@@ -3,8 +3,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { I_HeaderProps } from '@rnb/types'
 import { Navbar } from './Navbar'
+
+import { StaticImageData } from 'next/image'
+import { I_Link } from '@rnb/types'
+
+export interface I_HeaderProps {
+    companyBanner?: StaticImageData
+    companyLogo?: StaticImageData
+    companyName: string
+    rootLink?: string
+    navbarItems: I_Link[]
+    hasAuth?: boolean
+}
 
 export const Header = ({
     companyLogo,
