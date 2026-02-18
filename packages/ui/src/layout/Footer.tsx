@@ -1,13 +1,12 @@
 interface I_FooterProps {
-    companyName: string
-    copyright: string
+    appName: string
 }
 
-export const Footer = ({ companyName, copyright }: I_FooterProps) => {
+export const Footer = ({ appName }: I_FooterProps) => {
     return (
         <div className="footer-wrapper">
-            <h3 className="footer-company-name">{companyName}</h3>
-            <p className="footer-copyright">{copyright}</p>
+            <h3 className="footer-app-name">{appName}</h3>
+            <p className="footer-copyright">{`@copyright ${appName.toLowerCase().trim()} ${new Date().getFullYear()}`}</p>
         </div>
     )
 }

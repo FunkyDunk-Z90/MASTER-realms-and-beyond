@@ -1,11 +1,16 @@
 import type { Metadata } from 'next'
-import { Header } from '@rnb/ui'
+import { Header, Footer } from '@rnb/ui'
 import '@rnb/styles'
+import { I_Link } from '@rnb/types'
+
+const appName = 'Modularix'
 
 export const metadata: Metadata = {
-    title: 'Modularix',
+    title: appName,
     description: 'Realms & Beyond Ui',
 }
+
+const navbarItems: I_Link[] = []
 
 export default function RootLayout({
     children,
@@ -14,7 +19,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className="app-wrapper">{children}</body>
+            <body className="app-wrapper">
+                <Header appName={appName} navbarItems={navbarItems} />
+                {children}
+                <Footer appName={appName} />
+            </body>
         </html>
     )
 }

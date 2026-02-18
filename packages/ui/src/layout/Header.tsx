@@ -9,18 +9,18 @@ import { StaticImageData } from 'next/image'
 import { I_Link } from '@rnb/types'
 
 export interface I_HeaderProps {
-    companyBanner?: StaticImageData
-    companyLogo?: StaticImageData
-    companyName: string
+    appBanner?: StaticImageData
+    appLogo?: StaticImageData
+    appName: string
     rootLink?: string
     navbarItems: I_Link[]
     hasAuth?: boolean
 }
 
 export const Header = ({
-    companyLogo,
-    companyBanner,
-    companyName,
+    appLogo,
+    appBanner,
+    appName,
     rootLink,
     navbarItems,
     hasAuth,
@@ -128,28 +128,28 @@ export const Header = ({
                 ref={headerRef}
             >
                 <div className="header-contents">
-                    {companyLogo && (
+                    {appLogo && (
                         <Image
-                            src={companyLogo}
-                            alt={`${companyName}'s logo`}
-                            className="logo-company"
+                            src={appLogo}
+                            alt={`${appName}'s logo`}
+                            className="logo-app"
                             onClick={() => handleNavigate()}
                         />
                     )}
-                    {companyBanner && (
+                    {appBanner && (
                         <Image
-                            src={companyBanner}
-                            alt={`${companyName}'s banner`}
-                            className="banner-company"
+                            src={appBanner}
+                            alt={`${appName}'s banner`}
+                            className="banner-app"
                             onClick={() => handleNavigate()}
                         />
                     )}
                     <div className="title-wrapper">
                         <h1
-                            className="title-company"
+                            className="title-app"
                             onClick={() => handleNavigate()}
                         >
-                            {companyName}
+                            {appName}
                         </h1>
                     </div>
                     {hasAuth && (
