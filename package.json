@@ -1,0 +1,14 @@
+{
+    "name": "realms-and-beyond",
+    "private": true,
+    "version": "1.0.0",
+    "scripts": {
+        "build": "pnpm -r --filter \"./packages/**\" build",
+        "build:servers": "pnpm -r --filter \"./servers/**\" build",
+        "build:all": "pnpm run build && pnpm run build:servers",
+        "clean": "pnpm -r --filter \"./packages/**\" clean"
+    },
+    "devDependencies": {
+        "prettier": "^3.7.4"
+    }
+}

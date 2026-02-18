@@ -1,0 +1,765 @@
+// page.module.scss
+// Monorepo Documentation Page
+//
+// To wire up your shared tokens, add these imports at the top:
+// @use '@repo/styles/tokens' as *;     // CSS custom properties / design tokens
+// @use '@repo/styles/mixins' as *;     // shared mixins
+//
+// Currently uses local CSS variables that mirror your brand palette.
+
+// ─── Tokens ──────────────────────────────────────────────────────────────────
+
+:root {
+    --bg: #0d0e0f;
+    --surface: #131415;
+    --border: #1f2123;
+    --border-bright: #2d3033;
+    --text: #c8cdd2;
+    --text-dim: #5a6069;
+    --text-bright: #eceef0;
+    --accent: #c8a96e;
+    --accent-dim: #8a6f3f;
+    --accent-glow: rgba(200, 169, 110, 0.08);
+    --red: #d46b6b;
+    --green: #6db07a;
+    --blue: #6b9fd4;
+    --purple: #9b7fd4;
+    --tag-bg: #191b1d;
+    --mono: 'DM Mono', 'Fira Code', monospace;
+    --serif: 'Fraunces', Georgia, serif;
+}
+
+// ─── Layout ──────────────────────────────────────────────────────────────────
+
+.layout {
+    display: grid;
+    // grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+// ─── Sidebar ─────────────────────────────────────────────────────────────────
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-bright) transparent;
+}
+
+.sidebarHeader {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebarLogo {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-bright);
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+}
+
+.logoAccent {
+    color: var(--accent);
+}
+
+.sidebarSub {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.sidebarVersion {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--text-dim);
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 3px;
+}
+
+.dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--green);
+    display: inline-block;
+}
+
+// ─── Nav ─────────────────────────────────────────────────────────────────────
+
+.nav {
+    padding: 16px 0;
+    flex: 1;
+}
+
+.navSection {
+    padding: 0 16px;
+    margin-bottom: 6px;
+}
+
+.navLabel {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 10px 8px 6px;
+    display: block;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition:
+        color 0.15s,
+        background 0.15s;
+
+    &:hover {
+        color: var(--text-bright);
+        background: var(--accent-glow);
+    }
+}
+
+.navLinkActive {
+    color: var(--accent) !important;
+    background: var(--accent-glow);
+}
+
+.navIcon {
+    font-size: 10px;
+    width: 14px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+// ─── Main ────────────────────────────────────────────────────────────────────
+
+.main {
+    margin-left: 240px;
+    padding: 60px 64px 100px;
+    max-width: 900px;
+}
+
+// ─── Sections ────────────────────────────────────────────────────────────────
+
+.section {
+    margin-bottom: 80px;
+    animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sectionLabel {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 10px;
+}
+
+// ─── Typography ──────────────────────────────────────────────────────────────
+
+.h1 {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--text-bright);
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.h1Accent {
+    color: var(--accent);
+    font-style: italic;
+}
+
+.h2 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text-bright);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-bright);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+}
+
+.body {
+    font-size: 12.5px;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.8;
+}
+
+.footnote {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    margin-top: 8px;
+
+    code {
+        font-size: 11px;
+    }
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+.heroDesc {
+    font-size: 13px;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+.heroTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+}
+
+.tag {
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    background: var(--tag-bg);
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    font-family: var(--mono);
+}
+
+// ─── Tree ────────────────────────────────────────────────────────────────────
+
+.tree {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    font-size: 12px;
+    line-height: 2;
+    overflow-x: auto;
+}
+
+.treeLine {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.treeIndent {
+    padding-left: 16px;
+}
+
+.treeConnector {
+    color: var(--border-bright);
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.treeFolder {
+    color: var(--accent);
+}
+
+.treeFile {
+    color: var(--text);
+}
+
+.treeComment {
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 11px;
+}
+
+// ─── Cards ───────────────────────────────────────────────────────────────────
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    transition: border-color 0.2s;
+
+    &:hover {
+        border-color: var(--border-bright);
+    }
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.cardName {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-bright);
+    font-family: var(--mono);
+}
+
+.cardDesc {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin: 0 0 8px;
+}
+
+.cardPath {
+    font-size: 10px;
+    color: var(--accent-dim);
+    display: block;
+}
+
+// ─── Badges ──────────────────────────────────────────────────────────────────
+
+.badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+    font-family: var(--mono);
+}
+
+.badge_server {
+    color: var(--red);
+    border-color: #5a2d2d;
+    background: #1f1212;
+}
+
+.badge_app {
+    color: var(--blue);
+    border-color: #2d3f5a;
+    background: #121520;
+}
+
+.badge_pkg {
+    color: var(--purple);
+    border-color: #3d2d5a;
+    background: #171220;
+}
+
+// ─── Callout ─────────────────────────────────────────────────────────────────
+
+.callout {
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 12px;
+    margin: 14px 0;
+    border: 1px solid;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.7;
+}
+
+.calloutIcon {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.callout_warn {
+    background: #1a1500;
+    border-color: #4a3d00;
+    color: #c8a030;
+}
+
+.callout_info {
+    background: #0f1620;
+    border-color: #1e3250;
+    color: var(--blue);
+}
+
+.callout_tip {
+    background: #0f1a12;
+    border-color: #1e4228;
+    color: var(--green);
+}
+
+// ─── Steps ───────────────────────────────────────────────────────────────────
+
+.steps {
+    display: flex;
+    flex-direction: column;
+}
+
+.step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 0 16px;
+}
+
+.stepNumCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stepNum {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--surface);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.stepLine {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    margin: 6px 0;
+}
+
+.stepContent {
+    padding-bottom: 28px;
+}
+
+.stepTitle {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-bright);
+    margin-bottom: 8px;
+    padding-top: 4px;
+}
+
+.stepNote {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    line-height: 1.7;
+}
+
+// ─── Code / Pre ───────────────────────────────────────────────────────────────
+
+.pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 18px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.8;
+    margin: 8px 0;
+    font-family: var(--mono);
+    color: var(--text);
+    white-space: pre;
+}
+
+// Global inline code styles (within this page)
+:global(code) {
+    font-family: var(--mono);
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11.5px;
+    color: var(--accent);
+}
+
+:global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+}
+
+// ─── Commands Table ───────────────────────────────────────────────────────────
+
+.cmdTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 12px 0;
+    font-family: var(--mono);
+
+    th {
+        text-align: left;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--border);
+        font-weight: 400;
+    }
+
+    td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background: var(--accent-glow);
+    }
+}
+
+.cmdCell {
+    color: var(--text-bright);
+    white-space: nowrap;
+}
+
+.whereCell {
+    color: var(--accent);
+}
+
+.descCell {
+    color: var(--text-dim);
+}
+
+// ─── Env Blocks ──────────────────────────────────────────────────────────────
+
+.envStack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.envBlock {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.envHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--tag-bg);
+}
+
+.envTitle {
+    font-size: 11px;
+    color: var(--text-bright);
+    font-weight: 500;
+}
+
+.envLocation {
+    font-size: 10px;
+    color: var(--accent-dim);
+}
+
+.envBody {
+    padding: 14px 18px;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.envGroup {
+    margin-bottom: 14px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.envGroupLabel {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+}
+
+.envVar {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.envKey {
+    color: var(--blue);
+    font-family: var(--mono);
+}
+
+.envEq {
+    color: var(--text-dim);
+}
+
+.envVal {
+    color: var(--green);
+    font-family: var(--mono);
+}
+
+.envNote {
+    color: var(--text-dim);
+    font-size: 10px;
+    font-style: italic;
+    margin-left: 4px;
+}
+
+// ─── Git Branches ─────────────────────────────────────────────────────────────
+
+.branchBlock {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0 18px;
+}
+
+.branchRow {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.branchName {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-bright);
+    padding-top: 2px;
+}
+
+.branchDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.branchDot_main {
+    background: var(--red);
+}
+
+.branchDot_publish {
+    background: var(--accent);
+}
+
+.branchDot_dev {
+    background: var(--green);
+}
+
+.branchDesc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin: 0;
+}
+
+// ─── Scrollbar ────────────────────────────────────────────────────────────────
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-bright);
+    border-radius: 3px;
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 32px 24px 80px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .branchRow {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+}
