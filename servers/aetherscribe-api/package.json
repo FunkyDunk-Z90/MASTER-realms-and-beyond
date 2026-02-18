@@ -12,14 +12,14 @@
     },
     "dependencies": {
         "bcrypt": "^6.0.0",
-        "cloudinary": "^2.8.0",
+        "cloudinary": "^2.9.0",
         "cookie-parser": "^1.4.7",
-        "cors": "^2.8.5",
-        "dotenv": "^17.2.1",
+        "cors": "^2.8.6",
+        "dotenv": "^17.3.1",
         "envalid": "^8.1.1",
         "express": "^5.2.1",
         "jsonwebtoken": "^9.0.3",
-        "mongoose": "^8.18.0",
+        "mongoose": "^9.2.1",
         "morgan": "^1.10.1",
         "postman": "^0.2.0"
     },
@@ -30,9 +30,9 @@
         "@types/express": "^5.0.6",
         "@types/jsonwebtoken": "^9.0.10",
         "@types/morgan": "^1.9.10",
-        "@types/node": "^24.10.13",
+        "@types/node": "^25.2.3",
         "mailtrap": "^4.4.0",
-        "tsx": "^4.7.0",
-        "typescript": "^5.9.2"
+        "tsx": "^4.21.0",
+        "typescript": "^5.9.3"
     }
 }
