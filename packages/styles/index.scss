@@ -1,21 +1,8 @@
 @use '_variables' as *;
 @use '_mixins' as *;
 
-@use './components/sidebar';
-@use './components/dropdown';
-@use './components/button';
-
-@use './components/ui/navbar';
-@use './components/ui/header';
-@use './components/ui/footer';
-
-@use './images/images';
-
-@use './components/forms/form';
-
-@use './components/cards/user-profile';
-
-@use './components/skeletons/skeletonStyles';
+@use './components/indexUi.scss';
+@use './images/indexImages.scss';
 
 *,
 *::before,
