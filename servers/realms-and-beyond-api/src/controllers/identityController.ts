@@ -6,7 +6,7 @@ import { AppError } from '@rnb/errors'
 import { catchAsync } from '@rnb/middleware'
 import { validate } from '@rnb/validators'
 import { setAuthCookie, formatEmail } from '@rnb/security'
-import { env } from '../config/validateEnv'
+import { env } from '@rnb/validators'
 
 interface I_SuccessResponse {
     accessToken: void

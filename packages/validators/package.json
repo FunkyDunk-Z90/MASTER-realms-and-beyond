@@ -9,10 +9,12 @@
         "clean": "rimraf dist"
     },
     "devDependencies": {
+        "@types/node": "^25.2.3",
         "rimraf": "^5.0.0",
         "typescript": "^5.0.0"
     },
     "dependencies": {
-        "@rnb/errors": "workspace:*"
+        "@rnb/errors": "workspace:*",
+        "envalid": "^8.1.1"
     }
 }

@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary'
-import { env } from './validateEnv'
+import { env } from '@rnb/validators'
 
 cloudinary.config({
     cloud_name: env.CLOUDINARY_NAME,

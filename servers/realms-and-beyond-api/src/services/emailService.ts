@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import { env } from '../config/validateEnv'
+import { env } from '@rnb/validators'
 
 const transporter = nodemailer.createTransport({
     host: env.MAILTRAP_HOST,

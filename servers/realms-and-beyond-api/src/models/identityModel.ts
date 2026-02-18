@@ -17,7 +17,7 @@ import {
     I_GenderIdentity,
     I_Pronouns,
 } from '@rnb/types'
-import { formatDate } from '../utils/formatDate'
+import { formatDate } from '@rnb/security'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
