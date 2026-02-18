@@ -5,7 +5,16 @@ import Link from 'next/link'
 import Image, { StaticImageData } from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '../utils/Button'
-import { I_NavBarProps } from '@rnb/types'
+import { I_Link, I_BreadcrumbItem } from '@rnb/types'
+
+import type { SetStateAction, Dispatch } from 'react'
+
+export interface I_NavBarProps {
+    items: I_Link[]
+    breadcrumbs?: I_BreadcrumbItem[]
+    onNavigate?: (link: I_Link) => void
+    scrollLock: Dispatch<SetStateAction<boolean>>
+}
 
 const mobile = 1025
 
