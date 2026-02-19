@@ -20,7 +20,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className="app-wrapper">
-                <Header appName={appName} navbarItems={navbarItems} />
+                <Header
+                    appName={appName}
+                    hasAuth={true}
+                    navbarItems={navbarItems}
+                />
                 {children}
                 <Footer appName={appName} />
             </body>

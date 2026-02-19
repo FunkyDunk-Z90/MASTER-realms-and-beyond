@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image, { StaticImageData } from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '../utils/Button'
-import { I_Link, I_BreadcrumbItem } from '@rnb/types'
+import { I_Link } from '@rnb/types'
 
 import type { SetStateAction, Dispatch } from 'react'
 
