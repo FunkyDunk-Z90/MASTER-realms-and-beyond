@@ -10,7 +10,13 @@ export const metadata: Metadata = {
     description: 'Realms & Beyond Ui',
 }
 
-const navbarItems: I_Link[] = []
+const navbarItems: I_Link[] = [
+    {
+        id: 'home',
+        label: 'Home',
+        href: '/',
+    },
+]
 
 export default function RootLayout({
     children,
@@ -20,11 +26,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className="app-wrapper">
-                <Header
-                    appName={appName}
-                    hasAuth={true}
-                    navbarItems={navbarItems}
-                />
+                <Header appName={appName} hasAuth navbarItems={navbarItems} />
                 {children}
                 <Footer appName={appName} />
             </body>
