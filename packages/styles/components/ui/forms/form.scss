@@ -104,7 +104,7 @@
     color: var(--text-color);
 }
 
-.form-input {
+.input {
     padding: $medium $large;
     border-radius: $border-radius;
     font-size: 1rem;
@@ -113,16 +113,16 @@
     @include border;
 }
 
-.form-input:focus {
+.input:focus {
     outline-color: var(--primary-hover-color);
 }
 
 /* Warning state for invalid inputs */
-.form-input.warning {
+.input.warning {
     outline-color: var(--danger-color);
 }
 
-.form-input.warning:focus {
+.input.warning:focus {
     outline-color: var(--danger-color);
 }
 

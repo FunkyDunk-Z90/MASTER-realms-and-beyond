@@ -14,7 +14,7 @@ type T_BtnTheme =
     | 'success'
     | 'disabled'
 
-type T_BtnRef = RefObject<HTMLButtonElement>
+type T_BtnRef = RefObject<HTMLButtonElement | null>
 
 interface I_ButtonProps {
     children: React.ReactNode

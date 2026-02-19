@@ -1,2 +1,45 @@
 @use '../../../_variables' as *;
 @use '../../../_mixins' as *;
+
+.dropdown-list-wrapper {
+    background-color: var(--bg-color);
+    border-radius: $border-radius;
+    margin-top: $small;
+    padding: $medium;
+}
+
+.dropdown-list-item-wrapper {
+    background-color: var(--bg-secondary-color);
+    border-radius: $border-radius;
+    padding: $medium;
+    margin-top: $small;
+}
+
+.dropdown-list-item {
+    background-color: var(--primary-color);
+    margin-block: $small;
+    border-radius: $border-radius;
+    padding: $medium $large;
+
+    &:hover {
+        cursor: pointer;
+        color: var(--bg-color);
+        background-color: var(--primary-hover-color);
+    }
+}
+
+.dropdown-searchbar {
+    background-color: var(--bg-secondary-color);
+    border-radius: $border-radius;
+    color: var(--text-color);
+    padding: $small;
+}
+
+.dropdown-btn-wrapper {
+    width: 100%;
+
+    & > button {
+        width: 100%;
+        max-width: none;
+    }
+}

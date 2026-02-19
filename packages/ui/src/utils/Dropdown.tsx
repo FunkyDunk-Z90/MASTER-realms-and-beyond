@@ -9,6 +9,8 @@ import React, {
     type MouseEvent,
 } from 'react'
 
+import { Button } from './Button'
+
 import { ReactNode } from 'react'
 
 export interface I_DropdownOption {
@@ -150,7 +152,7 @@ const DropdownMenu: React.FC<I_DropdownMenuProps> = ({
     }
 
     return (
-        <ul role="menu">
+        <ul role="menu" className="dropdown-list-item-wrapper">
             {options.map((option) => {
                 const isSelected =
                     !!option.value &&
@@ -166,6 +168,7 @@ const DropdownMenu: React.FC<I_DropdownMenuProps> = ({
                     <li
                         key={option.id}
                         role="menuitem"
+                        className="dropdown-list-item"
                         aria-haspopup={hasChildren(option) || undefined}
                         aria-expanded={hasChildren(option) ? isOpen : undefined}
                         aria-disabled={option.disabled || undefined}
@@ -260,23 +263,25 @@ export const Dropdown: React.FC<I_DropdownProps> = ({
 
     return (
         <div ref={rootRef} id={id} className="dropdown-wrapper">
-            <button
-                type="button"
-                onClick={toggleOpen}
-                disabled={disabled}
-                aria-haspopup="menu"
-                aria-expanded={isOpen}
-            >
-                <span>{selectedOption?.label ?? placeholder}</span>
-                {children ?? <span>▾</span>}
-            </button>
+            <div className="dropdown-btn-wrapper">
+                <Button
+                    handleClick={toggleOpen}
+                    isDisabled={disabled}
+                    aria-haspopup="menu"
+                    aria-expanded={isOpen}
+                >
+                    <span>{selectedOption?.label ?? placeholder}</span>
+                    {children ?? <span>▾</span>}
+                </Button>
+            </div>
 
             {isOpen && (
-                <div>
+                <div className="dropdown-list-wrapper">
                     {searchable && (
-                        <div>
+                        <div className="dropdown-searchbar-wrapper">
                             <input
                                 type="text"
+                                className="input"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder="Search…"
