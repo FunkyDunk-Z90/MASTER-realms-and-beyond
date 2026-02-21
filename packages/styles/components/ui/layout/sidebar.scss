@@ -1,155 +1,241 @@
 @use '../../../_variables' as *;
 @use '../../../_mixins' as *;
 
-// ─── Sidebar wrapper ────────────────────────────────────────────────────────
+// ─── Wrapper ─────────────────────────────────────────────────────────────────
 .sidebar-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: var(--sidebar-max);
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--primary-color);
-    overflow: hidden;
+    overflow: visible;
+    z-index: 99;
+    transition: transform var(--transition-speed) ease;
 
-    transition:
-        width var(--transition-speed) ease,
-        min-width var(--transition-speed) ease;
-
-    // Default variant (full-width)
-    &.sidebar-default {
-        width: var(--sidebar-max);
-        min-width: var(--sidebar-min);
+    &.sidebar-open {
+        transform: translateX(0);
     }
 
-    // Compact variant
-    &.sidebar-compact {
-        width: var(--sidebar-min);
+    &.sidebar-collapsed {
+        transform: translateX(-100%);
     }
 }
 
-// ─── Overlay (drawer) mode ──────────────────────────────────────────────────
-.sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    z-index: 200;
-    transform: translateX(-100%);
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.sidebar-overlay-open {
-    transform: translateX(0);
-}
-
-.sidebar-overlay-closed {
-    transform: translateX(-100%);
-}
-
-.sidebar-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 199;
-    background-color: var(--blur);
-    backdrop-filter: blur(3px);
-}
-
-// ─── Collapse button ────────────────────────────────────────────────────────
+// ─── Collapse toggle ─────────────────────────────────────────────────────────
 .sidebar-collapse-btn {
-    align-self: flex-end;
-    background: none;
-    border: none;
+    position: absolute;
+    top: $medium;
+    right: 0;
+    transform: translateX(100%);
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--primary-color);
+    border-left: none;
+    border-radius: 0 $border-radius $border-radius 0;
     color: var(--text-color);
     cursor: pointer;
-    padding: $small $medium;
-    line-height: 1;
+    padding: $small;
     font-size: 1.2rem;
+    line-height: 1;
+    z-index: 1001;
 }
 
 .sidebar-collapse-icon {
     display: inline-block;
     transition: transform var(--transition-speed) ease;
-    transform: rotate(180deg);
 
     &.open {
-        transform: rotate(0deg);
+        transform: rotate(180deg);
     }
 }
 
-// ─── Navigation ─────────────────────────────────────────────────────────────
+// ─── Navigation ──────────────────────────────────────────────────────────────
 .sidebar-nav {
     flex: 1;
     overflow-y: auto;
-    padding: $medium 0;
+    overflow-x: visible;
 }
 
+// ─── Sections ────────────────────────────────────────────────────────────────
 .sidebar-section {
-    margin-bottom: $large;
+    margin-block: $medium;
+}
+
+.sidebar-collapsed .sidebar-section {
+    margin-block: 0;
+    padding-block: $medium;
+    border-top: 1px solid var(--border-color);
+
+    &:first-child {
+        border-top: none;
+    }
 }
 
 .sidebar-section-title {
     padding: $small $large;
-    font-size: 0.7rem;
-    font-weight: 700;
+    margin-block: $small;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--accent-color);
     white-space: nowrap;
-    overflow: hidden;
 }
 
 .sidebar-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    display: grid;
+    gap: $small;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-// ─── Link items ─────────────────────────────────────────────────────────────
-.sidebar-link {
-    display: flex;
-    align-items: center;
-    gap: $medium;
-    padding: $medium $large;
-    color: var(--text-color);
+// ─── Items ────────────────────────────────────────────────────────────────────
+.sidebar-item {
     border-radius: $border-radius;
     margin-inline: $small;
-    transition:
-        background-color var(--transition-speed) ease,
-        color var(--transition-speed) ease;
 
-    &:hover {
-        background-color: var(--bg-primary-color);
-        color: var(--primary-hover-color);
-    }
-
-    &.active {
-        background-color: var(--primary-color);
-        color: $light;
+    // Scope highlight to the link row only — not the whole <li> which includes
+    // any open submenu children beneath it
+    > .sidebar-link {
+        border-radius: $border-radius;
+        transition: background-color var(--transition-speed) ease;
 
         &:hover {
-            background-color: var(--primary-hover-color);
+            background-color: var(--text-color);
+
+            .sidebar-label {
+                color: var(--bg-color);
+            }
+        }
+    }
+
+    &.active > .sidebar-link {
+        background-color: var(--primary-color);
+
+        &:hover {
+            background-color: var(--text-color);
         }
     }
 }
 
-.sidebar-icon {
-    flex-shrink: 0;
+.sidebar-link {
+    position: relative;
     display: flex;
     align-items: center;
-    font-size: 1.1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    width: 100%;
 }
 
+.sidebar-icon {
+    flex-shrink: 0;
+    height: 30px;
+    width: 30px;
+    border-radius: $border-radius;
+    margin: $small $medium;
+    padding: $small;
+}
+
+// ─── Label ────────────────────────────────────────────────────────────────────
 .sidebar-label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 0.95rem;
+    padding: $medium $large;
 }
 
-// ─── Sidebar footer slot ────────────────────────────────────────────────────
+.sidebar-collapsed .sidebar-label {
+    position: absolute;
+    left: calc(var(--sidebar-min) + #{$small});
+    color: var(--text-color);
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $small $medium;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 300;
+    overflow: visible;
+    text-overflow: unset;
+    white-space: nowrap;
+}
+
+.sidebar-collapsed .sidebar-link:hover .sidebar-label {
+    opacity: 1;
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
 .sidebar-footer {
     padding: $large;
     border-top: 1px solid var(--border-color);
     margin-top: auto;
+}
+
+// ─── Nested items ─────────────────────────────────────────────────────────────
+.sidebar-item--nested {
+    margin-inline: 0;
+
+    // Scope indent to the direct link row only
+    > .sidebar-link {
+        padding-left: calc(#{$medium} + (var(--depth, 1) * #{$large}));
+    }
+
+    .sidebar-label {
+        padding-block: $small;
+        font-size: 0.9em;
+        color: var(
+            --text-muted-color,
+            color-mix(in srgb, var(--text-color) 70%, transparent)
+        );
+    }
+}
+
+// ─── Parent link (has children) ───────────────────────────────────────────────
+.sidebar-link--parent {
+    cursor: pointer;
+}
+
+// ─── Chevron ──────────────────────────────────────────────────────────────────
+.sidebar-chevron {
+    display: inline-block;
+    margin-left: auto;
+    padding-right: $medium;
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform var(--transition-speed) ease;
+    color: var(--accent-color);
+    flex-shrink: 0;
+
+    &.expanded {
+        transform: rotate(90deg);
+    }
+}
+
+// ─── Submenu ──────────────────────────────────────────────────────────────────
+.sidebar-submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--transition-speed) ease;
+    overflow: hidden;
+
+    &--open {
+        grid-template-rows: 1fr;
+    }
+}
+
+.sidebar-submenu-inner {
+    min-height: 0;
+    overflow: hidden;
+}
+
+// ─── Collapsed sidebar — hide submenus entirely ───────────────────────────────
+.sidebar-collapsed {
+    .sidebar-submenu {
+        display: none;
+    }
+
+    .sidebar-chevron {
+        display: none;
+    }
 }

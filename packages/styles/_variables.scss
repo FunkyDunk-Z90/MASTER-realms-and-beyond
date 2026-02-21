@@ -3,7 +3,7 @@ $dark: #181818;
 $dark-secondary: #353535;
 $dark-blur: #1e1e1e9f;
 $light: #e0e0e0;
-$light-secondary: #ebebeb;
+$light-secondary: #d6d6d6;
 $light-blur: #e0e0e06e;
 $primary: #5f4680;
 $primary-hover: #7c42a3;
@@ -35,10 +35,10 @@ $gallery-50px: repeat(auto-fit, minmax(calc(50px), 1fr));
 $gallery-100px: repeat(auto-fit, minmax(calc(100px), 1fr));
 
 // Sizes
-$sidebar-max: 200px;
-$sidebar-min: 125px;
+$sidebar-max: 250px;
+$sidebar-min: 70px;
 $header-height: 100px;
 $nav-height: 80px;
 
 // annimation speeds
-$transition-speed: 0.3s;
+$transition-speed: 0.4s;

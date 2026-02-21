@@ -1,7 +1,7 @@
-export default function Landing() {
+export default function Hub() {
     return (
         <section className="page-wrapper">
-            <h1>Landing</h1>
+            <h1>Adventure Hub</h1>
         </section>
     )
 }

@@ -1,139 +1,160 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { I_Link } from '@rnb/types'
 
-export type T_SidebarVariant = 'default' | 'compact'
+const STORAGE_KEY = 'sidebar-open'
+
+export interface I_SidebarItem extends I_Link {
+    children?: I_SidebarItem[]
+}
 
 export interface I_SidebarSection {
     title?: string
-    items: I_Link[]
+    items: I_SidebarItem[]
 }
 
 export interface I_SidebarProps {
-    /** Array of nav sections. Each section can have an optional heading and a list of links. */
     sections: I_SidebarSection[]
-    /** Controls the width mode. 'default' uses --sidebar-max, 'compact' uses --sidebar-min. */
-    variant?: T_SidebarVariant
-    /** When true the sidebar slides in as an overlay (mobile drawer behaviour). */
-    isOpen?: boolean
-    /** Callback fired when the sidebar requests to close (overlay mode). */
-    onClose?: () => void
-    /** Optional footer slot rendered at the bottom of the sidebar. */
     footer?: React.ReactNode
 }
 
-export const Sidebar = ({
-    sections,
-    variant = 'default',
-    isOpen,
-    onClose,
-    footer,
-}: I_SidebarProps) => {
-    const pathName = usePathname()
-    const sidebarRef = useRef<HTMLDivElement>(null)
-    const isControlled = isOpen !== undefined
+interface I_SidebarMenuItemProps {
+    item: I_SidebarItem
+    pathName: string
+    sidebarOpen: boolean
+    depth?: number
+}
 
-    const [internalOpen, setInternalOpen] = useState(true)
-    const effectiveOpen = isControlled ? isOpen : internalOpen
+const SidebarMenuItem = ({
+    item,
+    pathName,
+    sidebarOpen,
+    depth = 0,
+}: I_SidebarMenuItemProps) => {
+    const hasChildren = item.children && item.children.length > 0
 
-    // Close on outside click in overlay mode
-    useEffect(() => {
-        if (!isControlled) return
+    // Auto-expand if a child route is active
+    const isChildActive = (items: I_SidebarItem[]): boolean =>
+        items.some(
+            (child) =>
+                pathName === child.href ||
+                (child.children && isChildActive(child.children))
+        )
 
-        const handler = (e: MouseEvent) => {
-            if (
-                sidebarRef.current &&
-                !sidebarRef.current.contains(e.target as Node)
-            ) {
-                onClose?.()
-            }
+    const [expanded, setExpanded] = useState<boolean | undefined>(
+        () => hasChildren && isChildActive(item.children!)
+    )
+
+    const isActive = pathName === item.href
+
+    const handleToggle = (e: React.MouseEvent) => {
+        if (hasChildren) {
+            e.preventDefault()
+            setExpanded((prev) => !prev)
         }
-
-        if (effectiveOpen) {
-            document.addEventListener('mousedown', handler)
-        }
-        return () => document.removeEventListener('mousedown', handler)
-    }, [effectiveOpen, isControlled, onClose])
-
-    const openClass = isControlled
-        ? effectiveOpen
-            ? 'sidebar-overlay-open'
-            : 'sidebar-overlay-closed'
-        : ''
+    }
 
     return (
-        <>
-            {/* Backdrop for overlay mode */}
-            {isControlled && effectiveOpen && (
-                <div className="sidebar-backdrop" onClick={onClose} />
-            )}
-
-            <aside
-                ref={sidebarRef}
-                className={`sidebar-wrapper sidebar-${variant} ${isControlled ? 'sidebar-overlay' : ''} ${openClass}`}
+        <li
+            className={`sidebar-item ${isActive ? 'active' : ''} ${hasChildren ? 'has-children' : ''} ${depth > 0 ? 'sidebar-item--nested' : ''}`}
+            style={{ '--depth': depth } as React.CSSProperties}
+        >
+            <Link
+                href={hasChildren ? '#' : item.href}
+                className={`sidebar-link ${hasChildren ? 'sidebar-link--parent' : ''}`}
+                onClick={hasChildren ? handleToggle : undefined}
+                aria-expanded={hasChildren ? expanded : undefined}
             >
-                {/* Collapse toggle for non-controlled (desktop) mode */}
-                {!isControlled && (
-                    <button
-                        className="sidebar-collapse-btn"
-                        onClick={() => setInternalOpen((p) => !p)}
-                        aria-label={
-                            internalOpen ? 'Collapse sidebar' : 'Expand sidebar'
-                        }
+                <span className="sidebar-label">{item.label}</span>
+
+                {hasChildren && sidebarOpen && (
+                    <span
+                        className={`sidebar-chevron ${expanded ? 'expanded' : ''}`}
+                        aria-hidden="true"
                     >
-                        <span
-                            className={`sidebar-collapse-icon ${internalOpen ? 'open' : ''}`}
-                        >
-                            ›
-                        </span>
-                    </button>
+                        ›
+                    </span>
                 )}
+            </Link>
 
-                <nav className="sidebar-nav">
-                    {sections.map((section, si) => (
-                        <div key={si} className="sidebar-section">
-                            {section.title && (
-                                <p className="sidebar-section-title">
-                                    {section.title}
-                                </p>
-                            )}
-                            <ul className="sidebar-menu">
-                                {section.items.map((item) => {
-                                    const isActive = pathName === item.href
-                                    return (
-                                        <li
-                                            key={item.id}
-                                            className="sidebar-item"
-                                        >
-                                            <Link
-                                                href={item.href}
-                                                className={`sidebar-link ${isActive ? 'active' : ''}`}
-                                            >
-                                                {item.icon && (
-                                                    <span className="sidebar-icon">
-                                                        {/* Icon passed as ReactNode via item.icon */}
-                                                        {
-                                                            item.icon as React.ReactNode
-                                                        }
-                                                    </span>
-                                                )}
-                                                <span className="sidebar-label">
-                                                    {item.label}
-                                                </span>
-                                            </Link>
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                        </div>
-                    ))}
-                </nav>
+            {hasChildren && (
+                <div
+                    className={`sidebar-submenu ${expanded ? 'sidebar-submenu--open' : ''}`}
+                >
+                    <ul className="sidebar-menu sidebar-submenu-inner">
+                        {item.children!.map((child) => (
+                            <SidebarMenuItem
+                                key={child.id}
+                                item={child}
+                                pathName={pathName}
+                                sidebarOpen={sidebarOpen}
+                                depth={depth + 1}
+                            />
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </li>
+    )
+}
 
-                {footer && <div className="sidebar-footer">{footer}</div>}
-            </aside>
-        </>
+export const Sidebar = ({ sections, footer }: I_SidebarProps) => {
+    const pathName = usePathname()
+    const [open, setOpen] = useState<boolean | null>(null)
+
+    useEffect(() => {
+        const stored = localStorage.getItem(STORAGE_KEY)
+        setOpen(stored === null ? false : stored === 'true')
+    }, [])
+
+    const toggle = () => {
+        const next = !open
+        setOpen(next)
+        localStorage.setItem(STORAGE_KEY, String(next))
+    }
+
+    if (open === null) return null
+
+    return (
+        <aside
+            className={`sidebar-wrapper ${open ? 'sidebar-open' : 'sidebar-collapsed'}`}
+        >
+            <button
+                className="sidebar-collapse-btn"
+                onClick={toggle}
+                aria-label={open ? 'Collapse sidebar' : 'Expand sidebar'}
+            >
+                <span className={`sidebar-collapse-icon ${open ? 'open' : ''}`}>
+                    ›
+                </span>
+            </button>
+
+            <nav className="sidebar-nav">
+                {sections.map((section, i) => (
+                    <div key={i} className="sidebar-section">
+                        {section.title && open && (
+                            <p className="sidebar-section-title">
+                                {section.title}
+                            </p>
+                        )}
+                        <ul className="sidebar-menu">
+                            {section.items.map((item) => (
+                                <SidebarMenuItem
+                                    key={item.id}
+                                    item={item}
+                                    pathName={pathName}
+                                    sidebarOpen={open}
+                                />
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </nav>
+
+            {footer && <div className="sidebar-footer">{footer}</div>}
+        </aside>
     )
 }

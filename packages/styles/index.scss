@@ -19,6 +19,7 @@
     --bg-secondary-color: #{$light-secondary};
     --bg-primary-color: #{$primary-light};
     --text-color: #{$dark};
+    // --text-muted-color: #{$dark-secondary};
     --primary-color: #{$primary};
     --primary-hover-color: #{$primary-hover};
     --accent-color: #{$accent};
@@ -59,8 +60,31 @@ body {
     box-sizing: border-box;
 }
 
+// ─── Global scrollbar ─────────────────────────────────────────────────────────
 ::-webkit-scrollbar {
+    width: 4px;
+    height: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 99px;
+    max-height: 60px;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-button {
     display: none;
+}
+
+// Firefox
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
 }
 
 a {
@@ -68,6 +92,7 @@ a {
     font-size: 1rem;
     color: var(--text-color);
     width: max-content;
+    transition: color var(--transition-speed) ease;
 
     &:hover {
         color: var(--primary-hover-color);
@@ -94,13 +119,23 @@ input::-webkit-inner-spin-button {
 }
 
 .page-wrapper {
+    position: relative;
     display: grid;
     align-items: start;
     margin-inline: auto;
+    width: 100%;
 
-    @media (min-width: $tablet) {
-        max-width: $desktop;
-    }
+    // @media (min-width: $tablet) {
+    //     max-width: $desktop;
+    // }
+}
+
+.asside-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
 }
 
 .section-wrapper {
@@ -108,61 +143,4 @@ input::-webkit-inner-spin-button {
     background-color: var(--bg-secondary-color);
     border-radius: $border-radius;
     padding: $large;
-}
-
-.dashboard-wrapper {
-    display: grid;
-    gap: $large;
-}
-
-.adventure-hub-wrapper {
-    display: grid;
-    background-color: var(--bg-secondary-color);
-    border-radius: $border-radius;
-    padding: $medium;
-}
-
-.section-title {
-    margin: $medium;
-}
-
-.error-wrapper {
-    display: grid;
-    justify-items: start;
-    gap: $small;
-    padding: $medium;
-}
-.error-text {
-    color: var(--warning-color);
-    list-style: disc;
-    margin-left: $medium;
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
-}
-
-.skeleton {
-    position: relative;
-    overflow: hidden;
-    border-radius: $border-radius;
-}
-
-.skeleton::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--text-color),
-        transparent
-    );
-    background-size: 200% 100%;
-    animation: shimmer 4s ease-in-out infinite;
 }
