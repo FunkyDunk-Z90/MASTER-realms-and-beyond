@@ -14,7 +14,7 @@ import {
     testAccountContent,
     categoryMeta,
     T_ContentCategory,
-} from '@/data/sidebarData'
+} from '@/data/aetherscribeData'
 import { I_AetherScribeContent, I_ContentObj } from '@rnb/types'
 import { useCallback } from 'react'
 

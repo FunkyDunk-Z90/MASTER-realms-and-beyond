@@ -17,6 +17,7 @@
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 // Thin, teal-tinted scrollbar
@@ -78,6 +79,7 @@
     // Borders
     --border-color: #{$silver};
     --border-strong-color: #{$ash};
+    --border-radius: #{$border-radius};
 
     // Overlays
     --blur: #{$blur-light};
@@ -183,6 +185,7 @@ a {
     color: var(--text-color);
     text-decoration: none;
     transition: color var(--transition-speed) ease;
+    width: max-content;
 
     &:hover {
         color: var(--primary-hover-color);
@@ -255,11 +258,8 @@ input::-webkit-inner-spin-button {
     position: relative;
     display: grid;
     align-items: start;
+    justify-items: center;
     margin-inline: auto;
     width: 100%;
-    // Safe to clip horizontal overflow here — fixed elements aren't DOM children
-    overflow-x: hidden;
-    transition: padding-left var(--transition-speed) ease;
-    // Reserve room for the pill toggle at all times
-    padding-left: 28px;
+    gap: $medium;
 }
