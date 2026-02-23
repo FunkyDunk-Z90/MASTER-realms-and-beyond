@@ -1,18 +1,44 @@
 @use '../../../_variables' as *;
 @use '../../../_mixins' as *;
 
-// ─── Wrapper ─────────────────────────────────────────────────────────────────
+// ─── Sidebar layout context ───────────────────────────────────────────────────
+//
+//  .page-wrapper (overflow: visible — never clips fixed children)
+//    ├── .sidebar-pill-toggle   (fixed, always visible)
+//    ├── .sidebar-wrapper       (fixed, slides in/out)
+//    └── .section-wrapper       (offsets via padding-left)
+
+// ─── Wrapper ──────────────────────────────────────────────────────────────────
+
 .sidebar-wrapper {
-    position: relative;
+    position: fixed;
+    top: var(--header-height, #{$header-height});
+    left: 0;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: var(--sidebar-max);
+    height: calc(
+        100dvh - var(--header-height, #{$header-height}) - var(
+                --footer-height,
+                #{$footer-height}
+            )
+    );
+    width: var(--sidebar-max, #{$sidebar-max});
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
+
+    box-shadow:
+        1px 0 0 0 var(--primary-color),
+        2px 0 16px var(--primary-glow);
     overflow: visible;
-    z-index: 99;
+    z-index: 100;
     transition: transform var(--transition-speed) ease;
+
+    &::before {
+        @include scanlines;
+        pointer-events: none;
+        z-index: 0;
+    }
 
     &.sidebar-open {
         transform: translateX(0);
@@ -23,26 +49,98 @@
     }
 }
 
-// ─── Collapse toggle ─────────────────────────────────────────────────────────
-.sidebar-collapse-btn {
-    position: absolute;
-    top: $medium;
-    right: 0;
-    transform: translateX(100%);
+// ─── Pill toggle ──────────────────────────────────────────────────────────────
+
+.sidebar-pill-toggle {
+    position: fixed;
+    top: calc(
+        var(--header-height, #{$header-height}) +
+            (
+                100dvh - var(--header-height, #{$header-height}) - var(
+                        --footer-height,
+                        #{$footer-height}
+                    )
+            ) /
+            6
+    );
+    left: 0;
+    z-index: 200;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    width: 16px;
+    height: 64px;
+    padding: $small 0;
+
     background-color: var(--bg-secondary-color);
     border: 1px solid var(--primary-color);
     border-left: none;
-    border-radius: 0 $border-radius $border-radius 0;
-    color: var(--text-color);
+    border-radius: 0 $border-radius-lg $border-radius-lg 0;
     cursor: pointer;
-    padding: $small;
-    font-size: 1.2rem;
-    line-height: 1;
-    z-index: 1001;
+    color: var(--text-muted-color);
+
+    transition:
+        left var(--transition-speed) ease,
+        background-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &:hover {
+        background-color: var(--primary-color);
+        box-shadow: 2px 0 12px var(--primary-glow-strong);
+        color: var(--bg-color);
+
+        .sidebar-pill-bar {
+            background-color: var(--bg-color);
+        }
+    }
+
+    &.sidebar-pill-toggle--open {
+        left: var(--sidebar-max, #{$sidebar-max});
+    }
 }
 
-.sidebar-collapse-icon {
+.sidebar-pill-track {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.sidebar-pill-bar {
+    display: block;
+    width: 8px;
+    height: 1.5px;
+    border-radius: 1px;
+    background-color: var(--primary-color);
+    transition:
+        transform var(--transition-speed) ease,
+        opacity var(--transition-speed) ease,
+        background-color var(--transition-speed) ease;
+}
+
+.sidebar-pill-toggle--open {
+    .sidebar-pill-bar:nth-child(1) {
+        transform: translateY(5.5px) rotate(45deg);
+    }
+    .sidebar-pill-bar:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    .sidebar-pill-bar:nth-child(3) {
+        transform: translateY(-5.5px) rotate(-45deg);
+    }
+}
+
+.sidebar-pill-chevron {
     display: inline-block;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--accent-color);
     transition: transform var(--transition-speed) ease;
 
     &.open {
@@ -50,14 +148,161 @@
     }
 }
 
-// ─── Navigation ──────────────────────────────────────────────────────────────
+// ─── Search ───────────────────────────────────────────────────────────────────
+
+.sidebar-search-wrapper {
+    position: relative;
+    padding: $medium $medium 0;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.sidebar-search-input-row {
+    display: flex;
+    align-items: center;
+    gap: $small;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $small $medium;
+    transition:
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &:focus-within {
+        border-color: var(--primary-color);
+        box-shadow:
+            0 0 0 2px var(--primary-glow-strong),
+            inset 0 0 8px var(--primary-glow);
+    }
+}
+
+.sidebar-search-icon {
+    color: var(--text-muted-color);
+    font-size: 1rem;
+    flex-shrink: 0;
+    transform: rotate(-45deg) translateY(-1px);
+    display: inline-block;
+}
+
+.sidebar-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    font-family: $font-body;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    min-width: 0;
+
+    &::placeholder {
+        color: var(--text-muted-color);
+        letter-spacing: 0.06em;
+    }
+}
+
+.sidebar-search-clear {
+    background: transparent;
+    border: none;
+    color: var(--text-muted-color);
+    cursor: pointer;
+    font-size: 0.65rem;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color var(--transition-speed) ease;
+
+    &:hover {
+        color: var(--accent-color);
+    }
+}
+
+.sidebar-search-results {
+    position: absolute;
+    top: calc(100% + #{$small});
+    left: $medium;
+    right: $medium;
+    z-index: 400;
+    background-color: var(--bg-color);
+    border: 1px solid var(--primary-color);
+    border-radius: $border-radius;
+    box-shadow:
+        0 4px 24px var(--primary-glow),
+        0 1px 0 0 var(--primary-color);
+    overflow: hidden;
+    animation: searchResultsIn 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes searchResultsIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scaleY(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+.sidebar-search-empty {
+    @include font-label;
+    font-size: 0.65rem;
+    color: var(--text-muted-color);
+    padding: $medium $large;
+    margin: 0;
+    text-align: center;
+}
+
+.sidebar-search-result-list {
+    list-style: none;
+    margin: 0;
+    padding: $small;
+    display: grid;
+    gap: 2px;
+    max-height: 300px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.sidebar-search-result-item {
+    display: block;
+    padding: $small $medium;
+    border-radius: $border-radius;
+    text-decoration: none;
+    font-family: $font-body;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 2px solid transparent;
+    transition:
+        border-color var(--transition-speed) ease,
+        background-color var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &:hover {
+        border-left-color: var(--primary-color);
+        background-color: var(--primary-glow);
+        color: var(--primary-hover-color);
+    }
+}
+
+// ─── Navigation ───────────────────────────────────────────────────────────────
+
 .sidebar-nav {
     flex: 1;
     overflow-y: auto;
     overflow-x: visible;
+    padding-top: $medium;
+    overscroll-behavior: contain;
+    z-index: 1;
 }
 
-// ─── Sections ────────────────────────────────────────────────────────────────
+// ─── Sections ─────────────────────────────────────────────────────────────────
+
 .sidebar-section {
     margin-block: $medium;
 }
@@ -73,47 +318,55 @@
 }
 
 .sidebar-section-title {
+    @include font-label;
     padding: $small $large;
     margin-block: $small;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent-color);
+    color: var(--accent-dim-color);
     white-space: nowrap;
 }
 
 .sidebar-menu {
     display: grid;
-    gap: $small;
+    gap: 2px;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 // ─── Items ────────────────────────────────────────────────────────────────────
-.sidebar-item {
-    border-radius: $border-radius;
-    margin-inline: $small;
 
-    // Scope highlight to the link row only — not the whole <li> which includes
-    // any open submenu children beneath it
+.sidebar-item {
+    margin-inline: $small;
+    border-radius: $border-radius;
+
     > .sidebar-link {
         border-radius: $border-radius;
-        transition: background-color var(--transition-speed) ease;
+        border-left: 2px solid transparent;
+        transition:
+            border-color var(--transition-speed) ease,
+            background-color var(--transition-speed) ease;
 
         &:hover {
-            background-color: var(--text-color);
+            border-left-color: var(--primary-color);
+            background-color: var(--primary-glow);
 
             .sidebar-label {
-                color: var(--bg-color);
+                color: var(--primary-hover-color);
             }
         }
     }
 
-    &.active > .sidebar-link {
-        background-color: var(--primary-color);
+    &.active {
+        > .sidebar-link {
+            @include active-indicator;
 
-        &:hover {
-            background-color: var(--text-color);
+            .sidebar-label {
+                color: var(--primary-hover-color);
+            }
+
+            &:hover .sidebar-label {
+                color: var(--primary-hover-color);
+            }
         }
     }
 }
@@ -129,36 +382,49 @@
 
 .sidebar-icon {
     flex-shrink: 0;
-    height: 30px;
-    width: 30px;
+    height: 28px;
+    width: 28px;
     border-radius: $border-radius;
     margin: $small $medium;
     padding: $small;
+    opacity: 0.7;
+    transition: opacity var(--transition-speed) ease;
+
+    .sidebar-link:hover & {
+        opacity: 1;
+    }
 }
 
 // ─── Label ────────────────────────────────────────────────────────────────────
+
 .sidebar-label {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding: $medium $large;
+    color: var(--text-secondary-color);
+    transition: color var(--transition-speed) ease;
 }
 
 .sidebar-collapsed .sidebar-label {
     position: absolute;
-    left: calc(var(--sidebar-min) + #{$small});
+    left: calc(var(--sidebar-min, 0px) + 20px + #{$small});
     color: var(--text-color);
     background-color: var(--bg-secondary-color);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--primary-color);
     border-radius: $border-radius;
     padding: $small $medium;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 12px var(--primary-glow);
     opacity: 0;
     pointer-events: none;
     z-index: 300;
     overflow: visible;
     text-overflow: unset;
     white-space: nowrap;
+    transition: opacity var(--transition-speed) ease;
 }
 
 .sidebar-collapsed .sidebar-link:hover .sidebar-label {
@@ -166,53 +432,59 @@
 }
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
+
 .sidebar-footer {
     padding: $large;
     border-top: 1px solid var(--border-color);
     margin-top: auto;
+    flex-shrink: 0;
+    z-index: 1;
 }
 
 // ─── Nested items ─────────────────────────────────────────────────────────────
+
 .sidebar-item--nested {
     margin-inline: 0;
 
-    // Scope indent to the direct link row only
     > .sidebar-link {
         padding-left: calc(#{$medium} + (var(--depth, 1) * #{$large}));
     }
 
     .sidebar-label {
         padding-block: $small;
-        font-size: 0.9em;
-        color: var(
-            --text-muted-color,
-            color-mix(in srgb, var(--text-color) 70%, transparent)
-        );
+        font-size: 0.78rem;
+        color: var(--text-muted-color);
     }
 }
 
-// ─── Parent link (has children) ───────────────────────────────────────────────
+// ─── Parent link ──────────────────────────────────────────────────────────────
+
 .sidebar-link--parent {
     cursor: pointer;
 }
 
 // ─── Chevron ──────────────────────────────────────────────────────────────────
+
 .sidebar-chevron {
     display: inline-block;
     margin-left: auto;
     padding-right: $medium;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1;
-    transition: transform var(--transition-speed) ease;
-    color: var(--accent-color);
+    color: var(--accent-dim-color);
     flex-shrink: 0;
+    transition:
+        transform var(--transition-speed) ease,
+        color var(--transition-speed) ease;
 
     &.expanded {
         transform: rotate(90deg);
+        color: var(--primary-hover-color);
     }
 }
 
 // ─── Submenu ──────────────────────────────────────────────────────────────────
+
 .sidebar-submenu {
     display: grid;
     grid-template-rows: 0fr;
@@ -229,7 +501,8 @@
     overflow: hidden;
 }
 
-// ─── Collapsed sidebar — hide submenus entirely ───────────────────────────────
+// ─── Collapsed state ──────────────────────────────────────────────────────────
+
 .sidebar-collapsed {
     .sidebar-submenu {
         display: none;

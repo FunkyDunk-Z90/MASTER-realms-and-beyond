@@ -1,357 +1,96 @@
-import { I_SidebarSection } from '@rnb/ui'
+import { I_AetherScribeContent } from '@rnb/types'
 
-import Worlds from '@/public/map.png'
-import Npc from '@/public/wizard.png'
-import Ancestry from '@/public/knight.png'
-import Icon from '@/public/dragon.jpg'
-import Items from '@/public/magic-potion.png'
-import Feat from '@/public/victory.png'
-import Spells from '@/public/spell-book.png'
-import Beast from '@/public/dragon.png'
-import Background from '@/public/ice.png'
-import Campaigns from '@/public/book.png'
+// ─── Test data matching I_AetherScribeContent shape ───────────────────────────
+// Replace with a real API call once the server is ready.
 
-export const sidebarData: I_SidebarSection[] = [
-    // ─── Hub ──────────────────────────────────────────────────────────────────
-    {
-        title: 'Hub',
-        items: [
-            {
-                href: '/hub',
-                id: 'hub',
-                label: 'Adventure Hub',
-                icon: Icon,
-            },
-        ],
+export const testAccountContent: I_AetherScribeContent = {
+    playerCharacters: [
+        { contentId: 'pc-001', contentName: 'Aldric Stonehammer' },
+        { contentId: 'pc-002', contentName: 'Seraphina Ashveil' },
+        { contentId: 'pc-003', contentName: 'Threx the Unbroken' },
+        { contentId: 'pc-004', contentName: 'Mirela Dusk' },
+    ],
+    npcs: [
+        { contentId: 'npc-001', contentName: 'Tarvon the Merchant' },
+        { contentId: 'npc-002', contentName: 'Lady Sylvara' },
+        { contentId: 'npc-003', contentName: 'Brother Eddan' },
+        { contentId: 'npc-004', contentName: 'The Pale Watcher' },
+        { contentId: 'npc-005', contentName: 'Grulk Ironjaw' },
+    ],
+    worlds: [
+        { contentId: 'wld-001', contentName: 'Aelvorn — The Shattered Realm' },
+        { contentId: 'wld-002', contentName: 'Cindervast' },
+    ],
+    campaigns: [
+        { contentId: 'cmp-001', contentName: 'The Ember Crown' },
+        { contentId: 'cmp-002', contentName: 'Shards of the Pale Gate' },
+        { contentId: 'cmp-003', contentName: 'Beneath the Iron Sea' },
+    ],
+    items: [
+        { contentId: 'itm-001', contentName: 'Shadowfang Dagger' },
+        { contentId: 'itm-002', contentName: 'Cloak of the Ashen Wood' },
+        { contentId: 'itm-003', contentName: 'Ring of Far Sight' },
+        { contentId: 'itm-004', contentName: 'Thornwood Staff' },
+    ],
+    classes: [
+        { contentId: 'cls-001', contentName: 'Runeblade' },
+        { contentId: 'cls-002', contentName: 'Verdant Warden' },
+        { contentId: 'cls-003', contentName: 'Soulweaver' },
+    ],
+    ancestries: [
+        { contentId: 'anc-001', contentName: 'Ashborn' },
+        { contentId: 'anc-002', contentName: 'Verdani' },
+        { contentId: 'anc-003', contentName: 'Stonekith' },
+    ],
+    monsters: [
+        { contentId: 'mon-001', contentName: 'Veilwraith' },
+        { contentId: 'mon-002', contentName: 'Cinder Drake' },
+        { contentId: 'mon-003', contentName: 'Thornback Basilisk' },
+        { contentId: 'mon-004', contentName: 'The Hollow King' },
+    ],
+    spells: [
+        { contentId: 'spl-001', contentName: 'Ember Lash' },
+        { contentId: 'spl-002', contentName: 'Veilstep' },
+        { contentId: 'spl-003', contentName: 'Thornwall' },
+        { contentId: 'spl-004', contentName: 'Mind Fracture' },
+        { contentId: 'spl-005', contentName: 'Glacial Tomb' },
+    ],
+    feats: [
+        { contentId: 'fea-001', contentName: 'Arcane Resilience' },
+        { contentId: 'fea-002', contentName: 'Shadow Step Mastery' },
+        { contentId: 'fea-003', contentName: "Titan's Grip" },
+    ],
+    backgrounds: [
+        { contentId: 'bg-001', contentName: 'Exiled Noble' },
+        { contentId: 'bg-002', contentName: 'Runic Scholar' },
+        { contentId: 'bg-003', contentName: 'Wandering Blade' },
+    ],
+}
+
+// ─── Category metadata for display ────────────────────────────────────────────
+
+export type T_ContentCategory = keyof I_AetherScribeContent
+
+export interface I_CategoryMeta {
+    label: string
+    href: string
+    emoji: string
+}
+
+export const categoryMeta: Record<T_ContentCategory, I_CategoryMeta> = {
+    playerCharacters: {
+        label: 'Player Character',
+        href: '/hub/player-characters',
+        emoji: '🧙',
     },
-
-    // ─── Categories ───────────────────────────────────────────────────────────
-    {
-        title: 'Categories',
-        items: [
-            {
-                href: '/hub/player-characters',
-                id: 'player-characters',
-                label: 'Player Characters',
-                icon: Icon,
-            },
-            {
-                href: '/hub/worlds',
-                id: 'worlds',
-                label: 'Worlds',
-                icon: Worlds,
-            },
-            {
-                href: '/hub/items',
-                id: 'items',
-                label: 'Items',
-                icon: Items,
-                children: [
-                    {
-                        href: '/hub/items/weapons',
-                        id: 'items-weapons',
-                        label: 'Weapons',
-                        icon: Items,
-                    },
-                    {
-                        href: '/hub/items/armour',
-                        id: 'items-armour',
-                        label: 'Armour',
-                        icon: Items,
-                    },
-                    {
-                        href: '/hub/items/consumables',
-                        id: 'items-consumables',
-                        label: 'Consumables',
-                        icon: Items,
-                    },
-                    {
-                        href: '/hub/items/magic',
-                        id: 'items-magic',
-                        label: 'Magic Items',
-                        icon: Items,
-                    },
-                ],
-            },
-            { href: '/hub/feats', id: 'feats', label: 'Feats', icon: Feat },
-            {
-                href: '/hub/backgrounds',
-                id: 'backgrounds',
-                label: 'Backgrounds',
-                icon: Background,
-            },
-            {
-                href: '/hub/npcs',
-                id: 'npcs',
-                label: 'NPCs',
-                icon: Npc,
-                children: [
-                    {
-                        href: '/hub/npcs/merchants',
-                        id: 'npcs-merchants',
-                        label: 'Merchants',
-                        icon: Npc,
-                    },
-                    {
-                        href: '/hub/npcs/allies',
-                        id: 'npcs-allies',
-                        label: 'Allies',
-                        icon: Npc,
-                    },
-                    {
-                        href: '/hub/npcs/villains',
-                        id: 'npcs-villains',
-                        label: 'Villains',
-                        icon: Npc,
-                    },
-                ],
-            },
-            {
-                href: '/hub/spells',
-                id: 'spells',
-                label: 'Spells',
-                icon: Spells,
-                children: [
-                    {
-                        href: '/hub/spells/cantrips',
-                        id: 'spells-cantrips',
-                        label: 'Cantrips',
-                        icon: Spells,
-                    },
-                    {
-                        href: '/hub/spells/level-1',
-                        id: 'spells-level-1',
-                        label: 'Level 1',
-                        icon: Spells,
-                    },
-                    {
-                        href: '/hub/spells/level-2',
-                        id: 'spells-level-2',
-                        label: 'Level 2',
-                        icon: Spells,
-                    },
-                    {
-                        href: '/hub/spells/level-3',
-                        id: 'spells-level-3',
-                        label: 'Level 3',
-                        icon: Spells,
-                    },
-                    {
-                        href: '/hub/spells/level-4-plus',
-                        id: 'spells-level-4-plus',
-                        label: 'Level 4+',
-                        icon: Spells,
-                    },
-                ],
-            },
-            {
-                href: '/hub/campaigns',
-                id: 'campaigns',
-                label: 'Campaigns',
-                icon: Campaigns,
-            },
-            {
-                href: '/hub/bestiary',
-                id: 'bestiary',
-                label: 'Bestiary',
-                icon: Beast,
-                children: [
-                    {
-                        href: '/hub/bestiary/beasts',
-                        id: 'bestiary-beasts',
-                        label: 'Beasts',
-                        icon: Beast,
-                    },
-                    {
-                        href: '/hub/bestiary/undead',
-                        id: 'bestiary-undead',
-                        label: 'Undead',
-                        icon: Beast,
-                    },
-                    {
-                        href: '/hub/bestiary/dragons',
-                        id: 'bestiary-dragons',
-                        label: 'Dragons',
-                        icon: Beast,
-                    },
-                    {
-                        href: '/hub/bestiary/fey',
-                        id: 'bestiary-fey',
-                        label: 'Fey',
-                        icon: Beast,
-                    },
-                    {
-                        href: '/hub/bestiary/constructs',
-                        id: 'bestiary-constructs',
-                        label: 'Constructs',
-                        icon: Beast,
-                    },
-                ],
-            },
-            {
-                href: '/hub/ancestries',
-                id: 'ancestries',
-                label: 'Ancestries',
-                icon: Ancestry,
-                children: [
-                    {
-                        href: '/hub/ancestries/common',
-                        id: 'ancestries-common',
-                        label: 'Common',
-                        icon: Ancestry,
-                        children: [
-                            {
-                                href: '/hub/ancestries/common/human',
-                                id: 'ancestries-human',
-                                label: 'Human',
-                                icon: Ancestry,
-                            },
-                            {
-                                href: '/hub/ancestries/common/elf',
-                                id: 'ancestries-elf',
-                                label: 'Elf',
-                                icon: Ancestry,
-                            },
-                            {
-                                href: '/hub/ancestries/common/dwarf',
-                                id: 'ancestries-dwarf',
-                                label: 'Dwarf',
-                                icon: Ancestry,
-                            },
-                        ],
-                    },
-                    {
-                        href: '/hub/ancestries/rare',
-                        id: 'ancestries-rare',
-                        label: 'Rare',
-                        icon: Ancestry,
-                        children: [
-                            {
-                                href: '/hub/ancestries/rare/tiefling',
-                                id: 'ancestries-tiefling',
-                                label: 'Tiefling',
-                                icon: Ancestry,
-                            },
-                            {
-                                href: '/hub/ancestries/rare/aasimar',
-                                id: 'ancestries-aasimar',
-                                label: 'Aasimar',
-                                icon: Ancestry,
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-
-    // ─── World Building ───────────────────────────────────────────────────────
-    {
-        title: 'World Building',
-        items: [
-            {
-                href: '/hub/lore',
-                id: 'lore',
-                label: 'Lore',
-                icon: Campaigns,
-                children: [
-                    {
-                        href: '/hub/lore/history',
-                        id: 'lore-history',
-                        label: 'History',
-                        icon: Campaigns,
-                    },
-                    {
-                        href: '/hub/lore/factions',
-                        id: 'lore-factions',
-                        label: 'Factions',
-                        icon: Campaigns,
-                    },
-                    {
-                        href: '/hub/lore/religions',
-                        id: 'lore-religions',
-                        label: 'Religions & Gods',
-                        icon: Campaigns,
-                    },
-                ],
-            },
-            {
-                href: '/hub/locations',
-                id: 'locations',
-                label: 'Locations',
-                icon: Worlds,
-                children: [
-                    {
-                        href: '/hub/locations/cities',
-                        id: 'locations-cities',
-                        label: 'Cities & Towns',
-                        icon: Worlds,
-                    },
-                    {
-                        href: '/hub/locations/dungeons',
-                        id: 'locations-dungeons',
-                        label: 'Dungeons',
-                        icon: Worlds,
-                    },
-                    {
-                        href: '/hub/locations/wilderness',
-                        id: 'locations-wilderness',
-                        label: 'Wilderness',
-                        icon: Worlds,
-                    },
-                    {
-                        href: '/hub/locations/planes',
-                        id: 'locations-planes',
-                        label: 'Planes of Existence',
-                        icon: Worlds,
-                    },
-                ],
-            },
-            {
-                href: '/hub/calendars',
-                id: 'calendars',
-                label: 'Calendars',
-                icon: Campaigns,
-            },
-        ],
-    },
-
-    // ─── Tools ────────────────────────────────────────────────────────────────
-    {
-        title: 'Tools',
-        items: [
-            {
-                href: '/hub/generators',
-                id: 'generators',
-                label: 'Generators',
-                icon: Icon,
-                children: [
-                    {
-                        href: '/hub/generators/names',
-                        id: 'generators-names',
-                        label: 'Name Generator',
-                        icon: Icon,
-                    },
-                    {
-                        href: '/hub/generators/encounters',
-                        id: 'generators-encounters',
-                        label: 'Encounter Builder',
-                        icon: Icon,
-                    },
-                    {
-                        href: '/hub/generators/treasure',
-                        id: 'generators-treasure',
-                        label: 'Treasure Hoard',
-                        icon: Icon,
-                    },
-                ],
-            },
-            {
-                href: '/hub/tables',
-                id: 'tables',
-                label: 'Random Tables',
-                icon: Campaigns,
-            },
-        ],
-    },
-]
+    npcs: { label: 'NPC', href: '/hub/npcs', emoji: '🗣️' },
+    worlds: { label: 'World', href: '/hub/worlds', emoji: '🌍' },
+    campaigns: { label: 'Campaign', href: '/hub/campaigns', emoji: '📖' },
+    items: { label: 'Item', href: '/hub/items', emoji: '⚔️' },
+    classes: { label: 'Class', href: '/hub/classes', emoji: '🛡️' },
+    ancestries: { label: 'Ancestry', href: '/hub/ancestries', emoji: '🌿' },
+    monsters: { label: 'Monster', href: '/hub/bestiary', emoji: '🐉' },
+    spells: { label: 'Spell', href: '/hub/spells', emoji: '✨' },
+    feats: { label: 'Feat', href: '/hub/feats', emoji: '🏆' },
+    backgrounds: { label: 'Background', href: '/hub/backgrounds', emoji: '📜' },
+}

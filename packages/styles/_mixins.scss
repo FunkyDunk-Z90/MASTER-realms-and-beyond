@@ -1,6 +1,99 @@
 @use './variables' as *;
 
+// ─── Responsive ───────────────────────────────────────────────────────────────
+
+@mixin mobile {
+    @media (max-width: #{$desktop - 1px}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: $desktop) {
+        @content;
+    }
+}
+
+// ─── Border utilities ─────────────────────────────────────────────────────────
+
 @mixin border {
     border: 1px solid var(--primary-color);
     border-radius: $border-radius;
+}
+
+@mixin border-subtle {
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+}
+
+// ─── Teal glow — used on focus rings and active states ────────────────────────
+
+@mixin glow-primary($strength: 1) {
+    box-shadow:
+        0 0 0 1px var(--primary-color),
+        0 0 #{8px * $strength} #{2px * $strength} var(--primary-glow);
+}
+
+@mixin glow-accent {
+    box-shadow: 0 0 8px 1px var(--accent-glow);
+}
+
+// ─── Scanline texture overlay ─────────────────────────────────────────────────
+// Apply to a ::before pseudo-element on the container.
+
+@mixin scanlines {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 0, 0, $scanline-opacity) 2px,
+        rgba(0, 0, 0, $scanline-opacity) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+
+@mixin font-display {
+    font-family: $font-display;
+    // Cormorant Garamond shines at heavier weights — 600 gives the high-contrast
+    // strokes room to breathe without collapsing at display sizes.
+    font-weight: 600;
+    // Tight tracking suits the inscriptional quality of this typeface.
+    letter-spacing: 0.04em;
+}
+
+@mixin font-label {
+    font-family: $font-display;
+    // Cormorant needs 700 at small sizes to stay legible — lighter weights
+    // are too thin for uppercase labels below 0.8rem.
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+@mixin font-display-italic {
+    @include font-display;
+    font-style: italic;
+    // Cormorant's italics are notably more elegant than the roman —
+    // use this for brand moments: app title, footer name, pull quotes.
+    letter-spacing: 0.02em;
+}
+
+@mixin font-mono {
+    font-family: $font-body;
+    font-weight: 400;
+}
+
+// ─── Teal left-border active indicator ───────────────────────────────────────
+// Used on active nav/sidebar items instead of filled backgrounds.
+
+@mixin active-indicator {
+    border-left: 2px solid var(--primary-color);
+    background: var(--primary-glow);
 }

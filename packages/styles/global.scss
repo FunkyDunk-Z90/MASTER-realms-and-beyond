@@ -1,0 +1,265 @@
+@use './_variables' as *;
+@use './_mixins' as *;
+
+@use './components/indexUi.scss';
+@use './images/indexImages.scss';
+
+// ─── Google Fonts import ──────────────────────────────────────────────────────
+// If using Next.js next/font, remove this and configure via layout.tsx instead.
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+// ─── Reset ────────────────────────────────────────────────────────────────────
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+// Thin, teal-tinted scrollbar
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover-color);
+}
+
+// Firefox
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+// ─── Design tokens — Light theme (default) ────────────────────────────────────
+
+:root {
+    // Backgrounds
+    --bg-color: #{$ghost};
+    --bg-secondary-color: #{$silver};
+    --bg-surface-color: #{$mist};
+
+    // Text
+    --text-color: #{$obsidian};
+    --text-secondary-color: #{$ash};
+    --text-muted-color: #{$slate};
+
+    // Primary — teal
+    --primary-color: #{$teal};
+    --primary-hover-color: #{$teal-mid};
+    --primary-deep-color: #{$teal-deep};
+    --primary-glow: #{$teal-glow};
+    --primary-glow-strong: #{$teal-glow-strong};
+
+    // Accent — amber
+    --accent-color: #{$amber};
+    --accent-dim-color: #{$amber-dim};
+    --accent-glow: #{$amber-glow};
+
+    // Semantic
+    --danger-color: #{$danger};
+    --danger-glow: #{$danger-glow};
+    --warning-color: #{$warning};
+    --success-color: #{$success};
+    --submit-color: #{$submit};
+    --disabled-color: #{$disabled};
+
+    // Borders
+    --border-color: #{$silver};
+    --border-strong-color: #{$ash};
+
+    // Overlays
+    --blur: #{$blur-light};
+
+    // Layout
+    --sidebar-max: #{$sidebar-max};
+    --sidebar-min: #{$sidebar-min};
+    --navbar-height: #{$header-height};
+    --header-height: #{$header-height};
+    --footer-height: #{$footer-height};
+
+    // Motion
+    --transition-speed: #{$transition-speed};
+    --transition-slow: #{$transition-speed-slow};
+
+    // Decorative — subtle teal line used as a separator / glow strip
+    --rule-color: #{$teal};
+    --rule-glow: 0 0 6px #{$teal-glow-strong};
+}
+
+// ─── Dark theme ───────────────────────────────────────────────────────────────
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #{$obsidian};
+        --bg-secondary-color: #{$obsidian-mid};
+        --bg-surface-color: #{$obsidian-light};
+
+        --text-color: #{$mist};
+        --text-secondary-color: #{$slate};
+        --text-muted-color: #{$ash};
+
+        --border-color: #{$obsidian-light};
+        --border-strong-color: #{$ash};
+
+        --blur: #{$blur-dark};
+    }
+}
+
+// Manual overrides — add [data-theme="dark"] or [data-theme="light"] to <html>
+[data-theme='dark'] {
+    --bg-color: #{$obsidian};
+    --bg-secondary-color: #{$obsidian-mid};
+    --bg-surface-color: #{$obsidian-light};
+
+    --text-color: #{$mist};
+    --text-secondary-color: #{$slate};
+    --text-muted-color: #{$ash};
+
+    --border-color: #{$obsidian-light};
+    --border-strong-color: #{$ash};
+
+    --blur: #{$blur-dark};
+}
+
+[data-theme='light'] {
+    --bg-color: #{$ghost};
+    --bg-secondary-color: #{$silver};
+    --bg-surface-color: #{$mist};
+
+    --text-color: #{$obsidian};
+    --text-secondary-color: #{$ash};
+    --text-muted-color: #{$slate};
+
+    --border-color: #{$silver};
+    --border-strong-color: #{$ash};
+
+    --blur: #{$blur-light};
+}
+
+// ─── Base ─────────────────────────────────────────────────────────────────────
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: $font-body;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    // Never let the body scroll horizontally
+    overflow-x: hidden;
+    overflow-y: auto;
+    // Subtle scanline texture layered over the body background
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 0, 0, $scanline-opacity) 3px,
+        rgba(0, 0, 0, $scanline-opacity) 4px
+    );
+}
+
+// ─── Base element resets ──────────────────────────────────────────────────────
+
+a {
+    font-family: $font-body;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+
+    &:hover {
+        color: var(--primary-hover-color);
+    }
+}
+
+li {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @include font-display;
+    color: var(--text-color);
+}
+
+input,
+textarea,
+select {
+    font-family: $font-body;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    background-color: var(--bg-surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $small $medium;
+    outline: none;
+    transition:
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px var(--primary-glow-strong);
+    }
+
+    &::placeholder {
+        color: var(--text-muted-color);
+    }
+}
+
+input::-webkit-inner-spin-button {
+    display: none;
+}
+
+// ─── Layout shells ────────────────────────────────────────────────────────────
+
+.app-wrapper {
+    // Never clip fixed children (sidebar, navbar)
+    overflow: visible;
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100dvh;
+}
+
+.page-wrapper {
+    // Must stay overflow: visible so fixed sidebar isn't clipped
+    overflow: visible;
+    position: relative;
+    width: 100%;
+    padding: $xLarge;
+}
+
+.section-wrapper {
+    position: relative;
+    display: grid;
+    align-items: start;
+    margin-inline: auto;
+    width: 100%;
+    // Safe to clip horizontal overflow here — fixed elements aren't DOM children
+    overflow-x: hidden;
+    transition: padding-left var(--transition-speed) ease;
+    // Reserve room for the pill toggle at all times
+    padding-left: 28px;
+}

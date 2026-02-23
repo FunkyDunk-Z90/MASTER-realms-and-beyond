@@ -1,21 +1,44 @@
 @use '../../../_variables' as *;
 @use '../../../_mixins' as *;
 
+// ─── Footer wrapper ───────────────────────────────────────────────────────────
+
 .footer-wrapper {
+    position: relative;
     display: grid;
     justify-items: center;
     align-items: center;
-    height: 120px;
+    gap: $small;
+    height: var(--footer-height, #{$footer-height});
     background-color: var(--bg-secondary-color);
-    border-top: 1px var(--bg-primary-color) solid;
-    box-shadow: 0px 2px 4px 2px var(--bg-secondary-color);
+    // Teal top border mirrors the navbar bottom border — bookending the app
+    border-top: 1px solid var(--primary-color);
+    box-shadow:
+        0 -1px 0 0 var(--primary-color),
+        0 -1px 12px var(--primary-glow);
     padding-block: $large;
+    z-index: 10;
+
+    // Scanline overlay
+    &::before {
+        @include scanlines;
+    }
 }
 
+// ─── Footer text ──────────────────────────────────────────────────────────────
+
 .footer-copyright {
-    font-weight: bold;
+    @include font-label;
+    color: var(--text-muted-color);
+    font-size: 0.65rem;
 }
 
 .footer-company-name {
-    font-weight: lighter;
+    @include font-display-italic;
+    font-size: 1rem;
+    // Italic Cormorant at the footer — refined, understated brand presence.
+    text-transform: none;
+    color: var(--primary-hover-color);
+    // Subtle glow on the brand name
+    text-shadow: 0 0 10px var(--primary-glow-strong);
 }

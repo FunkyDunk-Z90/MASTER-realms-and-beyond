@@ -1,5 +1,11 @@
-import { Sidebar } from '@rnb/ui'
-import { sidebarData } from '@/data/sidebarData'
+// app/hub/layout.tsx
+//
+// Pure Server Component — no functions, no client-only imports.
+// All search logic lives in HubSidebar (a Client Component) so nothing
+// crosses the RSC → Client boundary illegally.
+
+import { HubSidebar } from '@/components/HubSidebar'
+import { sidebarData } from '@/data/sidebarSections'
 
 export default function HubLayout({
     children,
@@ -7,11 +13,9 @@ export default function HubLayout({
     children: React.ReactNode
 }>) {
     return (
-        <section className="page-wrapper">
-            <div className="asside-wrapper">
-                <Sidebar sections={sidebarData} />
-            </div>
-            {children}
-        </section>
+        <>
+            <HubSidebar sections={sidebarData} />
+            <section className="section-wrapper">{children}</section>
+        </>
     )
 }

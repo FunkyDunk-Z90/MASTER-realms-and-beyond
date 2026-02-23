@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { Header, Footer } from '@rnb/ui'
+import { Navbar, Footer } from '@rnb/ui'
 import '@rnb/styles'
 import { I_Link } from '@rnb/types'
+import Dragon from '@/public/dragon.jpg'
 
 const appName = 'Aetherscribe'
 
@@ -36,8 +37,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className="app-wrapper">
-                <Header appName={appName} hasAuth navbarItems={navLinks} />
-                {children}
+                <Navbar
+                    headerIcon={Dragon}
+                    headerTitle={appName}
+                    navItems={navLinks}
+                />
+                <main className="page-wrapper">{children}</main>
                 <Footer appName={appName} />
             </body>
         </html>
