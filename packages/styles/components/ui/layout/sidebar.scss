@@ -1,13 +1,6 @@
 @use '../../../_variables' as *;
 @use '../../../_mixins' as *;
 
-// ─── Sidebar layout context ───────────────────────────────────────────────────
-//
-//  .page-wrapper (overflow: visible — never clips fixed children)
-//    ├── .sidebar-pill-toggle   (fixed, always visible)
-//    ├── .sidebar-wrapper       (fixed, slides in/out)
-//    └── .section-wrapper       (offsets via padding-left)
-
 // ─── Wrapper ──────────────────────────────────────────────────────────────────
 
 .sidebar-wrapper {
@@ -269,6 +262,7 @@
     display: block;
     padding: $small $medium;
     border-radius: $border-radius;
+    width: 100%;
     text-decoration: none;
     font-family: $font-body;
     font-size: 0.8rem;

@@ -1,5 +1,6 @@
 @use './_variables' as *;
 @use './_mixins' as *;
+@use './_themes';
 
 @use './components/indexUi.scss';
 @use './images/indexImages.scss';
@@ -43,18 +44,18 @@
     scrollbar-color: var(--primary-color) transparent;
 }
 
-// ─── Design tokens — Light theme (default) ────────────────────────────────────
+// ─── Design tokens — Dark theme (default) ─────────────────────────────────────
 
 :root {
     // Backgrounds
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
+    --bg-color: #{$obsidian};
+    --bg-secondary-color: #{$obsidian-mid};
+    --bg-surface-color: #{$obsidian-light};
 
     // Text
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
+    --text-color: #{$mist};
+    --text-secondary-color: #{$slate};
+    --text-muted-color: #{$ash};
 
     // Primary — teal
     --primary-color: #{$teal};
@@ -77,12 +78,12 @@
     --disabled-color: #{$disabled};
 
     // Borders
-    --border-color: #{$silver};
+    --border-color: #{$obsidian-light};
     --border-strong-color: #{$ash};
     --border-radius: #{$border-radius};
 
     // Overlays
-    --blur: #{$blur-light};
+    --blur: #{$blur-dark};
 
     // Layout
     --sidebar-max: #{$sidebar-max};
@@ -95,59 +96,28 @@
     --transition-speed: #{$transition-speed};
     --transition-slow: #{$transition-speed-slow};
 
-    // Decorative — subtle teal line used as a separator / glow strip
+    // Decorative — subtle primary-colour line used as a separator / glow strip
     --rule-color: #{$teal};
     --rule-glow: 0 0 6px #{$teal-glow-strong};
 }
 
-// ─── Dark theme ───────────────────────────────────────────────────────────────
+// ─── Respect light theme preference ───────────────────────────────────────────
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
     :root {
-        --bg-color: #{$obsidian};
-        --bg-secondary-color: #{$obsidian-mid};
-        --bg-surface-color: #{$obsidian-light};
+        --bg-color: #{$ghost};
+        --bg-secondary-color: #{$silver};
+        --bg-surface-color: #{$mist};
 
-        --text-color: #{$mist};
-        --text-secondary-color: #{$slate};
-        --text-muted-color: #{$ash};
+        --text-color: #{$obsidian};
+        --text-secondary-color: #{$ash};
+        --text-muted-color: #{$slate};
 
-        --border-color: #{$obsidian-light};
+        --border-color: #{$silver};
         --border-strong-color: #{$ash};
 
-        --blur: #{$blur-dark};
+        --blur: #{$blur-light};
     }
-}
-
-// Manual overrides — add [data-theme="dark"] or [data-theme="light"] to <html>
-[data-theme='dark'] {
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-
-    --blur: #{$blur-dark};
-}
-
-[data-theme='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-
-    --blur: #{$blur-light};
 }
 
 // ─── Base ─────────────────────────────────────────────────────────────────────

@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
 import { Navbar, Footer } from '@rnb/ui'
-import '@rnb/styles'
 import { I_Link } from '@rnb/types'
+
+import { ThemeProvider } from '@/src/context/ThemeContext'
+import { ThemeInitializer } from '@/src/context/ThemeInitializer'
+
+import '@rnb/styles'
 import Dragon from '@/public/dragon.jpg'
 
 const appName = 'Aetherscribe'
@@ -35,15 +39,20 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
+            <head>
+                <ThemeInitializer />
+            </head>
             <body className="app-wrapper">
-                <Navbar
-                    headerIcon={Dragon}
-                    headerTitle={appName}
-                    navItems={navLinks}
-                />
-                <main className="page-wrapper">{children}</main>
-                <Footer appName={appName} />
+                <ThemeProvider>
+                    <Navbar
+                        headerIcon={Dragon}
+                        headerTitle={appName}
+                        navItems={navLinks}
+                    />
+                    <main className="page-wrapper">{children}</main>
+                    <Footer appName={appName} />
+                </ThemeProvider>
             </body>
         </html>
     )

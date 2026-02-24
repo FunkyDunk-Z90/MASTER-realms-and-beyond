@@ -73,3 +73,54 @@ $font-body: 'DM Mono', 'Courier New', monospace;
 // ─── Decorative ───────────────────────────────────────────────────────────────
 // Repeating scanline used as a texture overlay
 $scanline-opacity: 0.025;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme: Aether  ·  Amethyst primary · Rose-gold accent
+// A mystical, violet-tinged palette — arcane and contemplative.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Primary — deep amethyst violet
+$amethyst-deep: #3b1f6e; // darkest violet, hover depth
+$amethyst: #5c2fa8; // primary brand colour
+$amethyst-mid: #8b5cf6; // lighter violet for glows / active indicators
+$amethyst-glow: rgba(92, 47, 168, 0.18); // ambient glow / bg tint
+$amethyst-glow-strong: rgba(92, 47, 168, 0.35); // stronger glow for focus rings
+
+// Accent — rose gold (warm luminous complement to violet)
+$rose-gold: #e8a0b4; // primary accent
+$rose-gold-dim: #b5607a; // dimmer rose for labels / borders
+$rose-gold-glow: rgba(232, 160, 180, 0.15); // ambient rose glow
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme: Sovereign  ·  Crimson primary · Pale-gold accent
+// A commanding, blood-red palette — regal, authoritative, intense.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Primary — deep crimson red
+$crimson-deep: #6b0f1a; // darkest crimson, hover depth
+$crimson: #9b1c2e; // primary brand colour
+$crimson-mid: #d4364f; // lighter crimson for glows / active indicators
+$crimson-glow: rgba(155, 28, 46, 0.18); // ambient glow / bg tint
+$crimson-glow-strong: rgba(155, 28, 46, 0.35); // stronger glow for focus rings
+
+// Accent — pale imperial gold (regal contrast to deep red)
+$pale-gold: #d4af5a; // primary accent
+$pale-gold-dim: #9a7b2e; // dimmer gold for labels / borders
+$pale-gold-glow: rgba(212, 175, 90, 0.15); // ambient gold glow
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme: Acanthium  ·  Deep emerald primary · Copper accent
+// A rich, forest-floor palette — ancient, organic, alchemical.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Primary — deep emerald green
+$emerald-deep: #0d3b22; // darkest emerald, hover depth
+$emerald: #145c35; // primary brand colour
+$emerald-mid: #22a05a; // lighter emerald for glows / active indicators
+$emerald-glow: rgba(20, 92, 53, 0.18); // ambient glow / bg tint
+$emerald-glow-strong: rgba(20, 92, 53, 0.35); // stronger glow for focus rings
+
+// Accent — warm copper (oxidised metal, earthen contrast to emerald)
+$copper: #c87941; // primary accent
+$copper-dim: #8f5220; // dimmer copper for labels / borders
+$copper-glow: rgba(200, 121, 65, 0.15); // ambient copper glow
