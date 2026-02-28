@@ -1,0 +1,102 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Dropdown wrapper ─────────────────────────────────────────────────────────
+
+.dropdown-list-wrapper {
+    background-color: var(--bg-color);
+    border: 1px solid var(--primary-color);
+    border-radius: $border-radius;
+    margin-top: $small;
+    padding: $medium;
+    box-shadow:
+        0 4px 24px var(--primary-glow),
+        0 1px 0 0 var(--primary-color);
+    animation: dropdownIn 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes dropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scaleY(0.96);
+        transform-origin: top center;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+// ─── Item group ───────────────────────────────────────────────────────────────
+
+.dropdown-list-item-wrapper {
+    background-color: var(--bg-secondary-color);
+    border-radius: $border-radius;
+    padding: $medium;
+    margin-top: $small;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+// ─── Individual items ─────────────────────────────────────────────────────────
+
+.dropdown-list-item {
+    margin-block: 2px;
+    border-radius: $border-radius;
+    padding: $medium $large;
+    border-left: 2px solid transparent;
+    color: var(--text-secondary-color);
+    font-family: $font-body;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    transition:
+        border-color var(--transition-speed) ease,
+        background-color var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &:hover {
+        cursor: pointer;
+        border-left-color: var(--primary-color);
+        background-color: var(--primary-glow);
+        color: var(--primary-hover-color);
+    }
+}
+
+// ─── Search bar ───────────────────────────────────────────────────────────────
+
+.dropdown-searchbar {
+    width: 100%;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    color: var(--text-color);
+    font-family: $font-body;
+    font-size: 0.8rem;
+    padding: $small $medium;
+    outline: none;
+    transition:
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px var(--primary-glow-strong);
+    }
+
+    &::placeholder {
+        color: var(--text-muted-color);
+    }
+}
+
+// ─── Button wrapper ───────────────────────────────────────────────────────────
+
+.dropdown-btn-wrapper {
+    width: 100%;
+
+    & > button {
+        width: 100%;
+        max-width: none;
+    }
+}

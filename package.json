@@ -6,9 +6,10 @@
         "build": "pnpm -r --filter \"./packages/**\" build",
         "build:servers": "pnpm -r --filter \"./servers/**\" build",
         "build:all": "pnpm run build && pnpm run build:servers",
-        "clean": "pnpm -r --filter \"./packages/**\" clean"
+        "clean": "pnpm -r --filter \"./packages/**\" clean",
+        "update:all": "pnpm up --recursive --latest"
     },
     "devDependencies": {
-        "prettier": "^3.7.4"
+        "prettier": "^3.8.1"
     }
 }

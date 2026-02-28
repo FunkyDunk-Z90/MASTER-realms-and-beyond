@@ -1,0 +1,400 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap');
+
+// ─── Shell layout ─────────────────────────────────────────────────────────────
+
+.docs-shell {
+    display: grid;
+    grid-template-columns: var(--sidebar-max, 400px) 1fr;
+    min-height: calc(100vh - var(--nav-height, 80px));
+    align-items: start;
+    justify-items: center;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+
+        // Hide the self-managed sidebar on mobile — use overlay mode instead
+        > aside.sidebar-wrapper:not(.sidebar-overlay) {
+            display: none;
+        }
+    }
+}
+
+.docs-main {
+    // padding: 3rem 3.5rem 6rem;
+    margin-inline: auto;
+    padding: 1rem;
+    max-width: 860px;
+    min-width: 0;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        padding: 2rem 1.25rem 5rem;
+    }
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+.docs-hero {
+    margin-bottom: 3.5rem;
+}
+
+.docs-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin-bottom: 0.65rem;
+}
+
+.docs-h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+
+    em {
+        font-style: normal;
+        color: var(--accent-color);
+    }
+}
+
+.docs-hero-sub {
+    color: var(--text-color);
+    opacity: 0.6;
+    max-width: 580px;
+    margin-bottom: 1.25rem;
+}
+
+.docs-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.docs-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid var(--primary-color);
+    color: var(--text-color);
+    opacity: 0.7;
+    background: var(--bg-secondary-color);
+}
+
+// ─── Section headings ──────────────────────────────────────────────────────────
+
+.docs-section {
+    margin-bottom: 4rem;
+}
+
+.docs-h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--bg-secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.docs-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--accent-color);
+    background: var(--bg-secondary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+}
+
+.docs-h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.75rem 0 0.65rem;
+}
+
+.docs-p {
+    color: var(--text-color);
+    opacity: 0.75;
+    margin-bottom: 0.65rem;
+    line-height: 1.7;
+}
+
+// ─── Code blocks ──────────────────────────────────────────────────────────────
+
+.docs-code-block {
+    background: var(--bg-secondary-color);
+    border: 1px solid var(--bg-primary-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0.75rem 0 1.25rem;
+}
+
+.docs-code-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 1rem;
+    background: var(--bg-secondary-color);
+    border-bottom: 1px solid var(--bg-primary-color);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    opacity: 0.6;
+}
+
+.docs-code-lang {
+    color: var(--accent-color);
+}
+
+.docs-pre {
+    padding: 1.1rem 1.25rem;
+    overflow-x: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.75;
+    white-space: pre;
+    color: var(--text-color);
+    opacity: 0.9;
+    text-align: start;
+}
+
+.docs-code-inline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82em;
+    background: var(--bg-secondary-color);
+    border: 1px solid var(--bg-primary-color);
+    border-radius: 3px;
+    padding: 0.1em 0.38em;
+}
+
+.prop-name {
+    color: #9d6bc7;
+}
+.prop-type {
+    color: #3db8cf;
+}
+.prop-default {
+    color: var(--accent-color);
+}
+
+// ─── Tables ───────────────────────────────────────────────────────────────────
+
+.docs-table-wrap {
+    overflow-x: auto;
+    margin: 0.75rem 0 1.25rem;
+}
+
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+
+    th {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.67rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-align: left;
+        padding: 0.45rem 0.7rem;
+        border-bottom: 1px solid var(--bg-secondary-color);
+        opacity: 0.5;
+    }
+
+    td {
+        padding: 0.5rem 0.7rem;
+        border-bottom: 1px solid var(--bg-secondary-color);
+        vertical-align: top;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+}
+
+.docs-td-desc {
+    opacity: 0.7;
+    font-size: 0.83rem;
+}
+
+.docs-req {
+    display: inline-block;
+    font-size: 0.58rem;
+    font-family: 'DM Mono', monospace;
+    padding: 0.08rem 0.32rem;
+    background: rgba(176, 24, 44, 0.15);
+    border: 1px solid rgba(176, 24, 44, 0.35);
+    color: var(--danger-color);
+    border-radius: 3px;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+}
+
+// ─── Callouts ─────────────────────────────────────────────────────────────────
+
+.docs-callout {
+    display: flex;
+    gap: 0.65rem;
+    padding: 0.8rem 1rem;
+    border-radius: 4px;
+    border-left: 3px solid;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+
+    p {
+        margin: 0;
+        opacity: 0.8;
+    }
+}
+
+.docs-callout-info {
+    background: var(--bg-secondary-color);
+    border-color: var(--submit-color);
+}
+.docs-callout-warn {
+    background: var(--bg-secondary-color);
+    border-color: var(--warning-color);
+}
+.docs-callout-tip {
+    background: var(--bg-secondary-color);
+    border-color: var(--success-color);
+}
+
+.docs-callout-icon {
+    flex-shrink: 0;
+}
+
+// ─── Demo cards ───────────────────────────────────────────────────────────────
+
+.docs-demo-card {
+    background: var(--bg-secondary-color);
+    border: 1px solid var(--bg-primary-color);
+    border-radius: 4px;
+    padding: 1.25rem;
+    margin: 0.75rem 0 1.25rem;
+}
+
+.docs-demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    align-items: center;
+
+    &--wrap {
+        align-items: flex-start;
+    }
+}
+
+.docs-demo-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.docs-demo-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.docs-demo-hint {
+    font-size: 0.8rem;
+    opacity: 0.55;
+    font-style: italic;
+}
+
+// ─── Colour swatches ──────────────────────────────────────────────────────────
+
+.docs-swatch-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 0.75rem 0 1.25rem;
+}
+
+.docs-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.docs-swatch-color {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+}
+
+.docs-swatch-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    opacity: 0.6;
+    text-align: center;
+}
+
+.docs-swatch-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    opacity: 0.4;
+}
+
+// ─── Spacing visualiser ───────────────────────────────────────────────────────
+
+.docs-spacing-grid {
+    margin: 0.75rem 0 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.docs-spacing-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.docs-spacing-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    opacity: 0.6;
+    min-width: 160px;
+}
+
+.docs-spacing-bar {
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+// ─── Divider ──────────────────────────────────────────────────────────────────
+
+.docs-divider {
+    border: none;
+    border-top: 1px solid var(--bg-secondary-color);
+    margin: 3rem 0;
+}
+
+// ─── Sidebar footer text ──────────────────────────────────────────────────────
+
+.docs-sidebar-footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    opacity: 0.45;
+}
+
+// ─── Dropdown wrapper override ────────────────────────────────────────────────
+
+.dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}

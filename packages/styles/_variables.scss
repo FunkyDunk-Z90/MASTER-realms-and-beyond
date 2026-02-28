@@ -1,44 +1,126 @@
-// Colours
-$dark: #181818;
-$dark-secondary: #353535;
-$dark-blur: #1e1e1e9f;
-$light: #e0e0e0;
-$light-secondary: #ebebeb;
-$light-blur: #e0e0e06e;
-$primary: #5f4680;
-$primary-hover: #7c42a3;
-$primary-light: #5a4d6b;
-$accent: #cfae70;
-$danger: #b0182c;
-$warning: #dbd02e;
-$success: #29971f;
-$submit: #1f5d97;
-$disabled: #adadad;
+// ─── AetherScribe Design Tokens ───────────────────────────────────────────────
+// Sci-fi fantasy · Deep teal primary · Amber-gold accent · Monochrome base
 
-// Spacings
+// ─── Raw colour values ────────────────────────────────────────────────────────
+
+// Monochrome base — near-black to near-white
+$void: #0a0c0f; // deepest dark, used for backgrounds in dark mode
+$obsidian: #111417; // dark bg
+$obsidian-mid: #181c21; // dark bg-secondary
+$obsidian-light: #222830; // dark surface / cards
+$ash: #3a4149; // muted borders in dark
+$slate: #8a9099; // muted text in dark
+$mist: #c8cdd4; // body text in light mode
+$silver: #dde1e6; // light bg-secondary
+$ghost: #edf0f3; // light bg
+
+// Primary — deep teal
+$teal-deep: #0b5e62; // darkest teal, hover depth
+$teal: #0d7377; // primary brand colour
+$teal-mid: #14a0a5; // lighter teal for glows / active indicators
+$teal-glow: rgba(13, 115, 119, 0.18); // teal ambient glow / bg tint
+$teal-glow-strong: rgba(13, 115, 119, 0.35); // stronger glow for focus rings
+
+// Accent — amber gold (warm counter to cold teal)
+$amber: #e8a045; // primary accent
+$amber-dim: #b57a2a; // dimmer amber for section labels, borders
+$amber-glow: rgba(232, 160, 69, 0.15); // ambient amber glow
+
+// Semantic colours
+$danger: #c0392b;
+$danger-glow: rgba(192, 57, 43, 0.2);
+$warning: #d4a017;
+$success: #1a8a4a;
+$submit: #1a5fa8;
+$disabled: #4a5260;
+
+// Blur overlays
+$blur-dark: rgba(10, 12, 15, 0.72);
+$blur-light: rgba(237, 240, 243, 0.72);
+
+// ─── Spacing ──────────────────────────────────────────────────────────────────
 $small: 0.3rem;
 $medium: 0.5rem;
 $large: 1rem;
 $xLarge: 1.5rem;
+$xxLarge: 2.5rem;
 
-// Border & Radius
-$border-dark: 1px solid $dark-secondary;
-$border-light: 1px solid $light-secondary;
-$border-radius: 4px;
+// ─── Borders & Radius ─────────────────────────────────────────────────────────
+$border-radius: 4px; // Crisp, near-square — military/technical aesthetic
+$border-radius-lg: 6px;
 
-// Screen Sizes
+// ─── Breakpoints ──────────────────────────────────────────────────────────────
 $tablet: 768px;
 $desktop: 1025px;
 
-// Containers
-$gallery-50px: repeat(auto-fit, minmax(calc(50px), 1fr));
-$gallery-100px: repeat(auto-fit, minmax(calc(100px), 1fr));
+// ─── Layout sizes ─────────────────────────────────────────────────────────────
+$sidebar-max: 260px;
+$sidebar-min: 0px; // fully collapsed — no icon strip in this design
+$header-height: 54px;
+$footer-height: 72px;
 
-// Sizes
-$sidebar-max: 400px;
-$sidebar-min: 125px;
-$header-height: 100px;
-$nav-height: 80px;
+// ─── Motion ───────────────────────────────────────────────────────────────────
+$transition-speed: 0.25s;
+$transition-speed-slow: 0.45s;
 
-// annimation speeds
-$transition-speed: 0.3s;
+// ─── Typography ───────────────────────────────────────────────────────────────
+// Loaded via next/font or <link> in the app root:
+//   Cormorant Garamond — high-contrast serif, display headings & labels
+//   DM Mono              — monospaced body text, inputs, data
+$font-display: 'Cormorant Garamond', 'Palatino Linotype', serif;
+$font-body: 'DM Mono', 'Courier New', monospace;
+
+// ─── Decorative ───────────────────────────────────────────────────────────────
+// Repeating scanline used as a texture overlay
+$scanline-opacity: 0.025;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme: Aether  ·  Amethyst primary · Rose-gold accent
+// A mystical, violet-tinged palette — arcane and contemplative.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Primary — deep amethyst violet
+$amethyst-deep: #3b1f6e; // darkest violet, hover depth
+$amethyst: #5c2fa8; // primary brand colour
+$amethyst-mid: #8b5cf6; // lighter violet for glows / active indicators
+$amethyst-glow: rgba(92, 47, 168, 0.18); // ambient glow / bg tint
+$amethyst-glow-strong: rgba(92, 47, 168, 0.35); // stronger glow for focus rings
+
+// Accent — rose gold (warm luminous complement to violet)
+$rose-gold: #e8a0b4; // primary accent
+$rose-gold-dim: #b5607a; // dimmer rose for labels / borders
+$rose-gold-glow: rgba(232, 160, 180, 0.15); // ambient rose glow
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme: Sovereign  ·  Crimson primary · Pale-gold accent
+// A commanding, blood-red palette — regal, authoritative, intense.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Primary — deep crimson red
+$crimson-deep: #6b0f1a; // darkest crimson, hover depth
+$crimson: #9b1c2e; // primary brand colour
+$crimson-mid: #d4364f; // lighter crimson for glows / active indicators
+$crimson-glow: rgba(155, 28, 46, 0.18); // ambient glow / bg tint
+$crimson-glow-strong: rgba(155, 28, 46, 0.35); // stronger glow for focus rings
+
+// Accent — pale imperial gold (regal contrast to deep red)
+$pale-gold: #d4af5a; // primary accent
+$pale-gold-dim: #9a7b2e; // dimmer gold for labels / borders
+$pale-gold-glow: rgba(212, 175, 90, 0.15); // ambient gold glow
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme: Acanthium  ·  Deep emerald primary · Copper accent
+// A rich, forest-floor palette — ancient, organic, alchemical.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Primary — deep emerald green
+$emerald-deep: #0d3b22; // darkest emerald, hover depth
+$emerald: #145c35; // primary brand colour
+$emerald-mid: #22a05a; // lighter emerald for glows / active indicators
+$emerald-glow: rgba(20, 92, 53, 0.18); // ambient glow / bg tint
+$emerald-glow-strong: rgba(20, 92, 53, 0.35); // stronger glow for focus rings
+
+// Accent — warm copper (oxidised metal, earthen contrast to emerald)
+$copper: #c87941; // primary accent
+$copper-dim: #8f5220; // dimmer copper for labels / borders
+$copper-glow: rgba(200, 121, 65, 0.15); // ambient copper glow

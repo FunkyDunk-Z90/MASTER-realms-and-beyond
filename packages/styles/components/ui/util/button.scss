@@ -1,0 +1,171 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Base button ──────────────────────────────────────────────────────────────
+
+.btn {
+    // Layout
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    max-width: max-content;
+    padding: $medium $large;
+
+    // Typography
+    @include font-label;
+    font-size: 0.78rem;
+
+    // Colour — primary teal by default
+    background-color: var(--primary-color);
+    color: $ghost;
+
+    // Border — 1px teal, matches the system border language
+    border: 1px solid var(--primary-color);
+    border-radius: $border-radius;
+
+    cursor: pointer;
+    overflow: hidden; // contains the ::before scanline overlay
+    transition:
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease,
+        transform var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    // Scanline texture overlay — same visual language as navbar/footer/sidebar
+    &::before {
+        @include scanlines;
+        border-radius: $border-radius;
+    }
+
+    &:hover {
+        background-color: var(--primary-hover-color);
+        border-color: var(--primary-hover-color);
+        box-shadow:
+            0 0 12px var(--primary-glow-strong),
+            inset 0 0 8px var(--primary-glow);
+    }
+
+    &:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        outline: none;
+        @include glow-primary(1.5);
+    }
+
+    // ─── Variants ─────────────────────────────────────────────────────────────
+
+    // Accent — amber gold; warm contrast to the default teal
+    &.accent {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        color: $obsidian;
+
+        &:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow:
+                0 0 12px var(--accent-glow),
+                inset 0 0 8px var(--accent-glow);
+        }
+
+        &:focus-visible {
+            @include glow-accent;
+        }
+    }
+
+    // Danger — red; destructive actions
+    &.danger {
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+        color: $ghost;
+
+        &:hover {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+            box-shadow:
+                0 0 12px var(--danger-glow),
+                inset 0 0 8px var(--danger-glow);
+        }
+
+        &:focus-visible {
+            box-shadow:
+                0 0 0 1px var(--danger-color),
+                0 0 8px 2px var(--danger-glow);
+        }
+    }
+
+    // Warning — amber; caution actions
+    &.warning {
+        background-color: var(--warning-color);
+        border-color: var(--warning-color);
+        // Dark text on warm background for legibility
+        color: $obsidian;
+
+        &:hover {
+            background-color: var(--warning-color);
+            border-color: var(--warning-color);
+            box-shadow:
+                0 0 12px rgba(212, 160, 23, 0.35),
+                inset 0 0 8px rgba(212, 160, 23, 0.2);
+        }
+    }
+
+    // Submit — blue; form submission
+    &.submit {
+        background-color: var(--submit-color);
+        border-color: var(--submit-color);
+        color: $ghost;
+
+        &:hover {
+            background-color: var(--submit-color);
+            border-color: var(--submit-color);
+            box-shadow:
+                0 0 12px rgba(26, 95, 168, 0.35),
+                inset 0 0 8px rgba(26, 95, 168, 0.2);
+        }
+    }
+
+    // Success — green; confirmations
+    &.success {
+        background-color: var(--success-color);
+        border-color: var(--success-color);
+        color: $ghost;
+
+        &:hover {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            box-shadow:
+                0 0 12px rgba(26, 138, 74, 0.35),
+                inset 0 0 8px rgba(26, 138, 74, 0.2);
+        }
+    }
+
+    // Disabled — no interaction, no glow
+    &.disabled,
+    &:disabled {
+        cursor: not-allowed;
+        background-color: var(--disabled-color);
+        border-color: var(--disabled-color);
+        color: $slate;
+        pointer-events: none;
+
+        &::before {
+            display: none; // remove scanline overlay — disabled should look inert
+        }
+
+        &:hover {
+            box-shadow: none;
+            background-color: var(--disabled-color);
+        }
+
+        &:active {
+            transform: none;
+        }
+    }
+}

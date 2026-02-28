@@ -8,6 +8,7 @@ export interface I_ContentObj {
 
 export interface I_AetherScribeContent {
     playerCharacters: I_ContentObj[]
+    npcs: I_ContentObj[]
     worlds: I_ContentObj[]
     campaigns: I_ContentObj[]
     items: I_ContentObj[]

@@ -2,9 +2,9 @@
     "name": "@rnb/styles",
     "version": "0.1.0",
     "private": false,
-    "main": "index.scss",
+    "main": "global.scss",
     "exports": {
-        ".": "./index.scss",
+        ".": "./global.scss",
         "./*": "./*"
     }
 }
