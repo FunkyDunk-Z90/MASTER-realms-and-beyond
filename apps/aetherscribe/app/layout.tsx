@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/src/context/ThemeContext'
 import { ThemeInitializer } from '@/src/context/ThemeInitializer'
 
 import '@rnb/styles'
-import Dragon from '@/public/dragon.jpg'
+import Logo from '@/public/aetherscribe.jpg'
 
 const appName = 'Aetherscribe'
 
@@ -46,7 +46,7 @@ export default function RootLayout({
             <body className="app-wrapper">
                 <ThemeProvider>
                     <Navbar
-                        headerIcon={Dragon}
+                        headerIcon={Logo}
                         headerTitle={appName}
                         navItems={navLinks}
                     />
