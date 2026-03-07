@@ -1,4 +1,4 @@
-import { T_ObjectId, T_Timestamp } from '../global/common'
+import { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
 export type T_SubscriptionPlan = 'free' | 'starter' | 'pro' | 'enterprise'
 

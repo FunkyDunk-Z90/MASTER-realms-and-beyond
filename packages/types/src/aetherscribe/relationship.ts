@@ -3,7 +3,7 @@
  * Entity relationships with ruleset support and metadata
  */
 
-import type { T_ObjectId, T_Timestamp } from '../global/common'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 import type { E_EntityType, E_Ruleset } from './entity'
 
 // ============================================================================

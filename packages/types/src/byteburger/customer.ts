@@ -3,7 +3,11 @@
  * Customer profiles and accounts
  */
 
-import type { T_ObjectId, T_Timestamp, I_User } from '../global/common'
+import type {
+    T_ObjectId,
+    T_Timestamp,
+    I_User,
+} from '../global/common/commonIndex'
 
 export interface I_ByteBurgerCustomer extends I_User {
     phone?: string

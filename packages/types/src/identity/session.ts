@@ -1,4 +1,4 @@
-import { T_ObjectId, T_Timestamp } from '../global/common'
+import { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 import { I_UserProfile } from './user'
 
 export interface I_Session {

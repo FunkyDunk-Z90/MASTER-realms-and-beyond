@@ -3,7 +3,7 @@
  * Stock management and inventory tracking
  */
 
-import type { T_ObjectId, T_Timestamp } from '../global/common'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
 // ============================================================================
 // INVENTORY ITEM

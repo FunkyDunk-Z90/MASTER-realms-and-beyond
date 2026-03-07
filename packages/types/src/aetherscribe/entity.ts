@@ -3,7 +3,7 @@
  * Polymorphic entities using separate ruleset type definitions
  */
 
-import type { T_ObjectId, T_Timestamp } from '../global/common'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 import type {
     I_DND5E_Character,
     I_DND5E_NPC,

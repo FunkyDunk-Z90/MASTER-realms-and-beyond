@@ -3,7 +3,7 @@
  * Menu items and product catalog
  */
 
-import type { T_ObjectId, T_Timestamp } from '../global/common'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
 export interface I_MenuItem {
     id: T_ObjectId

@@ -3,7 +3,7 @@
  * World management with comprehensive ruleset statistics
  */
 
-import type { T_ObjectId, T_Timestamp } from '../global/common'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 import type { E_Ruleset } from './entity'
 
 // ============================================================================

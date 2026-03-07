@@ -3,7 +3,7 @@
  * Complete request/response types for entities, worlds, campaigns, and relationships
  */
 
-import type { T_ObjectId, T_Timestamp } from '../global/common'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 import type { E_EntityType, E_Ruleset } from './entity'
 import type { E_RelationType, RelationshipStrength } from './relationship'
 import type { I_World, I_WorldStats } from './world'

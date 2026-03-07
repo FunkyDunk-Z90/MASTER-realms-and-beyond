@@ -3,7 +3,7 @@
  * Customer orders and order management
  */
 
-import type { T_ObjectId, T_Timestamp } from '../global/common'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
 export enum E_OrderStatus {
     PENDING = 'pending',

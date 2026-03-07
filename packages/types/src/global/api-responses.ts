@@ -1,4 +1,48 @@
-import { I_Pagination } from './pagination'
+import { I_Pagination, I_PaginationQuery } from './pagination'
+import { T_ObjectId, T_Timestamp } from './globalIndex'
+
+export interface I_FilterCriteria {
+    field: string
+    operator: 'eq' | 'ne' | 'gt' | 'gte' | 'lt' | 'lte' | 'in' | 'nin' | 'regex'
+    value: any
+}
+
+export interface I_SearchQuery {
+    q: string
+    fields?: string[]
+    pagination?: I_PaginationQuery
+    filters?: I_FilterCriteria[]
+}
+
+export interface I_SearchResults<T> {
+    results: T[]
+    relevanceScores: Record<string, number>
+    total: number
+}
+
+export interface I_FileInfo {
+    filename: string
+    mimeType: string
+    size: number
+    url: string
+    uploadedAt: T_Timestamp
+    publicId?: string
+}
+
+export interface I_AuditLog {
+    id: T_ObjectId
+    entityType: string
+    entityId: T_ObjectId
+    userId: T_ObjectId
+    action: 'create' | 'update' | 'delete' | 'read'
+    changes?: {
+        field: string
+        oldValue: any
+        newValue: any
+    }[]
+    ipAddress?: string
+    timestamp: T_Timestamp
+}
 
 export interface I_ApiSuccess<T> {
     success: true

@@ -3,7 +3,7 @@
  * Comprehensive error handling system for entire RnB ecosystem
  */
 
-import type { T_Timestamp } from '../global/common'
+import type { T_Timestamp } from './common/commonIndex'
 
 // ============================================================================
 // ERROR CODES

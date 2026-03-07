@@ -1,4 +1,4 @@
-import { T_ObjectId, T_Timestamp, I_User } from '../global/common'
+import { T_ObjectId, T_Timestamp, I_User } from '../global/common/commonIndex'
 
 export type T_UserRole = 'user' | 'admin' | 'developer' | 'support'
 
