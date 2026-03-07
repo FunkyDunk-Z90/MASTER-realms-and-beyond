@@ -11,6 +11,7 @@ const STORAGE_KEY = 'sidebar-open'
 
 export interface I_SidebarItem extends I_Link {
     children?: I_SidebarItem[]
+    id: string
 }
 
 export interface I_SidebarSection {

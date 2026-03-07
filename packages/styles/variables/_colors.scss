@@ -1,0 +1,34 @@
+// Monochrome base — near-black to near-white
+$void: #0a0c0f; // deepest dark, used for backgrounds in dark mode
+$obsidian: #111417; // dark bg
+$obsidian-mid: #181c21; // dark bg-secondary
+$obsidian-light: #222830; // dark surface / cards
+$ash: #3a4149; // muted borders in dark
+$slate: #8a9099; // muted text in dark
+$mist: #c8cdd4; // body text in light mode
+$silver: #dde1e6; // light bg-secondary
+$ghost: #edf0f3; // light bg
+
+// Primary — deep teal
+$teal-deep: #0b5e62; // darkest teal, hover depth
+$teal: #0d7377; // primary brand colour
+$teal-mid: #14a0a5; // lighter teal for glows / active indicators
+$teal-glow: rgba(13, 115, 119, 0.18); // teal ambient glow / bg tint
+$teal-glow-strong: rgba(13, 115, 119, 0.35); // stronger glow for focus rings
+
+// Accent — amber gold (warm counter to cold teal)
+$amber: #e8a045; // primary accent
+$amber-dim: #b57a2a; // dimmer amber for section labels, borders
+$amber-glow: rgba(232, 160, 69, 0.15); // ambient amber glow
+
+// Semantic colours
+$danger: #c0392b;
+$danger-glow: rgba(192, 57, 43, 0.2);
+$warning: #d4a017;
+$success: #1a8a4a;
+$submit: #1a5fa8;
+$disabled: #4a5260;
+
+// Blur overlays
+$blur-dark: rgba(10, 12, 15, 0.72);
+$blur-light: rgba(237, 240, 243, 0.72);
