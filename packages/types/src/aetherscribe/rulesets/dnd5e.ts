@@ -7,14 +7,13 @@
 // ABILITY SCORES & MODIFIERS
 // ============================================================================
 
-export enum E_Ability {
-    STRENGTH = 'strength',
-    DEXTERITY = 'dexterity',
-    CONSTITUTION = 'constitution',
-    INTELLIGENCE = 'intelligence',
-    WISDOM = 'wisdom',
-    CHARISMA = 'charisma',
-}
+export type E_Ability =
+    | 'strength'
+    | 'dexterity'
+    | 'constitution'
+    | 'intelligence'
+    | 'wisdom'
+    | 'charisma'
 
 export interface I_AbilityScore {
     score: number
@@ -34,24 +33,23 @@ export interface I_AbilityScores {
 // RACES (2024 UPDATE)
 // ============================================================================
 
-export enum E_Race {
-    AASIMAR = 'aasimar',
-    BEASTFOLK = 'beastfolk',
-    CHANGELING = 'changeling',
-    DRAGONBORN = 'dragonborn',
-    DWARF = 'dwarf',
-    ELF = 'elf',
-    GNOME = 'gnome',
-    GOLIATH = 'goliath',
-    HALF_ELF = 'half_elf',
-    HALF_ORC = 'half_orc',
-    HALFLING = 'halfling',
-    HUMAN = 'human',
-    ORC = 'orc',
-    TABAXI = 'tabaxi',
-    TIEFLING = 'tiefling',
-    TORTLE = 'tortle',
-}
+export type E_Race =
+    | 'aasimar'
+    | 'beastfolk'
+    | 'changeling'
+    | 'dragonborn'
+    | 'dwarf'
+    | 'elf'
+    | 'gnome'
+    | 'goliath'
+    | 'half_elf'
+    | 'half_orc'
+    | 'halfling'
+    | 'human'
+    | 'orc'
+    | 'tabaxi'
+    | 'tiefling'
+    | 'tortle'
 
 export interface I_Race {
     id: E_Race
@@ -73,22 +71,21 @@ export interface I_Race {
 // CLASSES (2024 UPDATE)
 // ============================================================================
 
-export enum E_Class {
-    ARTIFICER = 'artificer',
-    BARBARIAN = 'barbarian',
-    BARD = 'bard',
-    BLOOD_HUNTER = 'blood_hunter',
-    CLERIC = 'cleric',
-    DRUID = 'druid',
-    FIGHTER = 'fighter',
-    MONK = 'monk',
-    PALADIN = 'paladin',
-    RANGER = 'ranger',
-    ROGUE = 'rogue',
-    SORCERER = 'sorcerer',
-    WARLOCK = 'warlock',
-    WIZARD = 'wizard',
-}
+export type E_Class =
+    | 'artificer'
+    | 'barbarian'
+    | 'bard'
+    | 'blood_hunter'
+    | 'cleric'
+    | 'druid'
+    | 'fighter'
+    | 'monk'
+    | 'paladin'
+    | 'ranger'
+    | 'rogue'
+    | 'sorcerer'
+    | 'warlock'
+    | 'wizard'
 
 export type HitDie = 'd6' | 'd8' | 'd10' | 'd12'
 
@@ -158,29 +155,17 @@ export interface I_Background {
 // SPELLS (2024 UPDATE)
 // ============================================================================
 
-export enum E_SpellLevel {
-    CANTRIP = 0,
-    FIRST = 1,
-    SECOND = 2,
-    THIRD = 3,
-    FOURTH = 4,
-    FIFTH = 5,
-    SIXTH = 6,
-    SEVENTH = 7,
-    EIGHTH = 8,
-    NINTH = 9,
-}
+export type E_SpellLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
-export enum E_SpellSchool {
-    ABJURATION = 'abjuration',
-    CONJURATION = 'conjuration',
-    DIVINATION = 'divination',
-    ENCHANTMENT = 'enchantment',
-    EVOCATION = 'evocation',
-    ILLUSION = 'illusion',
-    NECROMANCY = 'necromancy',
-    TRANSMUTATION = 'transmutation',
-}
+export type E_SpellSchool =
+    | 'abjuration'
+    | 'conjuration'
+    | 'divination'
+    | 'enchantment'
+    | 'evocation'
+    | 'illusion'
+    | 'necromancy'
+    | 'transmutation'
 
 export interface I_SpellComponent {
     verbal: boolean
@@ -229,32 +214,30 @@ export interface I_Spell {
 // ITEMS & EQUIPMENT
 // ============================================================================
 
-export enum E_ItemRarity {
-    COMMON = 'common',
-    UNCOMMON = 'uncommon',
-    RARE = 'rare',
-    VERY_RARE = 'very_rare',
-    LEGENDARY = 'legendary',
-    ARTIFACT = 'artifact',
-}
+export type E_ItemRarity =
+    | 'common'
+    | 'uncommon'
+    | 'rare'
+    | 'very_rare'
+    | 'legendary'
+    | 'artifact'
 
-export enum E_ItemType {
-    WEAPON = 'weapon',
-    ARMOR = 'armor',
-    WONDROUS_ITEM = 'wondrous_item',
-    POTION = 'potion',
-    SCROLL = 'scroll',
-    RING = 'ring',
-    ROD = 'rod',
-    STAFF = 'staff',
-    WAND = 'wand',
-    ADVENTURING_GEAR = 'adventuring_gear',
-}
+export type E_ItemType =
+    | 'weapon'
+    | 'armor'
+    | 'wondrous_item'
+    | 'potion'
+    | 'scroll'
+    | 'ring'
+    | 'rod'
+    | 'staff'
+    | 'wand'
+    | 'adventuring_gear'
 
 export interface I_Weapon {
     id: string
     name: string
-    type: E_ItemType.WEAPON
+    type: 'weapon'
     rarity: E_ItemRarity
     damageExpression: string
     damageType: string
@@ -273,7 +256,7 @@ export interface I_Weapon {
 export interface I_Armor {
     id: string
     name: string
-    type: E_ItemType.ARMOR
+    type: 'armor'
     rarity: E_ItemRarity
     armorClass: number | string // e.g., "10 + DEX"
     stealthDisadvantage: boolean

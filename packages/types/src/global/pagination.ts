@@ -14,7 +14,7 @@ export interface I_Pagination {
 export function isPaginationQuery(value: any): value is I_PaginationQuery {
     return (
         typeof value === 'object' &&
-        typeof value.limie === 'number' &&
+        typeof value.limit === 'number' &&
         typeof value.offset === 'number'
     )
 }

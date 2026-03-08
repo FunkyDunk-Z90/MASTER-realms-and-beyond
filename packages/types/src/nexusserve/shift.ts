@@ -5,14 +5,13 @@
 
 import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
-export enum E_ShiftStatus {
-    SCHEDULED = 'scheduled',
-    CHECKED_IN = 'checked_in',
-    CHECKED_OUT = 'checked_out',
-    COMPLETED = 'completed',
-    CANCELLED = 'cancelled',
-    NO_SHOW = 'no_show',
-}
+export type E_ShiftStatus =
+    | 'scheduled'
+    | 'checked_in'
+    | 'checked_out'
+    | 'completed'
+    | 'cancelled'
+    | 'no_show'
 
 export interface I_Shift {
     id: T_ObjectId

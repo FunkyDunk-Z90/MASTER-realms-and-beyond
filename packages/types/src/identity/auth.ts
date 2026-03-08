@@ -1,4 +1,8 @@
-import type { I_UserProfile } from './user'
+import type { I_UserProfile, T_RnBApp } from './user'
+
+// ============================================================================
+// REGISTRATION & AUTH FLOWS
+// ============================================================================
 
 export interface I_RegisterRequest {
     email: string
@@ -17,9 +21,56 @@ export interface I_RegisterResponse {
     verificationRequired: boolean
 }
 
+// ============================================================================
+// PERMISSIONS
+// Scoped to platform or a specific RnB app.
+// Format: '<app|platform>:<action>:<resource>'
+// ============================================================================
+
+export type T_Permissions =
+    // Platform-level (admin/support tools)
+    | 'platform:read:profile'
+    | 'platform:write:profile'
+    | 'platform:manage:users'
+    | 'platform:manage:subscriptions'
+    | 'platform:view:audit'
+    // AetherScribe
+    | 'aetherscribe:read:world'
+    | 'aetherscribe:write:world'
+    | 'aetherscribe:delete:world'
+    | 'aetherscribe:read:entity'
+    | 'aetherscribe:write:entity'
+    | 'aetherscribe:delete:entity'
+    | 'aetherscribe:read:relationship'
+    | 'aetherscribe:write:relationship'
+    | 'aetherscribe:delete:relationship'
+    | 'aetherscribe:manage:collaborators'
+    // ByteBurger
+    | 'byteburger:read:orders'
+    | 'byteburger:place:order'
+    | 'byteburger:manage:loyalty'
+    // NexusServe
+    | 'nexusserve:manage:employees'
+    | 'nexusserve:manage:shifts'
+    | 'nexusserve:manage:menu'
+    | 'nexusserve:manage:inventory'
+    | 'nexusserve:manage:sales'
+    | 'nexusserve:view:reports'
+
+// ============================================================================
+// JWT TOKEN SHAPE
+// ============================================================================
+
+/**
+ * Decoded JWT payload issued by the RnB auth service.
+ * A single token grants access to all apps the user has connected.
+ */
 export interface I_AuthToken {
+    /** Issuer — 'realms-and-beyond' */
     iss: string
+    /** Subject — userId */
     sub: string
+    /** Audience — which RnB services can accept this token */
     aud: string[]
     iat: number
     exp: number
@@ -28,28 +79,14 @@ export interface I_AuthToken {
         email: string
         role: string
     }
-    permissions: string[]
+    /** Apps this user has connected — gates app-level API access */
+    apps: T_RnBApp[]
+    permissions: T_Permissions[]
 }
 
-export type T_Permissions =
-    | 'read:profile'
-    | 'write:profile'
-    | 'read:world'
-    | 'write:world'
-    | 'delete:word'
-    | 'read:entity'
-    | 'write:entity'
-    | 'delete:entity'
-    | 'read:relationship'
-    | 'write:relationship'
-    | 'delete:relationship'
-    | 'manage:users'
-    | 'manage:subscriptions'
-    | 'view:audit'
-    | 'manage:employees'
-    | 'manage:shifts'
-    | 'manage:menu'
-    | 'manage:sales'
+// ============================================================================
+// EMAIL VERIFICATION & PASSWORD
+// ============================================================================
 
 export interface I_VerifyEmailRequest {
     email: string
@@ -71,13 +108,17 @@ export interface I_ResetPasswordRequest {
     confirmPassword: string
 }
 
-export interface I_0AuthRequest {
+// ============================================================================
+// OAUTH
+// ============================================================================
+
+export interface I_OAuthRequest {
     provider: 'google' | 'github' | 'microsoft'
     code: string
-    redirecttUrl: string
+    redirectUrl: string
 }
 
-export interface I_0AuthCallbak {
+export interface I_OAuthCallback {
     user: I_UserProfile
     isNewUser: boolean
     accessToken: string

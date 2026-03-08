@@ -146,12 +146,7 @@ export interface I_AddToCartResponse {
 // DISCOUNT/PROMOTION
 // ============================================================================
 
-export enum E_DiscountType {
-    PERCENTAGE = 'percentage',
-    FIXED_AMOUNT = 'fixed',
-    FREE_ITEM = 'free_item',
-    LOYALTY_POINTS = 'loyalty_points',
-}
+export type E_DiscountType = 'percentage' | 'fixed' | 'free_item' | 'loyalty_points'
 
 export interface I_DiscountCode {
     id: T_ObjectId

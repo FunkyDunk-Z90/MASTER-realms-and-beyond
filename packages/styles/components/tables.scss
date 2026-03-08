@@ -1,0 +1,183 @@
+@use '../_variables' as *;
+@use '../_mixins' as *;
+
+// ─── Table Components ─────────────────────────────────────────────────────────
+// Data tables — arcade scoreboard / terminal readout aesthetic.
+// Horizontal rules only, monospaced figures, amber active state.
+
+// ─── Table wrapper ────────────────────────────────────────────────────────────
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+// ─── Table base ───────────────────────────────────────────────────────────────
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: $font-body;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    letter-spacing: 0.02em;
+
+    // ─── Header ───────────────────────────────────────────────────────────────
+
+    thead {
+        background-color: var(--bg-secondary-color);
+        border-bottom: 1px solid var(--primary-color);
+        box-shadow: 0 1px 0 0 var(--primary-glow);
+    }
+
+    th {
+        @include font-label;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        color: var(--text-muted-color);
+        text-align: left;
+        padding: $medium $large;
+        white-space: nowrap;
+        user-select: none;
+
+        &.sortable {
+            cursor: pointer;
+            transition: color var(--transition-speed, 0.18s) ease;
+
+            &:hover {
+                color: var(--primary-color);
+            }
+
+            &.sort-asc,
+            &.sort-desc {
+                color: var(--primary-color);
+            }
+        }
+    }
+
+    // ─── Body ─────────────────────────────────────────────────────────────────
+
+    tbody {
+        tr {
+            border-bottom: 1px solid var(--border-color);
+            transition:
+                background-color var(--transition-speed, 0.18s) ease;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background-color: var(--primary-glow);
+            }
+
+            &.active,
+            &.selected {
+                background-color: var(--primary-glow);
+                border-left: 2px solid var(--primary-color);
+            }
+        }
+    }
+
+    td {
+        padding: $medium $large;
+        color: var(--text-color);
+        vertical-align: middle;
+
+        // Numeric / code data in monospace
+        &.numeric {
+            font-variant-numeric: tabular-nums;
+            text-align: right;
+            color: var(--text-heading-color);
+        }
+
+        &.muted {
+            color: var(--text-muted-color);
+            font-size: 0.82rem;
+        }
+
+        &.accent {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+    }
+
+    // ─── Striped ──────────────────────────────────────────────────────────────
+
+    &--striped tbody tr:nth-child(even) {
+        background-color: var(--bg-surface-color);
+    }
+
+    // ─── Compact ──────────────────────────────────────────────────────────────
+
+    &--compact {
+        th, td {
+            padding: $small $medium;
+            font-size: 0.82rem;
+        }
+    }
+
+    // ─── Fixed layout ─────────────────────────────────────────────────────────
+
+    &--fixed {
+        table-layout: fixed;
+    }
+}
+
+// ─── Scoreboard variant ───────────────────────────────────────────────────────
+// Arcade leaderboard styling
+
+.table--scoreboard {
+    .table {
+        th {
+            font-size: 0.58rem;
+            color: var(--accent-dim-color);
+        }
+
+        td.rank {
+            @include font-display;
+            font-size: 1rem;
+            color: var(--primary-color);
+            text-align: center;
+            width: 48px;
+            @include text-glow-primary;
+        }
+
+        tr:first-child td {
+            color: var(--primary-color);
+        }
+
+        tr:nth-child(2) td,
+        tr:nth-child(3) td {
+            color: var(--text-heading-color);
+        }
+    }
+}
+
+// ─── Empty state ─────────────────────────────────────────────────────────────
+
+.table-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $medium;
+    padding: $xLarge $large;
+    color: var(--text-muted-color);
+
+    &__icon {
+        font-size: 2rem;
+        opacity: 0.4;
+    }
+
+    &__message {
+        @include font-label;
+        font-size: 0.65rem;
+        color: var(--text-muted-color);
+    }
+}

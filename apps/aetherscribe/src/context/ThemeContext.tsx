@@ -8,7 +8,13 @@ import React, {
     ReactNode,
 } from 'react'
 
-export type T_ThemeName = 'teal' | 'aether' | 'sovereign' | 'acanthium'
+export type T_ThemeName =
+    | 'arcade'
+    | 'phosphor'
+    | 'sovereign'
+    | 'void'
+    | 'dusk'
+    | 'parchment'
 export type T_ThemeMode = 'light' | 'dark' | 'system'
 
 interface I_ThemeContextValue {
@@ -26,7 +32,7 @@ const THEME_STORAGE_KEY = 'aether-theme'
 const MODE_STORAGE_KEY = 'aether-mode'
 
 // Defaults
-const DEFAULT_THEME: T_ThemeName = 'teal'
+const DEFAULT_THEME: T_ThemeName = 'arcade'
 const DEFAULT_MODE: T_ThemeMode = 'system'
 
 interface I_ThemeProviderProps {
@@ -56,7 +62,14 @@ export const ThemeProvider: React.FC<I_ThemeProviderProps> = ({ children }) => {
 
         if (
             savedTheme &&
-            ['teal', 'aether', 'sovereign', 'acanthium'].includes(savedTheme)
+            [
+                'arcade',
+                'phosphor',
+                'sovereign',
+                'void',
+                'dusk',
+                'parchment',
+            ].includes(savedTheme)
         ) {
             setThemeState(savedTheme)
         }

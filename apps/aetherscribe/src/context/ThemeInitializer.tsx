@@ -17,13 +17,13 @@ export const ThemeInitializer: React.FC = () => {
     const script = `
         (function() {
             try {
-                const theme = localStorage.getItem('aether-theme') || 'teal';
+                const theme = localStorage.getItem('aether-theme') || 'arcade';
                 const mode = localStorage.getItem('aether-mode') || 'system';
                 const html = document.documentElement;
                 
-                // CRITICAL FIX: Always set data-theme attribute, even for teal
-                // This ensures CSS selectors like html[data-theme='teal'] match immediately
-                // This is essential for teal + light mode to work
+                // CRITICAL FIX: Always set data-theme attribute, even for arcade
+                // This ensures CSS selectors like html[data-theme='arcade'] match immediately
+                // This is essential for dark + light mode to work
                 html.setAttribute('data-theme', theme);
                 
                 // Apply mode attribute

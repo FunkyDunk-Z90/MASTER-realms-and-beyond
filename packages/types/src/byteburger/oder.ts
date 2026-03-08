@@ -5,22 +5,17 @@
 
 import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
-export enum E_OrderStatus {
-    PENDING = 'pending',
-    CONFIRMED = 'confirmed',
-    PREPARING = 'preparing',
-    READY = 'ready',
-    PICKED_UP = 'picked_up',
-    DELIVERED = 'delivered',
-    COMPLETED = 'completed',
-    CANCELLED = 'cancelled',
-}
+export type E_OrderStatus =
+    | 'pending'
+    | 'confirmed'
+    | 'preparing'
+    | 'ready'
+    | 'picked_up'
+    | 'delivered'
+    | 'completed'
+    | 'cancelled'
 
-export enum E_OrderType {
-    DINE_IN = 'dine_in',
-    TAKEOUT = 'takeout',
-    DELIVERY = 'delivery',
-}
+export type E_OrderType = 'dine_in' | 'takeout' | 'delivery'
 
 export interface I_OrderItem {
     menuItemId: T_ObjectId

@@ -1,0 +1,101 @@
+// ─── Button Mixins ────────────────────────────────────────────────────────────
+// Composable button patterns for building custom button variants.
+
+// ─── Base interactive state ───────────────────────────────────────────────────
+
+@mixin btn-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    transition:
+        background-color var(--transition-speed, 0.18s) ease,
+        border-color var(--transition-speed, 0.18s) ease,
+        box-shadow var(--transition-speed, 0.18s) ease,
+        color var(--transition-speed, 0.18s) ease,
+        transform var(--transition-speed, 0.18s) ease;
+
+    &:active {
+        transform: translateY(1px);
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}
+
+// ─── Glow hover effect ───────────────────────────────────────────────────────
+
+@mixin btn-glow-hover($glow-var: '--primary-glow-strong') {
+    &:hover {
+        box-shadow:
+            0 0 12px var(#{$glow-var}),
+            inset 0 0 8px var(--primary-glow);
+    }
+}
+
+// ─── Filled variant ───────────────────────────────────────────────────────────
+
+@mixin btn-filled($bg: var(--primary-color), $color: var(--bg-color)) {
+    background-color: $bg;
+    color: $color;
+    border: 1px solid $bg;
+
+    &:hover {
+        filter: brightness(1.15);
+    }
+}
+
+// ─── Outline variant ──────────────────────────────────────────────────────────
+
+@mixin btn-outline($color: var(--primary-color)) {
+    background-color: transparent;
+    color: $color;
+    border: 1px solid $color;
+
+    &:hover {
+        background-color: $color;
+        color: var(--bg-color);
+    }
+}
+
+// ─── Ghost variant ────────────────────────────────────────────────────────────
+
+@mixin btn-ghost {
+    background-color: transparent;
+    color: var(--text-secondary-color);
+    border: 1px solid var(--border-color);
+
+    &:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background-color: var(--primary-glow);
+    }
+}
+
+// ─── Icon button ─────────────────────────────────────────────────────────────
+
+@mixin btn-icon($size: 32px) {
+    @include btn-base;
+    width: $size;
+    height: $size;
+    padding: 0;
+    border-radius: 2px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted-color);
+    flex-shrink: 0;
+
+    &:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background-color: var(--primary-glow);
+    }
+}

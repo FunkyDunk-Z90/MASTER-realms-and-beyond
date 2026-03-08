@@ -1,0 +1,47 @@
+// ─── Flexbox Mixins ───────────────────────────────────────────────────────────
+
+@mixin flex($direction: row, $align: center, $justify: flex-start, $gap: 0) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
+    @if $gap != 0 { gap: $gap; }
+}
+
+@mixin flex-row($align: center, $gap: 0) {
+    @include flex(row, $align, flex-start, $gap);
+}
+
+@mixin flex-col($align: stretch, $gap: 0) {
+    @include flex(column, $align, flex-start, $gap);
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin flex-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+@mixin flex-wrap($gap: 0) {
+    display: flex;
+    flex-wrap: wrap;
+    @if $gap != 0 { gap: $gap; }
+}
+
+@mixin flex-fill {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+}

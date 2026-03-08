@@ -9,109 +9,90 @@ import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 // AUDIT ACTION
 // ============================================================================
 
-export enum E_AuditAction {
+export type E_AuditAction =
     // Authentication
-    LOGIN = 'login',
-    LOGOUT = 'logout',
-    LOGIN_FAILED = 'login_failed',
-    LOGIN_2FA_ATTEMPT = 'login_2fa_attempt',
-    LOGIN_2FA_SUCCESS = 'login_2fa_success',
-    LOGIN_2FA_FAILED = 'login_2fa_failed',
-
+    | 'login'
+    | 'logout'
+    | 'login_failed'
+    | 'login_2fa_attempt'
+    | 'login_2fa_success'
+    | 'login_2fa_failed'
     // Registration
-    REGISTER = 'register',
-    EMAIL_VERIFIED = 'email_verified',
-    EMAIL_VERIFICATION_SENT = 'email_verification_sent',
-
+    | 'register'
+    | 'email_verified'
+    | 'email_verification_sent'
     // Password
-    PASSWORD_CHANGED = 'password_changed',
-    PASSWORD_RESET_REQUESTED = 'password_reset_requested',
-    PASSWORD_RESET = 'password_reset',
-    PASSWORD_RESET_FAILED = 'password_reset_failed',
-    PASSWORD_STRENGTH_CHECK = 'password_strength_check',
-
+    | 'password_changed'
+    | 'password_reset_requested'
+    | 'password_reset'
+    | 'password_reset_failed'
+    | 'password_strength_check'
     // Profile
-    PROFILE_UPDATED = 'profile_updated',
-    AVATAR_CHANGED = 'avatar_changed',
-    PREFERENCES_CHANGED = 'preferences_changed',
-    PROFILE_DELETED = 'profile_deleted',
-
+    | 'profile_updated'
+    | 'avatar_changed'
+    | 'preferences_changed'
+    | 'profile_deleted'
     // Session
-    SESSION_CREATED = 'session_created',
-    SESSION_TERMINATED = 'session_terminated',
-    SESSION_EXPIRED = 'session_expired',
-    MULTIPLE_SESSIONS_ACTIVE = 'multiple_sessions_active',
-    SESSION_TIMEOUT = 'session_timeout',
-
+    | 'session_created'
+    | 'session_terminated'
+    | 'session_expired'
+    | 'multiple_sessions_active'
+    | 'session_timeout'
     // Two-Factor Auth
-    TWO_FA_ENABLED = 'two_fa_enabled',
-    TWO_FA_DISABLED = 'two_fa_disabled',
-    TWO_FA_METHOD_CHANGED = 'two_fa_method_changed',
-    TWO_FA_BACKUP_CODES_GENERATED = 'two_fa_backup_codes_generated',
-
+    | 'two_fa_enabled'
+    | 'two_fa_disabled'
+    | 'two_fa_method_changed'
+    | 'two_fa_backup_codes_generated'
     // Permissions
-    PERMISSION_GRANTED = 'permission_granted',
-    PERMISSION_REVOKED = 'permission_revoked',
-    ROLE_CHANGED = 'role_changed',
-    ROLE_ASSIGNED = 'role_assigned',
-    ROLE_REMOVED = 'role_removed',
-
+    | 'permission_granted'
+    | 'permission_revoked'
+    | 'role_changed'
+    | 'role_assigned'
+    | 'role_removed'
     // Token
-    TOKEN_ISSUED = 'token_issued',
-    TOKEN_REFRESHED = 'token_refreshed',
-    TOKEN_REVOKED = 'token_revoked',
-    TOKEN_EXPIRED = 'token_expired',
-
+    | 'token_issued'
+    | 'token_refreshed'
+    | 'token_revoked'
+    | 'token_expired'
     // Security
-    SUSPICIOUS_ACTIVITY = 'suspicious_activity',
-    BRUTE_FORCE_DETECTED = 'brute_force_detected',
-    ACCOUNT_LOCKED = 'account_locked',
-    ACCOUNT_UNLOCKED = 'account_unlocked',
-    SUSPICIOUS_LOGIN_LOCATION = 'suspicious_login_location',
-    SUSPICIOUS_LOGIN_DEVICE = 'suspicious_login_device',
-
+    | 'suspicious_activity'
+    | 'brute_force_detected'
+    | 'account_locked'
+    | 'account_unlocked'
+    | 'suspicious_login_location'
+    | 'suspicious_login_device'
     // Subscription
-    SUBSCRIPTION_CREATED = 'subscription_created',
-    SUBSCRIPTION_UPDATED = 'subscription_updated',
-    SUBSCRIPTION_CANCELLED = 'subscription_cancelled',
-    SUBSCRIPTION_EXPIRED = 'subscription_expired',
-    SUBSCRIPTION_DOWNGRADED = 'subscription_downgraded',
-    SUBSCRIPTION_UPGRADED = 'subscription_upgraded',
-
+    | 'subscription_created'
+    | 'subscription_updated'
+    | 'subscription_cancelled'
+    | 'subscription_expired'
+    | 'subscription_downgraded'
+    | 'subscription_upgraded'
     // Compliance
-    TERMS_ACCEPTED = 'terms_accepted',
-    PRIVACY_POLICY_ACCEPTED = 'privacy_policy_accepted',
-    DATA_EXPORT_REQUESTED = 'data_export_requested',
-    DATA_DELETION_REQUESTED = 'data_deletion_requested',
-    DATA_DELETION_EXECUTED = 'data_deletion_executed',
-
+    | 'terms_accepted'
+    | 'privacy_policy_accepted'
+    | 'data_export_requested'
+    | 'data_deletion_requested'
+    | 'data_deletion_executed'
     // API
-    API_KEY_CREATED = 'api_key_created',
-    API_KEY_REVOKED = 'api_key_revoked',
-    API_QUOTA_CHANGED = 'api_quota_changed',
-
+    | 'api_key_created'
+    | 'api_key_revoked'
+    | 'api_quota_changed'
     // Access
-    RESOURCE_ACCESSED = 'resource_accessed',
-    RESOURCE_MODIFIED = 'resource_modified',
-    RESOURCE_DELETED = 'resource_deleted',
-    UNAUTHORIZED_ACCESS_ATTEMPT = 'unauthorized_access_attempt',
-
+    | 'resource_accessed'
+    | 'resource_modified'
+    | 'resource_deleted'
+    | 'unauthorized_access_attempt'
     // Collaboration
-    COLLABORATOR_ADDED = 'collaborator_added',
-    COLLABORATOR_REMOVED = 'collaborator_removed',
-    COLLABORATOR_ROLE_CHANGED = 'collaborator_role_changed',
-}
+    | 'collaborator_added'
+    | 'collaborator_removed'
+    | 'collaborator_role_changed'
 
 // ============================================================================
 // AUDIT SEVERITY
 // ============================================================================
 
-export enum E_AuditSeverity {
-    LOW = 'low',
-    MEDIUM = 'medium',
-    HIGH = 'high',
-    CRITICAL = 'critical',
-}
+export type E_AuditSeverity = 'low' | 'medium' | 'high' | 'critical'
 
 // ============================================================================
 // AUDIT LOG ENTRY

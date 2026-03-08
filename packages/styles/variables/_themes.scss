@@ -1,200 +1,84 @@
-@use './variables' as *;
-
 // ─────────────────────────────────────────────────────────────────────────────
-// AetherScribe — Extended Themes
+// Realms & Beyond — Theme Reference Map
 //
-// IMPORTANT: Selectors use html[data-theme='...'] for proper CSS specificity.
-// This ensures theme styles override :root defaults.
-//
-//  Teal       → teal primary       · amber accent (classic AetherScribe)
-//  Aether     → amethyst primary   · rose-gold accent
-//  Sovereign  → crimson primary    · pale-gold accent
-//  Acanthium  → emerald primary    · copper accent
-//
-// Usage: set data-theme on <html> to switch theme.
-// Optionally pair with data-mode="light" | "dark" to override the
-// monochrome base independently of the OS preference.
-//
-// Default base (no data-theme): dark with teal primary
-// All themes default to dark — use data-mode="light" to switch.
+// This file documents the 6 themes and their CSS custom property mappings.
+// The actual CSS selectors are defined in the root _themes.scss.
+// This file is for design tooling, documentation, and theme-switch logic
+// in application code (ThemeContext, ThemeSwitcher components, etc.).
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ─── Teal — Teal · Amber ──────────────────────────────────────────────────────
-// The classic AetherScribe palette. Deep teal primary with warm amber-gold
-// accent — sci-fi fantasy, crystalline precision, and technical elegance.
+// ─── Theme identifiers ───────────────────────────────────────────────────────
+// Set [data-theme="IDENTIFIER"] on <html> to activate.
+//
+// 'arcade'    — default — warm dark, amber primary, phosphor green accent
+// 'phosphor'  — CRT terminal green on near-black, amber accent
+// 'sovereign' — crimson authority on dark warm red, pale gold accent
+// 'void'      — teal sci-fi on cold dark blue-black, violet accent
+// 'dusk'      — amethyst mystical on warm purple-dark, rose accent
+// 'parchment' — light mode, dark olive on cream/parchment, terracotta accent
 
-html[data-theme='teal'] {
-    // Primary — teal
-    --primary-color: #{$teal};
-    --primary-hover-color: #{$teal-mid};
-    --primary-deep-color: #{$teal-deep};
-    --primary-glow: #{$teal-glow};
-    --primary-glow-strong: #{$teal-glow-strong};
+// ─── App-specific themes ─────────────────────────────────────────────────────
+// 'byte-burger' — hot orange on dark warm, mustard gold accent
+//                 defined in themes/_byte-burger.scss
 
-    // Accent — amber gold
-    --accent-color: #{$amber};
-    --accent-dim-color: #{$amber-dim};
-    --accent-glow: #{$amber-glow};
+// ─── Theme metadata for ThemeContext ─────────────────────────────────────────
+// Each theme object used in ThemeContext / ThemeSwitcher should include:
+// {
+//   id:          string  — matches data-theme value
+//   label:       string  — human-readable display name
+//   description: string  — short flavour description
+//   primary:     string  — hex value of --primary-color
+//   accent:      string  — hex value of --accent-color
+//   bg:          string  — hex value of --bg-color
+//   dark:        boolean — true for dark themes
+// }
+//
+// Themes:
+// { id: 'arcade',    label: 'Arcade',    primary: '#C47818', accent: '#4A8A52', bg: '#110F0C', dark: true  }
+// { id: 'phosphor',  label: 'Phosphor',  primary: '#3A8A48', accent: '#C47818', bg: '#070A07', dark: true  }
+// { id: 'sovereign', label: 'Sovereign', primary: '#8A2820', accent: '#C4A018', bg: '#0E0907', dark: true  }
+// { id: 'void',      label: 'Void',      primary: '#1A7280', accent: '#7A4A9A', bg: '#060A0C', dark: true  }
+// { id: 'dusk',      label: 'Dusk',      primary: '#5A3A8A', accent: '#C47080', bg: '#0B0910', dark: true  }
+// { id: 'parchment', label: 'Parchment', primary: '#3A4A1A', accent: '#8A4028', bg: '#F0EAD8', dark: false }
 
-    // Decorative rule strip
-    --rule-color: #{$teal};
-    --rule-glow: 0 0 6px #{$teal-glow-strong};
-
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
-}
-
-html[data-theme='teal'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
-}
-
-// ─── Aether — Amethyst · Rose-gold ───────────────────────────────────────────
-// Mystical and contemplative. Deep violet primary with a luminous rose-gold
-// accent — arcane manuscripts and crystalline resonance.
-
-html[data-theme='aether'] {
-    // Primary — amethyst violet
-    --primary-color: #{$amethyst};
-    --primary-hover-color: #{$amethyst-mid};
-    --primary-deep-color: #{$amethyst-deep};
-    --primary-glow: #{$amethyst-glow};
-    --primary-glow-strong: #{$amethyst-glow-strong};
-
-    // Accent — rose gold
-    --accent-color: #{$rose-gold};
-    --accent-dim-color: #{$rose-gold-dim};
-    --accent-glow: #{$rose-gold-glow};
-
-    // Decorative rule strip
-    --rule-color: #{$amethyst};
-    --rule-glow: 0 0 6px #{$amethyst-glow-strong};
-
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
-}
-
-html[data-theme='aether'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
-}
-
-// ─── Sovereign — Crimson · Pale-gold ─────────────────────────────────────────
-// Commanding and regal. Blood-red primary with an imperial pale-gold accent —
-// war standards, sovereign seals, and ancient authority.
-
-html[data-theme='sovereign'] {
-    // Primary — crimson red
-    --primary-color: #{$crimson};
-    --primary-hover-color: #{$crimson-mid};
-    --primary-deep-color: #{$crimson-deep};
-    --primary-glow: #{$crimson-glow};
-    --primary-glow-strong: #{$crimson-glow-strong};
-
-    // Accent — pale imperial gold
-    --accent-color: #{$pale-gold};
-    --accent-dim-color: #{$pale-gold-dim};
-    --accent-glow: #{$pale-gold-glow};
-
-    // Decorative rule strip
-    --rule-color: #{$crimson};
-    --rule-glow: 0 0 6px #{$crimson-glow-strong};
-
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
-}
-
-html[data-theme='sovereign'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
-}
-
-// ─── Acanthium — Deep emerald · Copper ───────────────────────────────────────
-// Ancient and alchemical. Forest-deep emerald primary with warm oxidised copper
-// accent — old-growth libraries, botanical charts, and apothecary instruments.
-
-html[data-theme='acanthium'] {
-    // Primary — deep emerald green
-    --primary-color: #{$emerald};
-    --primary-hover-color: #{$emerald-mid};
-    --primary-deep-color: #{$emerald-deep};
-    --primary-glow: #{$emerald-glow};
-    --primary-glow-strong: #{$emerald-glow-strong};
-
-    // Accent — warm copper
-    --accent-color: #{$copper};
-    --accent-dim-color: #{$copper-dim};
-    --accent-glow: #{$copper-glow};
-
-    // Decorative rule strip
-    --rule-color: #{$emerald};
-    --rule-glow: 0 0 6px #{$emerald-glow-strong};
-
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
-}
-
-html[data-theme='acanthium'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
-}
+// ─── CSS custom property contract ────────────────────────────────────────────
+// ALL themes must define these properties (the minimum contract):
+//
+// Backgrounds:
+//   --bg-color              primary page background
+//   --bg-secondary-color    header, sidebar, footer background
+//   --bg-surface-color      card, panel, surface background
+//   --bg-inset-color        input, inset, depressed background
+//
+// Text:
+//   --text-color            primary body text
+//   --text-secondary-color  secondary / supporting text
+//   --text-muted-color      muted / placeholder text
+//   --text-heading-color    heading text (brighter than body)
+//
+// Primary:
+//   --primary-color         brand primary interaction colour
+//   --primary-hover-color   lighter primary for hover states
+//   --primary-deep-color    darker primary for pressed/depth states
+//   --primary-glow          rgba(r,g,b, 0.18) — ambient glow
+//   --primary-glow-strong   rgba(r,g,b, 0.40) — focus ring glow
+//
+// Accent:
+//   --accent-color          secondary brand colour
+//   --accent-dim-color      dimmer accent for labels / borders
+//   --accent-glow           rgba(r,g,b, 0.18) — accent ambient glow
+//
+// Borders:
+//   --border-color          subtle border (low contrast)
+//   --border-strong-color   emphasized border (higher contrast)
+//   --border-radius         2px (shared, non-themed)
+//
+// Decorative:
+//   --rule-color            colour of the amber rule separator
+//   --rule-glow             box-shadow for the rule
+//   --blur                  backdrop-filter backdrop colour
+//
+// Shadows:
+//   --shadow-sm             subtle surface lift
+//   --shadow-md             card / panel elevation
+//   --shadow-lg             modal / overlay depth

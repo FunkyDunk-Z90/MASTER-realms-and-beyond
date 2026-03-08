@@ -1,0 +1,151 @@
+// ─── ByteBurger App — Local SCSS ─────────────────────────────────────────────
+// Page-level layout and nav/footer — all colours via CSS custom properties.
+// No SCSS vars needed; theme tokens come from [data-theme='byte-burger'].
+
+// ─── Navigation ───────────────────────────────────────────────────────────────
+
+.bb-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(14, 11, 8, 0.92);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(8px);
+
+    // Amber glow on the nav underline
+    box-shadow: 0 1px 0 var(--primary-color), 0 2px 20px rgba(212, 96, 16, 0.20);
+}
+
+.bb-nav__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.bb-nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    flex-shrink: 0;
+
+    &:hover .bb-nav__logo-text { color: var(--text-heading-color); }
+}
+
+.bb-nav__logo-icon { font-size: 1.4rem; line-height: 1; }
+
+.bb-nav__logo-text {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.18em;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(212, 96, 16, 0.42);
+    transition: color 0.18s ease;
+}
+
+.bb-nav__logo-accent { color: var(--accent-color); }
+
+.bb-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+    justify-content: center;
+
+    @media (max-width: 768px) { display: none; }
+}
+
+.bb-nav__link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-secondary-color);
+    text-decoration: none;
+    padding: 0.4rem 0.75rem;
+    border-radius: 2px;
+    transition: color 0.18s ease, background-color 0.18s ease;
+
+    &:hover {
+        color: var(--primary-color);
+        background-color: var(--primary-glow);
+    }
+}
+
+.bb-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+
+    .bb-hud-score {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        color: var(--accent-color);
+
+        @media (max-width: 640px) { display: none; }
+    }
+}
+
+// ─── Footer ──────────────────────────────────────────────────────────────────
+
+.bb-footer {
+    background-color: var(--bg-inset-color);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -1px 0 var(--primary-color), 0 -2px 20px rgba(212, 96, 16, 0.12);
+    margin-top: auto;
+}
+
+.bb-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.bb-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.bb-footer__links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.bb-footer__link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted-color);
+    text-decoration: none;
+    transition: color 0.18s ease;
+
+    &:hover { color: var(--primary-color); }
+}
+
+// ─── Page wrapper — offset for fixed nav ────────────────────────────────────
+
+main {
+    min-height: 100dvh;
+    padding-top: 56px; // nav height
+    display: flex;
+    flex-direction: column;
+}

@@ -8,6 +8,7 @@ import type { E_EntityType, E_Ruleset } from './entity'
 import type { E_RelationType, RelationshipStrength } from './relationship'
 import type { I_World, I_WorldStats } from './world'
 import type { I_ErrorResponse } from '../global/errors'
+import type { I_ApiSuccess } from '../global/api-responses'
 
 // ============================================================================
 // ENTITY CREATION REQUESTS
@@ -25,36 +26,36 @@ export interface I_CreateEntityRequest {
 }
 
 export interface I_CreateCharacterRequest extends I_CreateEntityRequest {
-    type: E_EntityType.CHARACTER
+    type: 'character'
 }
 
 export interface I_CreateNPCRequest extends I_CreateEntityRequest {
-    type: E_EntityType.NPC
+    type: 'npc'
 }
 
 export interface I_CreateLocationRequest extends I_CreateEntityRequest {
-    type: E_EntityType.LOCATION
+    type: 'location'
 }
 
 export interface I_CreateItemRequest extends I_CreateEntityRequest {
-    type: E_EntityType.ITEM
+    type: 'item'
 }
 
 export interface I_CreateFactionRequest extends I_CreateEntityRequest {
-    type: E_EntityType.FACTION
+    type: 'faction'
 }
 
 export interface I_CreateSpellRequest extends I_CreateEntityRequest {
-    type: E_EntityType.SPELL
-    ruleset: E_Ruleset.DND_5E_24
+    type: 'spell'
+    ruleset: 'dnd_5e_24'
 }
 
 export interface I_CreateBeliefRequest extends I_CreateEntityRequest {
-    type: E_EntityType.BELIEF
+    type: 'belief'
 }
 
 export interface I_CreateLoreRequest extends I_CreateEntityRequest {
-    type: E_EntityType.LORE
+    type: 'lore'
 }
 
 // ============================================================================
@@ -352,25 +353,9 @@ export interface I_BulkDeleteRelationshipRequest {
 // GENERIC RESPONSES
 // ============================================================================
 
-export interface I_SuccessResponse<T> {
-    success: true
-    data: T
-    timestamp: string
-    requestId: string
-}
+export type I_SuccessResponse<T> = I_ApiSuccess<T>
 
-// export interface I_ErrorResponse {
-//     success: false
-//     error: {
-//         code: string
-//         message: string
-//         details?: Record<string, any>
-//     }
-//     timestamp: string
-//     requestId: string
-// }
-
-export type T_Response<T> = I_SuccessResponse<T> | I_ErrorResponse
+export type T_Response<T> = I_ApiSuccess<T> | I_ErrorResponse
 
 // ============================================================================
 // LIST RESPONSES

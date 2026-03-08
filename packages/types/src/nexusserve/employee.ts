@@ -5,18 +5,9 @@
 
 import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
-export enum E_EmployeeRole {
-    STAFF = 'staff',
-    MANAGER = 'manager',
-    ADMIN = 'admin',
-}
+export type E_EmployeeRole = 'staff' | 'manager' | 'admin'
 
-export enum E_EmployeeStatus {
-    ACTIVE = 'active',
-    INACTIVE = 'inactive',
-    TERMINATED = 'terminated',
-    ON_LEAVE = 'on_leave',
-}
+export type E_EmployeeStatus = 'active' | 'inactive' | 'terminated' | 'on_leave'
 
 export interface I_Employee {
     id: T_ObjectId

@@ -1,5 +1,5 @@
 import { I_Pagination, I_PaginationQuery } from './pagination'
-import { T_ObjectId, T_Timestamp } from './globalIndex'
+import { T_ObjectId, T_Timestamp } from './common/commonIndex'
 
 export interface I_FilterCriteria {
     field: string
@@ -27,21 +27,6 @@ export interface I_FileInfo {
     url: string
     uploadedAt: T_Timestamp
     publicId?: string
-}
-
-export interface I_AuditLog {
-    id: T_ObjectId
-    entityType: string
-    entityId: T_ObjectId
-    userId: T_ObjectId
-    action: 'create' | 'update' | 'delete' | 'read'
-    changes?: {
-        field: string
-        oldValue: any
-        newValue: any
-    }[]
-    ipAddress?: string
-    timestamp: T_Timestamp
 }
 
 export interface I_ApiSuccess<T> {
@@ -72,18 +57,7 @@ export interface I_PaginationResponse<T> {
     requestId: string
 }
 
-export interface I_PaginationError {
-    success: false
-    error: {
-        code: string
-        message: string
-        details?: Record<string, any>
-        timestamp: string
-        requestId: string
-    }
-}
-
-export type T_PaginatedResponse<T> = I_PaginationResponse<T> | I_PaginationError
+export type T_PaginatedResponse<T> = I_PaginationResponse<T> | I_ApiError
 
 export interface I_BulkResponse {
     success: true
@@ -143,49 +117,6 @@ export interface I_AsyncOperationsResponse {
     timestamp: string
 }
 
-export type T_ApiErrorCode =
-    | 'validation_error'
-    | 'invalid_input'
-    | 'invalid_credentials'
-    | 'unauthorized'
-    | 'forbidden'
-    | 'not_found'
-    | 'conflict'
-    | 'already_exists'
-    | 'rate_limited'
-    | 'internal_error'
-    | 'service_unavailable'
-    | 'timeout'
-    | 'token_expired'
-    | 'token_invalid'
-    | 'session_expired'
-    | 'quota_exceeded'
-    | 'subscription_required'
-    | 'invalid_state'
-    | 'operation_failed'
-
-// export const ERROR_CODE_STATUS_MAP: Record<T_ApiErrorCode, number> = {
-//     validation_error: 400,
-//     invalid_input: 400,
-//     invalid_credentials: 401,
-//     unauthorized: 401,
-//     forbidden: 403,
-//     not_found: 404,
-//     conflict: 409,
-//     already_exists: 409,
-//     rate_limited: 429,
-//     internal_error: 500,
-//     service_unavailable: 503,
-//     timeout: 504,
-//     token_expired: 401,
-//     token_invalid: 401,
-//     session_expired: 401,
-//     quota_exceeded: 429,
-//     subscription_required: 402,
-//     invalid_state: 409,
-//     operation_failed: 500,
-// }
-
 // Helpers
 
 export function createSuccess<T>(data: T, requestId: string): I_ApiSuccess<T> {
@@ -210,24 +141,6 @@ export function createPaginationSuccess<T>(
         requestId,
     }
 }
-
-// export function createError(
-//     code: T_ApiErrorCode,
-//     message: string,
-//     requestId: string,
-//     details?: Record<string, any>
-// ): I_ApiError {
-//     return {
-//         success: false,
-//         error: {
-//             code,
-//             message,
-//             details,
-//             timestamp: new Date().toISOString(),
-//             requestId,
-//         },
-//     }
-// }
 
 // type guards
 

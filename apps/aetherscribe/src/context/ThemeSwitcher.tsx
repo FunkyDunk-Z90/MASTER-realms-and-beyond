@@ -33,28 +33,40 @@ export const ThemeSwitcher: React.FC<I_ThemeSwitcherProps> = ({
 
     const themeOptions: I_DropdownOption[] = [
         {
-            id: 'teal',
-            label: 'Teal',
-            value: 'teal',
-            description: 'Deep teal with amber accent',
+            id: 'arcade',
+            label: 'Arcade',
+            value: 'arcade',
+            description: 'Warm amber glow with phosphor green accent',
         },
         {
-            id: 'aether',
-            label: 'Aether',
-            value: 'aether',
-            description: 'Amethyst with rose-gold accent',
+            id: 'phosphor',
+            label: 'Phosphor',
+            value: 'phosphor',
+            description: 'CRT terminal green with amber accent',
         },
         {
             id: 'sovereign',
             label: 'Sovereign',
             value: 'sovereign',
-            description: 'Crimson with pale-gold accent',
+            description: 'Crimson authority with pale gold accent',
         },
         {
-            id: 'acanthium',
-            label: 'Acanthium',
-            value: 'acanthium',
-            description: 'Emerald with copper accent',
+            id: 'void',
+            label: 'Void',
+            value: 'void',
+            description: 'Teal sci-fi with violet accent',
+        },
+        {
+            id: 'dusk',
+            label: 'Dusk',
+            value: 'dusk',
+            description: 'Amethyst mystical with rose accent',
+        },
+        {
+            id: 'parchment',
+            label: 'Parchment',
+            value: 'parchment',
+            description: 'Ancient map light with terracotta accent',
         },
     ]
 
@@ -79,7 +91,14 @@ export const ThemeSwitcher: React.FC<I_ThemeSwitcherProps> = ({
     const handleThemeChange = (value: string | undefined) => {
         if (
             value &&
-            ['teal', 'aether', 'sovereign', 'acanthium'].includes(value)
+            [
+                'arcade',
+                'phosphor',
+                'sovereign',
+                'void',
+                'dusk',
+                'parchment',
+            ].includes(value)
         ) {
             setTheme(value as T_ThemeName)
         }

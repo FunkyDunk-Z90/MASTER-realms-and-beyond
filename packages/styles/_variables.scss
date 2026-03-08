@@ -1,126 +1,171 @@
-// ─── AetherScribe Design Tokens ───────────────────────────────────────────────
-// Sci-fi fantasy · Deep teal primary · Amber-gold accent · Monochrome base
+// ─────────────────────────────────────────────────────────────────────────────
+// Realms & Beyond — Design Tokens
+// Retro arcade · Warm muted palette · 80s inspired · Minimalist & sleek
+// ─────────────────────────────────────────────────────────────────────────────
 
-// ─── Raw colour values ────────────────────────────────────────────────────────
+// ─── Base darks — warm-tinted near-blacks ─────────────────────────────────────
+$void:           #090806;   // deepest warm dark
+$obsidian:       #110F0C;   // primary background
+$obsidian-mid:   #1A1713;   // header / sidebar background
+$obsidian-light: #252219;   // surface / card background
+$ash:            #3D3529;   // muted borders in dark
+$slate:          #7A6E5E;   // muted / secondary text in dark
+$mist:           #C4B89A;   // body text — warm, parchment-tinted
+$silver:         #DDD4BC;   // light mode secondary bg
+$ghost:          #F0EAD8;   // parchment light bg
 
-// Monochrome base — near-black to near-white
-$void: #0a0c0f; // deepest dark, used for backgrounds in dark mode
-$obsidian: #111417; // dark bg
-$obsidian-mid: #181c21; // dark bg-secondary
-$obsidian-light: #222830; // dark surface / cards
-$ash: #3a4149; // muted borders in dark
-$slate: #8a9099; // muted text in dark
-$mist: #c8cdd4; // body text in light mode
-$silver: #dde1e6; // light bg-secondary
-$ghost: #edf0f3; // light bg
+// ─── Primary — Arcade Amber ───────────────────────────────────────────────────
+// The signature R&B colour: warm amber-gold — phosphor-tube glow, not neon blaze
+$amber-deep:        #7A4A10;                    // deepest amber — press-depth
+$amber:             #C47818;                    // primary brand colour
+$amber-mid:         #DA9020;                    // hover / active
+$amber-glow:        rgba(196, 120, 24, 0.18);   // ambient glow
+$amber-glow-strong: rgba(196, 120, 24, 0.40);   // focus rings / glows
 
-// Primary — deep teal
-$teal-deep: #0b5e62; // darkest teal, hover depth
-$teal: #0d7377; // primary brand colour
-$teal-mid: #14a0a5; // lighter teal for glows / active indicators
-$teal-glow: rgba(13, 115, 119, 0.18); // teal ambient glow / bg tint
-$teal-glow-strong: rgba(13, 115, 119, 0.35); // stronger glow for focus rings
+// ─── Accent — Phosphor Green ──────────────────────────────────────────────────
+// Muted CRT-screen phosphor — the secondary frequency that completes amber
+$phosphor:       #4A8A52;                   // main accent
+$phosphor-dim:   #2E5C34;                   // dimmer, for labels / borders
+$phosphor-glow:  rgba(74, 138, 82, 0.18);  // ambient glow
 
-// Accent — amber gold (warm counter to cold teal)
-$amber: #e8a045; // primary accent
-$amber-dim: #b57a2a; // dimmer amber for section labels, borders
-$amber-glow: rgba(232, 160, 69, 0.15); // ambient amber glow
+// ─── Theme: Phosphor — CRT Terminal ──────────────────────────────────────────
+$crt-green:          #3A8A48;
+$crt-green-mid:      #50B060;
+$crt-green-glow:     rgba(58, 138, 72, 0.22);
+$crt-green-glow-str: rgba(58, 138, 72, 0.45);
+$crt-amber:          #C47818;
+$crt-amber-glow:     rgba(196, 120, 24, 0.18);
 
-// Semantic colours
-$danger: #c0392b;
-$danger-glow: rgba(192, 57, 43, 0.2);
-$warning: #d4a017;
-$success: #1a8a4a;
-$submit: #1a5fa8;
-$disabled: #4a5260;
+// ─── Theme: Sovereign — Imperial Crimson ──────────────────────────────────────
+$crimson-deep:      #5A1010;                    // near-black red
+$crimson:           #C41420;                    // vivid military crimson
+$crimson-mid:       #E02030;                    // hover
+$crimson-glow:      rgba(196, 20, 32, 0.22);
+$crimson-glow-str:  rgba(196, 20, 32, 0.48);
+$pale-gold:         #C4A018;
+$pale-gold-dim:     #907A10;
+$pale-gold-glow:    rgba(196, 160, 24, 0.18);
+$deep-maroon:       #3A0808;                    // inset/depth surface
 
-// Blur overlays
-$blur-dark: rgba(10, 12, 15, 0.72);
-$blur-light: rgba(237, 240, 243, 0.72);
+// ─── Theme: Void — Space Navy / CBRPNK ────────────────────────────────────────
+// Reference: dark navy #1A1F3A · space-orange accent · cool-gray neutrals
+$teal-deep:        #0D5A62;                     // kept for legacy use
+$teal:             #1A7280;                     // kept for legacy use
+$teal-mid:         #259098;                     // kept for legacy use
+$teal-glow:        rgba(26, 114, 128, 0.18);
+$teal-glow-strong: rgba(26, 114, 128, 0.40);
+$violet:           #7A4A9A;                     // kept for legacy use
+$violet-dim:       #523070;
+$violet-glow:      rgba(122, 74, 154, 0.18);
+// Void primary palette
+$steel-blue:       #4A90B8;                     // primary — space steel
+$steel-blue-mid:   #5AA8D8;
+$steel-blue-glow:  rgba(74, 144, 184, 0.20);
+$steel-blue-glow-str: rgba(74, 144, 184, 0.44);
+$space-orange:     #E84A0A;                     // accent — the pop colour
+$space-orange-mid: #F05A18;
+$space-orange-glow: rgba(232, 74, 10, 0.24);
+$space-orange-glow-str: rgba(232, 74, 10, 0.50);
+$cool-gray:        #7A8088;                     // highlight — neutral third
 
-// ─── Spacing ──────────────────────────────────────────────────────────────────
-$small: 0.3rem;
-$medium: 0.5rem;
-$large: 1rem;
-$xLarge: 1.5rem;
-$xxLarge: 2.5rem;
+// ─── Theme: Dusk — Magenta + Emerald (80s arcade: Tron / Galaga) ──────────────
+// Reference: download(3).png — #170011 · #7A1050 · #C83070 · #30B878 · #78A8C8
+$amethyst-deep:        #3A2060;                // kept for legacy use
+$amethyst:             #5A3A8A;                // kept for legacy use
+$amethyst-mid:         #7A54AE;
+$amethyst-glow:        rgba(90, 58, 138, 0.20);
+$amethyst-glow-strong: rgba(90, 58, 138, 0.42);
+$rose:                 #C47080;                // kept for legacy use
+$rose-dim:             #8A4858;
+$rose-glow:            rgba(196, 112, 128, 0.18);
+// Dusk primary palette
+$magenta-deep:         #7A1050;                // near-black magenta
+$magenta:              #C83070;                // hot magenta — primary
+$magenta-mid:          #E04888;                // hover
+$magenta-glow:         rgba(200, 48, 112, 0.22);
+$magenta-glow-str:     rgba(200, 48, 112, 0.48);
+$dusk-emerald:         #30B878;                // emerald — accent
+$dusk-emerald-mid:     #40D090;
+$dusk-emerald-glow:    rgba(48, 184, 120, 0.18);
+$steel-sky:            #78A8C8;                // steel sky blue — highlight
+$steel-sky-glow:       rgba(120, 168, 200, 0.16);
 
-// ─── Borders & Radius ─────────────────────────────────────────────────────────
-$border-radius: 4px; // Crisp, near-square — military/technical aesthetic
-$border-radius-lg: 6px;
+// ─── Theme: Parchment — Ancient Map (light mode) ─────────────────────────────
+// Reference: download(2).png — #874537 · #D37F7F · #F2E1C3 · #54A498 · #105446
+$olive-deep:        #2A3810;
+$olive:             #3A4A1A;
+$olive-mid:         #506A22;
+$olive-glow:        rgba(58, 74, 26, 0.18);
+$olive-glow-strong: rgba(58, 74, 26, 0.40);
+$terracotta:        #8A4028;                   // kept for legacy use
+$terracotta-dim:    #5E2A18;
+$terracotta-glow:   rgba(138, 64, 40, 0.18);
+// Parchment map palette (reference-accurate)
+$map-cream:         #F2E1C3;                   // warm aged paper
+$map-terracotta:    #874537;                   // primary — terracotta earth
+$map-terracotta-mid: #A05040;
+$map-terracotta-glow: rgba(135, 69, 55, 0.22);
+$map-terracotta-glow-str: rgba(135, 69, 55, 0.46);
+$dusty-rose:        #D37F7F;                   // highlight — faded rose
+$dusty-rose-glow:   rgba(211, 127, 127, 0.18);
+$map-teal:          #54A498;                   // accent mid-tone
+$map-teal-deep:     #105446;                   // accent deep
+$map-teal-glow:     rgba(84, 164, 152, 0.18);
+// Phosphor extended greens
+$army-green:        #818B71;                   // muted khaki text
+$sage-green:        #C5CEA5;                   // sage highlight
+$bright-emerald:    #02A953;                   // vivid phosphor green
 
-// ─── Breakpoints ──────────────────────────────────────────────────────────────
-$tablet: 768px;
+// ─── Semantic colours ─────────────────────────────────────────────────────────
+$danger:      #8A2820;
+$danger-glow: rgba(138, 40, 32, 0.24);
+$warning:     #C47818;
+$success:     #3A8A48;
+$submit:      #1A5A8A;
+$disabled:    #3A3228;
+
+// ─── Overlays ────────────────────────────────────────────────────────────────
+$blur-dark:  rgba(9, 8, 6, 0.76);
+$blur-light: rgba(240, 234, 216, 0.76);
+
+// ─── Spacing ─────────────────────────────────────────────────────────────────
+// Named scale — used by components throughout the system
+$small:    0.3rem;   // ~5px  — tight gaps, icon padding
+$medium:   0.5rem;   // ~8px  — standard gap
+$large:    1rem;     // 16px  — section padding
+$xLarge:   1.5rem;   // 24px  — page padding
+$xxLarge:  2.5rem;   // 40px  — hero spacing
+
+// ─── Borders & Radius ────────────────────────────────────────────────────────
+// Pixel-sharp corners — retro arcade precision, not soft modern bubbles
+$border-radius:    2px;
+$border-radius-lg: 4px;
+
+// ─── Breakpoints ─────────────────────────────────────────────────────────────
+$tablet:  768px;
 $desktop: 1025px;
 
-// ─── Layout sizes ─────────────────────────────────────────────────────────────
-$sidebar-max: 260px;
-$sidebar-min: 0px; // fully collapsed — no icon strip in this design
+// ─── Layout sizes ────────────────────────────────────────────────────────────
+$sidebar-max:   260px;
+$sidebar-min:   0px;
 $header-height: 54px;
-$footer-height: 72px;
+$footer-height: 64px;
 
-// ─── Motion ───────────────────────────────────────────────────────────────────
-$transition-speed: 0.25s;
-$transition-speed-slow: 0.45s;
+// ─── Motion ──────────────────────────────────────────────────────────────────
+$transition-speed:      0.18s;
+$transition-speed-slow: 0.35s;
+$ease-snap: cubic-bezier(0.25, 0, 0, 1);
+$ease-out:  cubic-bezier(0, 0, 0.2, 1);
 
-// ─── Typography ───────────────────────────────────────────────────────────────
-// Loaded via next/font or <link> in the app root:
-//   Cormorant Garamond — high-contrast serif, display headings & labels
-//   DM Mono              — monospaced body text, inputs, data
-$font-display: 'Cormorant Garamond', 'Palatino Linotype', serif;
-$font-body: 'DM Mono', 'Courier New', monospace;
+// ─── Typography ──────────────────────────────────────────────────────────────
+// Cinzel          — classical Roman inscriptional letterforms; evokes fantasy
+//                   map headers, ancient authority, regal precision
+// Share Tech Mono — monospaced technical readout; data terminals, arcade scores
+// Barlow Condensed — condensed sans; compact labels, status tags, HUD text
+$font-display: 'Cinzel', 'Palatino Linotype', 'Times New Roman', serif;
+$font-body:    'Share Tech Mono', 'DM Mono', 'Courier New', monospace;
+$font-ui:      'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif;
 
-// ─── Decorative ───────────────────────────────────────────────────────────────
-// Repeating scanline used as a texture overlay
-$scanline-opacity: 0.025;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Theme: Aether  ·  Amethyst primary · Rose-gold accent
-// A mystical, violet-tinged palette — arcane and contemplative.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Primary — deep amethyst violet
-$amethyst-deep: #3b1f6e; // darkest violet, hover depth
-$amethyst: #5c2fa8; // primary brand colour
-$amethyst-mid: #8b5cf6; // lighter violet for glows / active indicators
-$amethyst-glow: rgba(92, 47, 168, 0.18); // ambient glow / bg tint
-$amethyst-glow-strong: rgba(92, 47, 168, 0.35); // stronger glow for focus rings
-
-// Accent — rose gold (warm luminous complement to violet)
-$rose-gold: #e8a0b4; // primary accent
-$rose-gold-dim: #b5607a; // dimmer rose for labels / borders
-$rose-gold-glow: rgba(232, 160, 180, 0.15); // ambient rose glow
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Theme: Sovereign  ·  Crimson primary · Pale-gold accent
-// A commanding, blood-red palette — regal, authoritative, intense.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Primary — deep crimson red
-$crimson-deep: #6b0f1a; // darkest crimson, hover depth
-$crimson: #9b1c2e; // primary brand colour
-$crimson-mid: #d4364f; // lighter crimson for glows / active indicators
-$crimson-glow: rgba(155, 28, 46, 0.18); // ambient glow / bg tint
-$crimson-glow-strong: rgba(155, 28, 46, 0.35); // stronger glow for focus rings
-
-// Accent — pale imperial gold (regal contrast to deep red)
-$pale-gold: #d4af5a; // primary accent
-$pale-gold-dim: #9a7b2e; // dimmer gold for labels / borders
-$pale-gold-glow: rgba(212, 175, 90, 0.15); // ambient gold glow
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Theme: Acanthium  ·  Deep emerald primary · Copper accent
-// A rich, forest-floor palette — ancient, organic, alchemical.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Primary — deep emerald green
-$emerald-deep: #0d3b22; // darkest emerald, hover depth
-$emerald: #145c35; // primary brand colour
-$emerald-mid: #22a05a; // lighter emerald for glows / active indicators
-$emerald-glow: rgba(20, 92, 53, 0.18); // ambient glow / bg tint
-$emerald-glow-strong: rgba(20, 92, 53, 0.35); // stronger glow for focus rings
-
-// Accent — warm copper (oxidised metal, earthen contrast to emerald)
-$copper: #c87941; // primary accent
-$copper-dim: #8f5220; // dimmer copper for labels / borders
-$copper-glow: rgba(200, 121, 65, 0.15); // ambient copper glow
+// ─── Decorative ──────────────────────────────────────────────────────────────
+// Scanline texture — the signature R&B aesthetic overlay on dark surfaces
+$scanline-opacity: 0.03;

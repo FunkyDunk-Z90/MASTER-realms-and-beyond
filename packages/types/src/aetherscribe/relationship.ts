@@ -10,55 +10,41 @@ import type { E_EntityType, E_Ruleset } from './entity'
 // RELATIONSHIP TYPES
 // ============================================================================
 
-export enum E_RelationType {
-    // Character to Character / NPC
-    ALLY = 'ally',
-    ENEMY = 'enemy',
-    RIVAL = 'rival',
-    FRIEND = 'friend',
-    LOVER = 'lover',
-    FAMILY = 'family',
-
-    // Hierarchical
-    MENTOR = 'mentor',
-    STUDENT = 'student',
-    LEADER = 'leader',
-    SUBORDINATE = 'subordinate',
-
-    // Possession
-    OWNS = 'owns',
-    OWNED_BY = 'owned_by',
-    CARRIES = 'carries',
-    WIELDED_BY = 'wielded_by',
-
-    // Location
-    LOCATED_IN = 'located_in',
-    CONTAINS = 'contains',
-    BORDERS = 'borders',
-    CONNECTED_TO = 'connected_to',
-
-    // Organization
-    MEMBER_OF = 'member_of',
-    LEADS = 'leads',
-    ALLIED_WITH = 'allied_with',
-    OPPOSED_TO = 'opposed_to',
-    VASSAL_OF = 'vassal_of',
-    OVERLORD_OF = 'overlord_of',
-
-    // Belief
-    WORSHIPS = 'worships',
-    PRIESTHOOD_OF = 'priesthood_of',
-    OPPOSED_BELIEF = 'opposed_belief',
-
-    // Lore
-    CAUSED_BY = 'caused_by',
-    RESULTED_IN = 'resulted_in',
-    INFLUENCED_BY = 'influenced_by',
-    INFLUENCES = 'influences',
-
-    // Generic/Custom
-    CUSTOM = 'custom',
-}
+// Character to Character / NPC
+// Hierarchical / Possession / Location / Organization / Belief / Lore / Generic
+export type E_RelationType =
+    | 'ally'
+    | 'enemy'
+    | 'rival'
+    | 'friend'
+    | 'lover'
+    | 'family'
+    | 'mentor'
+    | 'student'
+    | 'leader'
+    | 'subordinate'
+    | 'owns'
+    | 'owned_by'
+    | 'carries'
+    | 'wielded_by'
+    | 'located_in'
+    | 'contains'
+    | 'borders'
+    | 'connected_to'
+    | 'member_of'
+    | 'leads'
+    | 'allied_with'
+    | 'opposed_to'
+    | 'vassal_of'
+    | 'overlord_of'
+    | 'worships'
+    | 'priesthood_of'
+    | 'opposed_belief'
+    | 'caused_by'
+    | 'resulted_in'
+    | 'influenced_by'
+    | 'influences'
+    | 'custom'
 
 // ============================================================================
 // RELATIONSHIP STRENGTH & DIRECTION

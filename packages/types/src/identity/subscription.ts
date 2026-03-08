@@ -1,6 +1,17 @@
-import { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
+/**
+ * @rnb/types - Subscription Types
+ *
+ * RnB uses per-app subscriptions:
+ *   - AetherScribe: tiered user plan (free → starter → pro → enterprise)
+ *   - NexusServe: company-level plan
+ *   - ByteBurger: free to use; monetised via transaction fees / loyalty
+ */
 
-export type T_SubscriptionPlan = 'free' | 'starter' | 'pro' | 'enterprise'
+import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
+
+// ============================================================================
+// SHARED
+// ============================================================================
 
 export type T_SubscriptionStatus =
     | 'active'
@@ -11,26 +22,33 @@ export type T_SubscriptionStatus =
 
 export type T_BillingCycle = 'monthly' | 'quarterly' | 'yearly'
 
+// ============================================================================
+// AETHERSCRIBE SUBSCRIPTION (user-level)
+// ============================================================================
+
+export type T_SubscriptionPlan = 'free' | 'starter' | 'pro' | 'enterprise'
+
 export interface I_SubscriptionLimits {
     maxWorlds: number
     maxCharacters: number
     maxStorageGB: number
     maxCollaborators: number
     advancedFeatures: boolean
-    customDomain: boolean
     apiAccess: boolean
+    customDomain: boolean
     prioritySupport: boolean
 }
 
 export interface I_Subscription {
     id: T_ObjectId
     userId: T_ObjectId
+    app: 'aetherscribe'
     plan: T_SubscriptionPlan
     status: T_SubscriptionStatus
     limits: I_SubscriptionLimits
     billing: {
         cycle: T_BillingCycle
-        nextBillingDate: Date
+        nextBillingDate: T_Timestamp
         amount: number
         currency: string
         autoRenew: boolean
@@ -40,23 +58,6 @@ export interface I_Subscription {
     cancelledAt?: T_Timestamp
     createdAt: T_Timestamp
     updatedAt: T_Timestamp
-}
-
-export interface I_CreateSubscriptionRequest {
-    plan: T_SubscriptionPlan
-    billingCycle: T_BillingCycle
-    paymentMethodId?: string
-}
-
-export interface I_UpdateSubscriptionRequest {
-    plan?: T_SubscriptionPlan
-    billingCycle?: T_BillingCycle
-    autoRenew?: boolean
-}
-
-export interface I_CancelSubscriptionRequest {
-    reason?: string
-    feedback?: string
 }
 
 export const PLAN_LIMITS: Record<T_SubscriptionPlan, I_SubscriptionLimits> = {
@@ -100,4 +101,53 @@ export const PLAN_LIMITS: Record<T_SubscriptionPlan, I_SubscriptionLimits> = {
         customDomain: true,
         prioritySupport: true,
     },
+}
+
+export interface I_CreateSubscriptionRequest {
+    plan: T_SubscriptionPlan
+    billingCycle: T_BillingCycle
+    paymentMethodId?: string
+}
+
+export interface I_UpdateSubscriptionRequest {
+    plan?: T_SubscriptionPlan
+    billingCycle?: T_BillingCycle
+    autoRenew?: boolean
+}
+
+export interface I_CancelSubscriptionRequest {
+    reason?: string
+    feedback?: string
+}
+
+// ============================================================================
+// NEXUSSERVE SUBSCRIPTION (company-level)
+// ============================================================================
+
+export type T_NexusServePlan = 'trial' | 'basic' | 'professional' | 'enterprise'
+
+export interface I_NexusServeSubscription {
+    id: T_ObjectId
+    companyId: T_ObjectId
+    app: 'nexusserve'
+    plan: T_NexusServePlan
+    status: T_SubscriptionStatus
+    billing: {
+        cycle: T_BillingCycle
+        nextBillingDate: T_Timestamp
+        amount: number
+        currency: string
+        autoRenew: boolean
+    }
+    limits: {
+        maxLocations: number
+        maxEmployees: number
+        maxMenuItems: number
+        advancedReporting: boolean
+        apiAccess: boolean
+    }
+    startDate: T_Timestamp
+    endDate?: T_Timestamp
+    createdAt: T_Timestamp
+    updatedAt: T_Timestamp
 }

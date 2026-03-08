@@ -1,34 +1,86 @@
-// Monochrome base — near-black to near-white
-$void: #0a0c0f; // deepest dark, used for backgrounds in dark mode
-$obsidian: #111417; // dark bg
-$obsidian-mid: #181c21; // dark bg-secondary
-$obsidian-light: #222830; // dark surface / cards
-$ash: #3a4149; // muted borders in dark
-$slate: #8a9099; // muted text in dark
-$mist: #c8cdd4; // body text in light mode
-$silver: #dde1e6; // light bg-secondary
-$ghost: #edf0f3; // light bg
+// ─────────────────────────────────────────────────────────────────────────────
+// Realms & Beyond — Raw Color Palette
+//
+// This file documents the full brand color palette as a flat reference.
+// The authoritative SCSS variables are defined in the root _variables.scss
+// which all components import. This file is for design reference and
+// future tooling / design-token export.
+// ─────────────────────────────────────────────────────────────────────────────
 
-// Primary — deep teal
-$teal-deep: #0b5e62; // darkest teal, hover depth
-$teal: #0d7377; // primary brand colour
-$teal-mid: #14a0a5; // lighter teal for glows / active indicators
-$teal-glow: rgba(13, 115, 119, 0.18); // teal ambient glow / bg tint
-$teal-glow-strong: rgba(13, 115, 119, 0.35); // stronger glow for focus rings
+// ─── Base darks — warm-tinted ─────────────────────────────────────────────────
+// #090806 — void         — deepest warm dark
+// #110F0C — obsidian     — primary background
+// #1A1713 — obsidian-mid — header / sidebar background
+// #252219 — obsidian-light — surface / card background
+// #3D3529 — ash          — muted borders in dark mode
+// #7A6E5E — slate        — muted / secondary text in dark
+// #C4B89A — mist         — primary body text (warm, parchment-tinted)
+// #DDD4BC — silver       — light mode secondary bg
+// #F0EAD8 — ghost        — parchment light background
 
-// Accent — amber gold (warm counter to cold teal)
-$amber: #e8a045; // primary accent
-$amber-dim: #b57a2a; // dimmer amber for section labels, borders
-$amber-glow: rgba(232, 160, 69, 0.15); // ambient amber glow
+// ─── Arcade Amber (default primary) ───────────────────────────────────────────
+// #7A4A10 — amber-deep   — deepest, press-depth state
+// #C47818 — amber        — brand primary
+// #DA9020 — amber-mid    — hover / active
+// rgba(196, 120, 24, 0.18) — amber-glow        — ambient glow
+// rgba(196, 120, 24, 0.40) — amber-glow-strong — focus rings
 
-// Semantic colours
-$danger: #c0392b;
-$danger-glow: rgba(192, 57, 43, 0.2);
-$warning: #d4a017;
-$success: #1a8a4a;
-$submit: #1a5fa8;
-$disabled: #4a5260;
+// ─── Phosphor Green (default accent) ──────────────────────────────────────────
+// #4A8A52 — phosphor     — main accent
+// #2E5C34 — phosphor-dim — dimmer accent
+// rgba(74, 138, 82, 0.18) — phosphor-glow — ambient glow
 
-// Blur overlays
-$blur-dark: rgba(10, 12, 15, 0.72);
-$blur-light: rgba(237, 240, 243, 0.72);
+// ─── Theme: Phosphor CRT ──────────────────────────────────────────────────────
+// #3A8A48 — crt-green
+// #50B060 — crt-green-mid
+// #C47818 — crt-amber
+
+// ─── Theme: Sovereign ─────────────────────────────────────────────────────────
+// #5A1810 — crimson-deep
+// #8A2820 — crimson
+// #B03C30 — crimson-mid
+// #C4A018 — pale-gold
+// #907A10 — pale-gold-dim
+
+// ─── Theme: Void ──────────────────────────────────────────────────────────────
+// #0D5A62 — teal-deep
+// #1A7280 — teal
+// #259098 — teal-mid
+// #7A4A9A — violet
+// #523070 — violet-dim
+
+// ─── Theme: Dusk ──────────────────────────────────────────────────────────────
+// #3A2060 — amethyst-deep
+// #5A3A8A — amethyst
+// #7A54AE — amethyst-mid
+// #C47080 — rose
+// #8A4858 — rose-dim
+
+// ─── Theme: Parchment ─────────────────────────────────────────────────────────
+// #2A3810 — olive-deep
+// #3A4A1A — olive
+// #506A22 — olive-mid
+// #8A4028 — terracotta
+// #5E2A18 — terracotta-dim
+
+// ─── Theme: ByteBurger ────────────────────────────────────────────────────────
+// #D46010 — bb-orange    — hot orange primary
+// #E87828 — bb-orange-mid — hover
+// #8A3808 — bb-orange-deep
+// #D4A818 — bb-gold      — mustard accent
+
+// ─── Semantic ─────────────────────────────────────────────────────────────────
+// #8A2820 — danger
+// #C47818 — warning      (shared with amber)
+// #3A8A48 — success
+// #1A5A8A — submit
+// #3A3228 — disabled
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Colour palette reference images (stored in /docs):
+//   images.jpg         — warm earth: terracotta, orange, amber, olive, near-black
+//   download.png       — arcade: violet, rose, orange, amber, gold
+//   images (2).png     — muted sage greens: charcoal to fresh green
+//   download (2).png   — earth tones: terracotta, dusty rose, cream, teal
+//   download (3).png   — dark arcade: near-black, maroon, crimson-pink, emerald
+// ─────────────────────────────────────────────────────────────────────────────

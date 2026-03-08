@@ -1,0 +1,215 @@
+@use '../_variables' as *;
+@use '../_mixins' as *;
+
+// ─── Base Typography ──────────────────────────────────────────────────────────
+// Applies R&B brand type system to raw HTML elements.
+// All custom component typography is handled at the component level.
+
+body {
+    font-family: $font-body;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    // Scanline texture — the R&B signature on all dark surfaces
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 0, 0, $scanline-opacity) 3px,
+        rgba(0, 0, 0, $scanline-opacity) 4px
+    );
+    transition:
+        background-color var(--transition-speed, 0.18s) ease,
+        color var(--transition-speed, 0.18s) ease;
+}
+
+// ─── Headings ─────────────────────────────────────────────────────────────────
+// Cinzel — classical inscriptional letterforms, all caps, wide tracking
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @include font-display;
+    color: var(--text-heading-color);
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    letter-spacing: 0.12em;
+    font-weight: 900;
+}
+
+h2 {
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    letter-spacing: 0.10em;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    letter-spacing: 0.09em;
+}
+
+h4 {
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+}
+
+h5 {
+    font-size: 0.95rem;
+    letter-spacing: 0.10em;
+}
+
+h6 {
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    color: var(--text-muted-color);
+}
+
+// ─── Body text ────────────────────────────────────────────────────────────────
+
+p {
+    font-family: $font-body;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--text-color);
+    max-width: 72ch;
+}
+
+// ─── Links ────────────────────────────────────────────────────────────────────
+
+a {
+    font-family: $font-body;
+    font-size: inherit;
+    letter-spacing: 0.03em;
+    color: var(--primary-color);
+    text-decoration: none;
+    width: max-content;
+    transition: color var(--transition-speed, 0.18s) ease;
+
+    &:hover {
+        color: var(--primary-hover-color);
+    }
+
+    &:focus-visible {
+        outline: 1px solid var(--primary-color);
+        outline-offset: 3px;
+        border-radius: #{$border-radius};
+    }
+}
+
+// ─── Form controls ───────────────────────────────────────────────────────────
+
+input,
+textarea,
+select {
+    font-family: $font-body;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $small $medium;
+    outline: none;
+    transition:
+        border-color var(--transition-speed, 0.18s) ease,
+        box-shadow var(--transition-speed, 0.18s) ease;
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px var(--primary-glow-strong);
+    }
+
+    &::placeholder {
+        color: var(--text-muted-color);
+        letter-spacing: 0.04em;
+    }
+}
+
+// Suppress number spinners
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    display: none;
+}
+
+// ─── Code & pre ───────────────────────────────────────────────────────────────
+
+code,
+kbd,
+samp {
+    font-family: $font-body;
+    font-size: 0.85em;
+    color: var(--primary-color);
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 0.1em 0.35em;
+}
+
+pre {
+    font-family: $font-body;
+    font-size: 0.875rem;
+    color: var(--text-heading-color);
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--primary-color);
+    border-radius: $border-radius;
+    padding: $large $xLarge;
+    overflow-x: auto;
+    line-height: 1.7;
+
+    code {
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+        font-size: inherit;
+    }
+}
+
+// ─── Small / label text ───────────────────────────────────────────────────────
+
+small {
+    font-family: $font-ui;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted-color);
+}
+
+// ─── Blockquote ───────────────────────────────────────────────────────────────
+
+blockquote {
+    border-left: 3px solid var(--primary-color);
+    padding-left: $large;
+    margin-left: 0;
+    color: var(--text-secondary-color);
+    font-style: italic;
+
+    &::before {
+        content: '"';
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        line-height: 0;
+        vertical-align: -0.6em;
+        margin-right: 0.15em;
+    }
+}
+
+// ─── Horizontal rule ─────────────────────────────────────────────────────────
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: $xLarge 0;
+
+    &.rule-accent {
+        border-color: var(--primary-color);
+        box-shadow: var(--rule-glow);
+    }
+}

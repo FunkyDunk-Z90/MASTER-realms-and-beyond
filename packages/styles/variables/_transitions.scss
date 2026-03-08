@@ -1,0 +1,56 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Realms & Beyond — Transition Tokens
+//
+// Motion language: snappy and purposeful — 80s arcade precision.
+// No slow, drifting eases. Transitions should feel responsive and deliberate.
+//
+// SCSS variables are in root _variables.scss.
+// CSS custom properties are set on :root in global/_root.scss.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── Duration ────────────────────────────────────────────────────────────────
+// 50ms  — instant   — state changes with no visible transition (e.g. display)
+// 100ms — fast      — icon hover colour, border flash
+// 180ms — base      — standard interactive transition (buttons, links)
+//                     also: $transition-speed in _variables.scss
+// 350ms — slow      — panel slides, sidebar toggle, modal open
+//                     also: $transition-speed-slow in _variables.scss
+// 500ms — slower    — page-level fades, theme switch
+
+// ─── Easing ──────────────────────────────────────────────────────────────────
+// $ease-snap: cubic-bezier(0.25, 0, 0, 1)
+//   — Immediate start, rapid deceleration. Used for interactive elements
+//     that must feel responsive (buttons, focus rings).
+//
+// $ease-out: cubic-bezier(0, 0, 0.2, 1)
+//   — Standard ease-out. Used for panels and overlays entering the screen.
+
+// ─── CSS custom property scale ───────────────────────────────────────────────
+// --transition-speed: 0.18s  — standard interactive speed
+// --transition-slow:  0.35s  — panel / overlay animation speed
+// --ease-snap:        cubic-bezier(0.25, 0, 0, 1)
+// --ease-out:         cubic-bezier(0, 0, 0.2, 1)
+
+// ─── Standard property declarations ──────────────────────────────────────────
+// Colour change:
+//   transition: color var(--transition-speed) ease;
+//
+// Background + border:
+//   transition: background-color var(--transition-speed) ease,
+//               border-color var(--transition-speed) ease;
+//
+// Glow / shadow:
+//   transition: box-shadow var(--transition-speed) ease;
+//
+// Panel slide:
+//   transition: transform var(--transition-slow) var(--ease-snap);
+//
+// Theme switch (body):
+//   transition: background-color var(--transition-slow) ease,
+//               color var(--transition-slow) ease;
+
+// ─── Do NOT animate ──────────────────────────────────────────────────────────
+// - Layout properties (width, height, padding) — can cause layout thrash
+// - display, visibility — use opacity + pointer-events instead
+// - font-size — affects layout
+// - margin  — prefer gap / padding changes

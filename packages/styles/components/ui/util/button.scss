@@ -146,6 +146,46 @@
         }
     }
 
+    // Ghost — transparent with border
+    &.ghost {
+        background-color: transparent;
+        border-color: var(--border-color);
+        color: var(--text-secondary-color);
+
+        &:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: var(--primary-glow);
+            box-shadow: none;
+        }
+    }
+
+    // Outline — transparent with primary border
+    &.outline {
+        background-color: transparent;
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+
+        &:hover {
+            background-color: var(--primary-color);
+            color: $ghost;
+            box-shadow: 0 0 12px var(--primary-glow-strong);
+        }
+    }
+
+    // ─── Sizes ────────────────────────────────────────────────────────────────
+
+    &.btn-sm {
+        padding: $small $medium;
+        font-size: 0.65rem;
+        min-width: 60px;
+    }
+
+    &.btn-lg {
+        padding: $large $xLarge;
+        font-size: 0.88rem;
+    }
+
     // Disabled — no interaction, no glow
     &.disabled,
     &:disabled {

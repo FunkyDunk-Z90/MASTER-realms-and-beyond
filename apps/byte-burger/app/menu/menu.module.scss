@@ -1,0 +1,290 @@
+// ─── ByteBurger Menu Page ─────────────────────────────────────────────────────
+
+// ─── Page layout ─────────────────────────────────────────────────────────────
+
+.menuPage {
+    display: flex;
+    flex-direction: column;
+}
+
+// ─── Menu hero ────────────────────────────────────────────────────────────────
+
+.menuHero {
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 1.5rem;
+    text-align: center;
+    background-color: var(--bg-inset-color);
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 70% 80% at 50% 50%, rgba(212, 96, 16, 0.12) 0%, transparent 65%),
+            repeating-linear-gradient(
+                90deg,
+                rgba(212, 96, 16, 0.03) 0px, rgba(212, 96, 16, 0.03) 1px,
+                transparent 1px, transparent 60px
+            ),
+            repeating-linear-gradient(
+                0deg,
+                rgba(212, 96, 16, 0.03) 0px, rgba(212, 96, 16, 0.03) 1px,
+                transparent 1px, transparent 60px
+            );
+        pointer-events: none;
+    }
+}
+
+.menuHeroContent {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.menuHeroTitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-heading-color);
+    text-shadow: 0 0 40px rgba(212, 96, 16, 0.40);
+    line-height: 1;
+}
+
+.menuHeroSub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.1em;
+}
+
+.menuHeroEmoji { font-size: 3rem; line-height: 1; }
+
+// ─── Section wrapper ──────────────────────────────────────────────────────────
+
+.menuSection {
+    position: relative;
+    padding: 0 0 5rem;
+    overflow: hidden;
+}
+
+.menuSectionBg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.menuSectionInner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+// ─── Character select grid ────────────────────────────────────────────────────
+
+.characterGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.characterSelectLabel {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted-color);
+    margin-top: 1rem;
+    text-align: center;
+}
+
+// ─── Selected burger detail ───────────────────────────────────────────────────
+
+.burgerDetail {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.burgerDetailPanel {
+    background-color: var(--bg-surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(0, 0, 0, 0.03) 3px,
+            rgba(0, 0, 0, 0.03) 4px
+        );
+        pointer-events: none;
+    }
+
+    > * { position: relative; z-index: 1; }
+}
+
+.burgerDetailEmoji {
+    font-size: 5rem;
+    line-height: 1;
+    display: block;
+    margin-bottom: 1rem;
+    animation: bb-float 3.5s ease-in-out infinite;
+    text-align: center;
+}
+
+.burgerDetailName {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-heading-color);
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+}
+
+.burgerDetailClass {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.65rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.burgerDetailTagline {
+    font-family: 'Cinzel', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--accent-color);
+    margin-bottom: 1.25rem;
+    line-height: 1.4;
+}
+
+.burgerDetailDesc {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-secondary-color);
+    line-height: 1.65;
+}
+
+.burgerDetailStatsTitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted-color);
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.burgerDetailActions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+.burgerDetailPrice {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(212, 168, 24, 0.20);
+}
+
+// ─── Sides grid ──────────────────────────────────────────────────────────────
+
+.sidesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+// ─── Drinks grid ─────────────────────────────────────────────────────────────
+
+.drinksGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+// ─── Section divider with parallax gradient ──────────────────────────────────
+
+.sectionDivider {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), var(--accent-color), var(--primary-color), transparent);
+    opacity: 0.6;
+    margin: 0;
+}
+
+// ─── Level header with parallax bg ───────────────────────────────────────────
+
+.levelHeader {
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 1.5rem 2rem;
+    background-color: var(--bg-secondary-color);
+}
+
+.levelHeaderBg {
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+}
+
+.levelHeaderContent {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+// ─── No selection state ──────────────────────────────────────────────────────
+
+.noSelection {
+    background-color: var(--bg-inset-color);
+    border: 1px dashed var(--border-color);
+    border-radius: 2px;
+    padding: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.08em;
+}

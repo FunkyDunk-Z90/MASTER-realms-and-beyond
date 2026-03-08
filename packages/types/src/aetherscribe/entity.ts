@@ -23,30 +23,25 @@ import type {
 // ENTITY TYPE ENUM
 // ============================================================================
 
-export enum E_EntityType {
-    CHARACTER = 'character',
-    NPC = 'npc',
-    LOCATION = 'location',
-    ITEM = 'item',
-    FACTION = 'faction',
+export type E_EntityType =
+    | 'character'
+    | 'npc'
+    | 'location'
+    | 'item'
+    | 'faction'
     // Ruleset-specific entities
-    SPECIES = 'species', // D&D 5e
-    CLASS = 'class', // D&D 5e
-    BACKGROUND = 'background', // D&D 5e
-    SPELL = 'spell', // D&D 5e
-    BELIEF = 'belief', // Generic
-    LORE = 'lore', // Generic
-    ARCHETYPE = 'archetype', // Aetherscape
-    ORIGIN = 'origin', // Aetherscape
-    GIFT = 'gift', // Aetherscape
-    ARTIFACT = 'artifact', // Aetherscape
-}
+    | 'species' // D&D 5e
+    | 'class' // D&D 5e
+    | 'background' // D&D 5e
+    | 'spell' // D&D 5e
+    | 'belief' // Generic
+    | 'lore' // Generic
+    | 'archetype' // Aetherscape
+    | 'origin' // Aetherscape
+    | 'gift' // Aetherscape
+    | 'artifact' // Aetherscape
 
-export enum E_Ruleset {
-    GENERIC = 'generic',
-    DND_5E_24 = 'dnd_5e_24',
-    AETHERSCAPE = 'aetherscape',
-}
+export type E_Ruleset = 'generic' | 'dnd_5e_24' | 'aetherscape'
 
 // ============================================================================
 // BASE ENTITY
@@ -73,7 +68,7 @@ export interface I_BaseEntity {
 // ============================================================================
 
 export interface I_CharacterEntity extends I_BaseEntity {
-    type: E_EntityType.CHARACTER
+    type: 'character'
     data: I_DND5E_Character | I_Aetherscape_Character | I_GenericCharacter
     metadata?: {
         portraitUrl?: string
@@ -107,7 +102,7 @@ export interface I_GenericCharacter {
 // ============================================================================
 
 export interface I_NPCEntity extends I_BaseEntity {
-    type: E_EntityType.NPC
+    type: 'npc'
     data: I_DND5E_NPC | I_Aetherscape_NPC | I_GenericNPC
     relationships: {
         targetEntityId: T_ObjectId
@@ -139,7 +134,7 @@ export interface I_GenericNPC {
 // ============================================================================
 
 export interface I_LocationEntity extends I_BaseEntity {
-    type: E_EntityType.LOCATION
+    type: 'location'
     data: I_LocationData
     inhabitants: T_ObjectId[]
     relatedLocations: {
@@ -174,11 +169,11 @@ export interface I_LocationData {
 // ============================================================================
 
 export interface I_ItemEntity extends I_BaseEntity {
-    type: E_EntityType.ITEM
+    type: 'item'
     data:
-        | (I_Item & { ruleset: E_Ruleset.DND_5E_24 })
-        | (I_Artifact & { ruleset: E_Ruleset.AETHERSCAPE })
-        | (I_GenericItem & { ruleset: E_Ruleset.GENERIC })
+        | (I_Item & { ruleset: 'dnd_5e_24' })
+        | (I_Artifact & { ruleset: 'aetherscape' })
+        | (I_GenericItem & { ruleset: 'generic' })
     owner?: T_ObjectId
     location?: T_ObjectId
     metadata?: {
@@ -206,7 +201,7 @@ export interface I_GenericItem {
 // ============================================================================
 
 export interface I_FactionEntity extends I_BaseEntity {
-    type: E_EntityType.FACTION
+    type: 'faction'
     data: I_FactionData
     members: {
         entityId: T_ObjectId
@@ -242,20 +237,20 @@ export interface I_FactionData {
 // ============================================================================
 
 export interface I_SpeciesEntity extends I_BaseEntity {
-    type: E_EntityType.SPECIES
-    ruleset: E_Ruleset.DND_5E_24
+    type: 'species'
+    ruleset: 'dnd_5e_24'
     data: I_Race
 }
 
 export interface I_ClassEntity extends I_BaseEntity {
-    type: E_EntityType.CLASS
-    ruleset: E_Ruleset.DND_5E_24
+    type: 'class'
+    ruleset: 'dnd_5e_24'
     data: I_Class
 }
 
 export interface I_BackgroundEntity extends I_BaseEntity {
-    type: E_EntityType.BACKGROUND
-    ruleset: E_Ruleset.DND_5E_24
+    type: 'background'
+    ruleset: 'dnd_5e_24'
     data: {
         id: string
         name: string
@@ -272,8 +267,8 @@ export interface I_BackgroundEntity extends I_BaseEntity {
 }
 
 export interface I_SpellEntity extends I_BaseEntity {
-    type: E_EntityType.SPELL
-    ruleset: E_Ruleset.DND_5E_24
+    type: 'spell'
+    ruleset: 'dnd_5e_24'
     data: I_Spell
     componentMaterials?: {
         itemId: T_ObjectId
@@ -287,8 +282,8 @@ export interface I_SpellEntity extends I_BaseEntity {
 // ============================================================================
 
 export interface I_BeliefEntity extends I_BaseEntity {
-    type: E_EntityType.BELIEF
-    ruleset: E_Ruleset.GENERIC
+    type: 'belief'
+    ruleset: 'generic'
     data: {
         deityName?: string
         domains?: string[]
@@ -302,8 +297,8 @@ export interface I_BeliefEntity extends I_BaseEntity {
 }
 
 export interface I_LoreEntity extends I_BaseEntity {
-    type: E_EntityType.LORE
-    ruleset: E_Ruleset.GENERIC
+    type: 'lore'
+    ruleset: 'generic'
     data: {
         category: string
         era?: string
@@ -326,20 +321,20 @@ export interface I_LoreEntity extends I_BaseEntity {
 // ============================================================================
 
 export interface I_ArchetypeEntity extends I_BaseEntity {
-    type: E_EntityType.ARCHETYPE
-    ruleset: E_Ruleset.AETHERSCAPE
+    type: 'archetype'
+    ruleset: 'aetherscape'
     data: I_Archetype
 }
 
 export interface I_OriginEntity extends I_BaseEntity {
-    type: E_EntityType.ORIGIN
-    ruleset: E_Ruleset.AETHERSCAPE
+    type: 'origin'
+    ruleset: 'aetherscape'
     data: I_Origin
 }
 
 export interface I_GiftEntity extends I_BaseEntity {
-    type: E_EntityType.GIFT
-    ruleset: E_Ruleset.AETHERSCAPE
+    type: 'gift'
+    ruleset: 'aetherscape'
     data: I_Gift
     prerequisites?: {
         giftId: T_ObjectId
@@ -349,8 +344,8 @@ export interface I_GiftEntity extends I_BaseEntity {
 }
 
 export interface I_ArtifactEntity extends I_BaseEntity {
-    type: E_EntityType.ARTIFACT
-    ruleset: E_Ruleset.AETHERSCAPE
+    type: 'artifact'
+    ruleset: 'aetherscape'
     data: I_Artifact
     currentOwner?: T_ObjectId
     currentLocation?: T_ObjectId
@@ -416,17 +411,17 @@ export interface I_EntityRelation {
 // ============================================================================
 
 export type I_EntityByType<T extends E_EntityType> =
-    T extends E_EntityType.CHARACTER
+    T extends 'character'
         ? I_CharacterEntity
-        : T extends E_EntityType.NPC
+        : T extends 'npc'
           ? I_NPCEntity
-          : T extends E_EntityType.LOCATION
+          : T extends 'location'
             ? I_LocationEntity
-            : T extends E_EntityType.ITEM
+            : T extends 'item'
               ? I_ItemEntity
-              : T extends E_EntityType.FACTION
+              : T extends 'faction'
                 ? I_FactionEntity
-                : T extends E_EntityType.SPELL
+                : T extends 'spell'
                   ? I_SpellEntity
                   : I_Entity
 

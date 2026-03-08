@@ -1,0 +1,158 @@
+@use '../_variables' as *;
+
+// ─── Root — Design Token Defaults ────────────────────────────────────────────
+// Defines the default theme (arcade / dark) on :root.
+// Override at runtime by adding [data-theme="..."] to <html>.
+// All theme-switchable values are CSS custom properties.
+// Static layout and motion tokens are defined here regardless of theme.
+
+:root {
+    // ── Default theme: arcade (warm dark + amber primary) ─────────────────────
+    // Backgrounds
+    --bg-color:             #{$obsidian};
+    --bg-secondary-color:   #{$obsidian-mid};
+    --bg-surface-color:     #{$obsidian-light};
+    --bg-inset-color:       #{$void};
+
+    // Text
+    --text-color:           #{$mist};
+    --text-secondary-color: #{$slate};
+    --text-muted-color:     #{$ash};
+    --text-heading-color:   #{$silver};
+
+    // Primary — amber
+    --primary-color:        #{$amber};
+    --primary-hover-color:  #{$amber-mid};
+    --primary-deep-color:   #{$amber-deep};
+    --primary-glow:         #{$amber-glow};
+    --primary-glow-strong:  #{$amber-glow-strong};
+
+    // Accent — phosphor green
+    --accent-color:         #{$phosphor};
+    --accent-dim-color:     #{$phosphor-dim};
+    --accent-glow:          #{$phosphor-glow};
+
+    // Borders
+    --border-color:         #{$obsidian-light};
+    --border-strong-color:  #{$ash};
+    --border-radius:        #{$border-radius};
+
+    // Decorative rule
+    --rule-color:           #{$amber};
+    --rule-glow:            0 0 8px #{$amber-glow-strong};
+
+    // Overlay blur
+    --blur:                 #{$blur-dark};
+
+    // Shadows — glow-forward, no hard drop shadows
+    --shadow-sm:  0 1px 4px #{$amber-glow};
+    --shadow-md:  0 4px 16px #{$amber-glow};
+    --shadow-lg:  0 10px 40px #{$amber-glow};
+
+    // ── Semantic colours ──────────────────────────────────────────────────────
+    --danger-color:   #{$danger};
+    --danger-glow:    #{$danger-glow};
+    --warning-color:  #{$warning};
+    --success-color:  #{$success};
+    --submit-color:   #{$submit};
+    --disabled-color: #{$disabled};
+
+    // ── Layout ────────────────────────────────────────────────────────────────
+    --sidebar-max:    #{$sidebar-max};
+    --sidebar-min:    #{$sidebar-min};
+    --header-height:  #{$header-height};
+    --navbar-height:  #{$header-height};
+    --footer-height:  #{$footer-height};
+
+    // ── Motion ────────────────────────────────────────────────────────────────
+    --transition-speed: #{$transition-speed};
+    --transition-slow:  #{$transition-speed-slow};
+
+    --ease-snap: #{$ease-snap};
+    --ease-out:  #{$ease-out};
+
+    // ── Spacing (CSS var exposure for use in calc / components) ───────────────
+    --space-1:  4px;
+    --space-2:  8px;
+    --space-3:  12px;
+    --space-4:  16px;
+    --space-5:  20px;
+    --space-6:  24px;
+    --space-8:  32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+
+    // ── Border radius ─────────────────────────────────────────────────────────
+    --radius-none: 0;
+    --radius-xs:   1px;
+    --radius-sm:   #{$border-radius};
+    --radius-md:   #{$border-radius-lg};
+    --radius-lg:   8px;
+    --radius-pill: 9999px;
+}
+
+// ─── Light mode OS preference ────────────────────────────────────────────────
+// Falls back to parchment palette if no [data-theme] is set
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --bg-color:             #{$ghost};
+        --bg-secondary-color:   #{$silver};
+        --bg-surface-color:     #ffffff;
+        --bg-inset-color:       #E8E0C8;
+
+        --text-color:           #3A3020;
+        --text-secondary-color: #6A5840;
+        --text-muted-color:     #9A8868;
+        --text-heading-color:   #1A1208;
+
+        --primary-color:        #{$olive};
+        --primary-hover-color:  #{$olive-mid};
+        --primary-deep-color:   #{$olive-deep};
+        --primary-glow:         #{$olive-glow};
+        --primary-glow-strong:  #{$olive-glow-strong};
+
+        --accent-color:         #{$terracotta};
+        --accent-dim-color:     #{$terracotta-dim};
+        --accent-glow:          #{$terracotta-glow};
+
+        --border-color:         #{$silver};
+        --border-strong-color:  #B8A888;
+
+        --rule-color:           #{$olive};
+        --rule-glow:            0 0 6px #{$olive-glow-strong};
+        --blur:                 #{$blur-light};
+
+        --shadow-sm:  0 1px 4px #{$olive-glow};
+        --shadow-md:  0 4px 16px #{$olive-glow};
+        --shadow-lg:  0 10px 40px #{$olive-glow};
+    }
+}
+
+// ─── Layout shells ────────────────────────────────────────────────────────────
+
+.app-wrapper {
+    overflow: visible;
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100dvh;
+}
+
+.page-wrapper {
+    overflow: visible;
+    position: relative;
+    width: 100%;
+    padding: $xLarge;
+}
+
+.section-wrapper {
+    position: relative;
+    display: grid;
+    align-items: start;
+    justify-items: center;
+    margin-inline: auto;
+    width: 100%;
+    gap: $medium;
+}

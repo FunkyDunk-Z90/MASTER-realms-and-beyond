@@ -9,19 +9,17 @@ import { T_ObjectId, T_Timestamp } from './commonIndex'
 // PAYMENT METHOD
 // ============================================================================
 
-export enum E_PaymentMethodType {
-    CREDIT_CARD = 'credit_card',
-    DEBIT_CARD = 'debit_card',
-    DIGITAL_WALLET = 'digital_wallet',
-    PAYPAL = 'paypal',
-    APPLE_PAY = 'apple_pay',
-    GOOGLE_PAY = 'google_pay',
-    CASH = 'cash',
-    GIFT_CARD = 'gift_card',
-    LOYALTY_POINTS = 'loyalty_points',
-}
+export type E_PaymentMethodType =
+    | 'credit_card'
+    | 'debit_card'
+    | 'digital_wallet'
+    | 'paypal'
+    | 'apple_pay'
+    | 'google_pay'
+    | 'cash'
+    | 'gift_card'
+    | 'loyalty_points'
 
-// FIX 1: Alias added so sales types can use E_PaymentMethod interchangeably
 export type E_PaymentMethod = E_PaymentMethodType
 
 export interface I_CreditCard {
@@ -94,16 +92,12 @@ export interface I_PaymentRequest {
 }
 
 export interface I_CardPaymentRequest extends I_PaymentRequest {
-    paymentMethod:
-        | E_PaymentMethodType.CREDIT_CARD
-        | E_PaymentMethodType.DEBIT_CARD
+    paymentMethod: 'credit_card' | 'debit_card'
     cardData: I_CreditCard
 }
 
 export interface I_DigitalWalletPaymentRequest extends I_PaymentRequest {
-    paymentMethod:
-        | E_PaymentMethodType.APPLE_PAY
-        | E_PaymentMethodType.GOOGLE_PAY
+    paymentMethod: 'apple_pay' | 'google_pay'
     token: string
 }
 
@@ -121,25 +115,17 @@ export interface I_SavePaymentMethodRequest {
 // PAYMENT TRANSACTION
 // ============================================================================
 
-// FIX 2: E_TransactionStatus was commented out, breaking all downstream types — restored
-export enum E_TransactionStatus {
-    PENDING = 'pending',
-    PROCESSING = 'processing',
-    AUTHORIZED = 'authorized',
-    CAPTURED = 'captured',
-    FAILED = 'failed',
-    CANCELLED = 'cancelled',
-    REFUNDED = 'refunded',
-    PARTIALLY_REFUNDED = 'partially_refunded',
-}
+export type E_TransactionStatus =
+    | 'pending'
+    | 'processing'
+    | 'authorized'
+    | 'captured'
+    | 'failed'
+    | 'cancelled'
+    | 'refunded'
+    | 'partially_refunded'
 
-export enum E_PaymentGateway {
-    STRIPE = 'stripe',
-    SQUARE = 'square',
-    PAYPAL = 'paypal',
-    AUTHORIZE_NET = 'authorize_net',
-    INTERNAL = 'internal',
-}
+export type E_PaymentGateway = 'stripe' | 'square' | 'paypal' | 'authorize_net' | 'internal'
 
 export interface I_PaymentTransaction {
     id: T_ObjectId

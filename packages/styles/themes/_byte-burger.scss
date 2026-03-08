@@ -1,0 +1,602 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// ByteBurger App Theme
+// Fast food meets retro arcade. Warm orange-red primary with bright gold accent
+// on a near-black warm dark background. High contrast, appetite-stimulating,
+// still within the R&B warm-dark design language.
+//
+// Usage: [data-theme='byte-burger'] on <html> when loading the ByteBurger app.
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='byte-burger'] {
+    --bg-color:             #0E0B08;
+    --bg-secondary-color:   #1A1410;
+    --bg-surface-color:     #241C16;
+    --bg-inset-color:       #090704;
+
+    // Warm cream-orange text — like backlit menu boards
+    --text-color:           #D4B890;
+    --text-secondary-color: #9A7858;
+    --text-muted-color:     #5A4030;
+    --text-heading-color:   #EDD8A8;
+
+    // Primary — hot orange (appetite trigger, retro fast-food signage)
+    --primary-color:        #D46010;
+    --primary-hover-color:  #E87828;
+    --primary-deep-color:   #8A3808;
+    --primary-glow:         rgba(212, 96, 16, 0.20);
+    --primary-glow-strong:  rgba(212, 96, 16, 0.42);
+
+    // Accent — bright mustard gold (classic fast-food palette)
+    --accent-color:         #D4A818;
+    --accent-dim-color:     #906E08;
+    --accent-glow:          rgba(212, 168, 24, 0.20);
+
+    // Highlight — blood red (heat accent)
+    --highlight-color:      #C02010;
+    --highlight-glow:       rgba(192, 32, 16, 0.24);
+
+    --border-color:         #2A1E14;
+    --border-strong-color:  #5A3820;
+    --border-radius:        2px;
+
+    --rule-color:           #D46010;
+    --rule-glow:            0 0 8px rgba(212, 96, 16, 0.42);
+    --blur:                 rgba(14, 11, 8, 0.80);
+
+    --shadow-sm:  0 1px 4px rgba(212, 96, 16, 0.20);
+    --shadow-md:  0 4px 16px rgba(212, 96, 16, 0.20);
+    --shadow-lg:  0 10px 40px rgba(212, 96, 16, 0.20);
+
+    --success-color:  #4A8A28;
+    --warning-color:  #D4A818;
+    --danger-color:   #C02818;
+    --submit-color:   #1A5A8A;
+    --disabled-color: #2A1E14;
+
+    --transition-speed: 0.18s;
+    --transition-slow:  0.35s;
+}
+
+// ─── ByteBurger body — hot scanline overlay ───────────────────────────────────
+
+[data-theme='byte-burger'] body {
+    background-color: var(--bg-color);
+
+    &::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image:
+            repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(212, 96, 16, 0.025) 3px,
+                rgba(212, 96, 16, 0.025) 4px
+            );
+        pointer-events: none;
+        z-index: 9998;
+    }
+}
+
+// ─── Keyframe animations ──────────────────────────────────────────────────────
+
+@keyframes bb-boot-flicker {
+    0%   { opacity: 0; }
+    5%   { opacity: 1; }
+    7%   { opacity: 0; }
+    9%   { opacity: 1; }
+    15%  { opacity: 0.6; }
+    17%  { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+@keyframes bb-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+@keyframes bb-flicker {
+    0%   { opacity: 1; }
+    92%  { opacity: 1; }
+    93%  { opacity: 0.7; }
+    94%  { opacity: 1; }
+    96%  { opacity: 0.85; }
+    97%  { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+@keyframes bb-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+@keyframes bb-glow-pulse {
+    0%, 100% { box-shadow: 0 0 12px var(--primary-glow-strong); }
+    50%       { box-shadow: 0 0 28px var(--primary-glow-strong), 0 0 48px var(--primary-glow); }
+}
+
+@keyframes bb-text-glow-pulse {
+    0%, 100% { text-shadow: 0 0 8px rgba(212, 96, 16, 0.42); }
+    50%       { text-shadow: 0 0 20px rgba(212, 96, 16, 0.42), 0 0 40px rgba(212, 96, 16, 0.20); }
+}
+
+@keyframes bb-slide-up {
+    from { transform: translateY(24px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes bb-slide-in-left {
+    from { transform: translateX(-32px); opacity: 0; }
+    to   { transform: translateX(0);     opacity: 1; }
+}
+
+@keyframes bb-scan-sweep {
+    0%   { top: -2px; }
+    100% { top: 100%; }
+}
+
+@keyframes bb-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+// ─── ByteBurger component classes ────────────────────────────────────────────
+
+[data-theme='byte-burger'] {
+
+    // ── CTA Order button ──────────────────────────────────────────────────────
+
+    .btn-order {
+        background-color: var(--primary-color);
+        color: var(--bg-color);
+        border-color: var(--primary-color);
+        font-size: 0.85rem;
+        letter-spacing: 0.18em;
+        animation: bb-glow-pulse 2.5s ease-in-out infinite;
+
+        &:hover {
+            background-color: var(--primary-hover-color);
+            border-color: var(--primary-hover-color);
+            box-shadow:
+                0 0 36px var(--primary-glow-strong),
+                inset 0 0 16px rgba(255, 255, 255, 0.08);
+        }
+    }
+
+    // ── Order status badge ────────────────────────────────────────────────────
+
+    .order-status {
+        padding: 2px 10px;
+        border-radius: 2px;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+
+        &--pending   { color: var(--warning-color); border: 1px solid var(--warning-color); }
+        &--preparing { color: var(--primary-color); border: 1px solid var(--primary-color); }
+        &--ready     { color: var(--success-color); border: 1px solid var(--success-color); }
+        &--cancelled { color: var(--danger-color);  border: 1px solid var(--danger-color); }
+    }
+
+    // ── Price display ─────────────────────────────────────────────────────────
+
+    .price {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        color: var(--accent-color);
+        letter-spacing: 0.04em;
+    }
+
+    // ── Loyalty points ────────────────────────────────────────────────────────
+
+    .loyalty-points {
+        color: var(--primary-color);
+        text-shadow: 0 0 8px var(--primary-glow-strong);
+        font-variant-numeric: tabular-nums;
+    }
+
+    // ── Glow text variants ────────────────────────────────────────────────────
+
+    .bb-glow-text {
+        color: var(--primary-color);
+        text-shadow: 0 0 12px rgba(212, 96, 16, 0.42);
+        animation: bb-text-glow-pulse 2.5s ease-in-out infinite;
+    }
+
+    .bb-gold-text {
+        color: var(--accent-color);
+        text-shadow: 0 0 10px rgba(212, 168, 24, 0.20);
+    }
+
+    .bb-blink { animation: bb-blink 1s step-end infinite; }
+
+    // ── Level banner — STAGE X arcade strip ───────────────────────────────────
+
+    .bb-level-banner {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.6rem 1.5rem;
+        background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-deep-color) 60%, transparent 100%);
+        border-left: 4px solid var(--accent-color);
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--bg-color);
+
+        .bb-level-num {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+    }
+
+    // ── Character card — "Choose Your Fighter" ────────────────────────────────
+
+    .bb-character-card {
+        position: relative;
+        overflow: hidden;
+        background-color: var(--bg-surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 2px;
+        padding: 1.5rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        cursor: pointer;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(0, 0, 0, 0.04) 3px,
+                rgba(0, 0, 0, 0.04) 4px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        // Amber corner bracket — top-left
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            border-top: 2px solid var(--accent-color);
+            border-left: 2px solid var(--accent-color);
+        }
+
+        &:hover {
+            border-color: var(--primary-color);
+            box-shadow:
+                0 0 20px var(--primary-glow-strong),
+                inset 0 0 16px var(--primary-glow);
+            transform: translateY(-3px);
+        }
+
+        &.selected {
+            border-color: var(--accent-color);
+            box-shadow:
+                0 0 24px rgba(212, 168, 24, 0.40),
+                inset 0 0 20px rgba(212, 168, 24, 0.10);
+        }
+
+        > * { position: relative; z-index: 1; }
+    }
+
+    .bb-character-emoji {
+        font-size: 3rem;
+        line-height: 1;
+        animation: bb-float 3s ease-in-out infinite;
+        display: block;
+    }
+
+    .bb-character-name {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-heading-color);
+    }
+
+    .bb-character-class {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 600;
+        font-size: 0.62rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--primary-color);
+    }
+
+    .bb-character-desc {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.72rem;
+        color: var(--text-secondary-color);
+        line-height: 1.55;
+    }
+
+    .bb-character-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        margin-top: 0.25rem;
+    }
+
+    .bb-stat-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted-color);
+
+        .bb-stat-label { width: 48px; flex-shrink: 0; }
+
+        .bb-stat-track {
+            flex: 1;
+            height: 3px;
+            background-color: var(--border-color);
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .bb-stat-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 1px;
+        }
+    }
+
+    // ── Menu item card — sides / drinks ───────────────────────────────────────
+
+    .bb-menu-card {
+        position: relative;
+        overflow: hidden;
+        background-color: var(--bg-surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 2px;
+        padding: 1.25rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(0, 0, 0, 0.03) 3px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            pointer-events: none;
+        }
+
+        &:hover {
+            border-color: var(--border-strong-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        > * { position: relative; z-index: 1; }
+    }
+
+    .bb-menu-icon  { font-size: 2rem; flex-shrink: 0; line-height: 1; }
+
+    .bb-menu-info  { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
+
+    .bb-menu-name {
+        font-family: 'Cinzel', serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-heading-color);
+    }
+
+    .bb-menu-desc {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.7rem;
+        color: var(--text-secondary-color);
+        line-height: 1.5;
+    }
+
+    .bb-menu-tags  { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.25rem; }
+
+    .bb-tag {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 0.55rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 1px 6px;
+        border: 1px solid var(--border-color);
+        border-radius: 1px;
+        color: var(--text-muted-color);
+
+        &--hot   { color: var(--primary-color); border-color: var(--primary-color); }
+        &--gold  { color: var(--accent-color);  border-color: var(--accent-color); }
+        &--new   { color: var(--success-color); border-color: var(--success-color); background: rgba(74, 138, 40, 0.12); }
+        &--vegan { color: #5AAA40; border-color: #5AAA40; }
+        &--fish  { color: #5A90C8; border-color: #5A90C8; }
+    }
+
+    .bb-menu-price {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--accent-color);
+        flex-shrink: 0;
+        align-self: center;
+    }
+
+    // ── Marquee ticker ────────────────────────────────────────────────────────
+
+    .bb-ticker-wrap {
+        overflow: hidden;
+        background-color: var(--primary-color);
+        padding: 0.4rem 0;
+        border-top: 1px solid var(--accent-color);
+        border-bottom: 1px solid var(--accent-color);
+    }
+
+    .bb-ticker {
+        display: flex;
+        width: max-content;
+        animation: bb-marquee 28s linear infinite;
+    }
+
+    .bb-ticker-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 0 2rem;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--bg-color);
+        white-space: nowrap;
+
+        &::after { content: '◆'; color: var(--accent-color); }
+    }
+
+    // ── Promo card ────────────────────────────────────────────────────────────
+
+    .bb-promo-card {
+        position: relative;
+        overflow: hidden;
+        background-color: var(--bg-surface-color);
+        border: 1px solid var(--border-color);
+        border-left: 3px solid var(--primary-color);
+        border-radius: 2px;
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        box-shadow: -3px 0 20px var(--primary-glow-strong);
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(0, 0, 0, 0.03) 3px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            pointer-events: none;
+        }
+
+        > * { position: relative; z-index: 1; }
+    }
+
+    .bb-promo-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 0.58rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        background-color: var(--primary-color);
+        color: var(--bg-color);
+        border-radius: 1px;
+        width: fit-content;
+    }
+
+    .bb-promo-title {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-heading-color);
+        line-height: 1.2;
+    }
+
+    .bb-promo-desc {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.76rem;
+        color: var(--text-secondary-color);
+        line-height: 1.6;
+    }
+
+    .bb-promo-price {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        text-shadow: 0 0 10px rgba(212, 168, 24, 0.20);
+    }
+
+    // ── Boot screen lines ─────────────────────────────────────────────────────
+
+    .bb-boot-line {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        color: var(--primary-color);
+
+        &--dim   { color: var(--text-muted-color); }
+        &--gold  { color: var(--accent-color); }
+    }
+
+    // ── HUD bar — top of each "level" section ─────────────────────────────────
+
+    .bb-hud-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 1.5rem;
+        background-color: var(--bg-inset-color);
+        border-bottom: 1px solid var(--border-color);
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        color: var(--text-muted-color);
+
+        .bb-hud-score { color: var(--accent-color); font-size: 0.78rem; }
+        .bb-hud-lives { color: var(--primary-color); letter-spacing: 0.14em; }
+    }
+
+    // ── Scan sweep line on hover containers ──────────────────────────────────
+
+    .bb-scan-sweep {
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(212, 96, 16, 0.42), transparent);
+            animation: bb-scan-sweep 4s linear infinite;
+            pointer-events: none;
+        }
+    }
+}

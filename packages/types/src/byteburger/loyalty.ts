@@ -5,13 +5,7 @@
 
 import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 
-export enum E_TierLevel {
-    BASIC = 'basic',
-    SILVER = 'silver',
-    GOLD = 'gold',
-    PLATINUM = 'platinum',
-    RETRO_LEGEND = 'retro_legend',
-}
+export type E_TierLevel = 'basic' | 'silver' | 'gold' | 'platinum' | 'retro_legend'
 
 export interface I_LoyaltyAccount {
     id: T_ObjectId
@@ -81,12 +75,12 @@ export const TIER_BENEFITS: Record<
         benefits: string[]
     }
 > = {
-    [E_TierLevel.BASIC]: {
+    basic: {
         minPoints: 0,
         pointsMultiplier: 1,
         benefits: ['Basic points earning', 'Birthday bonus'],
     },
-    [E_TierLevel.SILVER]: {
+    silver: {
         minPoints: 500,
         pointsMultiplier: 1.25,
         benefits: [
@@ -95,17 +89,17 @@ export const TIER_BENEFITS: Record<
             'Early access to promos',
         ],
     },
-    [E_TierLevel.GOLD]: {
+    gold: {
         minPoints: 2000,
         pointsMultiplier: 1.5,
         benefits: ['1.5x points', 'Monthly bonus', 'Priority delivery'],
     },
-    [E_TierLevel.PLATINUM]: {
+    platinum: {
         minPoints: 5000,
         pointsMultiplier: 2,
         benefits: ['2x points', 'Exclusive items', 'VIP support'],
     },
-    [E_TierLevel.RETRO_LEGEND]: {
+    retro_legend: {
         minPoints: 10000,
         pointsMultiplier: 2.5,
         benefits: ['2.5x points', 'Lifetime rewards', 'Retro legend status'],

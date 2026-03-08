@@ -14,12 +14,7 @@
  * Affinity represents the character's connection to different aspects of Aetherscape
  * TBD: Additional affinities will be defined as ruleset develops
  */
-export enum E_Affinity {
-    AETHER = 'aether', // TBD: Definition and mechanics
-    VOID = 'void', // TBD: Definition and mechanics
-    ESSENCE = 'essence', // TBD: Definition and mechanics
-    UNKNOWN = 'unknown', // Unaligned / Neutral
-}
+export type E_Affinity = 'aether' | 'void' | 'essence' | 'unknown'
 
 /**
  * Essence represents a character's fundamental power/energy

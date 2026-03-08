@@ -9,16 +9,7 @@ import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
 // INVENTORY ITEM
 // ============================================================================
 
-export enum E_InventoryUnit {
-    PIECE = 'piece',
-    KILOGRAM = 'kg',
-    LITER = 'l',
-    GRAM = 'g',
-    OUNCE = 'oz',
-    POUND = 'lb',
-    MILLILITER = 'ml',
-    GALLON = 'gal',
-}
+export type E_InventoryUnit = 'piece' | 'kg' | 'l' | 'g' | 'oz' | 'lb' | 'ml' | 'gal'
 
 export interface I_InventoryItem {
     id: T_ObjectId
@@ -73,17 +64,16 @@ export interface I_InventoryItem {
 // STOCK MOVEMENT
 // ============================================================================
 
-export enum E_StockMovementType {
-    PURCHASE = 'purchase',
-    SALE = 'sale',
-    ADJUSTMENT = 'adjustment',
-    WASTE = 'waste',
-    RETURN = 'return',
-    TRANSFER = 'transfer',
-    DAMAGE = 'damage',
-    SPOILAGE = 'spoilage',
-    INVENTORY_COUNT = 'inventory_count',
-}
+export type E_StockMovementType =
+    | 'purchase'
+    | 'sale'
+    | 'adjustment'
+    | 'waste'
+    | 'return'
+    | 'transfer'
+    | 'damage'
+    | 'spoilage'
+    | 'inventory_count'
 
 export interface I_StockMovement {
     id: T_ObjectId
@@ -238,14 +228,13 @@ export interface I_StockMovementResponse {
 // INVENTORY ALERTS
 // ============================================================================
 
-export enum E_AlertType {
-    LOW_STOCK = 'low_stock',
-    OUT_OF_STOCK = 'out_of_stock',
-    OVERSTOCK = 'overstock',
-    EXPIRING_SOON = 'expiring_soon',
-    EXPIRED = 'expired',
-    DISCREPANCY = 'discrepancy',
-}
+export type E_AlertType =
+    | 'low_stock'
+    | 'out_of_stock'
+    | 'overstock'
+    | 'expiring_soon'
+    | 'expired'
+    | 'discrepancy'
 
 export interface I_InventoryAlert {
     id: T_ObjectId
@@ -390,15 +379,14 @@ export interface I_CreateSupplierRequest {
 // PURCHASE ORDERS
 // ============================================================================
 
-export enum E_PurchaseOrderStatus {
-    DRAFT = 'draft',
-    SENT = 'sent',
-    CONFIRMED = 'confirmed',
-    PARTIALLY_RECEIVED = 'partially_received',
-    RECEIVED = 'received',
-    CANCELLED = 'cancelled',
-    CLOSED = 'closed',
-}
+export type E_PurchaseOrderStatus =
+    | 'draft'
+    | 'sent'
+    | 'confirmed'
+    | 'partially_received'
+    | 'received'
+    | 'cancelled'
+    | 'closed'
 
 export interface I_PurchaseOrder {
     id: T_ObjectId
