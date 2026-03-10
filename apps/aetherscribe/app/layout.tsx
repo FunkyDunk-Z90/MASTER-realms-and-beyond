@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
-import { Navbar, Footer } from '@rnb/ui'
+import { Navbar, Footer, ThemeProvider, ThemeInitializer } from '@rnb/ui'
 import { I_Link } from '@rnb/types'
-
-import { ThemeProvider } from '@/src/context/ThemeContext'
-import { ThemeInitializer } from '@/src/context/ThemeInitializer'
 
 import '@rnb/styles'
 import Logo from '@/public/aetherscribe.jpg'
+
+// Aetherscribe-specific localStorage keys — kept here so they stay in sync
+// between ThemeInitializer (runs before hydration) and ThemeProvider (React).
+const THEME_KEY = 'aether-theme'
+const MODE_KEY = 'aether-mode'
 
 const appName = 'Aetherscribe'
 
@@ -41,10 +43,10 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                <ThemeInitializer />
+                <ThemeInitializer themeStorageKey={THEME_KEY} modeStorageKey={MODE_KEY} />
             </head>
             <body className="app-wrapper">
-                <ThemeProvider>
+                <ThemeProvider themeStorageKey={THEME_KEY} modeStorageKey={MODE_KEY}>
                     <Navbar
                         headerIcon={Logo}
                         headerTitle={appName}

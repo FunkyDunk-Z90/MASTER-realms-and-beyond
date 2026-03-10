@@ -1,16 +1,20 @@
 @use './_variables' as *;
 @use './themes/byte-burger';
+@use './themes/snes';
+@use './themes/n64';
 
 // ╔══════════════════════════════════════════════════════════════════════════╗
 // ║          REALMS & BEYOND — THEME SYSTEM                                 ║
-// ║          6 palettes · 2 modes each · retro arcade · 80s inspired        ║
+// ║          8 palettes · elegant editorial · SNES/N64 retro colour         ║
 // ╠══════════════════════════════════════════════════════════════════════════╣
-// ║  arcade     — amber · olive green · rust fire  (images.jpg palette)     ║
-// ║  phosphor   — bright emerald · army green · sage · amber pop            ║
-// ║  sovereign  — imperial crimson · pale gold · deep maroon                ║
-// ║  void       — space navy · steel blue · space orange  (CBRPNK ref)      ║
-// ║  dusk       — hot magenta · emerald · steel sky  (download(3) palette)  ║
-// ║  parchment  — map cream · terracotta · deep teal  (download(2) palette) ║
+// ║  arcade     — antique gold · sage green · warm dark   (SNES RPG)        ║
+// ║  phosphor   — forest green · leaf · deep forest       (Zelda / DKC)     ║
+// ║  sovereign  — battle crimson · pale gold · deep warm  (SNES RPG battle) ║
+// ║  void       — cobalt steel · space violet · deep blue (N64 Star Fox)    ║
+// ║  dusk       — magic purple · rose flash · twilight    (Chrono Trigger)  ║
+// ║  parchment  — aged paper · warm brown · forest olive  (SNES manual)     ║
+// ║  snes       — deep navy · SNES blue · pixel gold      (authentic 16-bit)║
+// ║  n64        — console charcoal · logo blue · A/B/C/Start buttons        ║
 // ╠══════════════════════════════════════════════════════════════════════════╣
 // ║  Each theme exposes:                                                     ║
 // ║    --primary-color / --accent-color / --highlight-color  (3 hues)       ║
@@ -21,1438 +25,824 @@
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ARCADE
-// Warm amber · olive-phosphor green · rust fire — the default R&B palette
-// Inspired by images.jpg: rust #A4301E · fire #FC4821 · gold #FDA821 · olive
+// Antique gold · sage green · warm near-black — the default R&B palette
+// Inspired by "The Journey" card: SNES RPG treasure gold · ALTTP sage fields
 // ─────────────────────────────────────────────────────────────────────────────
 
 [data-theme='arcade'],
 [data-theme='arcade'][data-mode='dark'] {
     // ── Backgrounds ───────────────────────────────────────────────────────
-    --bg-color:              #0E0A06;
-    --bg-secondary-color:    #1A1408;
-    --bg-surface-color:      #241E10;
-    --bg-inset-color:        #080604;
+    --bg-color:              #0E0C09;
+    --bg-secondary-color:    #161310;
+    --bg-surface-color:      #1D1A14;
+    --bg-inset-color:        #090806;
 
     // ── Text ──────────────────────────────────────────────────────────────
-    --text-color:            #C4B89A;
-    --text-secondary-color:  #8A7A5E;
-    --text-muted-color:      #4A3E2A;
-    --text-heading-color:    #E0D0A8;
+    --text-color:            #C2B79E;
+    --text-secondary-color:  #8A7E6A;
+    --text-muted-color:      #4A4236;
+    --text-heading-color:    #D8CCAC;
 
-    // ── Primary — Arcade Amber ────────────────────────────────────────────
-    --primary-color:         #{$amber};
-    --primary-hover-color:   #{$amber-mid};
-    --primary-deep-color:    #{$amber-deep};
-    --primary-glow:          #{$amber-glow};
-    --primary-glow-strong:   #{$amber-glow-strong};
+    // ── Primary — Antique Gold ─────────────────────────────────────────────
+    --primary-color:         #B89038;
+    --primary-hover-color:   #CCA840;
+    --primary-deep-color:    #7A6020;
+    --primary-glow:          rgba(184, 144, 56, 0.16);
+    --primary-glow-strong:   rgba(184, 144, 56, 0.36);
 
-    // ── Accent — Phosphor Olive Green ─────────────────────────────────────
-    --accent-color:          #5A9038;
-    --accent-dim-color:      #3A6022;
-    --accent-glow:           rgba(90, 144, 56, 0.20);
+    // ── Accent — Sage Green ────────────────────────────────────────────────
+    --accent-color:          #507040;
+    --accent-dim-color:      #304828;
+    --accent-glow:           rgba(80, 112, 64, 0.16);
 
-    // ── Highlight — Rust Fire (3rd hue, warm-red for contrast) ────────────
-    --highlight-color:       #C84018;
-    --highlight-glow:        rgba(200, 64, 24, 0.24);
+    // ── Highlight — Warm Gold-Cream (editorial callout) ────────────────────
+    --highlight-color:       #D4B868;
+    --highlight-glow:        rgba(212, 184, 104, 0.20);
 
     // ── Borders ───────────────────────────────────────────────────────────
-    --border-color:          #2A2018;
-    --border-strong-color:   #4A3E2A;
+    --border-color:          #282318;
+    --border-strong-color:   #3A3428;
     --border-radius:         #{$border-radius};
 
     // ── Semantic ──────────────────────────────────────────────────────────
-    --danger-color:          #C84018;
-    --danger-glow:           rgba(200, 64, 24, 0.30);
-    --warning-color:         #E07020;
-    --success-color:         #5A9038;
-    --submit-color:          #2858A8;
-    --disabled-color:        #3A3228;
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.28);
+    --warning-color:         #C89030;
+    --success-color:         #4A7A3C;
+    --submit-color:          #2858A0;
+    --disabled-color:        #3A3428;
 
     // ── Decorative ────────────────────────────────────────────────────────
-    --rule-color:            #{$amber};
-    --rule-glow:             0 0 8px #{$amber-glow-strong};
-    --blur:                  rgba(14, 10, 6, 0.80);
-    --surface-tint:          linear-gradient(135deg, rgba(196, 120, 24, 0.05) 0%, transparent 65%);
+    --rule-color:            #B89038;
+    --rule-glow:             0 0 8px rgba(184, 144, 56, 0.36);
+    --blur:                  rgba(14, 12, 9, 0.82);
+    --surface-tint:          linear-gradient(135deg, rgba(184, 144, 56, 0.04) 0%, transparent 65%);
 
     // ── Shadows ───────────────────────────────────────────────────────────
-    --shadow-sm:   0 1px 4px rgba(196, 120, 24, 0.14);
-    --shadow-md:   0 4px 16px rgba(196, 120, 24, 0.14);
-    --shadow-lg:   0 10px 40px rgba(196, 120, 24, 0.14);
+    --shadow-sm:   0 1px 4px rgba(184, 144, 56, 0.12);
+    --shadow-md:   0 4px 16px rgba(184, 144, 56, 0.12);
+    --shadow-lg:   0 10px 40px rgba(184, 144, 56, 0.12);
 }
 
 [data-theme='arcade'][data-mode='light'] {
-    --bg-color:              #{$ghost};
-    --bg-secondary-color:    #E4D8C0;
-    --bg-surface-color:      #FFFCF0;
-    --bg-inset-color:        #E0CCA8;
+    --bg-color:              #F2ECE0;
+    --bg-secondary-color:    #E8E0CE;
+    --bg-surface-color:      #FDFAF4;
+    --bg-inset-color:        #E4DCD0;
 
-    --text-color:            #1E1408;
-    --text-secondary-color:  #5A4030;
-    --text-muted-color:      #8A6A48;
-    --text-heading-color:    #0A0604;
+    --text-color:            #2C2018;
+    --text-secondary-color:  #5A4838;
+    --text-muted-color:      #8A7860;
+    --text-heading-color:    #18100A;
 
-    --primary-color:         #9A5810;
-    --primary-hover-color:   #{$amber};
-    --primary-deep-color:    #6A3808;
-    --primary-glow:          rgba(154, 88, 16, 0.15);
-    --primary-glow-strong:   rgba(154, 88, 16, 0.35);
+    --primary-color:         #6A4820;
+    --primary-hover-color:   #7A5828;
+    --primary-deep-color:    #4A3010;
+    --primary-glow:          rgba(106, 72, 32, 0.14);
+    --primary-glow-strong:   rgba(106, 72, 32, 0.30);
 
-    --accent-color:          #2A5E1A;
-    --accent-dim-color:      #1A3A0A;
-    --accent-glow:           rgba(42, 94, 26, 0.15);
+    --accent-color:          #486830;
+    --accent-dim-color:      #304820;
+    --accent-glow:           rgba(72, 104, 48, 0.14);
 
-    --highlight-color:       #8A2808;
-    --highlight-glow:        rgba(138, 40, 8, 0.18);
+    --highlight-color:       #8A7040;
+    --highlight-glow:        rgba(138, 112, 64, 0.14);
 
-    --border-color:          #D8C8A8;
-    --border-strong-color:   #B8A080;
+    --border-color:          #D8CEB8;
+    --border-strong-color:   #B8A890;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #8A2808;
-    --danger-glow:           rgba(138, 40, 8, 0.20);
-    --warning-color:         #B05010;
-    --success-color:         #2A5E1A;
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #A07020;
+    --success-color:         #3A6028;
     --submit-color:          #1A4888;
     --disabled-color:        #A89880;
 
-    --rule-color:            #9A5810;
-    --rule-glow:             0 0 6px rgba(154, 88, 16, 0.35);
-    --blur:                  rgba(240, 234, 216, 0.80);
-    --surface-tint:          linear-gradient(135deg, rgba(154, 88, 16, 0.04) 0%, transparent 65%);
+    --rule-color:            #6A4820;
+    --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+    --blur:                  rgba(242, 236, 224, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px rgba(154, 88, 16, 0.10);
-    --shadow-md:   0 4px 16px rgba(154, 88, 16, 0.10);
-    --shadow-lg:   0 10px 40px rgba(154, 88, 16, 0.10);
+    --shadow-sm:   0 1px 4px rgba(106, 72, 32, 0.08);
+    --shadow-md:   0 4px 16px rgba(106, 72, 32, 0.08);
+    --shadow-lg:   0 10px 40px rgba(106, 72, 32, 0.08);
 }
 
 @media (prefers-color-scheme: light) {
     [data-theme='arcade']:not([data-mode='dark']) {
-        --bg-color:              #{$ghost};
-        --bg-secondary-color:    #E4D8C0;
-        --bg-surface-color:      #FFFCF0;
-        --bg-inset-color:        #E0CCA8;
-        --text-color:            #1E1408;
-        --text-secondary-color:  #5A4030;
-        --text-muted-color:      #8A6A48;
-        --text-heading-color:    #0A0604;
-        --primary-color:         #9A5810;
-        --primary-hover-color:   #{$amber};
-        --primary-deep-color:    #6A3808;
-        --primary-glow:          rgba(154, 88, 16, 0.15);
-        --primary-glow-strong:   rgba(154, 88, 16, 0.35);
-        --accent-color:          #2A5E1A;
-        --accent-dim-color:      #1A3A0A;
-        --accent-glow:           rgba(42, 94, 26, 0.15);
-        --highlight-color:       #8A2808;
-        --highlight-glow:        rgba(138, 40, 8, 0.18);
-        --border-color:          #D8C8A8;
-        --border-strong-color:   #B8A080;
-        --danger-color:          #8A2808;
-        --danger-glow:           rgba(138, 40, 8, 0.20);
-        --warning-color:         #B05010;
-        --success-color:         #2A5E1A;
+        --bg-color:              #F2ECE0;
+        --bg-secondary-color:    #E8E0CE;
+        --bg-surface-color:      #FDFAF4;
+        --bg-inset-color:        #E4DCD0;
+        --text-color:            #2C2018;
+        --text-secondary-color:  #5A4838;
+        --text-muted-color:      #8A7860;
+        --text-heading-color:    #18100A;
+        --primary-color:         #6A4820;
+        --primary-hover-color:   #7A5828;
+        --primary-deep-color:    #4A3010;
+        --primary-glow:          rgba(106, 72, 32, 0.14);
+        --primary-glow-strong:   rgba(106, 72, 32, 0.30);
+        --accent-color:          #486830;
+        --accent-dim-color:      #304820;
+        --accent-glow:           rgba(72, 104, 48, 0.14);
+        --highlight-color:       #8A7040;
+        --highlight-glow:        rgba(138, 112, 64, 0.14);
+        --border-color:          #D8CEB8;
+        --border-strong-color:   #B8A890;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #A07020;
+        --success-color:         #3A6028;
         --submit-color:          #1A4888;
         --disabled-color:        #A89880;
-        --rule-color:            #9A5810;
-        --rule-glow:             0 0 6px rgba(154, 88, 16, 0.35);
-        --blur:                  rgba(240, 234, 216, 0.80);
-        --surface-tint:          linear-gradient(135deg, rgba(154, 88, 16, 0.04) 0%, transparent 65%);
-        --shadow-sm:             0 1px 4px rgba(154, 88, 16, 0.10);
-        --shadow-md:             0 4px 16px rgba(154, 88, 16, 0.10);
-        --shadow-lg:             0 10px 40px rgba(154, 88, 16, 0.10);
+        --rule-color:            #6A4820;
+        --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+        --blur:                  rgba(242, 236, 224, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(106, 72, 32, 0.08);
+        --shadow-md:             0 4px 16px rgba(106, 72, 32, 0.08);
+        --shadow-lg:             0 10px 40px rgba(106, 72, 32, 0.08);
     }
 }
 
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PHOSPHOR
-// Bright emerald · army green text · sage highlights · amber warm pop
-// Inspired by images(2).png: charcoal · army #818B71 · sage #C5CEA5 · emerald
+// Forest green · bright leaf · deep dark — verdant SNES palette
+// Inspired by Zelda: A Link to the Past, Donkey Kong Country, Secret of Mana
 // ─────────────────────────────────────────────────────────────────────────────
 
 [data-theme='phosphor'],
 [data-theme='phosphor'][data-mode='dark'] {
-    --bg-color:              #070A07;
+    --bg-color:              #070C07;
     --bg-secondary-color:    #0D140D;
-    --bg-surface-color:      #131C13;
-    --bg-inset-color:        #040604;
+    --bg-surface-color:      #121A11;
+    --bg-inset-color:        #040804;
 
-    --text-color:            #{$army-green};
-    --text-secondary-color:  #{$sage-green};
-    --text-muted-color:      #485848;
-    --text-heading-color:    #{$bright-emerald};
+    --text-color:            #ACCCA8;
+    --text-secondary-color:  #6A8E68;
+    --text-muted-color:      #3A5038;
+    --text-heading-color:    #C0DCC0;
 
-    --primary-color:         #{$bright-emerald};
-    --primary-hover-color:   #04C060;
-    --primary-deep-color:    #016830;
-    --primary-glow:          rgba(2, 169, 83, 0.22);
-    --primary-glow-strong:   rgba(2, 169, 83, 0.48);
+    --primary-color:         #4A7A3C;
+    --primary-hover-color:   #5A9248;
+    --primary-deep-color:    #2E5028;
+    --primary-glow:          rgba(74, 122, 60, 0.18);
+    --primary-glow-strong:   rgba(74, 122, 60, 0.38);
 
-    --accent-color:          #{$amber};
-    --accent-dim-color:      #{$amber-deep};
-    --accent-glow:           #{$amber-glow};
+    --accent-color:          #80B840;
+    --accent-dim-color:      #507028;
+    --accent-glow:           rgba(128, 184, 64, 0.16);
 
-    --highlight-color:       #{$sage-green};
-    --highlight-glow:        rgba(197, 206, 165, 0.15);
+    --highlight-color:       #A0D880;
+    --highlight-glow:        rgba(160, 216, 128, 0.16);
 
-    --border-color:          #1A2A1A;
-    --border-strong-color:   #3A6A3A;
+    --border-color:          #182818;
+    --border-strong-color:   #2A3E28;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #C84018;
-    --danger-glow:           rgba(200, 64, 24, 0.28);
-    --warning-color:         #{$amber};
-    --success-color:         #{$bright-emerald};
-    --submit-color:          #285888;
-    --disabled-color:        #303830;
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.26);
+    --warning-color:         #B89038;
+    --success-color:         #4A7A3C;
+    --submit-color:          #2858A0;
+    --disabled-color:        #2A3828;
 
-    --rule-color:            #{$bright-emerald};
-    --rule-glow:             0 0 8px rgba(2, 169, 83, 0.48);
-    --blur:                  rgba(7, 10, 7, 0.82);
-    --surface-tint:          linear-gradient(to bottom, rgba(2, 169, 83, 0.05) 0%, transparent 50%);
+    --rule-color:            #4A7A3C;
+    --rule-glow:             0 0 8px rgba(74, 122, 60, 0.38);
+    --blur:                  rgba(7, 12, 7, 0.82);
+    --surface-tint:          linear-gradient(135deg, rgba(74, 122, 60, 0.05) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px rgba(2, 169, 83, 0.16);
-    --shadow-md:   0 4px 16px rgba(2, 169, 83, 0.16);
-    --shadow-lg:   0 10px 40px rgba(2, 169, 83, 0.16);
+    --shadow-sm:   0 1px 4px rgba(74, 122, 60, 0.14);
+    --shadow-md:   0 4px 16px rgba(74, 122, 60, 0.14);
+    --shadow-lg:   0 10px 40px rgba(74, 122, 60, 0.14);
 }
 
 [data-theme='phosphor'][data-mode='light'] {
-    --bg-color:              #E8EDE0;
-    --bg-secondary-color:    #D8E0C8;
-    --bg-surface-color:      #F4F8F0;
-    --bg-inset-color:        #C8D4B8;
+    --bg-color:              #EBF0E4;
+    --bg-secondary-color:    #DCE8D4;
+    --bg-surface-color:      #F6FAF2;
+    --bg-inset-color:        #CED8C4;
 
-    --text-color:            #1A2A1A;
-    --text-secondary-color:  #3A5A3A;
-    --text-muted-color:      #{$army-green};
+    --text-color:            #182A18;
+    --text-secondary-color:  #385A38;
+    --text-muted-color:      #6A8060;
     --text-heading-color:    #0A180A;
 
-    --primary-color:         #016830;
-    --primary-hover-color:   #{$bright-emerald};
-    --primary-deep-color:    #014820;
-    --primary-glow:          rgba(1, 104, 48, 0.15);
-    --primary-glow-strong:   rgba(1, 104, 48, 0.35);
+    --primary-color:         #2E5028;
+    --primary-hover-color:   #4A7A3C;
+    --primary-deep-color:    #1A3018;
+    --primary-glow:          rgba(46, 80, 40, 0.14);
+    --primary-glow-strong:   rgba(46, 80, 40, 0.30);
 
-    --accent-color:          #8A5810;
-    --accent-dim-color:      #{$amber-deep};
-    --accent-glow:           rgba(138, 88, 16, 0.15);
+    --accent-color:          #507028;
+    --accent-dim-color:      #304018;
+    --accent-glow:           rgba(80, 112, 40, 0.14);
 
-    --highlight-color:       #485848;
-    --highlight-glow:        rgba(72, 88, 72, 0.15);
+    --highlight-color:       #486830;
+    --highlight-glow:        rgba(72, 104, 48, 0.14);
 
-    --border-color:          #C8D4B8;
+    --border-color:          #C8D8BC;
     --border-strong-color:   #A0B890;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #8A2808;
-    --danger-glow:           rgba(138, 40, 8, 0.20);
-    --warning-color:         #8A5810;
-    --success-color:         #016830;
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #8A6018;
+    --success-color:         #2E5028;
     --submit-color:          #1A4888;
     --disabled-color:        #909880;
 
-    --rule-color:            #016830;
-    --rule-glow:             0 0 6px rgba(1, 104, 48, 0.35);
-    --blur:                  rgba(232, 237, 224, 0.82);
-    --surface-tint:          linear-gradient(to bottom, rgba(1, 104, 48, 0.04) 0%, transparent 50%);
+    --rule-color:            #2E5028;
+    --rule-glow:             0 0 6px rgba(46, 80, 40, 0.30);
+    --blur:                  rgba(235, 240, 228, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(46, 80, 40, 0.03) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px rgba(1, 104, 48, 0.10);
-    --shadow-md:   0 4px 16px rgba(1, 104, 48, 0.10);
-    --shadow-lg:   0 10px 40px rgba(1, 104, 48, 0.10);
+    --shadow-sm:   0 1px 4px rgba(46, 80, 40, 0.08);
+    --shadow-md:   0 4px 16px rgba(46, 80, 40, 0.08);
+    --shadow-lg:   0 10px 40px rgba(46, 80, 40, 0.08);
 }
 
 @media (prefers-color-scheme: light) {
     [data-theme='phosphor']:not([data-mode='dark']) {
-        --bg-color:              #E8EDE0;
-        --bg-secondary-color:    #D8E0C8;
-        --bg-surface-color:      #F4F8F0;
-        --bg-inset-color:        #C8D4B8;
-        --text-color:            #1A2A1A;
-        --text-secondary-color:  #3A5A3A;
-        --text-muted-color:      #{$army-green};
+        --bg-color:              #EBF0E4;
+        --bg-secondary-color:    #DCE8D4;
+        --bg-surface-color:      #F6FAF2;
+        --bg-inset-color:        #CED8C4;
+        --text-color:            #182A18;
+        --text-secondary-color:  #385A38;
+        --text-muted-color:      #6A8060;
         --text-heading-color:    #0A180A;
-        --primary-color:         #016830;
-        --primary-hover-color:   #{$bright-emerald};
-        --primary-deep-color:    #014820;
-        --primary-glow:          rgba(1, 104, 48, 0.15);
-        --primary-glow-strong:   rgba(1, 104, 48, 0.35);
-        --accent-color:          #8A5810;
-        --accent-dim-color:      #{$amber-deep};
-        --accent-glow:           rgba(138, 88, 16, 0.15);
-        --highlight-color:       #485848;
-        --highlight-glow:        rgba(72, 88, 72, 0.15);
-        --border-color:          #C8D4B8;
+        --primary-color:         #2E5028;
+        --primary-hover-color:   #4A7A3C;
+        --primary-deep-color:    #1A3018;
+        --primary-glow:          rgba(46, 80, 40, 0.14);
+        --primary-glow-strong:   rgba(46, 80, 40, 0.30);
+        --accent-color:          #507028;
+        --accent-dim-color:      #304018;
+        --accent-glow:           rgba(80, 112, 40, 0.14);
+        --highlight-color:       #486830;
+        --highlight-glow:        rgba(72, 104, 48, 0.14);
+        --border-color:          #C8D8BC;
         --border-strong-color:   #A0B890;
-        --danger-color:          #8A2808;
-        --danger-glow:           rgba(138, 40, 8, 0.20);
-        --warning-color:         #8A5810;
-        --success-color:         #016830;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #8A6018;
+        --success-color:         #2E5028;
         --submit-color:          #1A4888;
         --disabled-color:        #909880;
-        --rule-color:            #016830;
-        --rule-glow:             0 0 6px rgba(1, 104, 48, 0.35);
-        --blur:                  rgba(232, 237, 224, 0.82);
-        --surface-tint:          linear-gradient(to bottom, rgba(1, 104, 48, 0.04) 0%, transparent 50%);
-        --shadow-sm:             0 1px 4px rgba(1, 104, 48, 0.10);
-        --shadow-md:             0 4px 16px rgba(1, 104, 48, 0.10);
-        --shadow-lg:             0 10px 40px rgba(1, 104, 48, 0.10);
+        --rule-color:            #2E5028;
+        --rule-glow:             0 0 6px rgba(46, 80, 40, 0.30);
+        --blur:                  rgba(235, 240, 228, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(46, 80, 40, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(46, 80, 40, 0.08);
+        --shadow-md:             0 4px 16px rgba(46, 80, 40, 0.08);
+        --shadow-lg:             0 10px 40px rgba(46, 80, 40, 0.08);
     }
 }
 
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SOVEREIGN
-// Imperial crimson · pale gold · ivory text on near-black
-// Inspired by original-8850.webp: stark black · vivid red · white authority
+// Battle crimson · pale gold · deep warm dark — imperial SNES palette
+// Inspired by FFVI, Chrono Trigger battle scenes, SNES HP bar reds
 // ─────────────────────────────────────────────────────────────────────────────
 
 [data-theme='sovereign'],
 [data-theme='sovereign'][data-mode='dark'] {
-    --bg-color:              #0A0706;
-    --bg-secondary-color:    #160A08;
-    --bg-surface-color:      #200E0C;
-    --bg-inset-color:        #{$deep-maroon};
+    --bg-color:              #0C0808;
+    --bg-secondary-color:    #140E0E;
+    --bg-surface-color:      #1A1010;
+    --bg-inset-color:        #080505;
 
-    --text-color:            #D8C0B0;
-    --text-secondary-color:  #907060;
-    --text-muted-color:      #4A3028;
-    --text-heading-color:    #F0D8C8;
+    --text-color:            #C8B8A8;
+    --text-secondary-color:  #8A7868;
+    --text-muted-color:      #4A3630;
+    --text-heading-color:    #D8C8B0;
 
-    --primary-color:         #{$crimson};
-    --primary-hover-color:   #{$crimson-mid};
-    --primary-deep-color:    #{$crimson-deep};
-    --primary-glow:          #{$crimson-glow};
-    --primary-glow-strong:   #{$crimson-glow-str};
+    --primary-color:         #A83020;
+    --primary-hover-color:   #C03828;
+    --primary-deep-color:    #701808;
+    --primary-glow:          rgba(168, 48, 32, 0.20);
+    --primary-glow-strong:   rgba(168, 48, 32, 0.42);
 
-    --accent-color:          #{$pale-gold};
-    --accent-dim-color:      #{$pale-gold-dim};
-    --accent-glow:           #{$pale-gold-glow};
+    --accent-color:          #B89028;
+    --accent-dim-color:      #7A6018;
+    --accent-glow:           rgba(184, 144, 40, 0.16);
 
-    --highlight-color:       #E8D8C8;
-    --highlight-glow:        rgba(232, 216, 200, 0.12);
+    --highlight-color:       #D0B040;
+    --highlight-glow:        rgba(208, 176, 64, 0.18);
 
-    --border-color:          #280E0C;
-    --border-strong-color:   #4A1A18;
+    --border-color:          #281818;
+    --border-strong-color:   #3A2020;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #{$crimson};
-    --danger-glow:           #{$crimson-glow-str};
-    --warning-color:         #{$pale-gold};
-    --success-color:         #2A5A28;
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.40);
+    --warning-color:         #B89028;
+    --success-color:         #3A6028;
     --submit-color:          #1A2888;
     --disabled-color:        #3A2820;
 
-    --rule-color:            #{$crimson};
-    --rule-glow:             0 0 8px #{$crimson-glow-str};
-    --blur:                  rgba(10, 7, 6, 0.82);
-    --surface-tint:          linear-gradient(180deg, rgba(196, 20, 32, 0.06) 0%, transparent 60%);
+    --rule-color:            #A83020;
+    --rule-glow:             0 0 8px rgba(168, 48, 32, 0.42);
+    --blur:                  rgba(12, 8, 8, 0.84);
+    --surface-tint:          linear-gradient(180deg, rgba(168, 48, 32, 0.05) 0%, transparent 60%);
 
-    --shadow-sm:   0 1px 4px #{$crimson-glow};
-    --shadow-md:   0 4px 16px #{$crimson-glow};
-    --shadow-lg:   0 10px 40px #{$crimson-glow};
+    --shadow-sm:   0 1px 4px rgba(168, 48, 32, 0.16);
+    --shadow-md:   0 4px 16px rgba(168, 48, 32, 0.16);
+    --shadow-lg:   0 10px 40px rgba(168, 48, 32, 0.16);
 }
 
 [data-theme='sovereign'][data-mode='light'] {
-    --bg-color:              #FFF0E8;
-    --bg-secondary-color:    #F0E0D0;
+    --bg-color:              #FBF0EC;
+    --bg-secondary-color:    #F0E0D8;
     --bg-surface-color:      #FFFFFF;
-    --bg-inset-color:        #EAD0C0;
+    --bg-inset-color:        #EAD4C8;
 
     --text-color:            #280C08;
     --text-secondary-color:  #5A2818;
     --text-muted-color:      #9A6850;
     --text-heading-color:    #0A0402;
 
-    --primary-color:         #8A0E18;
-    --primary-hover-color:   #{$crimson};
-    --primary-deep-color:    #{$crimson-deep};
-    --primary-glow:          rgba(138, 14, 24, 0.15);
-    --primary-glow-strong:   rgba(138, 14, 24, 0.35);
+    --primary-color:         #8A1A10;
+    --primary-hover-color:   #A83020;
+    --primary-deep-color:    #600E08;
+    --primary-glow:          rgba(138, 26, 16, 0.14);
+    --primary-glow-strong:   rgba(138, 26, 16, 0.30);
 
-    --accent-color:          #7A6808;
-    --accent-dim-color:      #5A4A04;
-    --accent-glow:           rgba(122, 104, 8, 0.15);
+    --accent-color:          #7A6010;
+    --accent-dim-color:      #5A4808;
+    --accent-glow:           rgba(122, 96, 16, 0.14);
 
     --highlight-color:       #3A1010;
-    --highlight-glow:        rgba(58, 16, 16, 0.15);
+    --highlight-glow:        rgba(58, 16, 16, 0.14);
 
     --border-color:          #F0D8CC;
     --border-strong-color:   #D0A898;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #8A0E18;
-    --danger-glow:           rgba(138, 14, 24, 0.20);
-    --warning-color:         #7A6808;
+    --danger-color:          #8A1A10;
+    --danger-glow:           rgba(138, 26, 16, 0.20);
+    --warning-color:         #7A6010;
     --success-color:         #1A4018;
     --submit-color:          #1A1A88;
     --disabled-color:        #B09888;
 
-    --rule-color:            #8A0E18;
-    --rule-glow:             0 0 6px rgba(138, 14, 24, 0.35);
-    --blur:                  rgba(255, 240, 232, 0.82);
-    --surface-tint:          linear-gradient(180deg, rgba(138, 14, 24, 0.04) 0%, transparent 60%);
+    --rule-color:            #8A1A10;
+    --rule-glow:             0 0 6px rgba(138, 26, 16, 0.30);
+    --blur:                  rgba(251, 240, 236, 0.84);
+    --surface-tint:          linear-gradient(180deg, rgba(138, 26, 16, 0.03) 0%, transparent 60%);
 
-    --shadow-sm:   0 1px 4px rgba(138, 14, 24, 0.10);
-    --shadow-md:   0 4px 16px rgba(138, 14, 24, 0.10);
-    --shadow-lg:   0 10px 40px rgba(138, 14, 24, 0.10);
+    --shadow-sm:   0 1px 4px rgba(138, 26, 16, 0.08);
+    --shadow-md:   0 4px 16px rgba(138, 26, 16, 0.08);
+    --shadow-lg:   0 10px 40px rgba(138, 26, 16, 0.08);
 }
 
 @media (prefers-color-scheme: light) {
     [data-theme='sovereign']:not([data-mode='dark']) {
-        --bg-color:              #FFF0E8;
-        --bg-secondary-color:    #F0E0D0;
+        --bg-color:              #FBF0EC;
+        --bg-secondary-color:    #F0E0D8;
         --bg-surface-color:      #FFFFFF;
-        --bg-inset-color:        #EAD0C0;
+        --bg-inset-color:        #EAD4C8;
         --text-color:            #280C08;
         --text-secondary-color:  #5A2818;
         --text-muted-color:      #9A6850;
         --text-heading-color:    #0A0402;
-        --primary-color:         #8A0E18;
-        --primary-hover-color:   #{$crimson};
-        --primary-deep-color:    #{$crimson-deep};
-        --primary-glow:          rgba(138, 14, 24, 0.15);
-        --primary-glow-strong:   rgba(138, 14, 24, 0.35);
-        --accent-color:          #7A6808;
-        --accent-dim-color:      #5A4A04;
-        --accent-glow:           rgba(122, 104, 8, 0.15);
+        --primary-color:         #8A1A10;
+        --primary-hover-color:   #A83020;
+        --primary-deep-color:    #600E08;
+        --primary-glow:          rgba(138, 26, 16, 0.14);
+        --primary-glow-strong:   rgba(138, 26, 16, 0.30);
+        --accent-color:          #7A6010;
+        --accent-dim-color:      #5A4808;
+        --accent-glow:           rgba(122, 96, 16, 0.14);
         --highlight-color:       #3A1010;
-        --highlight-glow:        rgba(58, 16, 16, 0.15);
+        --highlight-glow:        rgba(58, 16, 16, 0.14);
         --border-color:          #F0D8CC;
         --border-strong-color:   #D0A898;
-        --danger-color:          #8A0E18;
-        --danger-glow:           rgba(138, 14, 24, 0.20);
-        --warning-color:         #7A6808;
+        --danger-color:          #8A1A10;
+        --danger-glow:           rgba(138, 26, 16, 0.20);
+        --warning-color:         #7A6010;
         --success-color:         #1A4018;
         --submit-color:          #1A1A88;
         --disabled-color:        #B09888;
-        --rule-color:            #8A0E18;
-        --rule-glow:             0 0 6px rgba(138, 14, 24, 0.35);
-        --blur:                  rgba(255, 240, 232, 0.82);
-        --surface-tint:          linear-gradient(180deg, rgba(138, 14, 24, 0.04) 0%, transparent 60%);
-        --shadow-sm:             0 1px 4px rgba(138, 14, 24, 0.10);
-        --shadow-md:             0 4px 16px rgba(138, 14, 24, 0.10);
-        --shadow-lg:             0 10px 40px rgba(138, 14, 24, 0.10);
+        --rule-color:            #8A1A10;
+        --rule-glow:             0 0 6px rgba(138, 26, 16, 0.30);
+        --blur:                  rgba(251, 240, 236, 0.84);
+        --surface-tint:          linear-gradient(180deg, rgba(138, 26, 16, 0.03) 0%, transparent 60%);
+        --shadow-sm:             0 1px 4px rgba(138, 26, 16, 0.08);
+        --shadow-md:             0 4px 16px rgba(138, 26, 16, 0.08);
+        --shadow-lg:             0 10px 40px rgba(138, 26, 16, 0.08);
     }
 }
 
 
 // ─────────────────────────────────────────────────────────────────────────────
 // VOID
-// Space navy · steel blue · space orange pop
-// Inspired by original-a3970.webp (CBRPNK): navy #1A1F3A · orange #E84A0A
+// Cobalt steel · space violet · deep blue-dark — N64 cosmic palette
+// Inspired by Star Fox 64, Metroid, Majora's Mask, N64 space-game colours
 // ─────────────────────────────────────────────────────────────────────────────
 
 [data-theme='void'],
 [data-theme='void'][data-mode='dark'] {
-    --bg-color:              #08090E;
-    --bg-secondary-color:    #0E1220;
-    --bg-surface-color:      #141C2E;
-    --bg-inset-color:        #060810;
+    --bg-color:              #07080F;
+    --bg-secondary-color:    #0D0E18;
+    --bg-surface-color:      #12141E;
+    --bg-inset-color:        #040508;
 
-    --text-color:            #8098B8;
-    --text-secondary-color:  #4A6888;
-    --text-muted-color:      #2A4060;
-    --text-heading-color:    #B8D0E8;
+    --text-color:            #A8B4C8;
+    --text-secondary-color:  #6878A0;
+    --text-muted-color:      #38405A;
+    --text-heading-color:    #C0CCDC;
 
-    --primary-color:         #{$steel-blue};
-    --primary-hover-color:   #{$steel-blue-mid};
-    --primary-deep-color:    #2A5878;
-    --primary-glow:          #{$steel-blue-glow};
-    --primary-glow-strong:   #{$steel-blue-glow-str};
+    --primary-color:         #4878B0;
+    --primary-hover-color:   #5890CC;
+    --primary-deep-color:    #2C5080;
+    --primary-glow:          rgba(72, 120, 176, 0.18);
+    --primary-glow-strong:   rgba(72, 120, 176, 0.40);
 
-    --accent-color:          #{$space-orange};
-    --accent-dim-color:      #A83008;
-    --accent-glow:           #{$space-orange-glow};
+    --accent-color:          #7058A8;
+    --accent-dim-color:      #503878;
+    --accent-glow:           rgba(112, 88, 168, 0.16);
 
-    --highlight-color:       #{$cool-gray};
-    --highlight-glow:        rgba(122, 128, 136, 0.15);
+    --highlight-color:       #90B8E0;
+    --highlight-glow:        rgba(144, 184, 224, 0.14);
 
-    --border-color:          #141E2E;
-    --border-strong-color:   #2A3A5A;
+    --border-color:          #181C28;
+    --border-strong-color:   #242A3A;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #{$space-orange};
-    --danger-glow:           #{$space-orange-glow-str};
-    --warning-color:         #F09A18;
-    --success-color:         #2A9870;
-    --submit-color:          #{$steel-blue};
-    --disabled-color:        #202838;
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.26);
+    --warning-color:         #B89038;
+    --success-color:         #3A6A48;
+    --submit-color:          #4878B0;
+    --disabled-color:        #282E40;
 
-    --rule-color:            #{$steel-blue};
-    --rule-glow:             0 0 8px #{$steel-blue-glow-str};
-    --blur:                  rgba(8, 9, 14, 0.82);
-    --surface-tint:          linear-gradient(135deg, rgba(74, 144, 184, 0.06) 0%, rgba(232, 74, 10, 0.03) 100%);
+    --rule-color:            #4878B0;
+    --rule-glow:             0 0 8px rgba(72, 120, 176, 0.40);
+    --blur:                  rgba(7, 8, 15, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(72, 120, 176, 0.06) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px #{$steel-blue-glow};
-    --shadow-md:   0 4px 16px #{$steel-blue-glow};
-    --shadow-lg:   0 10px 40px #{$steel-blue-glow};
+    --shadow-sm:   0 1px 4px rgba(72, 120, 176, 0.14);
+    --shadow-md:   0 4px 16px rgba(72, 120, 176, 0.14);
+    --shadow-lg:   0 10px 40px rgba(72, 120, 176, 0.14);
 }
 
 [data-theme='void'][data-mode='light'] {
-    --bg-color:              #EEF2FA;
-    --bg-secondary-color:    #DDE6F4;
-    --bg-surface-color:      #FFFFFF;
-    --bg-inset-color:        #D0DCF0;
+    --bg-color:              #EEF0F8;
+    --bg-secondary-color:    #E0E4F4;
+    --bg-surface-color:      #FAFBFF;
+    --bg-inset-color:        #D4DAF0;
 
-    --text-color:            #0A1428;
-    --text-secondary-color:  #2A3A58;
-    --text-muted-color:      #5A7090;
-    --text-heading-color:    #060810;
+    --text-color:            #080C28;
+    --text-secondary-color:  #283868;
+    --text-muted-color:      #6070A0;
+    --text-heading-color:    #040818;
 
-    --primary-color:         #2A5878;
-    --primary-hover-color:   #{$steel-blue};
-    --primary-deep-color:    #1A3858;
-    --primary-glow:          rgba(42, 88, 120, 0.15);
-    --primary-glow-strong:   rgba(42, 88, 120, 0.35);
+    --primary-color:         #2C5080;
+    --primary-hover-color:   #4878B0;
+    --primary-deep-color:    #182840;
+    --primary-glow:          rgba(44, 80, 128, 0.14);
+    --primary-glow-strong:   rgba(44, 80, 128, 0.30);
 
-    --accent-color:          #C04A18;
-    --accent-dim-color:      #883010;
-    --accent-glow:           rgba(192, 74, 24, 0.15);
+    --accent-color:          #503878;
+    --accent-dim-color:      #382858;
+    --accent-glow:           rgba(80, 56, 120, 0.14);
 
-    --highlight-color:       #4A5060;
-    --highlight-glow:        rgba(74, 80, 96, 0.15);
+    --highlight-color:       #182840;
+    --highlight-glow:        rgba(24, 40, 64, 0.14);
 
-    --border-color:          #D0DCF0;
-    --border-strong-color:   #A0B8D8;
+    --border-color:          #D4DAF0;
+    --border-strong-color:   #A8B4D8;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #C04A18;
-    --danger-glow:           rgba(192, 74, 24, 0.22);
-    --warning-color:         #C07818;
-    --success-color:         #1A7858;
-    --submit-color:          #2A5878;
-    --disabled-color:        #A0B0C8;
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #8A7018;
+    --success-color:         #1A4030;
+    --submit-color:          #2C5080;
+    --disabled-color:        #A8B0C8;
 
-    --rule-color:            #2A5878;
-    --rule-glow:             0 0 6px rgba(42, 88, 120, 0.35);
-    --blur:                  rgba(238, 242, 250, 0.82);
-    --surface-tint:          linear-gradient(135deg, rgba(42, 88, 120, 0.04) 0%, transparent 65%);
+    --rule-color:            #2C5080;
+    --rule-glow:             0 0 6px rgba(44, 80, 128, 0.30);
+    --blur:                  rgba(238, 240, 248, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(44, 80, 128, 0.03) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px rgba(42, 88, 120, 0.10);
-    --shadow-md:   0 4px 16px rgba(42, 88, 120, 0.10);
-    --shadow-lg:   0 10px 40px rgba(42, 88, 120, 0.10);
+    --shadow-sm:   0 1px 4px rgba(44, 80, 128, 0.08);
+    --shadow-md:   0 4px 16px rgba(44, 80, 128, 0.08);
+    --shadow-lg:   0 10px 40px rgba(44, 80, 128, 0.08);
 }
 
 @media (prefers-color-scheme: light) {
     [data-theme='void']:not([data-mode='dark']) {
-        --bg-color:              #EEF2FA;
-        --bg-secondary-color:    #DDE6F4;
-        --bg-surface-color:      #FFFFFF;
-        --bg-inset-color:        #D0DCF0;
-        --text-color:            #0A1428;
-        --text-secondary-color:  #2A3A58;
-        --text-muted-color:      #5A7090;
-        --text-heading-color:    #060810;
-        --primary-color:         #2A5878;
-        --primary-hover-color:   #{$steel-blue};
-        --primary-deep-color:    #1A3858;
-        --primary-glow:          rgba(42, 88, 120, 0.15);
-        --primary-glow-strong:   rgba(42, 88, 120, 0.35);
-        --accent-color:          #C04A18;
-        --accent-dim-color:      #883010;
-        --accent-glow:           rgba(192, 74, 24, 0.15);
-        --highlight-color:       #4A5060;
-        --highlight-glow:        rgba(74, 80, 96, 0.15);
-        --border-color:          #D0DCF0;
-        --border-strong-color:   #A0B8D8;
-        --danger-color:          #C04A18;
-        --danger-glow:           rgba(192, 74, 24, 0.22);
-        --warning-color:         #C07818;
-        --success-color:         #1A7858;
-        --submit-color:          #2A5878;
-        --disabled-color:        #A0B0C8;
-        --rule-color:            #2A5878;
-        --rule-glow:             0 0 6px rgba(42, 88, 120, 0.35);
-        --blur:                  rgba(238, 242, 250, 0.82);
-        --surface-tint:          linear-gradient(135deg, rgba(42, 88, 120, 0.04) 0%, transparent 65%);
-        --shadow-sm:             0 1px 4px rgba(42, 88, 120, 0.10);
-        --shadow-md:             0 4px 16px rgba(42, 88, 120, 0.10);
-        --shadow-lg:             0 10px 40px rgba(42, 88, 120, 0.10);
+        --bg-color:              #EEF0F8;
+        --bg-secondary-color:    #E0E4F4;
+        --bg-surface-color:      #FAFBFF;
+        --bg-inset-color:        #D4DAF0;
+        --text-color:            #080C28;
+        --text-secondary-color:  #283868;
+        --text-muted-color:      #6070A0;
+        --text-heading-color:    #040818;
+        --primary-color:         #2C5080;
+        --primary-hover-color:   #4878B0;
+        --primary-deep-color:    #182840;
+        --primary-glow:          rgba(44, 80, 128, 0.14);
+        --primary-glow-strong:   rgba(44, 80, 128, 0.30);
+        --accent-color:          #503878;
+        --accent-dim-color:      #382858;
+        --accent-glow:           rgba(80, 56, 120, 0.14);
+        --highlight-color:       #182840;
+        --highlight-glow:        rgba(24, 40, 64, 0.14);
+        --border-color:          #D4DAF0;
+        --border-strong-color:   #A8B4D8;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #8A7018;
+        --success-color:         #1A4030;
+        --submit-color:          #2C5080;
+        --disabled-color:        #A8B0C8;
+        --rule-color:            #2C5080;
+        --rule-glow:             0 0 6px rgba(44, 80, 128, 0.30);
+        --blur:                  rgba(238, 240, 248, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(44, 80, 128, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(44, 80, 128, 0.08);
+        --shadow-md:             0 4px 16px rgba(44, 80, 128, 0.08);
+        --shadow-lg:             0 10px 40px rgba(44, 80, 128, 0.08);
     }
 }
 
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DUSK
-// Hot magenta · emerald green · steel sky blue — 80s arcade (Tron / Galaga)
-// Inspired by download(3).png: #170011 · #7A1050 · #C83070 · #30B878 · #78A8C8
+// Magic purple · rose flash · twilight dark — SNES mystical palette
+// Inspired by Chrono Trigger magic moments, Castlevania, SNES spell effects
 // ─────────────────────────────────────────────────────────────────────────────
 
 [data-theme='dusk'],
 [data-theme='dusk'][data-mode='dark'] {
-    --bg-color:              #0C080F;
-    --bg-secondary-color:    #160E1E;
-    --bg-surface-color:      #1E1428;
-    --bg-inset-color:        #080510;
+    --bg-color:              #0B080F;
+    --bg-secondary-color:    #130E18;
+    --bg-surface-color:      #191220;
+    --bg-inset-color:        #070508;
 
-    --text-color:            #C890B8;
-    --text-secondary-color:  #8060A0;
-    --text-muted-color:      #48304A;
-    --text-heading-color:    #F0A8E0;
+    --text-color:            #C0A8C4;
+    --text-secondary-color:  #806878;
+    --text-muted-color:      #484050;
+    --text-heading-color:    #D4C0D4;
 
-    --primary-color:         #{$magenta};
-    --primary-hover-color:   #{$magenta-mid};
-    --primary-deep-color:    #{$magenta-deep};
-    --primary-glow:          #{$magenta-glow};
-    --primary-glow-strong:   #{$magenta-glow-str};
+    --primary-color:         #9040A0;
+    --primary-hover-color:   #A850B8;
+    --primary-deep-color:    #602870;
+    --primary-glow:          rgba(144, 64, 160, 0.18);
+    --primary-glow-strong:   rgba(144, 64, 160, 0.40);
 
-    --accent-color:          #{$dusk-emerald};
-    --accent-dim-color:      #1A7048;
-    --accent-glow:           #{$dusk-emerald-glow};
+    --accent-color:          #B86090;
+    --accent-dim-color:      #7A3A58;
+    --accent-glow:           rgba(184, 96, 144, 0.16);
 
-    --highlight-color:       #{$steel-sky};
-    --highlight-glow:        #{$steel-sky-glow};
+    --highlight-color:       #D090B0;
+    --highlight-glow:        rgba(208, 144, 176, 0.16);
 
-    --border-color:          #1E1030;
-    --border-strong-color:   #3A2050;
+    --border-color:          #1E1428;
+    --border-strong-color:   #2A1C38;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #{$magenta};
-    --danger-glow:           #{$magenta-glow-str};
-    --warning-color:         #D89020;
-    --success-color:         #{$dusk-emerald};
-    --submit-color:          #3A78A8;
-    --disabled-color:        #302040;
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.26);
+    --warning-color:         #B89038;
+    --success-color:         #3A6848;
+    --submit-color:          #5030A0;
+    --disabled-color:        #302840;
 
-    --rule-color:            #{$magenta};
-    --rule-glow:             0 0 8px #{$magenta-glow-str};
-    --blur:                  rgba(12, 8, 15, 0.82);
-    --surface-tint:          linear-gradient(135deg, rgba(200, 48, 112, 0.06) 0%, rgba(48, 184, 120, 0.03) 100%);
+    --rule-color:            #9040A0;
+    --rule-glow:             0 0 8px rgba(144, 64, 160, 0.40);
+    --blur:                  rgba(11, 8, 15, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(144, 64, 160, 0.05) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px #{$magenta-glow};
-    --shadow-md:   0 4px 16px #{$magenta-glow};
-    --shadow-lg:   0 10px 40px #{$magenta-glow};
+    --shadow-sm:   0 1px 4px rgba(144, 64, 160, 0.14);
+    --shadow-md:   0 4px 16px rgba(144, 64, 160, 0.14);
+    --shadow-lg:   0 10px 40px rgba(144, 64, 160, 0.14);
 }
 
 [data-theme='dusk'][data-mode='light'] {
-    --bg-color:              #FEF0F8;
-    --bg-secondary-color:    #F2E0F0;
-    --bg-surface-color:      #FFFFFF;
-    --bg-inset-color:        #E8D0EC;
+    --bg-color:              #F6EEF8;
+    --bg-secondary-color:    #EDE0F4;
+    --bg-surface-color:      #FDFAFF;
+    --bg-inset-color:        #E4D0EC;
 
-    --text-color:            #1A0820;
-    --text-secondary-color:  #501840;
-    --text-muted-color:      #906080;
-    --text-heading-color:    #0A0410;
+    --text-color:            #1E0828;
+    --text-secondary-color:  #502858;
+    --text-muted-color:      #907890;
+    --text-heading-color:    #0E0418;
 
-    --primary-color:         #8A1848;
-    --primary-hover-color:   #{$magenta};
-    --primary-deep-color:    #{$magenta-deep};
-    --primary-glow:          rgba(138, 24, 72, 0.15);
-    --primary-glow-strong:   rgba(138, 24, 72, 0.35);
+    --primary-color:         #602870;
+    --primary-hover-color:   #9040A0;
+    --primary-deep-color:    #401850;
+    --primary-glow:          rgba(96, 40, 112, 0.14);
+    --primary-glow-strong:   rgba(96, 40, 112, 0.30);
 
-    --accent-color:          #1A6848;
-    --accent-dim-color:      #0E4830;
-    --accent-glow:           rgba(26, 104, 72, 0.15);
+    --accent-color:          #7A3A58;
+    --accent-dim-color:      #582840;
+    --accent-glow:           rgba(122, 58, 88, 0.14);
 
-    --highlight-color:       #3A6888;
-    --highlight-glow:        rgba(58, 104, 136, 0.15);
+    --highlight-color:       #2E1040;
+    --highlight-glow:        rgba(46, 16, 64, 0.14);
 
-    --border-color:          #E8D8F0;
-    --border-strong-color:   #C8A8D8;
+    --border-color:          #EAD8F4;
+    --border-strong-color:   #C8A8DC;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #8A1848;
-    --danger-glow:           rgba(138, 24, 72, 0.20);
-    --warning-color:         #906010;
-    --success-color:         #1A6848;
-    --submit-color:          #1A5888;
-    --disabled-color:        #B898C8;
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #8A6818;
+    --success-color:         #1A4830;
+    --submit-color:          #402080;
+    --disabled-color:        #B098B8;
 
-    --rule-color:            #8A1848;
-    --rule-glow:             0 0 6px rgba(138, 24, 72, 0.35);
-    --blur:                  rgba(254, 240, 248, 0.82);
-    --surface-tint:          linear-gradient(135deg, rgba(138, 24, 72, 0.04) 0%, transparent 65%);
+    --rule-color:            #602870;
+    --rule-glow:             0 0 6px rgba(96, 40, 112, 0.30);
+    --blur:                  rgba(246, 238, 248, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(96, 40, 112, 0.03) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px rgba(138, 24, 72, 0.10);
-    --shadow-md:   0 4px 16px rgba(138, 24, 72, 0.10);
-    --shadow-lg:   0 10px 40px rgba(138, 24, 72, 0.10);
+    --shadow-sm:   0 1px 4px rgba(96, 40, 112, 0.08);
+    --shadow-md:   0 4px 16px rgba(96, 40, 112, 0.08);
+    --shadow-lg:   0 10px 40px rgba(96, 40, 112, 0.08);
 }
 
 @media (prefers-color-scheme: light) {
     [data-theme='dusk']:not([data-mode='dark']) {
-        --bg-color:              #FEF0F8;
-        --bg-secondary-color:    #F2E0F0;
-        --bg-surface-color:      #FFFFFF;
-        --bg-inset-color:        #E8D0EC;
-        --text-color:            #1A0820;
-        --text-secondary-color:  #501840;
-        --text-muted-color:      #906080;
-        --text-heading-color:    #0A0410;
-        --primary-color:         #8A1848;
-        --primary-hover-color:   #{$magenta};
-        --primary-deep-color:    #{$magenta-deep};
-        --primary-glow:          rgba(138, 24, 72, 0.15);
-        --primary-glow-strong:   rgba(138, 24, 72, 0.35);
-        --accent-color:          #1A6848;
-        --accent-dim-color:      #0E4830;
-        --accent-glow:           rgba(26, 104, 72, 0.15);
-        --highlight-color:       #3A6888;
-        --highlight-glow:        rgba(58, 104, 136, 0.15);
-        --border-color:          #E8D8F0;
-        --border-strong-color:   #C8A8D8;
-        --danger-color:          #8A1848;
-        --danger-glow:           rgba(138, 24, 72, 0.20);
-        --warning-color:         #906010;
-        --success-color:         #1A6848;
-        --submit-color:          #1A5888;
-        --disabled-color:        #B898C8;
-        --rule-color:            #8A1848;
-        --rule-glow:             0 0 6px rgba(138, 24, 72, 0.35);
-        --blur:                  rgba(254, 240, 248, 0.82);
-        --surface-tint:          linear-gradient(135deg, rgba(138, 24, 72, 0.04) 0%, transparent 65%);
-        --shadow-sm:             0 1px 4px rgba(138, 24, 72, 0.10);
-        --shadow-md:             0 4px 16px rgba(138, 24, 72, 0.10);
-        --shadow-lg:             0 10px 40px rgba(138, 24, 72, 0.10);
+        --bg-color:              #F6EEF8;
+        --bg-secondary-color:    #EDE0F4;
+        --bg-surface-color:      #FDFAFF;
+        --bg-inset-color:        #E4D0EC;
+        --text-color:            #1E0828;
+        --text-secondary-color:  #502858;
+        --text-muted-color:      #907890;
+        --text-heading-color:    #0E0418;
+        --primary-color:         #602870;
+        --primary-hover-color:   #9040A0;
+        --primary-deep-color:    #401850;
+        --primary-glow:          rgba(96, 40, 112, 0.14);
+        --primary-glow-strong:   rgba(96, 40, 112, 0.30);
+        --accent-color:          #7A3A58;
+        --accent-dim-color:      #582840;
+        --accent-glow:           rgba(122, 58, 88, 0.14);
+        --highlight-color:       #2E1040;
+        --highlight-glow:        rgba(46, 16, 64, 0.14);
+        --border-color:          #EAD8F4;
+        --border-strong-color:   #C8A8DC;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #8A6818;
+        --success-color:         #1A4830;
+        --submit-color:          #402080;
+        --disabled-color:        #B098B8;
+        --rule-color:            #602870;
+        --rule-glow:             0 0 6px rgba(96, 40, 112, 0.30);
+        --blur:                  rgba(246, 238, 248, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(96, 40, 112, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(96, 40, 112, 0.08);
+        --shadow-md:             0 4px 16px rgba(96, 40, 112, 0.08);
+        --shadow-lg:             0 10px 40px rgba(96, 40, 112, 0.08);
     }
 }
 
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PARCHMENT
-// Aged map cream · terracotta earth · deep teal · dusty rose
-// Inspired by download(2).png: #874537 · #D37F7F · #F2E1C3 · #54A498 · #105446
-// Naturally LIGHT — dark mode is an inversion
+// Aged paper · warm brown · forest olive — SNES game manual palette
+// Inspired by old RPG cartridge box art, SNES instruction booklets, map cream
 // ─────────────────────────────────────────────────────────────────────────────
 
 [data-theme='parchment'],
 [data-theme='parchment'][data-mode='light'] {
-    --bg-color:              #{$map-cream};
-    --bg-secondary-color:    #E8D0A8;
-    --bg-surface-color:      #FBF5E8;
-    --bg-inset-color:        #E0C898;
+    --bg-color:              #F2ECE0;
+    --bg-secondary-color:    #E8E0CE;
+    --bg-surface-color:      #FDFAF4;
+    --bg-inset-color:        #E2D9C8;
 
-    --text-color:            #2A1A0C;
-    --text-secondary-color:  #5A3A20;
-    --text-muted-color:      #8A6448;
-    --text-heading-color:    #120C04;
+    --text-color:            #2C2018;
+    --text-secondary-color:  #5A4838;
+    --text-muted-color:      #8A7860;
+    --text-heading-color:    #18100A;
 
-    --primary-color:         #{$map-terracotta};
-    --primary-hover-color:   #{$map-terracotta-mid};
-    --primary-deep-color:    #5E2A18;
-    --primary-glow:          #{$map-terracotta-glow};
-    --primary-glow-strong:   #{$map-terracotta-glow-str};
+    --primary-color:         #6A4820;
+    --primary-hover-color:   #7A5828;
+    --primary-deep-color:    #4A3010;
+    --primary-glow:          rgba(106, 72, 32, 0.14);
+    --primary-glow-strong:   rgba(106, 72, 32, 0.28);
 
-    --accent-color:          #{$map-teal-deep};
-    --accent-dim-color:      #0A3830;
-    --accent-glow:           #{$map-teal-glow};
+    --accent-color:          #486830;
+    --accent-dim-color:      #304820;
+    --accent-glow:           rgba(72, 104, 48, 0.14);
 
-    --highlight-color:       #{$dusty-rose};
-    --highlight-glow:        #{$dusty-rose-glow};
+    --highlight-color:       #8A7848;
+    --highlight-glow:        rgba(138, 120, 72, 0.14);
 
-    --border-color:          #D8C0A0;
-    --border-strong-color:   #B89870;
+    --border-color:          #D8CEB8;
+    --border-strong-color:   #B8A890;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #{$map-terracotta};
-    --danger-glow:           #{$map-terracotta-glow-str};
-    --warning-color:         #{$amber};
-    --success-color:         #{$map-teal-deep};
-    --submit-color:          #{$map-teal-deep};
-    --disabled-color:        #C0A880;
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #A07020;
+    --success-color:         #3A6028;
+    --submit-color:          #1A4888;
+    --disabled-color:        #A89880;
 
-    --rule-color:            #{$map-terracotta};
-    --rule-glow:             0 0 6px #{$map-terracotta-glow-str};
-    --blur:                  rgba(242, 225, 195, 0.82);
-    --surface-tint:          linear-gradient(to bottom right, rgba(135, 69, 55, 0.05) 0%, transparent 65%);
+    --rule-color:            #6A4820;
+    --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+    --blur:                  rgba(242, 236, 224, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px #{$map-terracotta-glow};
-    --shadow-md:   0 4px 16px #{$map-terracotta-glow};
-    --shadow-lg:   0 10px 40px #{$map-terracotta-glow};
+    --shadow-sm:   0 1px 4px rgba(106, 72, 32, 0.08);
+    --shadow-md:   0 4px 16px rgba(106, 72, 32, 0.08);
+    --shadow-lg:   0 10px 40px rgba(106, 72, 32, 0.08);
 }
 
 [data-theme='parchment'][data-mode='dark'] {
-    --bg-color:              #100E08;
-    --bg-secondary-color:    #1C1810;
-    --bg-surface-color:      #282416;
-    --bg-inset-color:        #0A0806;
+    --bg-color:              #0E0C09;
+    --bg-secondary-color:    #161310;
+    --bg-surface-color:      #1D1A14;
+    --bg-inset-color:        #090806;
 
-    --text-color:            #{$mist};
-    --text-secondary-color:  #{$slate};
-    --text-muted-color:      #{$ash};
-    --text-heading-color:    #E0D0A8;
+    --text-color:            #C2B79E;
+    --text-secondary-color:  #8A7E6A;
+    --text-muted-color:      #4A4236;
+    --text-heading-color:    #D8CCAC;
 
-    --primary-color:         #7A9038;
-    --primary-hover-color:   #9AB848;
-    --primary-deep-color:    #{$olive-mid};
-    --primary-glow:          rgba(122, 144, 56, 0.22);
-    --primary-glow-strong:   rgba(122, 144, 56, 0.44);
+    --primary-color:         #B89038;
+    --primary-hover-color:   #CCA840;
+    --primary-deep-color:    #7A6020;
+    --primary-glow:          rgba(184, 144, 56, 0.16);
+    --primary-glow-strong:   rgba(184, 144, 56, 0.36);
 
-    --accent-color:          #{$map-terracotta};
-    --accent-dim-color:      #{$map-terracotta-mid};
-    --accent-glow:           #{$map-terracotta-glow};
+    --accent-color:          #507040;
+    --accent-dim-color:      #304828;
+    --accent-glow:           rgba(80, 112, 64, 0.16);
 
-    --highlight-color:       #{$map-teal};
-    --highlight-glow:        #{$map-teal-glow};
+    --highlight-color:       #D4B868;
+    --highlight-glow:        rgba(212, 184, 104, 0.18);
 
-    --border-color:          #282416;
-    --border-strong-color:   #{$ash};
+    --border-color:          #282318;
+    --border-strong-color:   #3A3428;
     --border-radius:         #{$border-radius};
 
-    --danger-color:          #{$map-terracotta};
-    --danger-glow:           #{$map-terracotta-glow};
-    --warning-color:         #{$amber};
-    --success-color:         #7A9038;
-    --submit-color:          #{$map-teal};
-    --disabled-color:        #3A3228;
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.28);
+    --warning-color:         #C89030;
+    --success-color:         #4A7A3C;
+    --submit-color:          #2858A0;
+    --disabled-color:        #3A3428;
 
-    --rule-color:            #7A9038;
-    --rule-glow:             0 0 8px rgba(122, 144, 56, 0.44);
-    --blur:                  rgba(16, 14, 8, 0.82);
-    --surface-tint:          linear-gradient(to bottom, rgba(122, 144, 56, 0.05) 0%, transparent 50%);
+    --rule-color:            #B89038;
+    --rule-glow:             0 0 8px rgba(184, 144, 56, 0.36);
+    --blur:                  rgba(14, 12, 9, 0.82);
+    --surface-tint:          linear-gradient(135deg, rgba(184, 144, 56, 0.04) 0%, transparent 65%);
 
-    --shadow-sm:   0 1px 4px rgba(122, 144, 56, 0.18);
-    --shadow-md:   0 4px 16px rgba(122, 144, 56, 0.18);
-    --shadow-lg:   0 10px 40px rgba(122, 144, 56, 0.18);
+    --shadow-sm:   0 1px 4px rgba(184, 144, 56, 0.12);
+    --shadow-md:   0 4px 16px rgba(184, 144, 56, 0.12);
+    --shadow-lg:   0 10px 40px rgba(184, 144, 56, 0.12);
 }
 
-@media (prefers-color-scheme: dark) {
-    [data-theme='parchment']:not([data-mode='light']) {
-        --bg-color:              #100E08;
-        --bg-secondary-color:    #1C1810;
-        --bg-surface-color:      #282416;
-        --bg-inset-color:        #0A0806;
-        --text-color:            #{$mist};
-        --text-secondary-color:  #{$slate};
-        --text-muted-color:      #{$ash};
-        --text-heading-color:    #E0D0A8;
-        --primary-color:         #7A9038;
-        --primary-hover-color:   #9AB848;
-        --primary-deep-color:    #{$olive-mid};
-        --primary-glow:          rgba(122, 144, 56, 0.22);
-        --primary-glow-strong:   rgba(122, 144, 56, 0.44);
-        --accent-color:          #{$map-terracotta};
-        --accent-dim-color:      #{$map-terracotta-mid};
-        --accent-glow:           #{$map-terracotta-glow};
-        --highlight-color:       #{$map-teal};
-        --highlight-glow:        #{$map-teal-glow};
-        --border-color:          #282416;
-        --border-strong-color:   #{$ash};
-        --danger-color:          #{$map-terracotta};
-        --danger-glow:           #{$map-terracotta-glow};
-        --warning-color:         #{$amber};
-        --success-color:         #7A9038;
-        --submit-color:          #{$map-teal};
-        --disabled-color:        #3A3228;
-        --rule-color:            #7A9038;
-        --rule-glow:             0 0 8px rgba(122, 144, 56, 0.44);
-        --blur:                  rgba(16, 14, 8, 0.82);
-        --surface-tint:          linear-gradient(to bottom, rgba(122, 144, 56, 0.05) 0%, transparent 50%);
-        --shadow-sm:             0 1px 4px rgba(122, 144, 56, 0.18);
-        --shadow-md:             0 4px 16px rgba(122, 144, 56, 0.18);
-        --shadow-lg:             0 10px 40px rgba(122, 144, 56, 0.18);
-    }
-}
-
-
-// ═════════════════════════════════════════════════════════════════════════════
-// THEME-SPECIFIC DESIGN ELEMENTS
-// Each theme gets signature decorative classes, animations, and body textures
-// that go beyond palette — they define the character of the theme.
-// ═════════════════════════════════════════════════════════════════════════════
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ARCADE — Pixel-sharp, amber glow, INSERT COIN energy
-// ─────────────────────────────────────────────────────────────────────────────
-
-[data-theme='arcade'] {
-
-    // Amber-tinted scanline texture on all surfaces
-    body {
-        background-image: repeating-linear-gradient(
-            to bottom,
-            transparent 0px,
-            transparent 3px,
-            rgba(196, 120, 24, 0.025) 3px,
-            rgba(196, 120, 24, 0.025) 4px
-        );
-    }
-
-    // Score display — large monospace counter
-    .score-display {
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 2rem;
-        letter-spacing: 0.25em;
-        color: var(--primary-color);
-        text-shadow:
-            0 0 8px var(--primary-glow-strong),
-            0 0 20px var(--primary-glow);
-        font-variant-numeric: tabular-nums;
-    }
-
-    // INSERT COIN blink — classic arcade prompt
-    .insert-coin {
-        color: var(--primary-color);
-        text-transform: uppercase;
-        letter-spacing: 0.3em;
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 0.85rem;
-        animation: coin-blink 1.4s step-end infinite;
-    }
-
-    @keyframes coin-blink {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0; }
-    }
-
-    // Pixel corner decoration — 2px bracket marks on container corners
-    .pixel-corner {
-        position: relative;
-
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-color: var(--primary-color);
-            border-style: solid;
-            opacity: 0.7;
-        }
-        &::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
-        &::after  { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
-    }
-
-    // Amber glow text
-    .amber-glow {
-        color: var(--primary-color);
-        text-shadow: 0 0 8px var(--primary-glow-strong);
-    }
-
-    // Rust fire tag — uses the third hue (highlight)
-    .fire-tag {
-        background: var(--highlight-color);
-        color: #F0D0B0;
-        padding: 0.15em 0.55em;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-weight: 700;
-        font-size: 0.65rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        line-height: 1.6;
-    }
-
-    // Olive accent rule
-    .phosphor-rule {
-        border-top: 1px solid var(--accent-color);
-        opacity: 0.6;
-    }
-
-    // Score flash on point gain
-    .score-flash {
-        animation: score-flash 0.4s ease-out;
-    }
-
-    @keyframes score-flash {
-        0%   { color: var(--text-heading-color); }
-        40%  { color: var(--primary-color); text-shadow: 0 0 14px var(--primary-glow-strong); }
-        100% { color: var(--text-heading-color); }
-    }
-
-    // Global blink utility
-    .blink {
-        animation: blink-step 1.2s step-end infinite;
-    }
-
-    @keyframes blink-step {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0; }
-    }
-}
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PHOSPHOR — CRT terminal: multi-green layers, amber cursor, vignette
-// ─────────────────────────────────────────────────────────────────────────────
-
-[data-theme='phosphor'] {
-
-    // Green phosphor scanlines — colored, not just dark
-    body {
-        background-image: repeating-linear-gradient(
-            to bottom,
-            transparent 0px,
-            transparent 2px,
-            rgba(2, 169, 83, 0.045) 2px,
-            rgba(2, 169, 83, 0.045) 4px
-        );
-    }
-
-    // CRT vignette — darkens corners like a real monitor
-    body::after {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background: radial-gradient(
-            ellipse at center,
-            transparent 55%,
-            rgba(0, 0, 0, 0.50) 100%
-        );
-        pointer-events: none;
-        z-index: 9998;
-    }
-
-    // CRT flicker animation
-    .crt-screen {
-        animation: crt-flicker 12s infinite;
-        position: relative;
-        overflow: hidden;
-
-        // Inner scanline overlay (stronger on this component)
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0px,
-                transparent 2px,
-                rgba(2, 169, 83, 0.07) 2px,
-                rgba(2, 169, 83, 0.07) 4px
-            );
-            pointer-events: none;
-            z-index: 1;
-        }
-    }
-
-    @keyframes crt-flicker {
-        0%, 94%, 100%  { opacity: 1; }
-        94.5%           { opacity: 0.92; }
-        95%             { opacity: 1; }
-        95.8%           { opacity: 0.86; }
-        96.2%           { opacity: 1; }
-        97%             { opacity: 0.95; }
-        97.4%           { opacity: 1; }
-    }
-
-    // Multi-layer phosphor glow — deep green with halo
-    .phosphor-glow {
-        color: var(--primary-color);
-        text-shadow:
-            0 0 3px var(--primary-color),
-            0 0 10px var(--primary-glow-strong),
-            0 0 24px rgba(2, 169, 83, 0.22);
-    }
-
-    // Army green — dim, background-grade text (like inactive terminal lines)
-    .terminal-muted {
-        color: #{$army-green};
-        font-size: 0.78rem;
-        letter-spacing: 0.14em;
-        font-variant: all-small-caps;
-    }
-
-    // Sage — mid-brightness secondary info
-    .terminal-secondary {
-        color: #{$sage-green};
-        letter-spacing: 0.06em;
-    }
-
-    // Amber terminal cursor (warm contrast on green terminal)
-    .cursor {
-        display: inline-block;
-        width: 0.55em;
-        height: 1.1em;
-        background: var(--accent-color);
-        animation: cursor-blink 1s step-end infinite;
-        vertical-align: text-bottom;
-    }
-
-    @keyframes cursor-blink {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0; }
-    }
-
-    // Amber data readout — used for numbers/values on the terminal
-    .amber-value {
-        color: var(--accent-color);
-        font-family: 'Share Tech Mono', monospace;
-        font-weight: 400;
-        text-shadow: 0 0 6px var(--accent-glow);
-        font-variant-numeric: tabular-nums;
-    }
-
-    // Divider rule in terminal sage
-    .terminal-rule {
-        border-top: 1px solid rgba(197, 206, 165, 0.35);
-        margin: 0.75rem 0;
-    }
-}
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SOVEREIGN — Imperial authority: crimson slash, gold cap, decree blocks
-// ─────────────────────────────────────────────────────────────────────────────
-
-[data-theme='sovereign'] {
-
-    // Crimson left-edge slash marker
-    .power-slash {
-        position: relative;
-        padding-left: 1.25rem;
-
-        &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            background: var(--primary-color);
-            box-shadow:
-                0 0 10px var(--primary-color),
-                0 0 28px var(--primary-glow-strong);
-        }
-    }
-
-    // Gold top-cap rule — applied to headings
-    .gold-cap {
-        border-top: 2px solid var(--accent-color);
-        padding-top: 0.6rem;
-        color: var(--accent-color);
-        letter-spacing: 0.14em;
-    }
-
-    // Imperial double rule — gold over crimson
-    .imperial-rule {
-        position: relative;
-        margin: 1rem 0;
-        border-top: 2px solid var(--accent-color);
-
-        &::after {
-            content: '';
-            display: block;
-            border-top: 1px solid var(--primary-color);
-            margin-top: 3px;
-            opacity: 0.7;
-        }
-    }
-
-    // Authority badge — crimson background, gold text
-    .authority-badge {
-        display: inline-block;
-        background: var(--primary-color);
-        color: var(--accent-color);
-        font-family: 'Barlow Condensed', sans-serif;
-        font-weight: 700;
-        font-size: 0.65rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        padding: 0.2em 0.75em;
-        border: 1px solid var(--accent-color);
-        line-height: 1.6;
-    }
-
-    // Decree block — deep maroon inset, gold left border
-    .decree {
-        background: var(--bg-inset-color);
-        border-left: 4px solid var(--accent-color);
-        border-right: 1px solid var(--primary-color);
-        padding: 0.9rem 1.25rem;
-        color: #E8D8C8;
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 0.85rem;
-        line-height: 1.65;
-    }
-
-    // Gold text accent
-    .gold-text {
-        color: var(--accent-color);
-        text-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    // Crimson glow text
-    .crimson-glow {
-        color: var(--primary-color);
-        text-shadow: 0 0 8px var(--primary-glow-strong);
-    }
-}
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// VOID — CBRPNK: dot grid, orange signal pop, steel-blue depth shimmer
-// ─────────────────────────────────────────────────────────────────────────────
-
-[data-theme='void'] {
-
-    // Subtle dot grid — feels like a radar/schematic screen
-    body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image: radial-gradient(
-            circle,
-            rgba(74, 144, 184, 0.09) 1px,
-            transparent 1px
-        );
-        background-size: 28px 28px;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    // Depth shimmer on surfaces — steel blue breathing
-    .depth-shimmer {
-        background: linear-gradient(
-            135deg,
-            var(--bg-surface-color) 0%,
-            rgba(74, 144, 184, 0.09) 50%,
-            var(--bg-surface-color) 100%
-        );
-        background-size: 200% 200%;
-        animation: depth-shift 9s ease infinite;
-    }
-
-    @keyframes depth-shift {
-        0%   { background-position: 0% 50%; }
-        50%  { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    // Orange signal bar — the high-contrast pop element
-    .signal-bar {
-        height: 3px;
-        background: var(--accent-color);
-        box-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    // HUD data label — orange Barlow Condensed
-    .hud-label {
-        color: var(--accent-color);
-        font-family: 'Barlow Condensed', sans-serif;
-        font-weight: 700;
-        font-size: 0.62rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-    }
-
-    // Orange alert/highlight text
-    .signal-text {
-        color: var(--accent-color);
-        text-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    // Radar ping animation on icons/dots
-    .radar-ping {
-        position: relative;
-
-        &::after {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border: 2px solid var(--accent-color);
-            border-radius: 50%;
-            animation: radar-expand 2.2s ease-out infinite;
-            opacity: 0;
-        }
-    }
-
-    @keyframes radar-expand {
-        0%   { transform: scale(1);   opacity: 0.80; }
-        100% { transform: scale(2.8); opacity: 0; }
-    }
-
-    // Cool-gray readout — the neutral third dimension
-    .data-readout {
-        color: var(--highlight-color);
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 0.8rem;
-        letter-spacing: 0.10em;
-        opacity: 0.85;
-    }
-
-    // Steel-blue glow text
-    .steel-glow {
-        color: var(--primary-color);
-        text-shadow: 0 0 8px var(--primary-glow-strong);
-    }
-}
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// DUSK — 80s arcade: magenta/emerald contrast, star field, portal shimmer
-// ─────────────────────────────────────────────────────────────────────────────
-
-[data-theme='dusk'] {
-
-    // Star field — scattered pixel dots across the three hues
-    body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image:
-            radial-gradient(circle, rgba(200, 48, 112, 0.18) 1px, transparent 1px),
-            radial-gradient(circle, rgba(48, 184, 120, 0.14) 1px, transparent 1px),
-            radial-gradient(circle, rgba(120, 168, 200, 0.16) 1px, transparent 1px);
-        background-size: 97px 89px, 127px 113px, 73px 83px;
-        background-position: 0 0, 38px 44px, 19px 31px;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    // Arcane breathe — magenta text with pulsing glow
-    .arcane-pulse {
-        color: var(--primary-color);
-        animation: arcane-breathe 4s ease-in-out infinite;
-    }
-
-    @keyframes arcane-breathe {
-        0%, 100% {
-            text-shadow: 0 0 6px var(--primary-glow-strong);
-        }
-        50% {
-            text-shadow:
-                0 0 12px var(--primary-glow-strong),
-                0 0 28px var(--primary-glow);
-        }
-    }
-
-    // Neon border — magenta glow
-    .neon-border {
-        border: 1px solid var(--primary-color);
-        box-shadow:
-            0 0 8px var(--primary-glow),
-            inset 0 0 8px rgba(200, 48, 112, 0.06);
-    }
-
-    // Emerald contrast border
-    .emerald-border {
-        border: 1px solid var(--accent-color);
-        box-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    // Portal shimmer — magenta to emerald gradient text
-    .portal-shimmer {
-        background: linear-gradient(
-            to right,
-            var(--primary-color) 0%,
-            var(--accent-color) 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    // Dusk gradient rule — magenta/emerald bar
-    .dusk-rule {
-        height: 2px;
-        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-        box-shadow: 0 0 8px var(--primary-glow);
-        border: none;
-    }
-
-    // Sky blue — the third-dimension cool text
-    .sky-text {
-        color: var(--highlight-color);
-        text-shadow: 0 0 6px var(--highlight-glow);
-    }
-
-    // Emerald glow text
-    .emerald-glow {
-        color: var(--accent-color);
-        text-shadow: 0 0 8px var(--accent-glow);
-    }
-}
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PARCHMENT — Ancient map: terracotta + teal, cartographic grid, aged ink
-// ─────────────────────────────────────────────────────────────────────────────
-
-[data-theme='parchment'] {
-
-    // Map grid overlay on body — faint cartographic grid
-    body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(135, 69, 55, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(135, 69, 55, 0.05) 1px, transparent 1px);
-        background-size: 40px 40px;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    // Ink gradient text — terracotta to teal
-    .ink-gradient {
-        background: linear-gradient(
-            to right,
-            var(--primary-color),
-            var(--accent-color)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    // Aged text — slight opacity, warm shadow for ink depth
-    .aged-text {
-        opacity: 0.90;
-        text-shadow: 0.5px 0.5px 0 rgba(135, 69, 55, 0.18);
-        letter-spacing: 0.04em;
-    }
-
-    // Dusty rose tag — soft faded label
-    .rose-tag {
-        display: inline-block;
-        background: rgba(211, 127, 127, 0.15);
-        border: 1px solid var(--highlight-color);
-        color: var(--highlight-color);
-        padding: 0.1em 0.55em;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 0.65rem;
-        font-weight: 600;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        line-height: 1.6;
-    }
-
-    // Ink stamp — terracotta rotated block label
-    .ink-stamp {
-        display: inline-block;
-        border: 2px solid var(--primary-color);
-        color: var(--primary-color);
-        padding: 0.25em 0.8em;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-weight: 700;
-        font-size: 0.65rem;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        transform: rotate(-2deg);
-        opacity: 0.82;
-    }
-
-    // Map rule with compass diamond marker
-    .map-rule {
-        position: relative;
-        border-top: 1px solid rgba(84, 164, 152, 0.50);
-        margin: 1rem 0;
-
-        &::before {
-            content: '◆';
-            position: absolute;
-            top: -0.65em;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--accent-color);
-            font-size: 0.55rem;
-            background: var(--bg-color);
-            padding: 0 0.4em;
-            opacity: 0.70;
-        }
-    }
-
-    // Deep teal heading accent
-    .teal-cap {
-        border-top: 2px solid var(--accent-color);
-        padding-top: 0.6rem;
-        color: var(--accent-color);
-    }
-
-    // Terracotta glow text
-    .terracotta-glow {
-        color: var(--primary-color);
-        text-shadow: 0 0 8px var(--primary-glow-strong);
+@media (prefers-color-scheme: light) {
+    [data-theme='parchment']:not([data-mode='dark']) {
+        --bg-color:              #F2ECE0;
+        --bg-secondary-color:    #E8E0CE;
+        --bg-surface-color:      #FDFAF4;
+        --bg-inset-color:        #E2D9C8;
+        --text-color:            #2C2018;
+        --text-secondary-color:  #5A4838;
+        --text-muted-color:      #8A7860;
+        --text-heading-color:    #18100A;
+        --primary-color:         #6A4820;
+        --primary-hover-color:   #7A5828;
+        --primary-deep-color:    #4A3010;
+        --primary-glow:          rgba(106, 72, 32, 0.14);
+        --primary-glow-strong:   rgba(106, 72, 32, 0.28);
+        --accent-color:          #486830;
+        --accent-dim-color:      #304820;
+        --accent-glow:           rgba(72, 104, 48, 0.14);
+        --highlight-color:       #8A7848;
+        --highlight-glow:        rgba(138, 120, 72, 0.14);
+        --border-color:          #D8CEB8;
+        --border-strong-color:   #B8A890;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #A07020;
+        --success-color:         #3A6028;
+        --submit-color:          #1A4888;
+        --disabled-color:        #A89880;
+        --rule-color:            #6A4820;
+        --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+        --blur:                  rgba(242, 236, 224, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(106, 72, 32, 0.08);
+        --shadow-md:             0 4px 16px rgba(106, 72, 32, 0.08);
+        --shadow-lg:             0 10px 40px rgba(106, 72, 32, 0.08);
     }
 }

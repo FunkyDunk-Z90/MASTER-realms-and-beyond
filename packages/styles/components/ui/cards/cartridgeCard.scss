@@ -1,0 +1,260 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── CartridgeCard ────────────────────────────────────────────────────────────
+// A Game Boy cartridge shaped card component.
+// Shape: chamfered top corners, angled bottom corners, gold connector pins.
+
+// ─── Link wrapper ─────────────────────────────────────────────────────────────
+
+.cartridge-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+
+    &:focus-visible .cartridge-card {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 3px;
+    }
+}
+
+// ─── Root card ────────────────────────────────────────────────────────────────
+
+.cartridge-card {
+    --cartridge-accent: var(--primary-color);
+    --cartridge-width: 140px;
+    --cartridge-height: 180px;
+    --cartridge-top-h: 28px;
+    --cartridge-connector-h: 22px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    width: var(--cartridge-width);
+    height: var(--cartridge-height);
+
+    background-color: var(--bg-surface-color);
+    border: 1.5px solid var(--border-color);
+    border-radius: 6px 6px 0 0;
+
+    // Chamfer bottom corners to mimic Game Boy cartridge shape
+    clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% calc(100% - 18px),
+        calc(100% - 18px) 100%,
+        18px 100%,
+        0% calc(100% - 18px)
+    );
+
+    box-shadow:
+        2px 3px 12px var(--primary-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+    cursor: pointer;
+    transition:
+        transform var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease,
+        border-color var(--transition-speed) ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        border-color: var(--cartridge-accent);
+        box-shadow:
+            2px 8px 24px var(--primary-glow),
+            0 0 0 1px var(--cartridge-accent);
+    }
+
+    // Size variants
+    &--sm {
+        --cartridge-width: 110px;
+        --cartridge-height: 145px;
+        --cartridge-top-h: 22px;
+        --cartridge-connector-h: 18px;
+    }
+
+    &--lg {
+        --cartridge-width: 180px;
+        --cartridge-height: 230px;
+        --cartridge-top-h: 34px;
+        --cartridge-connector-h: 26px;
+    }
+}
+
+// ─── Top strip ────────────────────────────────────────────────────────────────
+
+.cartridge-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $small;
+    height: var(--cartridge-top-h);
+    flex-shrink: 0;
+    background-color: var(--cartridge-accent);
+    border-radius: 4px 4px 0 0;
+}
+
+.cartridge-platform {
+    font-family: $font-ui;
+    font-size: 0.48rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: rgba(0, 0, 0, 0.85);
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cartridge-logo {
+    font-family: $font-ui;
+    font-size: 0.45rem;
+    color: rgba(0, 0, 0, 0.55);
+    flex-shrink: 0;
+}
+
+// ─── Label sticker ────────────────────────────────────────────────────────────
+
+.cartridge-label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: $small $medium;
+    background-color: var(--bg-inset-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+    position: relative;
+
+    // Subtle grid texture on the label, like a printed sticker
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(var(--border-color) 1px, transparent 1px),
+            linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+        background-size: 12px 12px;
+        opacity: 0.08;
+        pointer-events: none;
+    }
+}
+
+.cartridge-badge {
+    @include font-label;
+    display: inline-block;
+    font-size: 0.42rem;
+    letter-spacing: 0.12em;
+    color: var(--cartridge-accent);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.cartridge-title {
+    @include font-display;
+    font-size: 0.68rem;
+    color: var(--text-heading-color);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin: 0 0 2px;
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cartridge-subtitle {
+    font-family: $font-body;
+    font-size: 0.52rem;
+    color: var(--text-secondary-color);
+    letter-spacing: 0.04em;
+    margin: 0 0 $small;
+    position: relative;
+    z-index: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cartridge-description {
+    font-family: $font-body;
+    font-size: 0.5rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+}
+
+.cartridge-tag {
+    @include font-label;
+    display: inline-block;
+    font-size: 0.4rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted-color);
+    text-transform: uppercase;
+    margin-top: auto;
+    padding-top: $small;
+    position: relative;
+    z-index: 1;
+    align-self: flex-end;
+}
+
+// ─── Connector strip ──────────────────────────────────────────────────────────
+
+.cartridge-connector {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 3px;
+    padding: 3px 12px;
+    height: var(--cartridge-connector-h);
+    flex-shrink: 0;
+    background-color: var(--bg-secondary-color);
+
+    // The chamfer cuts clip into this area — give it a bottom padding buffer
+    padding-bottom: 6px;
+}
+
+.cartridge-pin {
+    flex: 1;
+    max-width: 6px;
+    border-radius: 1px 1px 0 0;
+    background: linear-gradient(
+        to bottom,
+        #c8a840 0%,
+        #a07828 40%,
+        #7a5c1c 100%
+    );
+    box-shadow: inset 0 1px 0 rgba(255, 220, 100, 0.5);
+
+    [data-theme='parchment'] & {
+        background: linear-gradient(
+            to bottom,
+            #8a7040 0%,
+            #6a5428 40%,
+            #4a3810 100%
+        );
+    }
+}
+
+// ─── Grid layout helper ───────────────────────────────────────────────────────
+
+.cartridge-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $xLarge;
+    padding: $large 0;
+}

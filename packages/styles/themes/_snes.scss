@@ -1,0 +1,1067 @@
+@use '../_variables' as *;
+
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  SNES THEME — Authentic 16-bit console game aesthetic                   ║
+// ║  Palette sourced directly from SNES hardware colour output               ║
+// ║  Press Start 2P for all display/UI · Share Tech Mono for body            ║
+// ║  Zero border-radius · hard pixel shadows · instant transitions           ║
+// ║  Inspired by: Final Fantasy VI, Chrono Trigger, ALTTP, Super Metroid     ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CSS VARIABLES — Dark (default)
+// Deep purple-black CRT screen · SNES royal blue windows · antique gold
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'],
+[data-theme='snes'][data-mode='dark'] {
+    // ── Backgrounds ───────────────────────────────────────────────────────
+    --bg-color:              #100818;
+    --bg-secondary-color:    #1C1030;
+    --bg-surface-color:      #281C48;
+    --bg-inset-color:        #080410;
+
+    // ── Text ──────────────────────────────────────────────────────────────
+    --text-color:            #E8E0F0;
+    --text-secondary-color:  #B8A8D8;
+    --text-muted-color:      #706090;
+    --text-heading-color:    #FFFFFF;
+
+    // ── Primary — SNES Royal Blue (authentic FF6/ALTTP window chrome) ──────
+    --primary-color:         #3860D8;
+    --primary-hover-color:   #5880FF;
+    --primary-deep-color:    #1838A0;
+    --primary-glow:          rgba(56, 96, 216, 0.30);
+    --primary-glow-strong:   rgba(56, 96, 216, 0.60);
+
+    // ── Accent — SNES Gold (menu cursors, item names, XP bars) ────────────
+    --accent-color:          #F8C820;
+    --accent-dim-color:      #906008;
+    --accent-glow:           rgba(248, 200, 32, 0.30);
+
+    // ── Highlight — SNES Cyan (magic, special abilities) ─────────────────
+    --highlight-color:       #40D8F8;
+    --highlight-glow:        rgba(64, 216, 248, 0.30);
+
+    // ── Borders ───────────────────────────────────────────────────────────
+    --border-color:          #3850C0;
+    --border-strong-color:   #5070E0;
+    --border-radius:         0px;
+
+    // ── Rules & blur ──────────────────────────────────────────────────────
+    --rule-color:            #3860D8;
+    --rule-glow:             none;
+    --blur:                  rgba(16, 8, 24, 0.96);
+
+    // ── Shadows — hard offset pixel shadows, zero blur ────────────────────
+    --shadow-sm:             3px 3px 0 0 #000000;
+    --shadow-md:             4px 4px 0 0 #000000;
+    --shadow-lg:             6px 6px 0 0 #000000;
+
+    // ── Semantic ──────────────────────────────────────────────────────────
+    --danger-color:   #E82020;
+    --danger-glow:    rgba(232, 32, 32, 0.50);
+    --warning-color:  #F89020;
+    --success-color:  #20C840;
+    --submit-color:   #2858D8;
+    --disabled-color: #383050;
+
+    // ── Transitions — near-instant for that pixel-game snappiness ─────────
+    --transition-speed: 0.04s;
+    --transition-slow:  0.08s;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CSS VARIABLES — Light / "Day" mode
+// Like a SNES game in bright daylight — lavender bg, deep navy text
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'][data-mode='light'] {
+    --bg-color:              #D0C8F8;
+    --bg-secondary-color:    #B8B0E8;
+    --bg-surface-color:      #E8E0FF;
+    --bg-inset-color:        #B0A8D8;
+
+    --text-color:            #181028;
+    --text-secondary-color:  #302848;
+    --text-muted-color:      #605880;
+    --text-heading-color:    #080818;
+
+    --primary-color:         #1838A0;
+    --primary-hover-color:   #2848C0;
+    --primary-deep-color:    #0820A0;
+    --primary-glow:          rgba(24, 56, 160, 0.20);
+    --primary-glow-strong:   rgba(24, 56, 160, 0.40);
+
+    --accent-color:          #B06800;
+    --accent-dim-color:      #804800;
+    --accent-glow:           rgba(176, 104, 0, 0.25);
+
+    --border-color:          #3848C0;
+    --border-strong-color:   #2838A0;
+
+    --rule-color:            #1838A0;
+    --blur:                  rgba(208, 200, 248, 0.95);
+
+    --shadow-sm:             3px 3px 0 0 rgba(0, 0, 0, 0.35);
+    --shadow-md:             4px 4px 0 0 rgba(0, 0, 0, 0.35);
+    --shadow-lg:             6px 6px 0 0 rgba(0, 0, 0, 0.35);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='snes']:not([data-mode]) {
+        --bg-color:              #D0C8F8;
+        --bg-secondary-color:    #B8B0E8;
+        --bg-surface-color:      #E8E0FF;
+        --bg-inset-color:        #B0A8D8;
+
+        --text-color:            #181028;
+        --text-secondary-color:  #302848;
+        --text-muted-color:      #605880;
+        --text-heading-color:    #080818;
+
+        --primary-color:         #1838A0;
+        --primary-hover-color:   #2848C0;
+        --primary-deep-color:    #0820A0;
+        --primary-glow:          rgba(24, 56, 160, 0.20);
+        --primary-glow-strong:   rgba(24, 56, 160, 0.40);
+
+        --accent-color:          #B06800;
+        --accent-dim-color:      #804800;
+        --accent-glow:           rgba(176, 104, 0, 0.25);
+
+        --border-color:          #3848C0;
+        --border-strong-color:   #2838A0;
+
+        --shadow-sm:             3px 3px 0 0 rgba(0, 0, 0, 0.35);
+        --shadow-md:             4px 4px 0 0 rgba(0, 0, 0, 0.35);
+        --shadow-lg:             6px 6px 0 0 rgba(0, 0, 0, 0.35);
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GLOBAL ELEMENT OVERRIDES
+// Restyle raw HTML elements to match SNES pixel-game aesthetics
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] {
+
+    // ── Body — replace scanlines with 4×4 SNES dithering ─────────────────
+    body {
+        // Subtle 4×4 checkerboard dither — a signature SNES effect for transparency
+        background-image:
+            linear-gradient(45deg, rgba(56, 96, 216, 0.04) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(56, 96, 216, 0.04) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, rgba(56, 96, 216, 0.04) 75%),
+            linear-gradient(-45deg, transparent 75%, rgba(56, 96, 216, 0.04) 75%);
+        background-size: 4px 4px;
+        background-position: 0 0, 0 2px, 2px -2px, -2px 0;
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+    }
+
+    // ── Headings — Press Start 2P for all display text ────────────────────
+    // No text-shadow on headings — PS2P at small sizes with shadow reads as
+    // doubled text. Shadow reserved for large standalone titles only.
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Press Start 2P', 'Courier New', monospace;
+        text-shadow: none;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        line-height: 1.7; // PS2P needs generous line-height
+    }
+
+    h1 { font-size: clamp(1.1rem, 2.8vw, 1.6rem);  letter-spacing: 0.06em; }
+    h2 { font-size: clamp(0.85rem, 2.2vw, 1.2rem); letter-spacing: 0.05em; }
+    h3 { font-size: 0.9rem; }
+    h4 { font-size: 0.75rem; }
+    h5 { font-size: 0.65rem; color: var(--text-secondary-color); }
+    h6 { font-size: 0.58rem; color: var(--accent-color); font-family: 'Press Start 2P', monospace; }
+
+    // ── Body text ─────────────────────────────────────────────────────────
+    p {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        letter-spacing: 0.04em;
+        line-height: 1.8;
+        font-size: 0.875rem;
+    }
+
+    // ── Links ─────────────────────────────────────────────────────────────
+    a {
+        transition: color 0.04s step-end;
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+
+        &:focus-visible {
+            outline: 2px solid var(--accent-color);
+            border-radius: 0;
+        }
+    }
+
+    // ── Form elements ─────────────────────────────────────────────────────
+    input, textarea, select {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        transition:
+            border-color 0.04s step-end,
+            box-shadow 0.04s step-end;
+
+        &:focus {
+            box-shadow:
+                0 0 0 2px var(--accent-color),
+                inset 0 0 0 1px rgba(248, 200, 32, 0.15);
+        }
+    }
+
+    // ── Code & pre ────────────────────────────────────────────────────────
+    code, kbd, samp {
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+    }
+
+    pre {
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        border-left: 4px solid var(--primary-color);
+        box-shadow: var(--shadow-md);
+
+        code {
+            border: none;
+        }
+    }
+
+    // ── HR ────────────────────────────────────────────────────────────────
+    hr {
+        border-top: 2px solid var(--border-color);
+
+        &.rule-accent {
+            border-color: var(--accent-color);
+            box-shadow: none;
+        }
+    }
+
+    // ── Blockquote ────────────────────────────────────────────────────────
+    blockquote {
+        border-left: 4px solid var(--primary-color);
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        font-style: normal;
+        font-size: 0.875rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    // ── Small ─────────────────────────────────────────────────────────────
+    small {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SNES KEYFRAMES
+// ─────────────────────────────────────────────────────────────────────────────
+
+@keyframes snes-cursor-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+// Panel / dropdown open — quick slide down, no spring
+@keyframes snes-appear {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+// Modal fade + slight rise
+@keyframes snes-modal-in {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 10px)); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+// Backdrop fade
+@keyframes snes-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+// Drawer slide in from right
+@keyframes snes-drawer-in {
+    from { transform: translateX(110%); }
+    to   { transform: translateX(0); }
+}
+
+// Drawer slide in from left
+@keyframes snes-drawer-in-left {
+    from { transform: translateX(-110%); }
+    to   { transform: translateX(0); }
+}
+
+// Toast pop up
+@keyframes snes-toast-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BUTTONS
+// Chunky pixel buttons with hard drop shadows — like SNES menu selections
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .btn {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    border-radius: 0;
+    border: 2px solid var(--primary-deep-color);
+    box-shadow: var(--shadow-sm);
+    transition: none;
+    padding: $medium $large;
+
+    // Remove the scanline ::before overlay
+    &::before { display: none; }
+
+    &:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 0 #000000;
+    }
+
+    &:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 0 #000000;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    &.accent {
+        border-color: var(--accent-dim-color);
+        &:hover { box-shadow: 4px 4px 0 0 #000000; }
+    }
+
+    &.danger  { border-color: #800000; }
+    &.warning { border-color: #804000; }
+    &.submit  { border-color: #001080; }
+    &.success { border-color: #006000; }
+
+    &.ghost {
+        border: 2px solid var(--border-strong-color);
+        box-shadow: var(--shadow-sm);
+    }
+
+    &.outline {
+        border: 2px solid var(--primary-color);
+        box-shadow: var(--shadow-sm);
+
+        &:hover {
+            box-shadow: 4px 4px 0 0 #000000;
+        }
+    }
+
+    &.btn-sm {
+        font-size: 0.52rem;
+        padding: $small $medium;
+    }
+
+    &.btn-lg {
+        font-size: 0.72rem;
+    }
+
+    &.disabled, &:disabled {
+        box-shadow: none;
+        &:hover { transform: none; }
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CARDS
+// SNES window panels — thick border, hard shadow, inner border line
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .card {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    transition: none;
+    // SNES double-border window effect (inner highlight line)
+    outline: 1px solid rgba(56, 96, 216, 0.20);
+    outline-offset: -4px;
+
+    &::before { display: none; } // Remove scanlines
+
+    &:hover {
+        border-color: var(--border-strong-color);
+        box-shadow: var(--shadow-md);
+        transform: none;
+    }
+
+    &--glow {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-color);
+
+        &:hover {
+            box-shadow: var(--shadow-lg);
+        }
+    }
+
+    &--inset {
+        outline: none;
+        border: 2px solid var(--border-color);
+    }
+
+    &--interactive {
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--primary-color);
+            transform: none;
+            box-shadow: var(--shadow-md);
+        }
+
+        &:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 0 #000000;
+        }
+    }
+}
+
+[data-theme='snes'] .card-header {
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme='snes'] .card-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.72rem;
+    text-shadow: none;
+    letter-spacing: 0.06em;
+}
+
+[data-theme='snes'] .card-subtitle {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+}
+
+[data-theme='snes'] .card-footer {
+    border-top: 2px solid var(--border-color);
+}
+
+[data-theme='snes'] .stat-card {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    border-left: 4px solid var(--accent-color);
+    box-shadow: var(--shadow-md);
+
+    &::before { display: none; }
+}
+
+[data-theme='snes'] .stat-card__label {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-shadow: none;
+}
+
+[data-theme='snes'] .stat-card__value {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 1.3rem;
+    // Large enough that a subtle shadow reads as depth, not doubling
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.03em;
+}
+
+[data-theme='snes'] .stat-card__delta {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+}
+
+[data-theme='snes'] .profile-card {
+    border-radius: 0;
+
+    &__avatar {
+        border-radius: 0;
+        border: 3px solid var(--primary-color);
+        box-shadow: 3px 3px 0 0 #000000;
+    }
+
+    &__name {
+        font-family: 'Press Start 2P', 'Courier New', monospace;
+        font-size: 0.72rem;
+        text-shadow: none;
+    }
+
+    &__role {
+        font-family: 'Press Start 2P', 'Courier New', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.06em;
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INPUTS & FORMS
+// Terminal data-entry aesthetic — thick borders, gold focus, no radius
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .input {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.04s step-end, box-shadow 0.04s step-end;
+    letter-spacing: 0.05em;
+
+    &:focus {
+        border-color: var(--accent-color);
+        box-shadow:
+            0 0 0 2px rgba(248, 200, 32, 0.50),
+            inset 0 0 0 1px rgba(248, 200, 32, 0.15);
+    }
+
+    &--error {
+        border: 2px solid var(--danger-color);
+    }
+
+    &--success {
+        border: 2px solid var(--success-color);
+    }
+}
+
+[data-theme='snes'] .field-label {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-shadow: none;
+}
+
+[data-theme='snes'] .field-hint,
+[data-theme='snes'] .field-error {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+}
+
+[data-theme='snes'] .search-input-wrapper {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.04s step-end;
+
+    &:focus-within {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(248, 200, 32, 0.40);
+    }
+}
+
+[data-theme='snes'] .search-input {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    letter-spacing: 0.05em;
+}
+
+[data-theme='snes'] .toggle {
+    &__track {
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        transition: background-color 0.04s step-end, border-color 0.04s step-end;
+    }
+
+    &__thumb {
+        border-radius: 0;
+        transition: transform 0.04s step-end;
+    }
+
+    &__label {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        letter-spacing: 0.04em;
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NAVIGATION — Header / Navbar
+// Full-width title bar with thick SNES window-chrome border
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .header-wrapper {
+    border-bottom: 3px solid var(--primary-color);
+    box-shadow:
+        0 2px 0 0 var(--primary-deep-color),
+        0 4px 0 0 #000000;
+
+    &::before { display: none; } // Remove scanlines
+}
+
+[data-theme='snes'] .header-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-style: normal; // PS2P has no italic
+    letter-spacing: 0.08em;
+    // Shadow only on large title text — readable at this size
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+[data-theme='snes'] .nav-link {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    transition: color 0.04s step-end;
+
+    &::after {
+        height: 2px;
+        background-color: var(--accent-color);
+        transition: transform 0.04s step-end;
+    }
+
+    &.active {
+        color: var(--accent-color);
+        text-shadow: none;
+
+        &::after { background-color: var(--accent-color); }
+    }
+}
+
+// Burger lines — square instead of rounded
+[data-theme='snes'] .burgerIcon .line {
+    border-radius: 0;
+    height: 3px;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SIDEBAR
+// SNES game menu panel — thick chrome, no rounded corners, gold active state
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .sidebar-wrapper {
+    border-right: 3px solid var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    box-shadow:
+        2px 0 0 0 var(--primary-deep-color),
+        4px 0 0 0 #000000;
+    // Smooth open/close — panels feel mechanical, not instant
+    transition: transform 0.28s cubic-bezier(0.25, 0, 0, 1);
+
+    &::before { display: none; }
+}
+
+[data-theme='snes'] .sidebar-pill-toggle {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    border-left: none;
+    transition: none;
+
+    &:hover {
+        box-shadow: 2px 0 0 0 #000000;
+    }
+}
+
+[data-theme='snes'] .sidebar-section-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.10em;
+    color: var(--accent-color);
+    text-shadow: none;
+}
+
+[data-theme='snes'] .sidebar-item {
+    border-radius: 0;
+
+    // ▶ cursor indicator for active item — classic SNES menu cursor
+    &.active > .sidebar-link {
+        position: relative;
+        background-color: var(--primary-color);
+        border-left: 4px solid var(--accent-color);
+
+        // SNES golden cursor arrow
+        &::before {
+            content: '▶';
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+            font-size: 0.55rem;
+            text-shadow: none;
+            animation: snes-cursor-blink 0.8s step-end infinite;
+        }
+
+        .sidebar-label {
+            color: #FFFFFF;
+            padding-left: calc(#{$large} + 12px);
+        }
+    }
+
+    > .sidebar-link {
+        border-radius: 0;
+        border-left: 4px solid transparent;
+        transition: border-color 0.04s step-end, background-color 0.04s step-end;
+    }
+}
+
+[data-theme='snes'] .sidebar-label {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    transition: color 0.04s step-end;
+}
+
+[data-theme='snes'] .sidebar-collapsed .sidebar-label {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transition: opacity 0.04s step-end;
+}
+
+[data-theme='snes'] .sidebar-search-input-row {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.04s step-end;
+
+    &:focus-within {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(248, 200, 32, 0.40);
+    }
+}
+
+[data-theme='snes'] .sidebar-search-input {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    letter-spacing: 0.05em;
+}
+
+[data-theme='snes'] .sidebar-search-results {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    box-shadow: var(--shadow-md);
+    animation: snes-appear 0.15s ease forwards;
+}
+
+[data-theme='snes'] .sidebar-search-result-item {
+    border-radius: 0;
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.75rem;
+    border-left: 4px solid transparent;
+    transition: border-color 0.04s step-end, background-color 0.04s step-end;
+
+    &:hover {
+        border-left-color: var(--accent-color);
+    }
+}
+
+[data-theme='snes'] .sidebar-chevron {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+[data-theme='snes'] .sidebar-submenu {
+    transition: grid-template-rows 0.2s ease;
+}
+
+[data-theme='snes'] .sidebar-footer {
+    border-top: 2px solid var(--border-color);
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MODALS & OVERLAYS
+// SNES battle/menu screen overlay — pixel-sharp panels, hard shadows
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .modal-backdrop {
+    backdrop-filter: none; // No blur — SNES screens don't blur
+    -webkit-backdrop-filter: none;
+    background-color: rgba(16, 8, 24, 0.88);
+    // SNES dither backdrop
+    background-image:
+        linear-gradient(45deg, rgba(56, 96, 216, 0.06) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(56, 96, 216, 0.06) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(56, 96, 216, 0.06) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(56, 96, 216, 0.06) 75%);
+    background-size: 4px 4px;
+    background-position: 0 0, 0 2px, 2px -2px, -2px 0;
+    animation: snes-fade 0.18s ease forwards;
+}
+
+[data-theme='snes'] .modal {
+    border-radius: 0;
+    border: 3px solid var(--primary-color);
+    box-shadow:
+        inset 0 0 0 1px rgba(56, 96, 216, 0.25),
+        6px 6px 0 0 #000000;
+    animation: snes-modal-in 0.22s ease forwards;
+
+    // Classic SNES window accent bar (top edge)
+    &::after {
+        height: 3px;
+        background: linear-gradient(
+            to right,
+            var(--primary-deep-color) 0%,
+            var(--primary-color) 20%,
+            var(--primary-hover-color) 50%,
+            var(--primary-color) 80%,
+            var(--primary-deep-color) 100%
+        );
+        box-shadow: none;
+    }
+
+    &::before { display: none; } // No scanlines
+}
+
+[data-theme='snes'] .modal-header {
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme='snes'] .modal-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-shadow: none;
+}
+
+[data-theme='snes'] .modal-close {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    transition: none;
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    &:hover {
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+        color: #FFFFFF;
+    }
+}
+
+[data-theme='snes'] .modal-footer {
+    border-top: 2px solid var(--border-color);
+}
+
+[data-theme='snes'] .drawer {
+    border-left: 3px solid var(--primary-color);
+    box-shadow:
+        -2px 0 0 0 var(--primary-deep-color),
+        -6px 0 0 0 #000000;
+    animation: snes-drawer-in 0.28s cubic-bezier(0.25, 0, 0, 1) forwards;
+
+    &--left {
+        border-right: 3px solid var(--primary-color);
+        border-left: none;
+        box-shadow:
+            2px 0 0 0 var(--primary-deep-color),
+            6px 0 0 0 #000000;
+        animation: snes-drawer-in-left 0.28s cubic-bezier(0.25, 0, 0, 1) forwards;
+    }
+}
+
+[data-theme='snes'] .toast {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-md);
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    animation: snes-toast-in 0.2s ease forwards;
+
+    &--success { border-left: 4px solid var(--success-color); }
+    &--warning { border-left: 4px solid var(--warning-color); }
+    &--danger  { border-left: 4px solid var(--danger-color);  }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TABS & NAVIGATION COMPONENTS
+// SNES inventory/menu tab style — solid color selections, no animations
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .tabs {
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme='snes'] .tab {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    border-radius: 0;
+    border: 2px solid transparent;
+    border-bottom: none;
+    transition: none;
+    padding: $medium $large;
+
+    &:hover {
+        background-color: var(--primary-glow);
+        color: var(--text-color);
+    }
+
+    &.active {
+        background-color: var(--bg-surface-color);
+        border-color: var(--primary-color);
+        border-bottom-color: var(--bg-surface-color);
+        color: var(--accent-color);
+        text-shadow: none;
+
+        &::before {
+            height: 3px;
+            background-color: var(--accent-color);
+            box-shadow: none;
+        }
+    }
+}
+
+[data-theme='snes'] .pagination-btn {
+    border-radius: 0;
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.52rem;
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: none;
+
+    &:hover {
+        border-color: var(--primary-color);
+        transform: translate(-1px, -1px);
+        box-shadow: 3px 3px 0 0 #000000;
+    }
+
+    &.active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-deep-color);
+        box-shadow: var(--shadow-sm);
+        text-shadow: none;
+    }
+}
+
+[data-theme='snes'] .pagination-ellipsis {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.52rem;
+}
+
+[data-theme='snes'] .step-dot {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.52rem;
+    transition: none;
+
+    .step.active & {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+        background-color: var(--bg-inset-color);
+        box-shadow: var(--shadow-sm);
+        animation: none;
+    }
+
+    .step.completed & {
+        background-color: var(--primary-color);
+        border-color: var(--primary-deep-color);
+    }
+}
+
+[data-theme='snes'] .step-label {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.48rem;
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BREADCRUMBS
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .breadcrumb-item a,
+[data-theme='snes'] .breadcrumb-item span {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    transition: color 0.04s step-end;
+}
+
+[data-theme='snes'] .breadcrumb-item:not(:last-child)::after {
+    content: '▶';
+    font-size: 0.5rem;
+    opacity: 0.6;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DROPDOWN
+// SNES item-selection list — solid borders, instant appear, no spring
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .dropdown-list-wrapper {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    box-shadow: var(--shadow-md);
+    animation: snes-appear 0.15s ease forwards;
+}
+
+[data-theme='snes'] .dropdown-list-item-wrapper {
+    border-radius: 0;
+}
+
+[data-theme='snes'] .dropdown-list-item {
+    border-radius: 0;
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    border-left: 4px solid transparent;
+    transition: none;
+
+    // ▶ cursor on hover — SNES menu selection style
+    &:hover {
+        border-left-color: var(--accent-color);
+        background-color: var(--primary-color);
+        color: #FFFFFF;
+
+        &::before {
+            content: '▶ ';
+            color: var(--accent-color);
+            font-size: 0.6rem;
+        }
+    }
+}
+
+[data-theme='snes'] .dropdown-searchbar {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    transition: border-color 0.04s step-end;
+
+    &:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(248, 200, 32, 0.40);
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LAYOUT SHELLS
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .page-wrapper {
+    // Keep dithering consistent with body
+    background-image: none;
+}
+
+[data-theme='snes'] .section-wrapper {
+    gap: $large; // Slightly more breathing room between sections
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FOOTER
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='snes'] .footer-wrapper,
+[data-theme='snes'] footer {
+    border-top: 3px solid var(--primary-color);
+    box-shadow:
+        0 -2px 0 0 var(--primary-deep-color),
+        0 -4px 0 0 #000000;
+
+    &::before { display: none; }
+}

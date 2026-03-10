@@ -3,15 +3,17 @@
 
 // ─── Base Typography ──────────────────────────────────────────────────────────
 // Applies R&B brand type system to raw HTML elements.
+// Direction: elegant editorial — thin weights, generous spacing, refined.
 // All custom component typography is handled at the component level.
 
 body {
     font-family: $font-body;
     font-size: 1rem;
-    line-height: 1.6;
+    font-weight: 400;
+    line-height: 1.65;
     color: var(--text-color);
     background-color: var(--bg-color);
-    // Scanline texture — the R&B signature on all dark surfaces
+    // Grain texture — the R&B signature: barely perceptible film-grain feel
     background-image: repeating-linear-gradient(
         to bottom,
         transparent 0px,
@@ -19,13 +21,16 @@ body {
         rgba(0, 0, 0, $scanline-opacity) 3px,
         rgba(0, 0, 0, $scanline-opacity) 4px
     );
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     transition:
         background-color var(--transition-speed, 0.18s) ease,
         color var(--transition-speed, 0.18s) ease;
 }
 
 // ─── Headings ─────────────────────────────────────────────────────────────────
-// Cinzel — classical inscriptional letterforms, all caps, wide tracking
+// Cormorant Garamond — ultra-thin fantasy serif, editorial weight, not heavy
+// h1/h2 retain uppercase for brand authority; h3–h6 use natural case
 
 h1,
 h2,
@@ -33,42 +38,51 @@ h3,
 h4,
 h5,
 h6 {
-    @include font-display;
+    font-family: $font-display;
     color: var(--text-heading-color);
-    text-transform: uppercase;
-    line-height: 1.2;
+    line-height: 1.15;
+    font-weight: 400;
 }
 
 h1 {
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    letter-spacing: 0.12em;
-    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 400;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
 }
 
 h2 {
-    font-size: clamp(1.4rem, 3vw, 2.2rem);
-    letter-spacing: 0.10em;
-    font-weight: 700;
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
 }
 
 h3 {
-    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-    letter-spacing: 0.09em;
+    font-size: clamp(1.15rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    letter-spacing: 0.03em;
 }
 
 h4 {
-    font-size: 1.15rem;
-    letter-spacing: 0.08em;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
 }
 
 h5 {
-    font-size: 0.95rem;
-    letter-spacing: 0.10em;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary-color);
 }
 
 h6 {
-    font-size: 0.8rem;
+    font-family: $font-ui;
+    font-size: 0.72rem;
+    font-weight: 500;
     letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--text-muted-color);
 }
 
@@ -77,7 +91,8 @@ h6 {
 p {
     font-family: $font-body;
     font-size: 0.9rem;
-    line-height: 1.65;
+    font-weight: 400;
+    line-height: 1.7;
     color: var(--text-color);
     max-width: 72ch;
 }
@@ -85,9 +100,10 @@ p {
 // ─── Links ────────────────────────────────────────────────────────────────────
 
 a {
-    font-family: $font-body;
+    font-family: inherit;
     font-size: inherit;
-    letter-spacing: 0.03em;
+    font-weight: inherit;
+    letter-spacing: 0.02em;
     color: var(--primary-color);
     text-decoration: none;
     width: max-content;
@@ -111,6 +127,7 @@ textarea,
 select {
     font-family: $font-body;
     font-size: 0.875rem;
+    font-weight: 400;
     color: var(--text-color);
     background-color: var(--bg-inset-color);
     border: 1px solid var(--border-color);
@@ -128,11 +145,10 @@ select {
 
     &::placeholder {
         color: var(--text-muted-color);
-        letter-spacing: 0.04em;
+        letter-spacing: 0.03em;
     }
 }
 
-// Suppress number spinners
 input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
     display: none;
@@ -143,7 +159,7 @@ input::-webkit-outer-spin-button {
 code,
 kbd,
 samp {
-    font-family: $font-body;
+    font-family: $font-mono;
     font-size: 0.85em;
     color: var(--primary-color);
     background-color: var(--bg-inset-color);
@@ -153,12 +169,12 @@ samp {
 }
 
 pre {
-    font-family: $font-body;
+    font-family: $font-mono;
     font-size: 0.875rem;
     color: var(--text-heading-color);
     background-color: var(--bg-inset-color);
     border: 1px solid var(--border-color);
-    border-left: 3px solid var(--primary-color);
+    border-left: 2px solid var(--primary-color);
     border-radius: $border-radius;
     padding: $large $xLarge;
     overflow-x: auto;
@@ -177,7 +193,8 @@ pre {
 
 small {
     font-family: $font-ui;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 400;
     letter-spacing: 0.08em;
     color: var(--text-muted-color);
 }
@@ -185,20 +202,16 @@ small {
 // ─── Blockquote ───────────────────────────────────────────────────────────────
 
 blockquote {
-    border-left: 3px solid var(--primary-color);
+    border-left: 2px solid var(--primary-color);
     padding-left: $large;
     margin-left: 0;
     color: var(--text-secondary-color);
+    font-family: $font-display;
     font-style: italic;
-
-    &::before {
-        content: '"';
-        font-size: 2.5rem;
-        color: var(--primary-color);
-        line-height: 0;
-        vertical-align: -0.6em;
-        margin-right: 0.15em;
-    }
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
 }
 
 // ─── Horizontal rule ─────────────────────────────────────────────────────────

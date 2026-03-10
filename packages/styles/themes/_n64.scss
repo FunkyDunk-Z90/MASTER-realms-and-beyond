@@ -1,0 +1,1052 @@
+@use '../_variables' as *;
+
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  N64 THEME — Authentic Nintendo 64 hardware palette                     ║
+// ║  Sourced from N64 console body, controller buttons, and logo             ║
+// ║  Console grays · A-button blue · C-button gold · B-button green         ║
+// ║  Hard pixel shadows · zero radius · polygon grid texture                ║
+// ║  Inspired by: Mario 64, Zelda OoT, GoldenEye, Star Fox 64               ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
+
+// ─── N64 Source Palette ───────────────────────────────────────────────────────
+// Hardware:   #4A4A4A · #6B6B6B · #2B2B2B · #8A8A8A
+// A button:   #2F6BFF (blue)
+// B button:   #38B24A (green)
+// C button:   #FFD33D (yellow)
+// Start:      #D7262B (red)
+// Logo:       #E60012 · #0066CC · #00A651 · #FFD200
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CSS VARIABLES — Dark (default)
+// N64 console charcoal · logo blue · C-button gold
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'],
+[data-theme='n64'][data-mode='dark'] {
+    // ── Backgrounds — N64 console body grays ──────────────────────────────
+    --bg-color:              #141414;
+    --bg-secondary-color:    #202020;
+    --bg-surface-color:      #2B2B2B;
+    --bg-inset-color:        #0C0C0C;
+
+    // ── Text ──────────────────────────────────────────────────────────────
+    --text-color:            #D4D4D4;
+    --text-secondary-color:  #9A9A9A;
+    --text-muted-color:      #585858;
+    --text-heading-color:    #F0F0F0;
+
+    // ── Primary — N64 Logo Blue (#0066CC) ─────────────────────────────────
+    --primary-color:         #0066CC;
+    --primary-hover-color:   #1A80E0;
+    --primary-deep-color:    #004499;
+    --primary-glow:          rgba(0, 102, 204, 0.28);
+    --primary-glow-strong:   rgba(0, 102, 204, 0.55);
+
+    // ── Accent — C-button yellow / N64 logo gold (#FFD33D / #FFD200) ──────
+    --accent-color:          #FFD200;
+    --accent-dim-color:      #997E00;
+    --accent-glow:           rgba(255, 210, 0, 0.28);
+
+    // ── Highlight — N64 logo green / B-button (#00A651) ───────────────────
+    --highlight-color:       #00A651;
+    --highlight-glow:        rgba(0, 166, 81, 0.28);
+
+    // ── Borders — N64 console panel grays ─────────────────────────────────
+    --border-color:          #3A3A3A;
+    --border-strong-color:   #5A5A5A;
+    --border-radius:         0px;
+
+    // ── Rules ─────────────────────────────────────────────────────────────
+    --rule-color:            #0066CC;
+    --rule-glow:             none;
+    --blur:                  rgba(20, 20, 20, 0.95);
+
+    // ── Shadows — hard pixel offset, no blur ──────────────────────────────
+    --shadow-sm:             3px 3px 0 0 #000000;
+    --shadow-md:             4px 4px 0 0 #000000;
+    --shadow-lg:             6px 6px 0 0 #000000;
+
+    // ── Semantic — directly mapped from N64 controller buttons ────────────
+    --danger-color:   #D7262B;        // Start button
+    --danger-glow:    rgba(215, 38, 43, 0.45);
+    --warning-color:  #FFD33D;        // C button
+    --success-color:  #38B24A;        // B button
+    --submit-color:   #2F6BFF;        // A button (brighter blue for CTA)
+    --disabled-color: #3A3A3A;
+
+    // ── Transitions ───────────────────────────────────────────────────────
+    --transition-speed: 0.08s;
+    --transition-slow:  0.18s;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CSS VARIABLES — Light / "Daytime" mode
+// N64 reset-button light gray · deep charcoal text · vivid logo accents
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'][data-mode='light'] {
+    --bg-color:              #E8E8E8;
+    --bg-secondary-color:    #D4D4D4;
+    --bg-surface-color:      #F4F4F4;
+    --bg-inset-color:        #CFCFCF;
+
+    --text-color:            #1A1A1A;
+    --text-secondary-color:  #3A3A3A;
+    --text-muted-color:      #6B6B6B;
+    --text-heading-color:    #0C0C0C;
+
+    --primary-color:         #0055AA;
+    --primary-hover-color:   #0066CC;
+    --primary-deep-color:    #003A80;
+    --primary-glow:          rgba(0, 85, 170, 0.18);
+    --primary-glow-strong:   rgba(0, 85, 170, 0.36);
+
+    --accent-color:          #B89400;
+    --accent-dim-color:      #7A6200;
+    --accent-glow:           rgba(184, 148, 0, 0.22);
+
+    --border-color:          #B0B0B0;
+    --border-strong-color:   #8A8A8A;
+
+    --rule-color:            #0055AA;
+    --blur:                  rgba(232, 232, 232, 0.94);
+
+    --shadow-sm:             3px 3px 0 0 rgba(0, 0, 0, 0.30);
+    --shadow-md:             4px 4px 0 0 rgba(0, 0, 0, 0.30);
+    --shadow-lg:             6px 6px 0 0 rgba(0, 0, 0, 0.30);
+
+    --danger-color:   #C01820;
+    --success-color:  #2A9A3E;
+    --warning-color:  #C8A800;
+    --submit-color:   #1A5CE0;
+    --disabled-color: #B4B4B4;
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='n64']:not([data-mode]) {
+        --bg-color:              #E8E8E8;
+        --bg-secondary-color:    #D4D4D4;
+        --bg-surface-color:      #F4F4F4;
+        --bg-inset-color:        #CFCFCF;
+
+        --text-color:            #1A1A1A;
+        --text-secondary-color:  #3A3A3A;
+        --text-muted-color:      #6B6B6B;
+        --text-heading-color:    #0C0C0C;
+
+        --primary-color:         #0055AA;
+        --primary-hover-color:   #0066CC;
+        --primary-deep-color:    #003A80;
+        --primary-glow:          rgba(0, 85, 170, 0.18);
+        --primary-glow-strong:   rgba(0, 85, 170, 0.36);
+
+        --accent-color:          #B89400;
+        --accent-dim-color:      #7A6200;
+        --accent-glow:           rgba(184, 148, 0, 0.22);
+
+        --border-color:          #B0B0B0;
+        --border-strong-color:   #8A8A8A;
+
+        --shadow-sm:             3px 3px 0 0 rgba(0, 0, 0, 0.30);
+        --shadow-md:             4px 4px 0 0 rgba(0, 0, 0, 0.30);
+        --shadow-lg:             6px 6px 0 0 rgba(0, 0, 0, 0.30);
+
+        --danger-color:   #C01820;
+        --success-color:  #2A9A3E;
+        --warning-color:  #C8A800;
+        --submit-color:   #1A5CE0;
+        --disabled-color: #B4B4B4;
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// N64 KEYFRAMES
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Panel / dropdown appear
+@keyframes n64-appear {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+// Modal entrance
+@keyframes n64-modal-in {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 12px)); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+// Backdrop fade
+@keyframes n64-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+// Drawer slide from right
+@keyframes n64-drawer-in {
+    from { transform: translateX(110%); }
+    to   { transform: translateX(0); }
+}
+
+// Drawer slide from left
+@keyframes n64-drawer-in-left {
+    from { transform: translateX(-110%); }
+    to   { transform: translateX(0); }
+}
+
+// Toast pop up
+@keyframes n64-toast-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GLOBAL ELEMENT OVERRIDES
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] {
+
+    // ── Body — N64 polygon-era grid texture ───────────────────────────────
+    // Very subtle 24px wireframe grid — evokes the N64's 3D polygon worlds
+    body {
+        background-image:
+            linear-gradient(rgba(0, 102, 204, 0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 102, 204, 0.025) 1px, transparent 1px);
+        background-size: 24px 24px;
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+    }
+
+    // ── Headings — Press Start 2P, no text-shadow (same readability fix) ──
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Press Start 2P', 'Courier New', monospace;
+        text-shadow: none;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        line-height: 1.7;
+    }
+
+    h1 { font-size: clamp(1.1rem, 2.8vw, 1.6rem);  letter-spacing: 0.06em; }
+    h2 { font-size: clamp(0.85rem, 2.2vw, 1.2rem); letter-spacing: 0.05em; }
+    h3 { font-size: 0.9rem; }
+    h4 { font-size: 0.75rem; }
+    h5 { font-size: 0.65rem; color: var(--text-secondary-color); }
+    h6 {
+        font-size: 0.58rem;
+        // N64 C-button gold for lowest heading level
+        color: var(--accent-color);
+        font-family: 'Press Start 2P', monospace;
+    }
+
+    // ── Body text ─────────────────────────────────────────────────────────
+    p {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        letter-spacing: 0.04em;
+        line-height: 1.8;
+        font-size: 0.875rem;
+    }
+
+    // ── Links ─────────────────────────────────────────────────────────────
+    a {
+        transition: color 0.08s ease;
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+
+        &:focus-visible {
+            outline: 2px solid var(--accent-color);
+            border-radius: 0;
+        }
+    }
+
+    // ── Form elements ─────────────────────────────────────────────────────
+    input, textarea, select {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        transition:
+            border-color 0.08s ease,
+            box-shadow 0.08s ease;
+
+        &:focus {
+            border-color: var(--primary-color);
+            box-shadow:
+                0 0 0 2px rgba(0, 102, 204, 0.40),
+                inset 0 0 0 1px rgba(0, 102, 204, 0.12);
+        }
+    }
+
+    // ── Code & pre ────────────────────────────────────────────────────────
+    code, kbd, samp {
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+    }
+
+    pre {
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        border-left: 4px solid var(--primary-color);
+        box-shadow: var(--shadow-md);
+
+        code { border: none; }
+    }
+
+    // ── HR ────────────────────────────────────────────────────────────────
+    hr {
+        border-top: 2px solid var(--border-color);
+
+        &.rule-accent {
+            border-color: var(--accent-color);
+            box-shadow: none;
+        }
+    }
+
+    // ── Blockquote ────────────────────────────────────────────────────────
+    blockquote {
+        border-left: 4px solid var(--primary-color);
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        font-style: normal;
+        font-size: 0.875rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    // ── Small ─────────────────────────────────────────────────────────────
+    small {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BUTTONS
+// N64 controller-button aesthetic — each variant maps to a physical button
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .btn {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    border-radius: 0;
+    border: 2px solid var(--primary-deep-color);
+    box-shadow: var(--shadow-sm);
+    transition: none;
+
+    &::before { display: none; }
+
+    // Pixel-press effect — button physically depresses
+    &:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 0 #000000;
+    }
+
+    &:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 0 #000000;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    // .accent → C-button yellow
+    &.accent {
+        border-color: var(--accent-dim-color);
+        &:hover { box-shadow: 4px 4px 0 0 #000000; }
+    }
+
+    // .danger → Start button red
+    &.danger  { border-color: #8A0010; }
+
+    // .warning → C-button yellow variant
+    &.warning { border-color: #907000; }
+
+    // .submit → A-button blue
+    &.submit  { border-color: #1040A8; }
+
+    // .success → B-button green
+    &.success { border-color: #1A6028; }
+
+    &.ghost {
+        border: 2px solid var(--border-strong-color);
+        box-shadow: var(--shadow-sm);
+    }
+
+    &.outline {
+        border: 2px solid var(--primary-color);
+        box-shadow: var(--shadow-sm);
+
+        &:hover { box-shadow: 4px 4px 0 0 #000000; }
+    }
+
+    &.btn-sm {
+        font-size: 0.52rem;
+        padding: $small $medium;
+    }
+
+    &.btn-lg { font-size: 0.72rem; }
+
+    &.disabled, &:disabled {
+        box-shadow: none;
+        &:hover { transform: none; }
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CARDS
+// N64 menu panels — console gray surfaces, hard shadows
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .card {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    transition: border-color 0.08s ease;
+    // Subtle inner edge line — like N64 menu window chrome
+    outline: 1px solid rgba(0, 102, 204, 0.12);
+    outline-offset: -4px;
+
+    &::before { display: none; }
+
+    &:hover {
+        border-color: var(--border-strong-color);
+        box-shadow: var(--shadow-md);
+        transform: none;
+    }
+
+    &--glow {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-md);
+
+        &:hover { box-shadow: var(--shadow-lg); }
+    }
+
+    &--inset {
+        outline: none;
+    }
+
+    &--interactive {
+        cursor: pointer;
+        transition: border-color 0.08s ease;
+
+        &:hover {
+            border-color: var(--primary-color);
+            transform: none;
+            box-shadow: var(--shadow-md);
+        }
+
+        &:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 0 #000000;
+        }
+    }
+}
+
+[data-theme='n64'] .card-header {
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme='n64'] .card-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.72rem;
+    text-shadow: none;
+    letter-spacing: 0.06em;
+}
+
+[data-theme='n64'] .card-subtitle {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+[data-theme='n64'] .card-footer {
+    border-top: 2px solid var(--border-color);
+}
+
+[data-theme='n64'] .stat-card {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-md);
+
+    &::before { display: none; }
+}
+
+[data-theme='n64'] .stat-card__label {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-shadow: none;
+}
+
+[data-theme='n64'] .stat-card__value {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 1.3rem;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.03em;
+}
+
+[data-theme='n64'] .stat-card__delta {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+}
+
+[data-theme='n64'] .profile-card {
+    border-radius: 0;
+
+    &__avatar {
+        border-radius: 0;
+        border: 3px solid var(--primary-color);
+        box-shadow: 3px 3px 0 0 #000000;
+    }
+
+    &__name {
+        font-family: 'Press Start 2P', 'Courier New', monospace;
+        font-size: 0.72rem;
+        text-shadow: none;
+    }
+
+    &__role {
+        font-family: 'Press Start 2P', 'Courier New', monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.06em;
+        // Tint role label with B-button green
+        color: var(--highlight-color);
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INPUTS & FORMS
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .input {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.08s ease, box-shadow 0.08s ease;
+    letter-spacing: 0.05em;
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow:
+            0 0 0 2px rgba(0, 102, 204, 0.40),
+            inset 0 0 0 1px rgba(0, 102, 204, 0.10);
+    }
+
+    &--error  { border: 2px solid var(--danger-color); }
+    &--success { border: 2px solid var(--success-color); }
+}
+
+[data-theme='n64'] .field-label {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-shadow: none;
+}
+
+[data-theme='n64'] .field-hint,
+[data-theme='n64'] .field-error {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+}
+
+[data-theme='n64'] .search-input-wrapper {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.08s ease, box-shadow 0.08s ease;
+
+    &:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.35);
+    }
+}
+
+[data-theme='n64'] .search-input {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    letter-spacing: 0.05em;
+}
+
+[data-theme='n64'] .toggle {
+    &__track {
+        border-radius: 0;
+        border: 2px solid var(--border-color);
+        transition: background-color 0.08s ease, border-color 0.08s ease;
+    }
+
+    &__thumb {
+        border-radius: 0;
+        transition: transform 0.12s ease;
+    }
+
+    &__label {
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        letter-spacing: 0.04em;
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NAVIGATION — Header / Navbar
+// The iconic N64 logo treatment on the title
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .header-wrapper {
+    border-bottom: 3px solid var(--primary-color);
+    box-shadow:
+        0 2px 0 0 var(--primary-deep-color),
+        0 4px 0 0 #000000;
+
+    &::before { display: none; }
+}
+
+[data-theme='n64'] .header-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-style: normal;
+    letter-spacing: 0.08em;
+    // N64 logo 4-color gradient — red · blue · yellow · green
+    background: linear-gradient(
+        to right,
+        #E60012 0%,
+        #E60012 24%,
+        #0066CC 26%,
+        #0066CC 50%,
+        #FFD200 52%,
+        #FFD200 74%,
+        #00A651 76%,
+        #00A651 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: none; // Can't combine text-shadow with gradient text
+}
+
+[data-theme='n64'] .nav-link {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    transition: color 0.08s ease;
+
+    &::after {
+        height: 2px;
+        background-color: var(--accent-color);
+        transition: transform 0.12s ease;
+    }
+
+    &.active {
+        color: var(--accent-color);
+        text-shadow: none;
+
+        &::after { background-color: var(--accent-color); }
+    }
+}
+
+[data-theme='n64'] .burgerIcon .line {
+    border-radius: 0;
+    height: 3px;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SIDEBAR
+// Clean N64 menu panel — solid blue active state, no cursor blink
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .sidebar-wrapper {
+    border-right: 3px solid var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    box-shadow:
+        2px 0 0 0 var(--primary-deep-color),
+        4px 0 0 0 #000000;
+    transition: transform 0.28s cubic-bezier(0.25, 0, 0, 1);
+
+    &::before { display: none; }
+}
+
+[data-theme='n64'] .sidebar-pill-toggle {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    border-left: none;
+    transition: background-color 0.08s ease, box-shadow 0.08s ease;
+
+    &:hover { box-shadow: 2px 0 0 0 #000000; }
+}
+
+[data-theme='n64'] .sidebar-section-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.10em;
+    // Use N64 gold for section headers
+    color: var(--accent-color);
+    text-shadow: none;
+}
+
+[data-theme='n64'] .sidebar-item {
+    border-radius: 0;
+
+    // Clean solid blue fill for active — no cursor blink (more N64 refined)
+    &.active > .sidebar-link {
+        background-color: var(--primary-color);
+        border-left: 4px solid var(--accent-color);
+
+        .sidebar-label { color: #FFFFFF; }
+    }
+
+    > .sidebar-link {
+        border-radius: 0;
+        border-left: 4px solid transparent;
+        transition: border-color 0.08s ease, background-color 0.08s ease;
+    }
+}
+
+[data-theme='n64'] .sidebar-label {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    transition: color 0.08s ease;
+}
+
+[data-theme='n64'] .sidebar-collapsed .sidebar-label {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transition: opacity 0.12s ease;
+}
+
+[data-theme='n64'] .sidebar-search-input-row {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.08s ease, box-shadow 0.08s ease;
+
+    &:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.35);
+    }
+}
+
+[data-theme='n64'] .sidebar-search-input {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    letter-spacing: 0.05em;
+}
+
+[data-theme='n64'] .sidebar-search-results {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    box-shadow: var(--shadow-md);
+    animation: n64-appear 0.15s ease forwards;
+}
+
+[data-theme='n64'] .sidebar-search-result-item {
+    border-radius: 0;
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.8rem;
+    border-left: 4px solid transparent;
+    transition: border-color 0.08s ease, background-color 0.08s ease;
+
+    &:hover {
+        border-left-color: var(--primary-color);
+        background-color: var(--primary-glow);
+    }
+}
+
+[data-theme='n64'] .sidebar-chevron {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+[data-theme='n64'] .sidebar-submenu {
+    transition: grid-template-rows 0.22s ease;
+}
+
+[data-theme='n64'] .sidebar-footer {
+    border-top: 2px solid var(--border-color);
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MODALS & OVERLAYS
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .modal-backdrop {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(20, 20, 20, 0.90);
+    // Subtle polygon grid on backdrop
+    background-image:
+        linear-gradient(rgba(0, 102, 204, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 102, 204, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    animation: n64-fade 0.18s ease forwards;
+}
+
+[data-theme='n64'] .modal {
+    border-radius: 0;
+    border: 3px solid var(--primary-color);
+    box-shadow:
+        inset 0 0 0 1px rgba(0, 102, 204, 0.18),
+        6px 6px 0 0 #000000;
+    animation: n64-modal-in 0.22s ease forwards;
+
+    // N64 blue gradient accent bar — matches the hardware console styling
+    &::after {
+        height: 3px;
+        background: linear-gradient(
+            to right,
+            var(--primary-deep-color) 0%,
+            var(--primary-color) 30%,
+            #2F6BFF 50%,          // A-button blue highlight
+            var(--primary-color) 70%,
+            var(--primary-deep-color) 100%
+        );
+        box-shadow: none;
+    }
+
+    &::before { display: none; }
+}
+
+[data-theme='n64'] .modal-header {
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme='n64'] .modal-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-shadow: none;
+}
+
+[data-theme='n64'] .modal-close {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    transition: background-color 0.08s ease, border-color 0.08s ease;
+
+    &:hover {
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+        color: #FFFFFF;
+    }
+}
+
+[data-theme='n64'] .modal-footer {
+    border-top: 2px solid var(--border-color);
+}
+
+[data-theme='n64'] .drawer {
+    border-left: 3px solid var(--primary-color);
+    box-shadow:
+        -2px 0 0 0 var(--primary-deep-color),
+        -6px 0 0 0 #000000;
+    animation: n64-drawer-in 0.28s cubic-bezier(0.25, 0, 0, 1) forwards;
+
+    &--left {
+        border-right: 3px solid var(--primary-color);
+        border-left: none;
+        box-shadow:
+            2px 0 0 0 var(--primary-deep-color),
+            6px 0 0 0 #000000;
+        animation: n64-drawer-in-left 0.28s cubic-bezier(0.25, 0, 0, 1) forwards;
+    }
+}
+
+[data-theme='n64'] .toast {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-md);
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    animation: n64-toast-in 0.2s ease forwards;
+
+    &--success { border-left: 4px solid var(--success-color); }
+    &--warning { border-left: 4px solid var(--warning-color); }
+    &--danger  { border-left: 4px solid var(--danger-color);  }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TABS & NAVIGATION COMPONENTS
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .tabs {
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme='n64'] .tab {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    border-radius: 0;
+    border: 2px solid transparent;
+    border-bottom: none;
+    transition: background-color 0.08s ease, color 0.08s ease;
+    padding: $medium $large;
+
+    &:hover {
+        background-color: var(--primary-glow);
+        color: var(--text-color);
+    }
+
+    &.active {
+        background-color: var(--bg-surface-color);
+        border-color: var(--primary-color);
+        border-bottom-color: var(--bg-surface-color);
+        color: var(--accent-color);
+        text-shadow: none;
+
+        &::before {
+            height: 3px;
+            background-color: var(--primary-color);
+            box-shadow: none;
+        }
+    }
+}
+
+[data-theme='n64'] .pagination-btn {
+    border-radius: 0;
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.52rem;
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: none;
+
+    &:hover {
+        border-color: var(--primary-color);
+        transform: translate(-1px, -1px);
+        box-shadow: 3px 3px 0 0 #000000;
+    }
+
+    &.active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-deep-color);
+        color: #FFFFFF;
+        text-shadow: none;
+    }
+}
+
+[data-theme='n64'] .pagination-ellipsis {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.52rem;
+}
+
+[data-theme='n64'] .step-dot {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.52rem;
+    transition: border-color 0.08s ease, background-color 0.08s ease;
+
+    .step.active & {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background-color: var(--bg-inset-color);
+        box-shadow: var(--shadow-sm);
+        animation: none;
+    }
+
+    .step.completed & {
+        background-color: var(--primary-color);
+        border-color: var(--primary-deep-color);
+        color: #FFFFFF;
+    }
+}
+
+[data-theme='n64'] .step-label {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.48rem;
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BREADCRUMBS
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .breadcrumb-item a,
+[data-theme='n64'] .breadcrumb-item span {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    transition: color 0.08s ease;
+}
+
+// N64 uses › as separator — cleaner than ▶
+[data-theme='n64'] .breadcrumb-item:not(:last-child)::after {
+    content: '›';
+    font-size: 0.7rem;
+    opacity: 0.5;
+    font-family: inherit;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DROPDOWN
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .dropdown-list-wrapper {
+    border-radius: 0;
+    border: 2px solid var(--primary-color);
+    box-shadow: var(--shadow-md);
+    animation: n64-appear 0.15s ease forwards;
+}
+
+[data-theme='n64'] .dropdown-list-item-wrapper {
+    border-radius: 0;
+}
+
+[data-theme='n64'] .dropdown-list-item {
+    border-radius: 0;
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    border-left: 4px solid transparent;
+    transition: border-color 0.08s ease, background-color 0.08s ease, color 0.08s ease;
+
+    &:hover {
+        border-left-color: var(--primary-color);
+        background-color: var(--primary-glow);
+        color: #FFFFFF;
+    }
+}
+
+[data-theme='n64'] .dropdown-searchbar {
+    border-radius: 0;
+    border: 2px solid var(--border-color);
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    transition: border-color 0.08s ease, box-shadow 0.08s ease;
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.35);
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LAYOUT SHELLS & FOOTER
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='n64'] .section-wrapper {
+    gap: $large;
+}
+
+[data-theme='n64'] .footer-wrapper,
+[data-theme='n64'] footer {
+    border-top: 3px solid var(--primary-color);
+    box-shadow:
+        0 -2px 0 0 var(--primary-deep-color),
+        0 -4px 0 0 #000000;
+
+    &::before { display: none; }
+}

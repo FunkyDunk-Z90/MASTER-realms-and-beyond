@@ -1,135 +1,131 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Realms & Beyond — Design Tokens
-// Retro arcade · Warm muted palette · 80s inspired · Minimalist & sleek
+// Elegant editorial · SNES/N64 retro palette · Minimalist & refined
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ─── Base darks — warm-tinted near-blacks ─────────────────────────────────────
 $void:           #090806;   // deepest warm dark
-$obsidian:       #110F0C;   // primary background
-$obsidian-mid:   #1A1713;   // header / sidebar background
-$obsidian-light: #252219;   // surface / card background
-$ash:            #3D3529;   // muted borders in dark
-$slate:          #7A6E5E;   // muted / secondary text in dark
-$mist:           #C4B89A;   // body text — warm, parchment-tinted
-$silver:         #DDD4BC;   // light mode secondary bg
-$ghost:          #F0EAD8;   // parchment light bg
+$obsidian:       #0E0C09;   // primary background (arcade default)
+$obsidian-mid:   #161310;   // header / sidebar background
+$obsidian-light: #1D1A14;   // surface / card background
+$ash:            #3A3428;   // muted borders in dark
+$slate:          #8A7E6A;   // muted / secondary text in dark
+$mist:           #C2B79E;   // body text — warm parchment-tinted
+$silver:         #D8CCAC;   // heading text
+$ghost:          #F2ECE0;   // parchment light bg
 
-// ─── Primary — Arcade Amber ───────────────────────────────────────────────────
-// The signature R&B colour: warm amber-gold — phosphor-tube glow, not neon blaze
-$amber-deep:        #7A4A10;                    // deepest amber — press-depth
-$amber:             #C47818;                    // primary brand colour
-$amber-mid:         #DA9020;                    // hover / active
-$amber-glow:        rgba(196, 120, 24, 0.18);   // ambient glow
-$amber-glow-strong: rgba(196, 120, 24, 0.40);   // focus rings / glows
+// ─── Primary — Antique Gold (Arcade / SNES RPG) ───────────────────────────────
+// The signature R&B colour: antique gold — aged coin, SNES treasure chest
+$amber-deep:        #7A6020;                    // deepest gold — press-depth
+$amber:             #B89038;                    // primary brand colour (muted, antique)
+$amber-mid:         #CCA840;                    // hover / active
+$amber-glow:        rgba(184, 144, 56, 0.16);   // ambient glow
+$amber-glow-strong: rgba(184, 144, 56, 0.36);   // focus rings / glows
 
-// ─── Accent — Phosphor Green ──────────────────────────────────────────────────
-// Muted CRT-screen phosphor — the secondary frequency that completes amber
-$phosphor:       #4A8A52;                   // main accent
-$phosphor-dim:   #2E5C34;                   // dimmer, for labels / borders
-$phosphor-glow:  rgba(74, 138, 82, 0.18);  // ambient glow
+// ─── Accent — Sage Green (SNES forest / nature) ───────────────────────────────
+// Muted sage — the secondary frequency. Zelda ALTTP field tiles.
+$phosphor:       #507040;                   // main accent (sage)
+$phosphor-dim:   #304828;                   // dimmer, for labels / borders
+$phosphor-glow:  rgba(80, 112, 64, 0.16);  // ambient glow
 
-// ─── Theme: Phosphor — CRT Terminal ──────────────────────────────────────────
-$crt-green:          #3A8A48;
-$crt-green-mid:      #50B060;
-$crt-green-glow:     rgba(58, 138, 72, 0.22);
-$crt-green-glow-str: rgba(58, 138, 72, 0.45);
-$crt-amber:          #C47818;
-$crt-amber-glow:     rgba(196, 120, 24, 0.18);
+// ─── Theme: Phosphor — Verdant Forest (SNES Zelda / DKC) ─────────────────────
+$crt-green:          #4A7A3C;
+$crt-green-mid:      #5A9248;
+$crt-green-glow:     rgba(74, 122, 60, 0.16);
+$crt-green-glow-str: rgba(74, 122, 60, 0.36);
+$crt-amber:          #80B840;               // bright leaf accent
+$crt-amber-glow:     rgba(128, 184, 64, 0.16);
 
-// ─── Theme: Sovereign — Imperial Crimson ──────────────────────────────────────
-$crimson-deep:      #5A1010;                    // near-black red
-$crimson:           #C41420;                    // vivid military crimson
-$crimson-mid:       #E02030;                    // hover
-$crimson-glow:      rgba(196, 20, 32, 0.22);
-$crimson-glow-str:  rgba(196, 20, 32, 0.48);
-$pale-gold:         #C4A018;
-$pale-gold-dim:     #907A10;
-$pale-gold-glow:    rgba(196, 160, 24, 0.18);
-$deep-maroon:       #3A0808;                    // inset/depth surface
+// ─── Theme: Sovereign — Imperial Battle (SNES RPG crimson) ────────────────────
+$crimson-deep:      #5A1010;
+$crimson:           #A83020;               // battle crimson — SNES HP bar
+$crimson-mid:       #C03828;               // hover
+$crimson-glow:      rgba(168, 48, 32, 0.20);
+$crimson-glow-str:  rgba(168, 48, 32, 0.42);
+$pale-gold:         #B89028;               // pale gold — SNES reward
+$pale-gold-dim:     #7A6018;
+$pale-gold-glow:    rgba(184, 144, 40, 0.16);
+$deep-maroon:       #280808;               // inset/depth surface
 
-// ─── Theme: Void — Space Navy / CBRPNK ────────────────────────────────────────
-// Reference: dark navy #1A1F3A · space-orange accent · cool-gray neutrals
-$teal-deep:        #0D5A62;                     // kept for legacy use
-$teal:             #1A7280;                     // kept for legacy use
-$teal-mid:         #259098;                     // kept for legacy use
+// ─── Theme: Void — Cosmic Stellar (N64 Star Fox / Majora's Mask) ──────────────
+$teal-deep:        #0D5A62;               // legacy — kept for compatibility
+$teal:             #1A7280;               // legacy
+$teal-mid:         #259098;               // legacy
 $teal-glow:        rgba(26, 114, 128, 0.18);
 $teal-glow-strong: rgba(26, 114, 128, 0.40);
-$violet:           #7A4A9A;                     // kept for legacy use
-$violet-dim:       #523070;
-$violet-glow:      rgba(122, 74, 154, 0.18);
+$violet:           #7058A8;               // N64 space purple
+$violet-dim:       #503878;
+$violet-glow:      rgba(112, 88, 168, 0.16);
 // Void primary palette
-$steel-blue:       #4A90B8;                     // primary — space steel
-$steel-blue-mid:   #5AA8D8;
-$steel-blue-glow:  rgba(74, 144, 184, 0.20);
-$steel-blue-glow-str: rgba(74, 144, 184, 0.44);
-$space-orange:     #E84A0A;                     // accent — the pop colour
-$space-orange-mid: #F05A18;
-$space-orange-glow: rgba(232, 74, 10, 0.24);
-$space-orange-glow-str: rgba(232, 74, 10, 0.50);
-$cool-gray:        #7A8088;                     // highlight — neutral third
+$steel-blue:       #4878B0;               // N64 cobalt steel
+$steel-blue-mid:   #5890CC;
+$steel-blue-glow:  rgba(72, 120, 176, 0.18);
+$steel-blue-glow-str: rgba(72, 120, 176, 0.40);
+$space-orange:     #7058A8;               // violet accent (slot repurposed)
+$space-orange-mid: #8068C0;
+$space-orange-glow: rgba(112, 88, 168, 0.16);
+$space-orange-glow-str: rgba(112, 88, 168, 0.38);
+$cool-gray:        #6878A0;               // highlight — cool blue-gray
 
-// ─── Theme: Dusk — Magenta + Emerald (80s arcade: Tron / Galaga) ──────────────
-// Reference: download(3).png — #170011 · #7A1050 · #C83070 · #30B878 · #78A8C8
-$amethyst-deep:        #3A2060;                // kept for legacy use
-$amethyst:             #5A3A8A;                // kept for legacy use
-$amethyst-mid:         #7A54AE;
-$amethyst-glow:        rgba(90, 58, 138, 0.20);
-$amethyst-glow-strong: rgba(90, 58, 138, 0.42);
-$rose:                 #C47080;                // kept for legacy use
-$rose-dim:             #8A4858;
-$rose-glow:            rgba(196, 112, 128, 0.18);
-// Dusk primary palette
-$magenta-deep:         #7A1050;                // near-black magenta
-$magenta:              #C83070;                // hot magenta — primary
-$magenta-mid:          #E04888;                // hover
-$magenta-glow:         rgba(200, 48, 112, 0.22);
-$magenta-glow-str:     rgba(200, 48, 112, 0.48);
-$dusk-emerald:         #30B878;                // emerald — accent
-$dusk-emerald-mid:     #40D090;
-$dusk-emerald-glow:    rgba(48, 184, 120, 0.18);
-$steel-sky:            #78A8C8;                // steel sky blue — highlight
-$steel-sky-glow:       rgba(120, 168, 200, 0.16);
+// ─── Theme: Dusk — Mystical Twilight (SNES magic / Chrono Trigger) ────────────
+$amethyst-deep:        #602870;
+$amethyst:             #9040A0;           // SNES magic purple — spell cast
+$amethyst-mid:         #A850B8;
+$amethyst-glow:        rgba(144, 64, 160, 0.18);
+$amethyst-glow-strong: rgba(144, 64, 160, 0.40);
+$rose:                 #B86090;           // SNES rose — magic flash
+$rose-dim:             #7A3A58;
+$rose-glow:            rgba(184, 96, 144, 0.16);
+// Dusk full palette
+$magenta-deep:         #602870;
+$magenta:              #9040A0;
+$magenta-mid:          #A850B8;
+$magenta-glow:         rgba(144, 64, 160, 0.18);
+$magenta-glow-str:     rgba(144, 64, 160, 0.40);
+$dusk-emerald:         #B86090;
+$dusk-emerald-mid:     #CC78A8;
+$dusk-emerald-glow:    rgba(184, 96, 144, 0.16);
+$steel-sky:            #7870A8;           // lavender — highlight
+$steel-sky-glow:       rgba(120, 112, 168, 0.14);
 
-// ─── Theme: Parchment — Ancient Map (light mode) ─────────────────────────────
-// Reference: download(2).png — #874537 · #D37F7F · #F2E1C3 · #54A498 · #105446
-$olive-deep:        #2A3810;
-$olive:             #3A4A1A;
-$olive-mid:         #506A22;
-$olive-glow:        rgba(58, 74, 26, 0.18);
-$olive-glow-strong: rgba(58, 74, 26, 0.40);
-$terracotta:        #8A4028;                   // kept for legacy use
-$terracotta-dim:    #5E2A18;
-$terracotta-glow:   rgba(138, 64, 40, 0.18);
-// Parchment map palette (reference-accurate)
-$map-cream:         #F2E1C3;                   // warm aged paper
-$map-terracotta:    #874537;                   // primary — terracotta earth
-$map-terracotta-mid: #A05040;
-$map-terracotta-glow: rgba(135, 69, 55, 0.22);
-$map-terracotta-glow-str: rgba(135, 69, 55, 0.46);
-$dusty-rose:        #D37F7F;                   // highlight — faded rose
-$dusty-rose-glow:   rgba(211, 127, 127, 0.18);
-$map-teal:          #54A498;                   // accent mid-tone
-$map-teal-deep:     #105446;                   // accent deep
-$map-teal-glow:     rgba(84, 164, 152, 0.18);
-// Phosphor extended greens
-$army-green:        #818B71;                   // muted khaki text
-$sage-green:        #C5CEA5;                   // sage highlight
-$bright-emerald:    #02A953;                   // vivid phosphor green
+// ─── Theme: Parchment — Old Map Light (SNES game manual / cartridge art) ──────
+$olive-deep:        #4A3010;
+$olive:             #6A4820;              // warm brown — SNES cartridge text
+$olive-mid:         #7A5828;
+$olive-glow:        rgba(106, 72, 32, 0.14);
+$olive-glow-strong: rgba(106, 72, 32, 0.28);
+$terracotta:        #486830;              // forest olive — SNES map
+$terracotta-dim:    #304820;
+$terracotta-glow:   rgba(72, 104, 48, 0.14);
+// Parchment palette
+$map-cream:         #F2ECE0;
+$map-terracotta:    #6A4820;
+$map-terracotta-mid: #7A5828;
+$map-terracotta-glow: rgba(106, 72, 32, 0.14);
+$map-terracotta-glow-str: rgba(106, 72, 32, 0.28);
+$dusty-rose:        #8A7060;
+$dusty-rose-glow:   rgba(138, 112, 96, 0.12);
+$map-teal:          #486830;
+$map-teal-deep:     #304820;
+$map-teal-glow:     rgba(72, 104, 48, 0.14);
+// Legacy
+$army-green:        #6A8060;
+$sage-green:        #A8BCA0;
+$bright-emerald:    #5A9248;
 
 // ─── Semantic colours ─────────────────────────────────────────────────────────
-$danger:      #8A2820;
-$danger-glow: rgba(138, 40, 32, 0.24);
-$warning:     #C47818;
-$success:     #3A8A48;
-$submit:      #1A5A8A;
-$disabled:    #3A3228;
+$danger:      #A82820;
+$danger-glow: rgba(168, 40, 32, 0.24);
+$warning:     #B89038;
+$success:     #4A7A3C;
+$submit:      #2858A0;
+$disabled:    #3A3428;
 
 // ─── Overlays ────────────────────────────────────────────────────────────────
-$blur-dark:  rgba(9, 8, 6, 0.76);
-$blur-light: rgba(240, 234, 216, 0.76);
+$blur-dark:  rgba(9, 8, 6, 0.80);
+$blur-light: rgba(242, 236, 224, 0.84);
 
 // ─── Spacing ─────────────────────────────────────────────────────────────────
-// Named scale — used by components throughout the system
 $small:    0.3rem;   // ~5px  — tight gaps, icon padding
 $medium:   0.5rem;   // ~8px  — standard gap
 $large:    1rem;     // 16px  — section padding
@@ -137,9 +133,9 @@ $xLarge:   1.5rem;   // 24px  — page padding
 $xxLarge:  2.5rem;   // 40px  — hero spacing
 
 // ─── Borders & Radius ────────────────────────────────────────────────────────
-// Pixel-sharp corners — retro arcade precision, not soft modern bubbles
-$border-radius:    2px;
-$border-radius-lg: 4px;
+// Refined corners — editorial precision, subtle not bubbly
+$border-radius:    4px;
+$border-radius-lg: 8px;
 
 // ─── Breakpoints ─────────────────────────────────────────────────────────────
 $tablet:  768px;
@@ -158,14 +154,16 @@ $ease-snap: cubic-bezier(0.25, 0, 0, 1);
 $ease-out:  cubic-bezier(0, 0, 0.2, 1);
 
 // ─── Typography ──────────────────────────────────────────────────────────────
-// Cinzel          — classical Roman inscriptional letterforms; evokes fantasy
-//                   map headers, ancient authority, regal precision
-// Share Tech Mono — monospaced technical readout; data terminals, arcade scores
-// Barlow Condensed — condensed sans; compact labels, status tags, HUD text
-$font-display: 'Cinzel', 'Palatino Linotype', 'Times New Roman', serif;
-$font-body:    'Share Tech Mono', 'DM Mono', 'Courier New', monospace;
+// Cormorant Garamond — ultra-thin fantasy serif; editorial, ancient, elegant
+//                      Weight 300 for brand moments, 400 for headings
+// Inter              — clean geometric sans; readable body copy, crisp at small sizes
+// Barlow Condensed   — condensed sans; compact labels, status tags, HUD text
+// Share Tech Mono    — monospaced readout; code blocks, data terminals
+$font-display: 'Cormorant Garamond', 'Palatino Linotype', 'Georgia', serif;
+$font-body:    'Inter', 'DM Sans', 'Segoe UI', sans-serif;
 $font-ui:      'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif;
+$font-mono:    'Share Tech Mono', 'DM Mono', 'Courier New', monospace;
 
 // ─── Decorative ──────────────────────────────────────────────────────────────
-// Scanline texture — the signature R&B aesthetic overlay on dark surfaces
-$scanline-opacity: 0.03;
+// Grain texture — barely perceptible film grain; elegant, not heavy CRT scanlines
+$scanline-opacity: 0.014;

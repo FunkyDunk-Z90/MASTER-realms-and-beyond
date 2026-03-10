@@ -13,7 +13,9 @@
 
 // ─── Google Fonts ─────────────────────────────────────────────────────────────
 // If using Next.js next/font, remove this and configure via layout.tsx instead.
-// Cinzel          — display headings, brand marks, fantasy inscriptional feel
-// Share Tech Mono — monospaced body text, inputs, data readouts
-// Barlow Condensed — compact UI labels, arcade-style status tags
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+// Cormorant Garamond — ultra-thin fantasy serif; display headings, editorial feel
+// Inter              — clean humanist sans-serif; body text, paragraphs
+// Barlow Condensed   — compact HUD labels, tags, status readouts
+// Share Tech Mono    — monospaced code, data, terminal readouts
+// Press Start 2P     — authentic pixel bitmap font; SNES theme only
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Barlow+Condensed:wght@400;500&family=Share+Tech+Mono&family=Press+Start+2P&display=swap');

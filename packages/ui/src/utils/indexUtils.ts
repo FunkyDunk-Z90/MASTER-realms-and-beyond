@@ -1,5 +1,7 @@
 export * from './Button'
 export * from './Dropdown'
+export * from './EntityCard'
+export * from './CartridgeCard'
 export * from './ui-docs-page/Section'
 export * from './ui-docs-page/PropsTable'
 export * from './ui-docs-page/CodeBlock'

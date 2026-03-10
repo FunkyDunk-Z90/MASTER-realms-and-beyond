@@ -1,7 +1,6 @@
 'use client'
 
-import { ThemeSwitcher } from '@/src/context/ThemeSwitcher'
-import { useTheme } from '@/src/context/ThemeContext'
+import { ThemeSwitcher, useTheme } from '@rnb/ui'
 import styles from './settings.module.scss'
 
 // ─── Colour swatch ────────────────────────────────────────────────────────────

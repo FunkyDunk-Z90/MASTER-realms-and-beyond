@@ -95,26 +95,26 @@
 
 // ─── Typography ───────────────────────────────────────────────────────────────
 
-// Display — Cinzel; inscriptional serif for headings and brand moments
+// Display — Cormorant Garamond; ultra-thin fantasy serif for headings and brand moments
 @mixin font-display {
     font-family: $font-display;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-weight: 400;
+    letter-spacing: 0.06em;
 }
 
-// Label — condensed uppercase for tags, nav items, section headers
+// Label — Barlow Condensed uppercase for tags, nav items, section headers
 @mixin font-label {
-    font-family: $font-display;
-    font-weight: 700;
+    font-family: $font-ui;
+    font-weight: 500;
     font-size: 0.72rem;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
 }
 
 // UI label — Barlow Condensed for compact HUD/arcade text
 @mixin font-ui-label {
     font-family: $font-ui;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -124,12 +124,12 @@
 @mixin font-display-italic {
     @include font-display;
     font-style: italic;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
 }
 
-// Mono — body copy, inputs, data readouts
+// Mono — code, data readouts, terminal
 @mixin font-mono {
-    font-family: $font-body;
+    font-family: $font-mono;
     font-weight: 400;
     letter-spacing: 0.02em;
 }
