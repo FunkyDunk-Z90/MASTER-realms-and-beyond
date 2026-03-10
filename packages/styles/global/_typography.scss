@@ -1,0 +1,228 @@
+@use '../_variables' as *;
+@use '../_mixins' as *;
+
+// ─── Base Typography ──────────────────────────────────────────────────────────
+// Applies R&B brand type system to raw HTML elements.
+// Direction: elegant editorial — thin weights, generous spacing, refined.
+// All custom component typography is handled at the component level.
+
+body {
+    font-family: $font-body;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    // Grain texture — the R&B signature: barely perceptible film-grain feel
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 0, 0, $scanline-opacity) 3px,
+        rgba(0, 0, 0, $scanline-opacity) 4px
+    );
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition:
+        background-color var(--transition-speed, 0.18s) ease,
+        color var(--transition-speed, 0.18s) ease;
+}
+
+// ─── Headings ─────────────────────────────────────────────────────────────────
+// Cormorant Garamond — ultra-thin fantasy serif, editorial weight, not heavy
+// h1/h2 retain uppercase for brand authority; h3–h6 use natural case
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-display;
+    color: var(--text-heading-color);
+    line-height: 1.15;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 400;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: clamp(1.15rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+}
+
+h4 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+h5 {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary-color);
+}
+
+h6 {
+    font-family: $font-ui;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted-color);
+}
+
+// ─── Body text ────────────────────────────────────────────────────────────────
+
+p {
+    font-family: $font-body;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-color);
+    max-width: 72ch;
+}
+
+// ─── Links ────────────────────────────────────────────────────────────────────
+
+a {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: 0.02em;
+    color: var(--primary-color);
+    text-decoration: none;
+    width: max-content;
+    transition: color var(--transition-speed, 0.18s) ease;
+
+    &:hover {
+        color: var(--primary-hover-color);
+    }
+
+    &:focus-visible {
+        outline: 1px solid var(--primary-color);
+        outline-offset: 3px;
+        border-radius: #{$border-radius};
+    }
+}
+
+// ─── Form controls ───────────────────────────────────────────────────────────
+
+input,
+textarea,
+select {
+    font-family: $font-body;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--text-color);
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $small $medium;
+    outline: none;
+    transition:
+        border-color var(--transition-speed, 0.18s) ease,
+        box-shadow var(--transition-speed, 0.18s) ease;
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px var(--primary-glow-strong);
+    }
+
+    &::placeholder {
+        color: var(--text-muted-color);
+        letter-spacing: 0.03em;
+    }
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    display: none;
+}
+
+// ─── Code & pre ───────────────────────────────────────────────────────────────
+
+code,
+kbd,
+samp {
+    font-family: $font-mono;
+    font-size: 0.85em;
+    color: var(--primary-color);
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 0.1em 0.35em;
+}
+
+pre {
+    font-family: $font-mono;
+    font-size: 0.875rem;
+    color: var(--text-heading-color);
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-left: 2px solid var(--primary-color);
+    border-radius: $border-radius;
+    padding: $large $xLarge;
+    overflow-x: auto;
+    line-height: 1.7;
+
+    code {
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+        font-size: inherit;
+    }
+}
+
+// ─── Small / label text ───────────────────────────────────────────────────────
+
+small {
+    font-family: $font-ui;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--text-muted-color);
+}
+
+// ─── Blockquote ───────────────────────────────────────────────────────────────
+
+blockquote {
+    border-left: 2px solid var(--primary-color);
+    padding-left: $large;
+    margin-left: 0;
+    color: var(--text-secondary-color);
+    font-family: $font-display;
+    font-style: italic;
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+}
+
+// ─── Horizontal rule ─────────────────────────────────────────────────────────
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: $xLarge 0;
+
+    &.rule-accent {
+        border-color: var(--primary-color);
+        box-shadow: var(--rule-glow);
+    }
+}

@@ -1,0 +1,46 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Realms & Beyond — Spacing Scale
+//
+// The spacing system uses a 4px base unit.
+// SCSS named aliases ($small, $medium, etc.) are in the root _variables.scss.
+// CSS custom properties (--space-*) are exposed on :root in global/_root.scss.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── 4px base scale ───────────────────────────────────────────────────────────
+// 1px   — space-px    — hairline / separator offset
+// 2px   — space-0-5   — micro tight gap
+// 4px   — space-1     — icon internal padding
+// 8px   — space-2     — tight gap between related elements
+// 12px  — space-3     — compact padding (tags, badges)
+// 16px  — space-4     — standard padding (inputs, list items)
+// 20px  — space-5     — medium gap
+// 24px  — space-6     — section inner padding
+// 32px  — space-8     — card padding, section gap
+// 40px  — space-10    — large section gap
+// 48px  — space-12    — hero padding
+// 64px  — space-16    — page section spacing
+// 80px  — space-20    — generous hero sections
+
+// ─── Named SCSS aliases ───────────────────────────────────────────────────────
+// $small   = 0.3rem  (~5px)  — tight gaps, icon inner padding
+// $medium  = 0.5rem  (~8px)  — standard small gap
+// $large   = 1rem    (16px)  — standard section padding
+// $xLarge  = 1.5rem  (24px)  — page content padding
+// $xxLarge = 2.5rem  (40px)  — hero / feature spacing
+
+// ─── Layout-specific ─────────────────────────────────────────────────────────
+// $sidebar-max   = 260px  — sidebar fully expanded width
+// $sidebar-min   = 0px    — sidebar fully collapsed (no icon strip)
+// $header-height = 54px   — fixed header / navbar height
+// $footer-height = 64px   — fixed footer height
+
+// ─── Usage guide ─────────────────────────────────────────────────────────────
+// Prefer SCSS variables in component .scss files (they compile away):
+//   padding: $medium $large;
+//
+// Use CSS variables for runtime-switchable spacing or JS-read values:
+//   height: var(--header-height);
+//   gap: var(--space-4);
+//
+// Don't mix arbitrary px values — always map to the scale above.
+// This keeps the design grid consistent across all apps and components.

@@ -1,0 +1,261 @@
+@use '../_variables' as *;
+@use '../_mixins' as *;
+
+// ─── Utility Classes ─────────────────────────────────────────────────────────
+// Single-purpose classes for layout, display, type, and brand decorative elements.
+
+// ─── Display ─────────────────────────────────────────────────────────────────
+
+.hidden       { display: none !important; }
+.sr-only      { @include sr-only; }
+.flex         { display: flex; }
+.flex-col     { display: flex; flex-direction: column; }
+.grid         { display: grid; }
+.inline-flex  { display: inline-flex; }
+.block        { display: block; }
+.inline-block { display: inline-block; }
+
+// ─── Flex alignment ───────────────────────────────────────────────────────────
+
+.items-center   { align-items: center; }
+.items-start    { align-items: flex-start; }
+.items-end      { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end    { justify-content: flex-end; }
+.flex-1         { flex: 1; }
+.flex-shrink-0  { flex-shrink: 0; }
+.flex-wrap      { flex-wrap: wrap; }
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// ─── Spacing ─────────────────────────────────────────────────────────────────
+
+.gap-1  { gap: $small; }
+.gap-2  { gap: $medium; }
+.gap-4  { gap: $large; }
+.gap-6  { gap: $xLarge; }
+
+.p-1    { padding: $small; }
+.p-2    { padding: $medium; }
+.p-4    { padding: $large; }
+.p-6    { padding: $xLarge; }
+.px-4   { padding-inline: $large; }
+.py-2   { padding-block: $medium; }
+.mt-auto { margin-top: auto; }
+.mb-auto { margin-bottom: auto; }
+.mx-auto { margin-inline: auto; }
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+
+.text-xs    { font-size: 0.72rem; }
+.text-sm    { font-size: 0.875rem; }
+.text-base  { font-size: 1rem; }
+.text-lg    { font-size: 1.2rem; }
+.text-xl    { font-size: 1.5rem; }
+
+.font-display { @include font-display; }
+.font-label   { @include font-label; }
+.font-ui      { @include font-ui-label; }
+.font-mono    { @include font-mono; }
+
+.uppercase    { text-transform: uppercase; }
+.lowercase    { text-transform: lowercase; }
+.capitalize   { text-transform: capitalize; }
+.truncate     { @include truncate; }
+
+.text-left    { text-align: left; }
+.text-center  { text-align: center; }
+.text-right   { text-align: right; }
+
+// ─── Colour ───────────────────────────────────────────────────────────────────
+
+.text-primary   { color: var(--primary-color); }
+.text-accent    { color: var(--accent-color); }
+.text-muted     { color: var(--text-muted-color); }
+.text-heading   { color: var(--text-heading-color); }
+.text-danger    { color: var(--danger-color); }
+.text-success   { color: var(--success-color); }
+.text-warning   { color: var(--warning-color); }
+
+// ─── Dimensions ───────────────────────────────────────────────────────────────
+
+.w-full   { width: 100%; }
+.h-full   { height: 100%; }
+.min-h-screen { min-height: 100dvh; }
+.max-w-content { max-width: max-content; }
+
+// ─── Overflow ─────────────────────────────────────────────────────────────────
+
+.overflow-hidden { overflow: hidden; }
+.overflow-auto   { overflow: auto; }
+.overflow-x-auto { overflow-x: auto; }
+
+// ─── Position ────────────────────────────────────────────────────────────────
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed    { position: fixed; }
+.sticky   { position: sticky; }
+
+// ─── Pointer ─────────────────────────────────────────────────────────────────
+
+.pointer         { cursor: pointer; }
+.no-select       { user-select: none; }
+.pointer-events-none { pointer-events: none; }
+
+// ─── Brand surfaces ───────────────────────────────────────────────────────────
+
+.surface {
+    @include surface;
+    padding: $large;
+}
+
+.surface-elevated {
+    @include surface-elevated;
+    padding: $large;
+}
+
+.surface-inset {
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $large;
+}
+
+// ─── Brand decorative elements ────────────────────────────────────────────────
+
+// Glowing amber rule — the signature horizontal separator
+.rule {
+    border: none;
+    border-top: 1px solid var(--rule-color);
+    box-shadow: var(--rule-glow);
+    margin: $xLarge 0;
+}
+
+// Scanline overlay — apply to any positioned container for CRT texture
+.scanline-overlay {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        @include scanlines;
+    }
+}
+
+// Pixel border — retro multi-layer outline
+.pixel-border {
+    outline: 1px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+// Glow text — amber phosphor heading style
+.glow-text {
+    color: var(--primary-color);
+    @include text-glow-primary;
+}
+
+// Badge / tag
+.tag {
+    @include font-ui-label;
+    display: inline-block;
+    padding: 2px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    background-color: var(--bg-surface-color);
+    color: var(--text-muted-color);
+    letter-spacing: 0.1em;
+
+    &--primary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background-color: var(--primary-glow);
+    }
+
+    &--accent {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+    }
+
+    &--danger {
+        border-color: var(--danger-color);
+        color: var(--danger-color);
+    }
+
+    &--success {
+        border-color: var(--success-color);
+        color: var(--success-color);
+    }
+}
+
+// Status dot — live indicator
+.status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-muted-color);
+
+    &--live {
+        background-color: var(--success-color);
+        box-shadow: 0 0 0 2px rgba(58, 138, 72, 0.3);
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    &--warning {
+        background-color: var(--warning-color);
+    }
+
+    &--danger {
+        background-color: var(--danger-color);
+    }
+}
+
+// Divider with label
+.divider-label {
+    display: flex;
+    align-items: center;
+    gap: $medium;
+    color: var(--text-muted-color);
+
+    @include font-label;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        border-top: 1px solid var(--border-color);
+    }
+}
+
+// Progress bar
+.progress-bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--border-color);
+    border-radius: 1px;
+    overflow: hidden;
+
+    &__fill {
+        height: 100%;
+        background-color: var(--primary-color);
+        box-shadow: 0 0 8px var(--primary-glow-strong);
+        border-radius: 1px;
+        transition: width var(--transition-slow, 0.35s) ease;
+    }
+}
+
+// Loading spinner
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}

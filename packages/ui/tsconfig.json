@@ -20,11 +20,6 @@
         "strict": true,
         "skipLibCheck": true
     },
-    "include": [
-        "src",
-        "**/*.d.ts",
-        ".next/types/**/*.ts",
-        ".next/dev/types/**/*.ts"
-    ],
+    "include": ["src"],
     "exclude": ["dist", "node_modules"]
 }

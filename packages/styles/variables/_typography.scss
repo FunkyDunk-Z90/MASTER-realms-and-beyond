@@ -1,0 +1,67 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Realms & Beyond — Typography Scale
+//
+// Reference for the full type system. SCSS variables are in root _variables.scss.
+// These CSS custom properties are set on :root in global/_root.scss and can
+// be consumed in components via var(--text-*) and var(--leading-*).
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── Font families ────────────────────────────────────────────────────────────
+// $font-display: 'Cinzel', 'Palatino Linotype', 'Times New Roman', serif
+//   → Classical Roman inscriptional letterforms
+//   → Used for: headings, brand mark, section labels, nav items
+//   → Weights: 400 (regular), 600 (semibold), 700 (bold), 900 (black)
+//   → Always uppercase, wide tracking
+//
+// $font-body: 'Share Tech Mono', 'DM Mono', 'Courier New', monospace
+//   → Monospaced technical readout — terminal, arcade score display
+//   → Used for: body text, inputs, data values, code
+//   → Weight: 400 only (monospaced fonts rarely need variation)
+//
+// $font-ui: 'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif
+//   → Condensed sans — compact HUD text, status tags, button labels
+//   → Used for: tags, badges, compact UI labels, status indicators
+//   → Weights: 400, 500, 600, 700
+
+// ─── Type scale ───────────────────────────────────────────────────────────────
+// Scale follows a modified Major Third ratio (1.25) from 1rem base
+//
+// 0.55rem  — text-2xs  — micro labels, timestamps
+// 0.72rem  — text-xs   — tags, status, button labels
+// 0.875rem — text-sm   — secondary body, form labels
+// 1rem     — text-base — primary body text
+// 1.2rem   — text-lg   — lead paragraphs
+// 1.5rem   — text-xl   — h5-level subheadings
+// 1.8rem   — text-2xl  — h4-level headings
+// 2.2rem   — text-3xl  — h3-level headings (clamp used for responsive)
+// 3rem     — text-4xl  — h2-level section headings (clamp used)
+// 4rem     — text-5xl  — h1-level hero headings (clamp used)
+
+// ─── Line height ──────────────────────────────────────────────────────────────
+// 1.1  — leading-tightest — display headings, all caps
+// 1.2  — leading-tight    — subheadings, large text
+// 1.5  — leading-base     — body text standard
+// 1.65 — leading-relaxed  — body paragraphs, max readability
+// 1.9  — leading-loose    — spacious data lists
+
+// ─── Letter spacing ───────────────────────────────────────────────────────────
+// -0.02em — tracking-tight    — large display text (optional)
+//  0em    — tracking-base     — normal body text
+//  0.04em — tracking-normal   — body text default
+//  0.08em — tracking-display  — display headings
+//  0.12em — tracking-ui       — UI labels / Barlow Condensed
+//  0.16em — tracking-label    — Cinzel section labels
+//  0.22em — tracking-widest   — micro uppercase stamps
+
+// ─── Responsive type ─────────────────────────────────────────────────────────
+// Headings use clamp() in global/_typography.scss for fluid scaling.
+// No fixed px breakpoints for type — fluid across all viewport widths.
+
+// ─── Font weight guide ────────────────────────────────────────────────────────
+// Cinzel 400 — body-weight display (subtle, airy)
+// Cinzel 600 — primary display weight (standard headings)
+// Cinzel 700 — bold labels (h5, h6, section markers)
+// Cinzel 900 — hero / brand maximum weight (h1, app title)
+// Share Tech Mono 400 — only available weight; single unified text feel
+// Barlow Condensed 600 — standard UI label weight
+// Barlow Condensed 700 — emphasis, price tags, CTAs

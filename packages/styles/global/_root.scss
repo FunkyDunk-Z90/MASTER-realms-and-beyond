@@ -1,0 +1,147 @@
+@use '../_variables' as *;
+
+// ─── Root — Design Token Defaults ────────────────────────────────────────────
+// Defines the default theme (arcade / dark) on :root.
+// Override at runtime by adding [data-theme="..."] to <html>.
+// All theme-switchable values are CSS custom properties.
+// Static layout and motion tokens are defined here regardless of theme.
+
+:root {
+    // ── Default theme: arcade (warm dark + antique gold) ──────────────────
+    --bg-color:             #0E0C09;
+    --bg-secondary-color:   #161310;
+    --bg-surface-color:     #1D1A14;
+    --bg-inset-color:       #090806;
+
+    --text-color:           #C2B79E;
+    --text-secondary-color: #8A7E6A;
+    --text-muted-color:     #4A4236;
+    --text-heading-color:   #D8CCAC;
+
+    --primary-color:        #B89038;
+    --primary-hover-color:  #CCA840;
+    --primary-deep-color:   #7A6020;
+    --primary-glow:         rgba(184, 144, 56, 0.16);
+    --primary-glow-strong:  rgba(184, 144, 56, 0.36);
+
+    --accent-color:         #507040;
+    --accent-dim-color:     #304828;
+    --accent-glow:          rgba(80, 112, 64, 0.16);
+
+    --border-color:         #282318;
+    --border-strong-color:  #3A3428;
+    --border-radius:        #{$border-radius};
+
+    --rule-color:           #B89038;
+    --rule-glow:            0 0 8px rgba(184, 144, 56, 0.36);
+    --blur:                 rgba(14, 12, 9, 0.82);
+
+    --shadow-sm:  0 1px 4px rgba(184, 144, 56, 0.12);
+    --shadow-md:  0 4px 16px rgba(184, 144, 56, 0.12);
+    --shadow-lg:  0 10px 40px rgba(184, 144, 56, 0.12);
+
+    // ── Semantic colours ──────────────────────────────────────────────────
+    --danger-color:   #A83020;
+    --danger-glow:    rgba(168, 48, 32, 0.28);
+    --warning-color:  #C89030;
+    --success-color:  #4A7A3C;
+    --submit-color:   #2858A0;
+    --disabled-color: #3A3428;
+
+    // ── Layout ────────────────────────────────────────────────────────────
+    --sidebar-max:    #{$sidebar-max};
+    --sidebar-min:    #{$sidebar-min};
+    --header-height:  #{$header-height};
+    --navbar-height:  #{$header-height};
+    --footer-height:  #{$footer-height};
+
+    // ── Motion ────────────────────────────────────────────────────────────
+    --transition-speed: #{$transition-speed};
+    --transition-slow:  #{$transition-speed-slow};
+    --ease-snap: #{$ease-snap};
+    --ease-out:  #{$ease-out};
+
+    // ── Spacing ───────────────────────────────────────────────────────────
+    --space-1:  4px;
+    --space-2:  8px;
+    --space-3:  12px;
+    --space-4:  16px;
+    --space-5:  20px;
+    --space-6:  24px;
+    --space-8:  32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+
+    // ── Border radius scale ───────────────────────────────────────────────
+    --radius-none: 0;
+    --radius-xs:   2px;
+    --radius-sm:   #{$border-radius};
+    --radius-md:   #{$border-radius-lg};
+    --radius-lg:   12px;
+    --radius-pill: 9999px;
+}
+
+// ─── Light mode OS preference ────────────────────────────────────────────────
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --bg-color:             #F2ECE0;
+        --bg-secondary-color:   #E8E0CE;
+        --bg-surface-color:     #FDFAF4;
+        --bg-inset-color:       #E2D9C8;
+
+        --text-color:           #2C2018;
+        --text-secondary-color: #5A4838;
+        --text-muted-color:     #8A7860;
+        --text-heading-color:   #18100A;
+
+        --primary-color:        #6A4820;
+        --primary-hover-color:  #7A5828;
+        --primary-deep-color:   #4A3010;
+        --primary-glow:         rgba(106, 72, 32, 0.14);
+        --primary-glow-strong:  rgba(106, 72, 32, 0.28);
+
+        --accent-color:         #486830;
+        --accent-dim-color:     #304820;
+        --accent-glow:          rgba(72, 104, 48, 0.14);
+
+        --border-color:         #D8CEB8;
+        --border-strong-color:  #B8A890;
+
+        --rule-color:           #6A4820;
+        --rule-glow:            0 0 6px rgba(106, 72, 32, 0.28);
+        --blur:                 rgba(242, 236, 224, 0.84);
+
+        --shadow-sm:  0 1px 4px rgba(106, 72, 32, 0.08);
+        --shadow-md:  0 4px 16px rgba(106, 72, 32, 0.08);
+        --shadow-lg:  0 10px 40px rgba(106, 72, 32, 0.08);
+    }
+}
+
+// ─── Layout shells ────────────────────────────────────────────────────────────
+
+.app-wrapper {
+    overflow: visible;
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100dvh;
+}
+
+.page-wrapper {
+    overflow: visible;
+    position: relative;
+    width: 100%;
+    padding: $xLarge;
+}
+
+.section-wrapper {
+    position: relative;
+    display: grid;
+    align-items: start;
+    justify-items: center;
+    margin-inline: auto;
+    width: 100%;
+    gap: $medium;
+}

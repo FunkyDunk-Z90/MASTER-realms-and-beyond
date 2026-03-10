@@ -10,7 +10,7 @@ import BurgerIcon from '../utils/BurgerIcon'
 interface I_NavbarProps {
     navItems: I_Link[]
     headerTitle: string
-    headerIcon: string | StaticImageData
+    headerIcon?: string | StaticImageData
 }
 
 const MOBILE_BREAKPOINT = 1025
@@ -73,7 +73,7 @@ export const Navbar = ({
         <>
             <div className="header-spacer" />
             <header className="header-wrapper" ref={navRef}>
-                <Image src={headerIcon} alt="icon" height={30} width={30} />
+                {headerIcon && <Image src={headerIcon} alt="icon" height={30} width={30} />}
                 <h1 className="header-title">{headerTitle}</h1>
                 <BurgerIcon isActive={isOpen} toggle={toggleNav} />
                 <nav className={menuClass}>

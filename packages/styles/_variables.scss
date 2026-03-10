@@ -1,126 +1,169 @@
-// ─── AetherScribe Design Tokens ───────────────────────────────────────────────
-// Sci-fi fantasy · Deep teal primary · Amber-gold accent · Monochrome base
+// ─────────────────────────────────────────────────────────────────────────────
+// Realms & Beyond — Design Tokens
+// Elegant editorial · SNES/N64 retro palette · Minimalist & refined
+// ─────────────────────────────────────────────────────────────────────────────
 
-// ─── Raw colour values ────────────────────────────────────────────────────────
+// ─── Base darks — warm-tinted near-blacks ─────────────────────────────────────
+$void:           #090806;   // deepest warm dark
+$obsidian:       #0E0C09;   // primary background (arcade default)
+$obsidian-mid:   #161310;   // header / sidebar background
+$obsidian-light: #1D1A14;   // surface / card background
+$ash:            #3A3428;   // muted borders in dark
+$slate:          #8A7E6A;   // muted / secondary text in dark
+$mist:           #C2B79E;   // body text — warm parchment-tinted
+$silver:         #D8CCAC;   // heading text
+$ghost:          #F2ECE0;   // parchment light bg
 
-// Monochrome base — near-black to near-white
-$void: #0a0c0f; // deepest dark, used for backgrounds in dark mode
-$obsidian: #111417; // dark bg
-$obsidian-mid: #181c21; // dark bg-secondary
-$obsidian-light: #222830; // dark surface / cards
-$ash: #3a4149; // muted borders in dark
-$slate: #8a9099; // muted text in dark
-$mist: #c8cdd4; // body text in light mode
-$silver: #dde1e6; // light bg-secondary
-$ghost: #edf0f3; // light bg
+// ─── Primary — Antique Gold (Arcade / SNES RPG) ───────────────────────────────
+// The signature R&B colour: antique gold — aged coin, SNES treasure chest
+$amber-deep:        #7A6020;                    // deepest gold — press-depth
+$amber:             #B89038;                    // primary brand colour (muted, antique)
+$amber-mid:         #CCA840;                    // hover / active
+$amber-glow:        rgba(184, 144, 56, 0.16);   // ambient glow
+$amber-glow-strong: rgba(184, 144, 56, 0.36);   // focus rings / glows
 
-// Primary — deep teal
-$teal-deep: #0b5e62; // darkest teal, hover depth
-$teal: #0d7377; // primary brand colour
-$teal-mid: #14a0a5; // lighter teal for glows / active indicators
-$teal-glow: rgba(13, 115, 119, 0.18); // teal ambient glow / bg tint
-$teal-glow-strong: rgba(13, 115, 119, 0.35); // stronger glow for focus rings
+// ─── Accent — Sage Green (SNES forest / nature) ───────────────────────────────
+// Muted sage — the secondary frequency. Zelda ALTTP field tiles.
+$phosphor:       #507040;                   // main accent (sage)
+$phosphor-dim:   #304828;                   // dimmer, for labels / borders
+$phosphor-glow:  rgba(80, 112, 64, 0.16);  // ambient glow
 
-// Accent — amber gold (warm counter to cold teal)
-$amber: #e8a045; // primary accent
-$amber-dim: #b57a2a; // dimmer amber for section labels, borders
-$amber-glow: rgba(232, 160, 69, 0.15); // ambient amber glow
+// ─── Theme: Phosphor — Verdant Forest (SNES Zelda / DKC) ─────────────────────
+$crt-green:          #4A7A3C;
+$crt-green-mid:      #5A9248;
+$crt-green-glow:     rgba(74, 122, 60, 0.16);
+$crt-green-glow-str: rgba(74, 122, 60, 0.36);
+$crt-amber:          #80B840;               // bright leaf accent
+$crt-amber-glow:     rgba(128, 184, 64, 0.16);
 
-// Semantic colours
-$danger: #c0392b;
-$danger-glow: rgba(192, 57, 43, 0.2);
-$warning: #d4a017;
-$success: #1a8a4a;
-$submit: #1a5fa8;
-$disabled: #4a5260;
+// ─── Theme: Sovereign — Imperial Battle (SNES RPG crimson) ────────────────────
+$crimson-deep:      #5A1010;
+$crimson:           #A83020;               // battle crimson — SNES HP bar
+$crimson-mid:       #C03828;               // hover
+$crimson-glow:      rgba(168, 48, 32, 0.20);
+$crimson-glow-str:  rgba(168, 48, 32, 0.42);
+$pale-gold:         #B89028;               // pale gold — SNES reward
+$pale-gold-dim:     #7A6018;
+$pale-gold-glow:    rgba(184, 144, 40, 0.16);
+$deep-maroon:       #280808;               // inset/depth surface
 
-// Blur overlays
-$blur-dark: rgba(10, 12, 15, 0.72);
-$blur-light: rgba(237, 240, 243, 0.72);
+// ─── Theme: Void — Cosmic Stellar (N64 Star Fox / Majora's Mask) ──────────────
+$teal-deep:        #0D5A62;               // legacy — kept for compatibility
+$teal:             #1A7280;               // legacy
+$teal-mid:         #259098;               // legacy
+$teal-glow:        rgba(26, 114, 128, 0.18);
+$teal-glow-strong: rgba(26, 114, 128, 0.40);
+$violet:           #7058A8;               // N64 space purple
+$violet-dim:       #503878;
+$violet-glow:      rgba(112, 88, 168, 0.16);
+// Void primary palette
+$steel-blue:       #4878B0;               // N64 cobalt steel
+$steel-blue-mid:   #5890CC;
+$steel-blue-glow:  rgba(72, 120, 176, 0.18);
+$steel-blue-glow-str: rgba(72, 120, 176, 0.40);
+$space-orange:     #7058A8;               // violet accent (slot repurposed)
+$space-orange-mid: #8068C0;
+$space-orange-glow: rgba(112, 88, 168, 0.16);
+$space-orange-glow-str: rgba(112, 88, 168, 0.38);
+$cool-gray:        #6878A0;               // highlight — cool blue-gray
 
-// ─── Spacing ──────────────────────────────────────────────────────────────────
-$small: 0.3rem;
-$medium: 0.5rem;
-$large: 1rem;
-$xLarge: 1.5rem;
-$xxLarge: 2.5rem;
+// ─── Theme: Dusk — Mystical Twilight (SNES magic / Chrono Trigger) ────────────
+$amethyst-deep:        #602870;
+$amethyst:             #9040A0;           // SNES magic purple — spell cast
+$amethyst-mid:         #A850B8;
+$amethyst-glow:        rgba(144, 64, 160, 0.18);
+$amethyst-glow-strong: rgba(144, 64, 160, 0.40);
+$rose:                 #B86090;           // SNES rose — magic flash
+$rose-dim:             #7A3A58;
+$rose-glow:            rgba(184, 96, 144, 0.16);
+// Dusk full palette
+$magenta-deep:         #602870;
+$magenta:              #9040A0;
+$magenta-mid:          #A850B8;
+$magenta-glow:         rgba(144, 64, 160, 0.18);
+$magenta-glow-str:     rgba(144, 64, 160, 0.40);
+$dusk-emerald:         #B86090;
+$dusk-emerald-mid:     #CC78A8;
+$dusk-emerald-glow:    rgba(184, 96, 144, 0.16);
+$steel-sky:            #7870A8;           // lavender — highlight
+$steel-sky-glow:       rgba(120, 112, 168, 0.14);
 
-// ─── Borders & Radius ─────────────────────────────────────────────────────────
-$border-radius: 4px; // Crisp, near-square — military/technical aesthetic
-$border-radius-lg: 6px;
+// ─── Theme: Parchment — Old Map Light (SNES game manual / cartridge art) ──────
+$olive-deep:        #4A3010;
+$olive:             #6A4820;              // warm brown — SNES cartridge text
+$olive-mid:         #7A5828;
+$olive-glow:        rgba(106, 72, 32, 0.14);
+$olive-glow-strong: rgba(106, 72, 32, 0.28);
+$terracotta:        #486830;              // forest olive — SNES map
+$terracotta-dim:    #304820;
+$terracotta-glow:   rgba(72, 104, 48, 0.14);
+// Parchment palette
+$map-cream:         #F2ECE0;
+$map-terracotta:    #6A4820;
+$map-terracotta-mid: #7A5828;
+$map-terracotta-glow: rgba(106, 72, 32, 0.14);
+$map-terracotta-glow-str: rgba(106, 72, 32, 0.28);
+$dusty-rose:        #8A7060;
+$dusty-rose-glow:   rgba(138, 112, 96, 0.12);
+$map-teal:          #486830;
+$map-teal-deep:     #304820;
+$map-teal-glow:     rgba(72, 104, 48, 0.14);
+// Legacy
+$army-green:        #6A8060;
+$sage-green:        #A8BCA0;
+$bright-emerald:    #5A9248;
 
-// ─── Breakpoints ──────────────────────────────────────────────────────────────
-$tablet: 768px;
+// ─── Semantic colours ─────────────────────────────────────────────────────────
+$danger:      #A82820;
+$danger-glow: rgba(168, 40, 32, 0.24);
+$warning:     #B89038;
+$success:     #4A7A3C;
+$submit:      #2858A0;
+$disabled:    #3A3428;
+
+// ─── Overlays ────────────────────────────────────────────────────────────────
+$blur-dark:  rgba(9, 8, 6, 0.80);
+$blur-light: rgba(242, 236, 224, 0.84);
+
+// ─── Spacing ─────────────────────────────────────────────────────────────────
+$small:    0.3rem;   // ~5px  — tight gaps, icon padding
+$medium:   0.5rem;   // ~8px  — standard gap
+$large:    1rem;     // 16px  — section padding
+$xLarge:   1.5rem;   // 24px  — page padding
+$xxLarge:  2.5rem;   // 40px  — hero spacing
+
+// ─── Borders & Radius ────────────────────────────────────────────────────────
+// Refined corners — editorial precision, subtle not bubbly
+$border-radius:    4px;
+$border-radius-lg: 8px;
+
+// ─── Breakpoints ─────────────────────────────────────────────────────────────
+$tablet:  768px;
 $desktop: 1025px;
 
-// ─── Layout sizes ─────────────────────────────────────────────────────────────
-$sidebar-max: 260px;
-$sidebar-min: 0px; // fully collapsed — no icon strip in this design
+// ─── Layout sizes ────────────────────────────────────────────────────────────
+$sidebar-max:   260px;
+$sidebar-min:   0px;
 $header-height: 54px;
-$footer-height: 72px;
+$footer-height: 64px;
 
-// ─── Motion ───────────────────────────────────────────────────────────────────
-$transition-speed: 0.25s;
-$transition-speed-slow: 0.45s;
+// ─── Motion ──────────────────────────────────────────────────────────────────
+$transition-speed:      0.18s;
+$transition-speed-slow: 0.35s;
+$ease-snap: cubic-bezier(0.25, 0, 0, 1);
+$ease-out:  cubic-bezier(0, 0, 0.2, 1);
 
-// ─── Typography ───────────────────────────────────────────────────────────────
-// Loaded via next/font or <link> in the app root:
-//   Cormorant Garamond — high-contrast serif, display headings & labels
-//   DM Mono              — monospaced body text, inputs, data
-$font-display: 'Cormorant Garamond', 'Palatino Linotype', serif;
-$font-body: 'DM Mono', 'Courier New', monospace;
+// ─── Typography ──────────────────────────────────────────────────────────────
+// Cormorant Garamond — ultra-thin fantasy serif; editorial, ancient, elegant
+//                      Weight 300 for brand moments, 400 for headings
+// Inter              — clean geometric sans; readable body copy, crisp at small sizes
+// Barlow Condensed   — condensed sans; compact labels, status tags, HUD text
+// Share Tech Mono    — monospaced readout; code blocks, data terminals
+$font-display: 'Cormorant Garamond', 'Palatino Linotype', 'Georgia', serif;
+$font-body:    'Inter', 'DM Sans', 'Segoe UI', sans-serif;
+$font-ui:      'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif;
+$font-mono:    'Share Tech Mono', 'DM Mono', 'Courier New', monospace;
 
-// ─── Decorative ───────────────────────────────────────────────────────────────
-// Repeating scanline used as a texture overlay
-$scanline-opacity: 0.025;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Theme: Aether  ·  Amethyst primary · Rose-gold accent
-// A mystical, violet-tinged palette — arcane and contemplative.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Primary — deep amethyst violet
-$amethyst-deep: #3b1f6e; // darkest violet, hover depth
-$amethyst: #5c2fa8; // primary brand colour
-$amethyst-mid: #8b5cf6; // lighter violet for glows / active indicators
-$amethyst-glow: rgba(92, 47, 168, 0.18); // ambient glow / bg tint
-$amethyst-glow-strong: rgba(92, 47, 168, 0.35); // stronger glow for focus rings
-
-// Accent — rose gold (warm luminous complement to violet)
-$rose-gold: #e8a0b4; // primary accent
-$rose-gold-dim: #b5607a; // dimmer rose for labels / borders
-$rose-gold-glow: rgba(232, 160, 180, 0.15); // ambient rose glow
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Theme: Sovereign  ·  Crimson primary · Pale-gold accent
-// A commanding, blood-red palette — regal, authoritative, intense.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Primary — deep crimson red
-$crimson-deep: #6b0f1a; // darkest crimson, hover depth
-$crimson: #9b1c2e; // primary brand colour
-$crimson-mid: #d4364f; // lighter crimson for glows / active indicators
-$crimson-glow: rgba(155, 28, 46, 0.18); // ambient glow / bg tint
-$crimson-glow-strong: rgba(155, 28, 46, 0.35); // stronger glow for focus rings
-
-// Accent — pale imperial gold (regal contrast to deep red)
-$pale-gold: #d4af5a; // primary accent
-$pale-gold-dim: #9a7b2e; // dimmer gold for labels / borders
-$pale-gold-glow: rgba(212, 175, 90, 0.15); // ambient gold glow
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Theme: Acanthium  ·  Deep emerald primary · Copper accent
-// A rich, forest-floor palette — ancient, organic, alchemical.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Primary — deep emerald green
-$emerald-deep: #0d3b22; // darkest emerald, hover depth
-$emerald: #145c35; // primary brand colour
-$emerald-mid: #22a05a; // lighter emerald for glows / active indicators
-$emerald-glow: rgba(20, 92, 53, 0.18); // ambient glow / bg tint
-$emerald-glow-strong: rgba(20, 92, 53, 0.35); // stronger glow for focus rings
-
-// Accent — warm copper (oxidised metal, earthen contrast to emerald)
-$copper: #c87941; // primary accent
-$copper-dim: #8f5220; // dimmer copper for labels / borders
-$copper-glow: rgba(200, 121, 65, 0.15); // ambient copper glow
+// ─── Decorative ──────────────────────────────────────────────────────────────
+// Grain texture — barely perceptible film grain; elegant, not heavy CRT scanlines
+$scanline-opacity: 0.014;

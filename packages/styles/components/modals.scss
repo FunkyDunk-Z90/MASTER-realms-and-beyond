@@ -1,0 +1,221 @@
+@use '../_variables' as *;
+@use '../_mixins' as *;
+
+// ─── Modal / Dialog Components ────────────────────────────────────────────────
+// Retro arcade overlay aesthetic — sharp borders, amber-edged panels,
+// scanline texture, dark backdrop.
+
+// ─── Backdrop ─────────────────────────────────────────────────────────────────
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: var(--blur);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 700;
+    animation: fade-in 0.18s ease forwards;
+}
+
+// ─── Modal container ──────────────────────────────────────────────────────────
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 800;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    width: min(90vw, 560px);
+    max-height: 90dvh;
+    overflow: hidden;
+
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: $border-radius;
+    box-shadow:
+        0 0 0 1px var(--primary-glow-strong),
+        var(--shadow-lg);
+
+    animation: fade-in-up 0.22s ease forwards;
+
+    // Scanline overlay on modal surface
+    &::before {
+        @include scanlines;
+        z-index: 0;
+    }
+
+    // Amber top accent line — the arcade "panel frame" signature
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--primary-color);
+        box-shadow: var(--rule-glow);
+        z-index: 1;
+    }
+
+    // Size variants
+    &--sm { width: min(90vw, 380px); }
+    &--lg { width: min(90vw, 760px); }
+    &--xl { width: min(96vw, 1024px); }
+}
+
+// ─── Modal header ─────────────────────────────────────────────────────────────
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $medium;
+    padding: $large $xLarge;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.modal-title {
+    @include font-display;
+    font-size: 0.95rem;
+    color: var(--text-heading-color);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    background: transparent;
+    color: var(--text-muted-color);
+    cursor: pointer;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition:
+        color var(--transition-speed, 0.18s) ease,
+        border-color var(--transition-speed, 0.18s) ease,
+        background-color var(--transition-speed, 0.18s) ease;
+
+    &:hover {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        background-color: var(--primary-glow);
+    }
+}
+
+// ─── Modal body ───────────────────────────────────────────────────────────────
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: $xLarge;
+    overscroll-behavior: contain;
+    position: relative;
+    z-index: 2;
+}
+
+// ─── Modal footer ─────────────────────────────────────────────────────────────
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $medium;
+    padding: $large $xLarge;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+// ─── Drawer (side panel) ─────────────────────────────────────────────────────
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 800;
+
+    width: min(90vw, 420px);
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--bg-secondary-color);
+    border-left: 1px solid var(--primary-color);
+    box-shadow:
+        -4px 0 24px var(--primary-glow),
+        -1px 0 0 0 var(--primary-color);
+
+    animation: slide-in 0.3s cubic-bezier(0.25, 0, 0, 1) forwards;
+
+    &--left {
+        right: auto;
+        left: 0;
+        border-left: none;
+        border-right: 1px solid var(--primary-color);
+        box-shadow:
+            4px 0 24px var(--primary-glow),
+            1px 0 0 0 var(--primary-color);
+        animation: slide-in-left 0.3s cubic-bezier(0.25, 0, 0, 1) forwards;
+    }
+
+    @keyframes slide-in-left {
+        from { transform: translateX(-110%); }
+        to   { transform: translateX(0); }
+    }
+}
+
+// ─── Toast / notification ────────────────────────────────────────────────────
+
+.toast {
+    position: fixed;
+    bottom: $xLarge;
+    right: $xLarge;
+    z-index: 600;
+
+    display: flex;
+    align-items: center;
+    gap: $medium;
+    padding: $medium $large;
+    min-width: 280px;
+    max-width: 420px;
+
+    background-color: var(--bg-surface-color);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--primary-color);
+    border-radius: $border-radius;
+    box-shadow: var(--shadow-lg);
+
+    font-family: $font-body;
+    font-size: 0.875rem;
+    color: var(--text-color);
+
+    animation: fade-in-up 0.22s ease forwards;
+
+    &--success { border-left-color: var(--success-color); }
+    &--warning { border-left-color: var(--warning-color); }
+    &--danger  { border-left-color: var(--danger-color); }
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+    color: var(--primary-color);
+
+    .toast--success & { color: var(--success-color); }
+    .toast--warning & { color: var(--warning-color); }
+    .toast--danger  & { color: var(--danger-color); }
+}

@@ -1,0 +1,150 @@
+// ─── Global Keyframe Animations ──────────────────────────────────────────────
+// Retro arcade motion language — snappy, purposeful, no excessive easing.
+// Import these animations in components via `animation:` declarations.
+
+// ─── Entrance ────────────────────────────────────────────────────────────────
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+// ─── Exit ────────────────────────────────────────────────────────────────────
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+// ─── Navigation ──────────────────────────────────────────────────────────────
+
+@keyframes slide-in {
+    from { transform: translateX(110%); }
+    to   { transform: translateX(0); }
+}
+
+@keyframes slide-out {
+    from { transform: translateX(0); }
+    to   { transform: translateX(110%); }
+}
+
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scaleY(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+// ─── Retro arcade ────────────────────────────────────────────────────────────
+
+// CRT phosphor pulse — slow organic breathing glow
+@keyframes phosphor-pulse {
+    0%, 100% { opacity: 0.85; }
+    50%      { opacity: 1; }
+}
+
+// Amber flicker — simulates worn arcade tube lighting
+@keyframes amber-flicker {
+    0%, 92%, 100% { opacity: 1; }
+    93%           { opacity: 0.88; }
+    94%           { opacity: 1; }
+    95%           { opacity: 0.82; }
+    96%           { opacity: 1; }
+}
+
+// Cursor blink — text input / terminal prompt
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+}
+
+// Score pop — number change flash
+@keyframes score-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.15); }
+    70%  { transform: scale(0.97); }
+    100% { transform: scale(1); }
+}
+
+// Scan sweep — single horizontal scanline sweeping down
+@keyframes scan-sweep {
+    from { top: -10%; }
+    to   { top: 110%; }
+}
+
+// Glitch shift — horizontal fragment glitch
+@keyframes glitch-shift {
+    0%   { clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); transform: translateX(4px); }
+    20%  { clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%); transform: translateX(-4px); }
+    40%  { clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); transform: translateX(2px); }
+    60%  { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); transform: translateX(-2px); }
+    80%  { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); transform: translateX(3px); }
+    100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translateX(0); }
+}
+
+// Spin — loading indicator
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+// Pulse — status dot / live indicator
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.6; transform: scale(0.9); }
+}
+
+// Ping — expanding ring ripple
+@keyframes ping {
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+// ─── Utility animation classes ────────────────────────────────────────────────
+
+.animate-fade-in      { animation: fade-in 0.3s ease forwards; }
+.animate-fade-in-up   { animation: fade-in-up 0.3s ease forwards; }
+.animate-fade-in-down { animation: fade-in-down 0.3s ease forwards; }
+.animate-pulse        { animation: pulse 2s ease-in-out infinite; }
+.animate-blink        { animation: cursor-blink 1.2s step-end infinite; }
+.animate-spin         { animation: spin 1s linear infinite; }
+.animate-flicker      { animation: amber-flicker 6s infinite; }

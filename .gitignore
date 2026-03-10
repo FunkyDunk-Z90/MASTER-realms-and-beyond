@@ -11,6 +11,14 @@ yarn-error.log*
 # pnpm lock files backups
 pnpm-lock.yaml.*
 
+# Stale npm/yarn lock files inside pnpm workspaces
+apps/**/package-lock.json
+apps/**/yarn.lock
+packages/**/package-lock.json
+packages/**/yarn.lock
+services/**/package-lock.json
+services/**/yarn.lock
+
 # ---------------------------
 # Build outputs
 # ---------------------------
@@ -68,6 +76,11 @@ Thumbs.db
 .vscode/
 .idea/
 *.iml
+
+# ---------------------------
+# Claude Code
+# ---------------------------
+.claude/
 
 # ---------------------------
 # Misc

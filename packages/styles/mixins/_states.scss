@@ -1,0 +1,83 @@
+// ─── State Mixins ─────────────────────────────────────────────────────────────
+// Interactive state patterns — hover, focus, active, disabled.
+// Consistent across all interactive components.
+
+// ─── Focus visible ───────────────────────────────────────────────────────────
+
+@mixin focus-ring {
+    outline: none;
+
+    &:focus-visible {
+        outline: 1px solid var(--primary-color);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+}
+
+@mixin focus-ring-inset {
+    outline: none;
+
+    &:focus-visible {
+        box-shadow:
+            inset 0 0 0 1px var(--primary-color),
+            0 0 0 2px var(--primary-glow-strong);
+    }
+}
+
+// ─── Hover glow ───────────────────────────────────────────────────────────────
+
+@mixin hover-glow {
+    &:hover {
+        box-shadow: 0 0 12px var(--primary-glow-strong);
+    }
+}
+
+@mixin hover-lift {
+    transition: transform var(--transition-speed, 0.18s) ease,
+                box-shadow var(--transition-speed, 0.18s) ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+// ─── Disabled ────────────────────────────────────────────────────────────────
+
+@mixin disabled-state {
+    &:disabled,
+    &[aria-disabled='true'],
+    &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+// ─── Active / selected ────────────────────────────────────────────────────────
+
+@mixin selected-state {
+    background-color: var(--primary-glow);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+// ─── Loading state ────────────────────────────────────────────────────────────
+
+@mixin loading-state {
+    position: relative;
+    pointer-events: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--bg-color);
+        opacity: 0.3;
+        border-radius: inherit;
+    }
+}

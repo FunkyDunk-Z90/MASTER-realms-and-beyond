@@ -1,35 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap');
 
 // ─── Shell layout ─────────────────────────────────────────────────────────────
+// The Sidebar is position: fixed — it doesn't participate in normal flow.
+// docs-main uses margin-left matching the sidebar width on desktop.
+// The CSS sibling selector tracks the sidebar's open/collapsed class so the
+// content shifts back when the sidebar collapses.
 
 .docs-shell {
-    display: grid;
-    grid-template-columns: var(--sidebar-max, 400px) 1fr;
-    min-height: calc(100vh - var(--nav-height, 80px));
-    align-items: start;
-    justify-items: center;
-
-    @media (max-width: 1024px) {
-        grid-template-columns: 1fr;
-
-        // Hide the self-managed sidebar on mobile — use overlay mode instead
-        > aside.sidebar-wrapper:not(.sidebar-overlay) {
-            display: none;
-        }
-    }
+    display: block;
+    position: relative;
+    min-height: calc(100dvh - var(--navbar-height, 60px));
 }
 
 .docs-main {
-    // padding: 3rem 3.5rem 6rem;
-    margin-inline: auto;
-    padding: 1rem;
-    max-width: 860px;
+    margin-left: var(--sidebar-max, 240px);
+    padding: 2rem 2rem 5rem;
+    max-width: 900px;
     min-width: 0;
-    width: 100%;
+    transition: margin-left var(--transition-speed, 0.18s) ease;
 
-    @media (max-width: 768px) {
-        padding: 2rem 1.25rem 5rem;
+    @media (max-width: 1024px) {
+        margin-left: 0;
+        padding: 1.5rem 1.25rem 4rem;
     }
+}
+
+// Collapse: content slides back when sidebar folds away
+.sidebar-wrapper.sidebar-collapsed + .docs-main {
+    margin-left: 0;
 }
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────

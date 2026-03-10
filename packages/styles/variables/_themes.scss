@@ -1,0 +1,84 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Realms & Beyond — Theme Reference Map
+//
+// This file documents the 6 themes and their CSS custom property mappings.
+// The actual CSS selectors are defined in the root _themes.scss.
+// This file is for design tooling, documentation, and theme-switch logic
+// in application code (ThemeContext, ThemeSwitcher components, etc.).
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── Theme identifiers ───────────────────────────────────────────────────────
+// Set [data-theme="IDENTIFIER"] on <html> to activate.
+//
+// 'arcade'    — default — warm dark, amber primary, phosphor green accent
+// 'phosphor'  — CRT terminal green on near-black, amber accent
+// 'sovereign' — crimson authority on dark warm red, pale gold accent
+// 'void'      — teal sci-fi on cold dark blue-black, violet accent
+// 'dusk'      — amethyst mystical on warm purple-dark, rose accent
+// 'parchment' — light mode, dark olive on cream/parchment, terracotta accent
+
+// ─── App-specific themes ─────────────────────────────────────────────────────
+// 'byte-burger' — hot orange on dark warm, mustard gold accent
+//                 defined in themes/_byte-burger.scss
+
+// ─── Theme metadata for ThemeContext ─────────────────────────────────────────
+// Each theme object used in ThemeContext / ThemeSwitcher should include:
+// {
+//   id:          string  — matches data-theme value
+//   label:       string  — human-readable display name
+//   description: string  — short flavour description
+//   primary:     string  — hex value of --primary-color
+//   accent:      string  — hex value of --accent-color
+//   bg:          string  — hex value of --bg-color
+//   dark:        boolean — true for dark themes
+// }
+//
+// Themes:
+// { id: 'arcade',    label: 'Arcade',    primary: '#C47818', accent: '#4A8A52', bg: '#110F0C', dark: true  }
+// { id: 'phosphor',  label: 'Phosphor',  primary: '#3A8A48', accent: '#C47818', bg: '#070A07', dark: true  }
+// { id: 'sovereign', label: 'Sovereign', primary: '#8A2820', accent: '#C4A018', bg: '#0E0907', dark: true  }
+// { id: 'void',      label: 'Void',      primary: '#1A7280', accent: '#7A4A9A', bg: '#060A0C', dark: true  }
+// { id: 'dusk',      label: 'Dusk',      primary: '#5A3A8A', accent: '#C47080', bg: '#0B0910', dark: true  }
+// { id: 'parchment', label: 'Parchment', primary: '#3A4A1A', accent: '#8A4028', bg: '#F0EAD8', dark: false }
+
+// ─── CSS custom property contract ────────────────────────────────────────────
+// ALL themes must define these properties (the minimum contract):
+//
+// Backgrounds:
+//   --bg-color              primary page background
+//   --bg-secondary-color    header, sidebar, footer background
+//   --bg-surface-color      card, panel, surface background
+//   --bg-inset-color        input, inset, depressed background
+//
+// Text:
+//   --text-color            primary body text
+//   --text-secondary-color  secondary / supporting text
+//   --text-muted-color      muted / placeholder text
+//   --text-heading-color    heading text (brighter than body)
+//
+// Primary:
+//   --primary-color         brand primary interaction colour
+//   --primary-hover-color   lighter primary for hover states
+//   --primary-deep-color    darker primary for pressed/depth states
+//   --primary-glow          rgba(r,g,b, 0.18) — ambient glow
+//   --primary-glow-strong   rgba(r,g,b, 0.40) — focus ring glow
+//
+// Accent:
+//   --accent-color          secondary brand colour
+//   --accent-dim-color      dimmer accent for labels / borders
+//   --accent-glow           rgba(r,g,b, 0.18) — accent ambient glow
+//
+// Borders:
+//   --border-color          subtle border (low contrast)
+//   --border-strong-color   emphasized border (higher contrast)
+//   --border-radius         2px (shared, non-themed)
+//
+// Decorative:
+//   --rule-color            colour of the amber rule separator
+//   --rule-glow             box-shadow for the rule
+//   --blur                  backdrop-filter backdrop colour
+//
+// Shadows:
+//   --shadow-sm             subtle surface lift
+//   --shadow-md             card / panel elevation
+//   --shadow-lg             modal / overlay depth

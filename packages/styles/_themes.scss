@@ -1,200 +1,848 @@
-@use './variables' as *;
+@use './_variables' as *;
+@use './themes/byte-burger';
+@use './themes/snes';
+@use './themes/n64';
+
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║          REALMS & BEYOND — THEME SYSTEM                                 ║
+// ║          8 palettes · elegant editorial · SNES/N64 retro colour         ║
+// ╠══════════════════════════════════════════════════════════════════════════╣
+// ║  arcade     — antique gold · sage green · warm dark   (SNES RPG)        ║
+// ║  phosphor   — forest green · leaf · deep forest       (Zelda / DKC)     ║
+// ║  sovereign  — battle crimson · pale gold · deep warm  (SNES RPG battle) ║
+// ║  void       — cobalt steel · space violet · deep blue (N64 Star Fox)    ║
+// ║  dusk       — magic purple · rose flash · twilight    (Chrono Trigger)  ║
+// ║  parchment  — aged paper · warm brown · forest olive  (SNES manual)     ║
+// ║  snes       — deep navy · SNES blue · pixel gold      (authentic 16-bit)║
+// ║  n64        — console charcoal · logo blue · A/B/C/Start buttons        ║
+// ╠══════════════════════════════════════════════════════════════════════════╣
+// ║  Each theme exposes:                                                     ║
+// ║    --primary-color / --accent-color / --highlight-color  (3 hues)       ║
+// ║    --danger-color / --warning-color / --success-color / --submit-color  ║
+// ║    --surface-tint  (subtle gradient for card/body depth)                ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
+
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AetherScribe — Extended Themes
-//
-// IMPORTANT: Selectors use html[data-theme='...'] for proper CSS specificity.
-// This ensures theme styles override :root defaults.
-//
-//  Teal       → teal primary       · amber accent (classic AetherScribe)
-//  Aether     → amethyst primary   · rose-gold accent
-//  Sovereign  → crimson primary    · pale-gold accent
-//  Acanthium  → emerald primary    · copper accent
-//
-// Usage: set data-theme on <html> to switch theme.
-// Optionally pair with data-mode="light" | "dark" to override the
-// monochrome base independently of the OS preference.
-//
-// Default base (no data-theme): dark with teal primary
-// All themes default to dark — use data-mode="light" to switch.
+// ARCADE
+// Antique gold · sage green · warm near-black — the default R&B palette
+// Inspired by "The Journey" card: SNES RPG treasure gold · ALTTP sage fields
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ─── Teal — Teal · Amber ──────────────────────────────────────────────────────
-// The classic AetherScribe palette. Deep teal primary with warm amber-gold
-// accent — sci-fi fantasy, crystalline precision, and technical elegance.
+[data-theme='arcade'],
+[data-theme='arcade'][data-mode='dark'] {
+    // ── Backgrounds ───────────────────────────────────────────────────────
+    --bg-color:              #0E0C09;
+    --bg-secondary-color:    #161310;
+    --bg-surface-color:      #1D1A14;
+    --bg-inset-color:        #090806;
 
-html[data-theme='teal'] {
-    // Primary — teal
-    --primary-color: #{$teal};
-    --primary-hover-color: #{$teal-mid};
-    --primary-deep-color: #{$teal-deep};
-    --primary-glow: #{$teal-glow};
-    --primary-glow-strong: #{$teal-glow-strong};
+    // ── Text ──────────────────────────────────────────────────────────────
+    --text-color:            #C2B79E;
+    --text-secondary-color:  #8A7E6A;
+    --text-muted-color:      #4A4236;
+    --text-heading-color:    #D8CCAC;
 
-    // Accent — amber gold
-    --accent-color: #{$amber};
-    --accent-dim-color: #{$amber-dim};
-    --accent-glow: #{$amber-glow};
+    // ── Primary — Antique Gold ─────────────────────────────────────────────
+    --primary-color:         #B89038;
+    --primary-hover-color:   #CCA840;
+    --primary-deep-color:    #7A6020;
+    --primary-glow:          rgba(184, 144, 56, 0.16);
+    --primary-glow-strong:   rgba(184, 144, 56, 0.36);
 
-    // Decorative rule strip
-    --rule-color: #{$teal};
-    --rule-glow: 0 0 6px #{$teal-glow-strong};
+    // ── Accent — Sage Green ────────────────────────────────────────────────
+    --accent-color:          #507040;
+    --accent-dim-color:      #304828;
+    --accent-glow:           rgba(80, 112, 64, 0.16);
 
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
+    // ── Highlight — Warm Gold-Cream (editorial callout) ────────────────────
+    --highlight-color:       #D4B868;
+    --highlight-glow:        rgba(212, 184, 104, 0.20);
+
+    // ── Borders ───────────────────────────────────────────────────────────
+    --border-color:          #282318;
+    --border-strong-color:   #3A3428;
+    --border-radius:         #{$border-radius};
+
+    // ── Semantic ──────────────────────────────────────────────────────────
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.28);
+    --warning-color:         #C89030;
+    --success-color:         #4A7A3C;
+    --submit-color:          #2858A0;
+    --disabled-color:        #3A3428;
+
+    // ── Decorative ────────────────────────────────────────────────────────
+    --rule-color:            #B89038;
+    --rule-glow:             0 0 8px rgba(184, 144, 56, 0.36);
+    --blur:                  rgba(14, 12, 9, 0.82);
+    --surface-tint:          linear-gradient(135deg, rgba(184, 144, 56, 0.04) 0%, transparent 65%);
+
+    // ── Shadows ───────────────────────────────────────────────────────────
+    --shadow-sm:   0 1px 4px rgba(184, 144, 56, 0.12);
+    --shadow-md:   0 4px 16px rgba(184, 144, 56, 0.12);
+    --shadow-lg:   0 10px 40px rgba(184, 144, 56, 0.12);
 }
 
-html[data-theme='teal'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
+[data-theme='arcade'][data-mode='light'] {
+    --bg-color:              #F2ECE0;
+    --bg-secondary-color:    #E8E0CE;
+    --bg-surface-color:      #FDFAF4;
+    --bg-inset-color:        #E4DCD0;
+
+    --text-color:            #2C2018;
+    --text-secondary-color:  #5A4838;
+    --text-muted-color:      #8A7860;
+    --text-heading-color:    #18100A;
+
+    --primary-color:         #6A4820;
+    --primary-hover-color:   #7A5828;
+    --primary-deep-color:    #4A3010;
+    --primary-glow:          rgba(106, 72, 32, 0.14);
+    --primary-glow-strong:   rgba(106, 72, 32, 0.30);
+
+    --accent-color:          #486830;
+    --accent-dim-color:      #304820;
+    --accent-glow:           rgba(72, 104, 48, 0.14);
+
+    --highlight-color:       #8A7040;
+    --highlight-glow:        rgba(138, 112, 64, 0.14);
+
+    --border-color:          #D8CEB8;
+    --border-strong-color:   #B8A890;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #A07020;
+    --success-color:         #3A6028;
+    --submit-color:          #1A4888;
+    --disabled-color:        #A89880;
+
+    --rule-color:            #6A4820;
+    --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+    --blur:                  rgba(242, 236, 224, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(106, 72, 32, 0.08);
+    --shadow-md:   0 4px 16px rgba(106, 72, 32, 0.08);
+    --shadow-lg:   0 10px 40px rgba(106, 72, 32, 0.08);
 }
 
-// ─── Aether — Amethyst · Rose-gold ───────────────────────────────────────────
-// Mystical and contemplative. Deep violet primary with a luminous rose-gold
-// accent — arcane manuscripts and crystalline resonance.
-
-html[data-theme='aether'] {
-    // Primary — amethyst violet
-    --primary-color: #{$amethyst};
-    --primary-hover-color: #{$amethyst-mid};
-    --primary-deep-color: #{$amethyst-deep};
-    --primary-glow: #{$amethyst-glow};
-    --primary-glow-strong: #{$amethyst-glow-strong};
-
-    // Accent — rose gold
-    --accent-color: #{$rose-gold};
-    --accent-dim-color: #{$rose-gold-dim};
-    --accent-glow: #{$rose-gold-glow};
-
-    // Decorative rule strip
-    --rule-color: #{$amethyst};
-    --rule-glow: 0 0 6px #{$amethyst-glow-strong};
-
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
+@media (prefers-color-scheme: light) {
+    [data-theme='arcade']:not([data-mode='dark']) {
+        --bg-color:              #F2ECE0;
+        --bg-secondary-color:    #E8E0CE;
+        --bg-surface-color:      #FDFAF4;
+        --bg-inset-color:        #E4DCD0;
+        --text-color:            #2C2018;
+        --text-secondary-color:  #5A4838;
+        --text-muted-color:      #8A7860;
+        --text-heading-color:    #18100A;
+        --primary-color:         #6A4820;
+        --primary-hover-color:   #7A5828;
+        --primary-deep-color:    #4A3010;
+        --primary-glow:          rgba(106, 72, 32, 0.14);
+        --primary-glow-strong:   rgba(106, 72, 32, 0.30);
+        --accent-color:          #486830;
+        --accent-dim-color:      #304820;
+        --accent-glow:           rgba(72, 104, 48, 0.14);
+        --highlight-color:       #8A7040;
+        --highlight-glow:        rgba(138, 112, 64, 0.14);
+        --border-color:          #D8CEB8;
+        --border-strong-color:   #B8A890;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #A07020;
+        --success-color:         #3A6028;
+        --submit-color:          #1A4888;
+        --disabled-color:        #A89880;
+        --rule-color:            #6A4820;
+        --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+        --blur:                  rgba(242, 236, 224, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(106, 72, 32, 0.08);
+        --shadow-md:             0 4px 16px rgba(106, 72, 32, 0.08);
+        --shadow-lg:             0 10px 40px rgba(106, 72, 32, 0.08);
+    }
 }
 
-html[data-theme='aether'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHOSPHOR
+// Forest green · bright leaf · deep dark — verdant SNES palette
+// Inspired by Zelda: A Link to the Past, Donkey Kong Country, Secret of Mana
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='phosphor'],
+[data-theme='phosphor'][data-mode='dark'] {
+    --bg-color:              #070C07;
+    --bg-secondary-color:    #0D140D;
+    --bg-surface-color:      #121A11;
+    --bg-inset-color:        #040804;
+
+    --text-color:            #ACCCA8;
+    --text-secondary-color:  #6A8E68;
+    --text-muted-color:      #3A5038;
+    --text-heading-color:    #C0DCC0;
+
+    --primary-color:         #4A7A3C;
+    --primary-hover-color:   #5A9248;
+    --primary-deep-color:    #2E5028;
+    --primary-glow:          rgba(74, 122, 60, 0.18);
+    --primary-glow-strong:   rgba(74, 122, 60, 0.38);
+
+    --accent-color:          #80B840;
+    --accent-dim-color:      #507028;
+    --accent-glow:           rgba(128, 184, 64, 0.16);
+
+    --highlight-color:       #A0D880;
+    --highlight-glow:        rgba(160, 216, 128, 0.16);
+
+    --border-color:          #182818;
+    --border-strong-color:   #2A3E28;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.26);
+    --warning-color:         #B89038;
+    --success-color:         #4A7A3C;
+    --submit-color:          #2858A0;
+    --disabled-color:        #2A3828;
+
+    --rule-color:            #4A7A3C;
+    --rule-glow:             0 0 8px rgba(74, 122, 60, 0.38);
+    --blur:                  rgba(7, 12, 7, 0.82);
+    --surface-tint:          linear-gradient(135deg, rgba(74, 122, 60, 0.05) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(74, 122, 60, 0.14);
+    --shadow-md:   0 4px 16px rgba(74, 122, 60, 0.14);
+    --shadow-lg:   0 10px 40px rgba(74, 122, 60, 0.14);
 }
 
-// ─── Sovereign — Crimson · Pale-gold ─────────────────────────────────────────
-// Commanding and regal. Blood-red primary with an imperial pale-gold accent —
-// war standards, sovereign seals, and ancient authority.
+[data-theme='phosphor'][data-mode='light'] {
+    --bg-color:              #EBF0E4;
+    --bg-secondary-color:    #DCE8D4;
+    --bg-surface-color:      #F6FAF2;
+    --bg-inset-color:        #CED8C4;
 
-html[data-theme='sovereign'] {
-    // Primary — crimson red
-    --primary-color: #{$crimson};
-    --primary-hover-color: #{$crimson-mid};
-    --primary-deep-color: #{$crimson-deep};
-    --primary-glow: #{$crimson-glow};
-    --primary-glow-strong: #{$crimson-glow-strong};
+    --text-color:            #182A18;
+    --text-secondary-color:  #385A38;
+    --text-muted-color:      #6A8060;
+    --text-heading-color:    #0A180A;
 
-    // Accent — pale imperial gold
-    --accent-color: #{$pale-gold};
-    --accent-dim-color: #{$pale-gold-dim};
-    --accent-glow: #{$pale-gold-glow};
+    --primary-color:         #2E5028;
+    --primary-hover-color:   #4A7A3C;
+    --primary-deep-color:    #1A3018;
+    --primary-glow:          rgba(46, 80, 40, 0.14);
+    --primary-glow-strong:   rgba(46, 80, 40, 0.30);
 
-    // Decorative rule strip
-    --rule-color: #{$crimson};
-    --rule-glow: 0 0 6px #{$crimson-glow-strong};
+    --accent-color:          #507028;
+    --accent-dim-color:      #304018;
+    --accent-glow:           rgba(80, 112, 40, 0.14);
 
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
+    --highlight-color:       #486830;
+    --highlight-glow:        rgba(72, 104, 48, 0.14);
+
+    --border-color:          #C8D8BC;
+    --border-strong-color:   #A0B890;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #8A6018;
+    --success-color:         #2E5028;
+    --submit-color:          #1A4888;
+    --disabled-color:        #909880;
+
+    --rule-color:            #2E5028;
+    --rule-glow:             0 0 6px rgba(46, 80, 40, 0.30);
+    --blur:                  rgba(235, 240, 228, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(46, 80, 40, 0.03) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(46, 80, 40, 0.08);
+    --shadow-md:   0 4px 16px rgba(46, 80, 40, 0.08);
+    --shadow-lg:   0 10px 40px rgba(46, 80, 40, 0.08);
 }
 
-html[data-theme='sovereign'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
+@media (prefers-color-scheme: light) {
+    [data-theme='phosphor']:not([data-mode='dark']) {
+        --bg-color:              #EBF0E4;
+        --bg-secondary-color:    #DCE8D4;
+        --bg-surface-color:      #F6FAF2;
+        --bg-inset-color:        #CED8C4;
+        --text-color:            #182A18;
+        --text-secondary-color:  #385A38;
+        --text-muted-color:      #6A8060;
+        --text-heading-color:    #0A180A;
+        --primary-color:         #2E5028;
+        --primary-hover-color:   #4A7A3C;
+        --primary-deep-color:    #1A3018;
+        --primary-glow:          rgba(46, 80, 40, 0.14);
+        --primary-glow-strong:   rgba(46, 80, 40, 0.30);
+        --accent-color:          #507028;
+        --accent-dim-color:      #304018;
+        --accent-glow:           rgba(80, 112, 40, 0.14);
+        --highlight-color:       #486830;
+        --highlight-glow:        rgba(72, 104, 48, 0.14);
+        --border-color:          #C8D8BC;
+        --border-strong-color:   #A0B890;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #8A6018;
+        --success-color:         #2E5028;
+        --submit-color:          #1A4888;
+        --disabled-color:        #909880;
+        --rule-color:            #2E5028;
+        --rule-glow:             0 0 6px rgba(46, 80, 40, 0.30);
+        --blur:                  rgba(235, 240, 228, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(46, 80, 40, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(46, 80, 40, 0.08);
+        --shadow-md:             0 4px 16px rgba(46, 80, 40, 0.08);
+        --shadow-lg:             0 10px 40px rgba(46, 80, 40, 0.08);
+    }
 }
 
-// ─── Acanthium — Deep emerald · Copper ───────────────────────────────────────
-// Ancient and alchemical. Forest-deep emerald primary with warm oxidised copper
-// accent — old-growth libraries, botanical charts, and apothecary instruments.
 
-html[data-theme='acanthium'] {
-    // Primary — deep emerald green
-    --primary-color: #{$emerald};
-    --primary-hover-color: #{$emerald-mid};
-    --primary-deep-color: #{$emerald-deep};
-    --primary-glow: #{$emerald-glow};
-    --primary-glow-strong: #{$emerald-glow-strong};
+// ─────────────────────────────────────────────────────────────────────────────
+// SOVEREIGN
+// Battle crimson · pale gold · deep warm dark — imperial SNES palette
+// Inspired by FFVI, Chrono Trigger battle scenes, SNES HP bar reds
+// ─────────────────────────────────────────────────────────────────────────────
 
-    // Accent — warm copper
-    --accent-color: #{$copper};
-    --accent-dim-color: #{$copper-dim};
-    --accent-glow: #{$copper-glow};
+[data-theme='sovereign'],
+[data-theme='sovereign'][data-mode='dark'] {
+    --bg-color:              #0C0808;
+    --bg-secondary-color:    #140E0E;
+    --bg-surface-color:      #1A1010;
+    --bg-inset-color:        #080505;
 
-    // Decorative rule strip
-    --rule-color: #{$emerald};
-    --rule-glow: 0 0 6px #{$emerald-glow-strong};
+    --text-color:            #C8B8A8;
+    --text-secondary-color:  #8A7868;
+    --text-muted-color:      #4A3630;
+    --text-heading-color:    #D8C8B0;
 
-    // Dark base (default)
-    --bg-color: #{$obsidian};
-    --bg-secondary-color: #{$obsidian-mid};
-    --bg-surface-color: #{$obsidian-light};
-    --text-color: #{$mist};
-    --text-secondary-color: #{$slate};
-    --text-muted-color: #{$ash};
-    --border-color: #{$obsidian-light};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-dark};
+    --primary-color:         #A83020;
+    --primary-hover-color:   #C03828;
+    --primary-deep-color:    #701808;
+    --primary-glow:          rgba(168, 48, 32, 0.20);
+    --primary-glow-strong:   rgba(168, 48, 32, 0.42);
+
+    --accent-color:          #B89028;
+    --accent-dim-color:      #7A6018;
+    --accent-glow:           rgba(184, 144, 40, 0.16);
+
+    --highlight-color:       #D0B040;
+    --highlight-glow:        rgba(208, 176, 64, 0.18);
+
+    --border-color:          #281818;
+    --border-strong-color:   #3A2020;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.40);
+    --warning-color:         #B89028;
+    --success-color:         #3A6028;
+    --submit-color:          #1A2888;
+    --disabled-color:        #3A2820;
+
+    --rule-color:            #A83020;
+    --rule-glow:             0 0 8px rgba(168, 48, 32, 0.42);
+    --blur:                  rgba(12, 8, 8, 0.84);
+    --surface-tint:          linear-gradient(180deg, rgba(168, 48, 32, 0.05) 0%, transparent 60%);
+
+    --shadow-sm:   0 1px 4px rgba(168, 48, 32, 0.16);
+    --shadow-md:   0 4px 16px rgba(168, 48, 32, 0.16);
+    --shadow-lg:   0 10px 40px rgba(168, 48, 32, 0.16);
 }
 
-html[data-theme='acanthium'][data-mode='light'] {
-    --bg-color: #{$ghost};
-    --bg-secondary-color: #{$silver};
-    --bg-surface-color: #{$mist};
-    --text-color: #{$obsidian};
-    --text-secondary-color: #{$ash};
-    --text-muted-color: #{$slate};
-    --border-color: #{$silver};
-    --border-strong-color: #{$ash};
-    --blur: #{$blur-light};
+[data-theme='sovereign'][data-mode='light'] {
+    --bg-color:              #FBF0EC;
+    --bg-secondary-color:    #F0E0D8;
+    --bg-surface-color:      #FFFFFF;
+    --bg-inset-color:        #EAD4C8;
+
+    --text-color:            #280C08;
+    --text-secondary-color:  #5A2818;
+    --text-muted-color:      #9A6850;
+    --text-heading-color:    #0A0402;
+
+    --primary-color:         #8A1A10;
+    --primary-hover-color:   #A83020;
+    --primary-deep-color:    #600E08;
+    --primary-glow:          rgba(138, 26, 16, 0.14);
+    --primary-glow-strong:   rgba(138, 26, 16, 0.30);
+
+    --accent-color:          #7A6010;
+    --accent-dim-color:      #5A4808;
+    --accent-glow:           rgba(122, 96, 16, 0.14);
+
+    --highlight-color:       #3A1010;
+    --highlight-glow:        rgba(58, 16, 16, 0.14);
+
+    --border-color:          #F0D8CC;
+    --border-strong-color:   #D0A898;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #8A1A10;
+    --danger-glow:           rgba(138, 26, 16, 0.20);
+    --warning-color:         #7A6010;
+    --success-color:         #1A4018;
+    --submit-color:          #1A1A88;
+    --disabled-color:        #B09888;
+
+    --rule-color:            #8A1A10;
+    --rule-glow:             0 0 6px rgba(138, 26, 16, 0.30);
+    --blur:                  rgba(251, 240, 236, 0.84);
+    --surface-tint:          linear-gradient(180deg, rgba(138, 26, 16, 0.03) 0%, transparent 60%);
+
+    --shadow-sm:   0 1px 4px rgba(138, 26, 16, 0.08);
+    --shadow-md:   0 4px 16px rgba(138, 26, 16, 0.08);
+    --shadow-lg:   0 10px 40px rgba(138, 26, 16, 0.08);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='sovereign']:not([data-mode='dark']) {
+        --bg-color:              #FBF0EC;
+        --bg-secondary-color:    #F0E0D8;
+        --bg-surface-color:      #FFFFFF;
+        --bg-inset-color:        #EAD4C8;
+        --text-color:            #280C08;
+        --text-secondary-color:  #5A2818;
+        --text-muted-color:      #9A6850;
+        --text-heading-color:    #0A0402;
+        --primary-color:         #8A1A10;
+        --primary-hover-color:   #A83020;
+        --primary-deep-color:    #600E08;
+        --primary-glow:          rgba(138, 26, 16, 0.14);
+        --primary-glow-strong:   rgba(138, 26, 16, 0.30);
+        --accent-color:          #7A6010;
+        --accent-dim-color:      #5A4808;
+        --accent-glow:           rgba(122, 96, 16, 0.14);
+        --highlight-color:       #3A1010;
+        --highlight-glow:        rgba(58, 16, 16, 0.14);
+        --border-color:          #F0D8CC;
+        --border-strong-color:   #D0A898;
+        --danger-color:          #8A1A10;
+        --danger-glow:           rgba(138, 26, 16, 0.20);
+        --warning-color:         #7A6010;
+        --success-color:         #1A4018;
+        --submit-color:          #1A1A88;
+        --disabled-color:        #B09888;
+        --rule-color:            #8A1A10;
+        --rule-glow:             0 0 6px rgba(138, 26, 16, 0.30);
+        --blur:                  rgba(251, 240, 236, 0.84);
+        --surface-tint:          linear-gradient(180deg, rgba(138, 26, 16, 0.03) 0%, transparent 60%);
+        --shadow-sm:             0 1px 4px rgba(138, 26, 16, 0.08);
+        --shadow-md:             0 4px 16px rgba(138, 26, 16, 0.08);
+        --shadow-lg:             0 10px 40px rgba(138, 26, 16, 0.08);
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VOID
+// Cobalt steel · space violet · deep blue-dark — N64 cosmic palette
+// Inspired by Star Fox 64, Metroid, Majora's Mask, N64 space-game colours
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='void'],
+[data-theme='void'][data-mode='dark'] {
+    --bg-color:              #07080F;
+    --bg-secondary-color:    #0D0E18;
+    --bg-surface-color:      #12141E;
+    --bg-inset-color:        #040508;
+
+    --text-color:            #A8B4C8;
+    --text-secondary-color:  #6878A0;
+    --text-muted-color:      #38405A;
+    --text-heading-color:    #C0CCDC;
+
+    --primary-color:         #4878B0;
+    --primary-hover-color:   #5890CC;
+    --primary-deep-color:    #2C5080;
+    --primary-glow:          rgba(72, 120, 176, 0.18);
+    --primary-glow-strong:   rgba(72, 120, 176, 0.40);
+
+    --accent-color:          #7058A8;
+    --accent-dim-color:      #503878;
+    --accent-glow:           rgba(112, 88, 168, 0.16);
+
+    --highlight-color:       #90B8E0;
+    --highlight-glow:        rgba(144, 184, 224, 0.14);
+
+    --border-color:          #181C28;
+    --border-strong-color:   #242A3A;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.26);
+    --warning-color:         #B89038;
+    --success-color:         #3A6A48;
+    --submit-color:          #4878B0;
+    --disabled-color:        #282E40;
+
+    --rule-color:            #4878B0;
+    --rule-glow:             0 0 8px rgba(72, 120, 176, 0.40);
+    --blur:                  rgba(7, 8, 15, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(72, 120, 176, 0.06) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(72, 120, 176, 0.14);
+    --shadow-md:   0 4px 16px rgba(72, 120, 176, 0.14);
+    --shadow-lg:   0 10px 40px rgba(72, 120, 176, 0.14);
+}
+
+[data-theme='void'][data-mode='light'] {
+    --bg-color:              #EEF0F8;
+    --bg-secondary-color:    #E0E4F4;
+    --bg-surface-color:      #FAFBFF;
+    --bg-inset-color:        #D4DAF0;
+
+    --text-color:            #080C28;
+    --text-secondary-color:  #283868;
+    --text-muted-color:      #6070A0;
+    --text-heading-color:    #040818;
+
+    --primary-color:         #2C5080;
+    --primary-hover-color:   #4878B0;
+    --primary-deep-color:    #182840;
+    --primary-glow:          rgba(44, 80, 128, 0.14);
+    --primary-glow-strong:   rgba(44, 80, 128, 0.30);
+
+    --accent-color:          #503878;
+    --accent-dim-color:      #382858;
+    --accent-glow:           rgba(80, 56, 120, 0.14);
+
+    --highlight-color:       #182840;
+    --highlight-glow:        rgba(24, 40, 64, 0.14);
+
+    --border-color:          #D4DAF0;
+    --border-strong-color:   #A8B4D8;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #8A7018;
+    --success-color:         #1A4030;
+    --submit-color:          #2C5080;
+    --disabled-color:        #A8B0C8;
+
+    --rule-color:            #2C5080;
+    --rule-glow:             0 0 6px rgba(44, 80, 128, 0.30);
+    --blur:                  rgba(238, 240, 248, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(44, 80, 128, 0.03) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(44, 80, 128, 0.08);
+    --shadow-md:   0 4px 16px rgba(44, 80, 128, 0.08);
+    --shadow-lg:   0 10px 40px rgba(44, 80, 128, 0.08);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='void']:not([data-mode='dark']) {
+        --bg-color:              #EEF0F8;
+        --bg-secondary-color:    #E0E4F4;
+        --bg-surface-color:      #FAFBFF;
+        --bg-inset-color:        #D4DAF0;
+        --text-color:            #080C28;
+        --text-secondary-color:  #283868;
+        --text-muted-color:      #6070A0;
+        --text-heading-color:    #040818;
+        --primary-color:         #2C5080;
+        --primary-hover-color:   #4878B0;
+        --primary-deep-color:    #182840;
+        --primary-glow:          rgba(44, 80, 128, 0.14);
+        --primary-glow-strong:   rgba(44, 80, 128, 0.30);
+        --accent-color:          #503878;
+        --accent-dim-color:      #382858;
+        --accent-glow:           rgba(80, 56, 120, 0.14);
+        --highlight-color:       #182840;
+        --highlight-glow:        rgba(24, 40, 64, 0.14);
+        --border-color:          #D4DAF0;
+        --border-strong-color:   #A8B4D8;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #8A7018;
+        --success-color:         #1A4030;
+        --submit-color:          #2C5080;
+        --disabled-color:        #A8B0C8;
+        --rule-color:            #2C5080;
+        --rule-glow:             0 0 6px rgba(44, 80, 128, 0.30);
+        --blur:                  rgba(238, 240, 248, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(44, 80, 128, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(44, 80, 128, 0.08);
+        --shadow-md:             0 4px 16px rgba(44, 80, 128, 0.08);
+        --shadow-lg:             0 10px 40px rgba(44, 80, 128, 0.08);
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DUSK
+// Magic purple · rose flash · twilight dark — SNES mystical palette
+// Inspired by Chrono Trigger magic moments, Castlevania, SNES spell effects
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='dusk'],
+[data-theme='dusk'][data-mode='dark'] {
+    --bg-color:              #0B080F;
+    --bg-secondary-color:    #130E18;
+    --bg-surface-color:      #191220;
+    --bg-inset-color:        #070508;
+
+    --text-color:            #C0A8C4;
+    --text-secondary-color:  #806878;
+    --text-muted-color:      #484050;
+    --text-heading-color:    #D4C0D4;
+
+    --primary-color:         #9040A0;
+    --primary-hover-color:   #A850B8;
+    --primary-deep-color:    #602870;
+    --primary-glow:          rgba(144, 64, 160, 0.18);
+    --primary-glow-strong:   rgba(144, 64, 160, 0.40);
+
+    --accent-color:          #B86090;
+    --accent-dim-color:      #7A3A58;
+    --accent-glow:           rgba(184, 96, 144, 0.16);
+
+    --highlight-color:       #D090B0;
+    --highlight-glow:        rgba(208, 144, 176, 0.16);
+
+    --border-color:          #1E1428;
+    --border-strong-color:   #2A1C38;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.26);
+    --warning-color:         #B89038;
+    --success-color:         #3A6848;
+    --submit-color:          #5030A0;
+    --disabled-color:        #302840;
+
+    --rule-color:            #9040A0;
+    --rule-glow:             0 0 8px rgba(144, 64, 160, 0.40);
+    --blur:                  rgba(11, 8, 15, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(144, 64, 160, 0.05) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(144, 64, 160, 0.14);
+    --shadow-md:   0 4px 16px rgba(144, 64, 160, 0.14);
+    --shadow-lg:   0 10px 40px rgba(144, 64, 160, 0.14);
+}
+
+[data-theme='dusk'][data-mode='light'] {
+    --bg-color:              #F6EEF8;
+    --bg-secondary-color:    #EDE0F4;
+    --bg-surface-color:      #FDFAFF;
+    --bg-inset-color:        #E4D0EC;
+
+    --text-color:            #1E0828;
+    --text-secondary-color:  #502858;
+    --text-muted-color:      #907890;
+    --text-heading-color:    #0E0418;
+
+    --primary-color:         #602870;
+    --primary-hover-color:   #9040A0;
+    --primary-deep-color:    #401850;
+    --primary-glow:          rgba(96, 40, 112, 0.14);
+    --primary-glow-strong:   rgba(96, 40, 112, 0.30);
+
+    --accent-color:          #7A3A58;
+    --accent-dim-color:      #582840;
+    --accent-glow:           rgba(122, 58, 88, 0.14);
+
+    --highlight-color:       #2E1040;
+    --highlight-glow:        rgba(46, 16, 64, 0.14);
+
+    --border-color:          #EAD8F4;
+    --border-strong-color:   #C8A8DC;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #8A6818;
+    --success-color:         #1A4830;
+    --submit-color:          #402080;
+    --disabled-color:        #B098B8;
+
+    --rule-color:            #602870;
+    --rule-glow:             0 0 6px rgba(96, 40, 112, 0.30);
+    --blur:                  rgba(246, 238, 248, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(96, 40, 112, 0.03) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(96, 40, 112, 0.08);
+    --shadow-md:   0 4px 16px rgba(96, 40, 112, 0.08);
+    --shadow-lg:   0 10px 40px rgba(96, 40, 112, 0.08);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='dusk']:not([data-mode='dark']) {
+        --bg-color:              #F6EEF8;
+        --bg-secondary-color:    #EDE0F4;
+        --bg-surface-color:      #FDFAFF;
+        --bg-inset-color:        #E4D0EC;
+        --text-color:            #1E0828;
+        --text-secondary-color:  #502858;
+        --text-muted-color:      #907890;
+        --text-heading-color:    #0E0418;
+        --primary-color:         #602870;
+        --primary-hover-color:   #9040A0;
+        --primary-deep-color:    #401850;
+        --primary-glow:          rgba(96, 40, 112, 0.14);
+        --primary-glow-strong:   rgba(96, 40, 112, 0.30);
+        --accent-color:          #7A3A58;
+        --accent-dim-color:      #582840;
+        --accent-glow:           rgba(122, 58, 88, 0.14);
+        --highlight-color:       #2E1040;
+        --highlight-glow:        rgba(46, 16, 64, 0.14);
+        --border-color:          #EAD8F4;
+        --border-strong-color:   #C8A8DC;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #8A6818;
+        --success-color:         #1A4830;
+        --submit-color:          #402080;
+        --disabled-color:        #B098B8;
+        --rule-color:            #602870;
+        --rule-glow:             0 0 6px rgba(96, 40, 112, 0.30);
+        --blur:                  rgba(246, 238, 248, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(96, 40, 112, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(96, 40, 112, 0.08);
+        --shadow-md:             0 4px 16px rgba(96, 40, 112, 0.08);
+        --shadow-lg:             0 10px 40px rgba(96, 40, 112, 0.08);
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PARCHMENT
+// Aged paper · warm brown · forest olive — SNES game manual palette
+// Inspired by old RPG cartridge box art, SNES instruction booklets, map cream
+// ─────────────────────────────────────────────────────────────────────────────
+
+[data-theme='parchment'],
+[data-theme='parchment'][data-mode='light'] {
+    --bg-color:              #F2ECE0;
+    --bg-secondary-color:    #E8E0CE;
+    --bg-surface-color:      #FDFAF4;
+    --bg-inset-color:        #E2D9C8;
+
+    --text-color:            #2C2018;
+    --text-secondary-color:  #5A4838;
+    --text-muted-color:      #8A7860;
+    --text-heading-color:    #18100A;
+
+    --primary-color:         #6A4820;
+    --primary-hover-color:   #7A5828;
+    --primary-deep-color:    #4A3010;
+    --primary-glow:          rgba(106, 72, 32, 0.14);
+    --primary-glow-strong:   rgba(106, 72, 32, 0.28);
+
+    --accent-color:          #486830;
+    --accent-dim-color:      #304820;
+    --accent-glow:           rgba(72, 104, 48, 0.14);
+
+    --highlight-color:       #8A7848;
+    --highlight-glow:        rgba(138, 120, 72, 0.14);
+
+    --border-color:          #D8CEB8;
+    --border-strong-color:   #B8A890;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #8A2018;
+    --danger-glow:           rgba(138, 32, 24, 0.20);
+    --warning-color:         #A07020;
+    --success-color:         #3A6028;
+    --submit-color:          #1A4888;
+    --disabled-color:        #A89880;
+
+    --rule-color:            #6A4820;
+    --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+    --blur:                  rgba(242, 236, 224, 0.84);
+    --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(106, 72, 32, 0.08);
+    --shadow-md:   0 4px 16px rgba(106, 72, 32, 0.08);
+    --shadow-lg:   0 10px 40px rgba(106, 72, 32, 0.08);
+}
+
+[data-theme='parchment'][data-mode='dark'] {
+    --bg-color:              #0E0C09;
+    --bg-secondary-color:    #161310;
+    --bg-surface-color:      #1D1A14;
+    --bg-inset-color:        #090806;
+
+    --text-color:            #C2B79E;
+    --text-secondary-color:  #8A7E6A;
+    --text-muted-color:      #4A4236;
+    --text-heading-color:    #D8CCAC;
+
+    --primary-color:         #B89038;
+    --primary-hover-color:   #CCA840;
+    --primary-deep-color:    #7A6020;
+    --primary-glow:          rgba(184, 144, 56, 0.16);
+    --primary-glow-strong:   rgba(184, 144, 56, 0.36);
+
+    --accent-color:          #507040;
+    --accent-dim-color:      #304828;
+    --accent-glow:           rgba(80, 112, 64, 0.16);
+
+    --highlight-color:       #D4B868;
+    --highlight-glow:        rgba(212, 184, 104, 0.18);
+
+    --border-color:          #282318;
+    --border-strong-color:   #3A3428;
+    --border-radius:         #{$border-radius};
+
+    --danger-color:          #A83020;
+    --danger-glow:           rgba(168, 48, 32, 0.28);
+    --warning-color:         #C89030;
+    --success-color:         #4A7A3C;
+    --submit-color:          #2858A0;
+    --disabled-color:        #3A3428;
+
+    --rule-color:            #B89038;
+    --rule-glow:             0 0 8px rgba(184, 144, 56, 0.36);
+    --blur:                  rgba(14, 12, 9, 0.82);
+    --surface-tint:          linear-gradient(135deg, rgba(184, 144, 56, 0.04) 0%, transparent 65%);
+
+    --shadow-sm:   0 1px 4px rgba(184, 144, 56, 0.12);
+    --shadow-md:   0 4px 16px rgba(184, 144, 56, 0.12);
+    --shadow-lg:   0 10px 40px rgba(184, 144, 56, 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='parchment']:not([data-mode='dark']) {
+        --bg-color:              #F2ECE0;
+        --bg-secondary-color:    #E8E0CE;
+        --bg-surface-color:      #FDFAF4;
+        --bg-inset-color:        #E2D9C8;
+        --text-color:            #2C2018;
+        --text-secondary-color:  #5A4838;
+        --text-muted-color:      #8A7860;
+        --text-heading-color:    #18100A;
+        --primary-color:         #6A4820;
+        --primary-hover-color:   #7A5828;
+        --primary-deep-color:    #4A3010;
+        --primary-glow:          rgba(106, 72, 32, 0.14);
+        --primary-glow-strong:   rgba(106, 72, 32, 0.28);
+        --accent-color:          #486830;
+        --accent-dim-color:      #304820;
+        --accent-glow:           rgba(72, 104, 48, 0.14);
+        --highlight-color:       #8A7848;
+        --highlight-glow:        rgba(138, 120, 72, 0.14);
+        --border-color:          #D8CEB8;
+        --border-strong-color:   #B8A890;
+        --danger-color:          #8A2018;
+        --danger-glow:           rgba(138, 32, 24, 0.20);
+        --warning-color:         #A07020;
+        --success-color:         #3A6028;
+        --submit-color:          #1A4888;
+        --disabled-color:        #A89880;
+        --rule-color:            #6A4820;
+        --rule-glow:             0 0 6px rgba(106, 72, 32, 0.28);
+        --blur:                  rgba(242, 236, 224, 0.84);
+        --surface-tint:          linear-gradient(135deg, rgba(106, 72, 32, 0.03) 0%, transparent 65%);
+        --shadow-sm:             0 1px 4px rgba(106, 72, 32, 0.08);
+        --shadow-md:             0 4px 16px rgba(106, 72, 32, 0.08);
+        --shadow-lg:             0 10px 40px rgba(106, 72, 32, 0.08);
+    }
 }

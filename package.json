@@ -2,14 +2,20 @@
     "name": "realms-and-beyond",
     "private": true,
     "version": "1.0.0",
+    "packageManager": "pnpm@10.18.2",
     "scripts": {
-        "build": "pnpm -r --filter \"./packages/**\" build",
-        "build:servers": "pnpm -r --filter \"./servers/**\" build",
-        "build:all": "pnpm run build && pnpm run build:servers",
-        "clean": "pnpm -r --filter \"./packages/**\" clean",
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "build:packages": "turbo run build --filter=\"./packages/**\"",
+        "build:services": "turbo run build --filter=\"./services/**\"",
+        "start": "turbo run start",
+        "lint": "turbo run lint",
+        "typecheck": "turbo run typecheck",
+        "clean": "turbo run clean",
         "update:all": "pnpm up --recursive --latest"
     },
     "devDependencies": {
-        "prettier": "^3.8.1"
+        "prettier": "^3.8.1",
+        "turbo": "^2.5.4"
     }
 }
