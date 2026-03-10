@@ -104,7 +104,7 @@
 
 // Label — Barlow Condensed uppercase for tags, nav items, section headers
 @mixin font-label {
-    font-family: $font-ui;
+    // font-family: $font-ui;
     font-weight: 500;
     font-size: 0.72rem;
     letter-spacing: 0.14em;
@@ -165,7 +165,9 @@
 @mixin pixel-border($color: var(--primary-color)) {
     outline: 1px solid $color;
     outline-offset: 2px;
-    box-shadow: 0 0 0 1px var(--bg-color), 0 0 0 3px $color;
+    box-shadow:
+        0 0 0 1px var(--bg-color),
+        0 0 0 3px $color;
 }
 
 // ─── Truncate ─────────────────────────────────────────────────────────────────
@@ -208,4 +210,116 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+// ─── Regal Fantasy mixins ────────────────────────────────────────────────────
+
+@mixin gold-text {
+    background: linear-gradient(
+        135deg,
+        $ancient-gold,
+        $regal-pale-gold,
+        $ancient-gold
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 6px rgba($sovereign-gold, 0.4));
+}
+
+@mixin regal-surface($depth: 'dark') {
+    @if $depth == 'dark' {
+        background: linear-gradient(145deg, $shadow-court, $midnight-realm);
+    } @else if $depth == 'parchment' {
+        background: linear-gradient(
+            135deg,
+            $ivory-scroll 0%,
+            $aged-vellum 50%,
+            $parchment-base 100%
+        );
+    } @else {
+        background: linear-gradient(145deg, $dusk-manor, $shadow-court);
+    }
+}
+
+@mixin parchment-surface {
+    background:
+        radial-gradient(
+            ellipse at 20% 20%,
+            rgba($regal-pale-gold, 0.15) 0%,
+            transparent 50%
+        ),
+        linear-gradient(
+            160deg,
+            $ivory-scroll 0%,
+            $aged-vellum 50%,
+            $parchment-base 100%
+        );
+}
+
+@mixin gold-glow($strength: 1) {
+    box-shadow:
+        0 0 #{16px * $strength} rgba($sovereign-gold, 0.4 * $strength),
+        0 0 #{40px * $strength} rgba($sovereign-gold, 0.15 * $strength);
+}
+
+@mixin regal-focus {
+    &:focus-visible {
+        outline: none;
+        box-shadow:
+            0 0 0 2px $midnight-realm,
+            0 0 0 4px rgba($sovereign-gold, 0.6);
+    }
+}
+
+@mixin regal-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba($sovereign-gold, 0.4),
+            transparent
+        );
+    }
+}
+
+@mixin ornate-border($color: var(--gold-500)) {
+    border: 1px solid $color;
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border: 1px solid rgba($sovereign-gold, 0.2);
+        pointer-events: none;
+    }
+}
+
+@mixin shimmer-effect {
+    overflow: hidden;
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            105deg,
+            transparent 40%,
+            rgba($regal-pale-gold, 0.15) 50%,
+            transparent 60%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+        pointer-events: none;
+    }
+    &:hover::after {
+        transform: translateX(100%);
+    }
 }

@@ -1,5 +1,5 @@
-@use '../_variables' as *;
-@use '../_mixins' as *;
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
 
 // ─── Table Components ─────────────────────────────────────────────────────────
 // Data tables — arcade scoreboard / terminal readout aesthetic.
@@ -65,8 +65,7 @@
     tbody {
         tr {
             border-bottom: 1px solid var(--border-color);
-            transition:
-                background-color var(--transition-speed, 0.18s) ease;
+            transition: background-color var(--transition-speed, 0.18s) ease;
 
             &:last-child {
                 border-bottom: none;
@@ -116,7 +115,8 @@
     // ─── Compact ──────────────────────────────────────────────────────────────
 
     &--compact {
-        th, td {
+        th,
+        td {
             padding: $small $medium;
             font-size: 0.82rem;
         }

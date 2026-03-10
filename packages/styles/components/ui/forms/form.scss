@@ -32,35 +32,35 @@
     margin-bottom: 0.5rem;
 }
 
-.step-dot {
+.step-indicator .step-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background-color: var(--text-color);
     transition: all 0.3s ease;
     position: relative;
-}
 
-.step-dot.active {
-    background-color: var(--primary-hover-color);
-    width: 16px;
-    height: 16px;
-    box-shadow: 0 0 0 3px var(--primary-color);
-}
+    &.active {
+        background-color: var(--primary-hover-color);
+        width: 16px;
+        height: 16px;
+        box-shadow: 0 0 0 3px var(--primary-color);
+    }
 
-.step-dot.completed {
-    background-color: var(--primary-color);
-}
+    &.completed {
+        background-color: var(--primary-color);
 
-.step-dot.completed::after {
-    content: '✓';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--text-color);
-    font-size: 15px;
-    font-weight: bold;
+        &::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-color);
+            font-size: 15px;
+            font-weight: bold;
+        }
+    }
 }
 
 .step-text {
@@ -104,27 +104,11 @@
     color: var(--text-color);
 }
 
-.input {
-    padding: $medium $large;
-    border-radius: $border-radius;
-    font-size: 1rem;
-    transition: all 0.2s;
-    min-width: 80px;
-
-    @include border;
-}
-
-.input:focus {
-    outline-color: var(--primary-hover-color);
-}
-
-/* Warning state for invalid inputs */
-.input.warning {
+/* .input styles are defined in components/inputs.scss — see .input.warning for form-specific state */
+.form-input-wrapper .input.warning {
     outline-color: var(--danger-color);
-}
 
-.input.warning:focus {
-    outline-color: var(--danger-color);
+    &:focus { outline-color: var(--danger-color); }
 }
 
 // /* Error Messages */
@@ -190,17 +174,7 @@
     animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes pulse {
-    0%,
-    100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.step-dot.active {
+.step-indicator .step-dot.active {
     animation: pulse 2s ease-in-out infinite;
 }
 

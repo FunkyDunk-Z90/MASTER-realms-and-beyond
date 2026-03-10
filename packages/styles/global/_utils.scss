@@ -6,26 +6,61 @@
 
 // ─── Display ─────────────────────────────────────────────────────────────────
 
-.hidden       { display: none !important; }
-.sr-only      { @include sr-only; }
-.flex         { display: flex; }
-.flex-col     { display: flex; flex-direction: column; }
-.grid         { display: grid; }
-.inline-flex  { display: inline-flex; }
-.block        { display: block; }
-.inline-block { display: inline-block; }
+.hidden {
+    display: none !important;
+}
+.sr-only {
+    @include sr-only;
+}
+.flex {
+    display: flex;
+}
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+.grid {
+    display: grid;
+}
+.inline-flex {
+    display: inline-flex;
+}
+.block {
+    display: block;
+}
+.inline-block {
+    display: inline-block;
+}
 
 // ─── Flex alignment ───────────────────────────────────────────────────────────
 
-.items-center   { align-items: center; }
-.items-start    { align-items: flex-start; }
-.items-end      { align-items: flex-end; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.justify-end    { justify-content: flex-end; }
-.flex-1         { flex: 1; }
-.flex-shrink-0  { flex-shrink: 0; }
-.flex-wrap      { flex-wrap: wrap; }
+.items-center {
+    align-items: center;
+}
+.items-start {
+    align-items: flex-start;
+}
+.items-end {
+    align-items: flex-end;
+}
+.justify-center {
+    justify-content: center;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.justify-end {
+    justify-content: flex-end;
+}
+.flex-1 {
+    flex: 1;
+}
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+.flex-wrap {
+    flex-wrap: wrap;
+}
 
 .center {
     display: flex;
@@ -35,78 +70,178 @@
 
 // ─── Spacing ─────────────────────────────────────────────────────────────────
 
-.gap-1  { gap: $small; }
-.gap-2  { gap: $medium; }
-.gap-4  { gap: $large; }
-.gap-6  { gap: $xLarge; }
+.gap-1 {
+    gap: $small;
+}
+.gap-2 {
+    gap: $medium;
+}
+.gap-4 {
+    gap: $large;
+}
+.gap-6 {
+    gap: $xLarge;
+}
 
-.p-1    { padding: $small; }
-.p-2    { padding: $medium; }
-.p-4    { padding: $large; }
-.p-6    { padding: $xLarge; }
-.px-4   { padding-inline: $large; }
-.py-2   { padding-block: $medium; }
-.mt-auto { margin-top: auto; }
-.mb-auto { margin-bottom: auto; }
-.mx-auto { margin-inline: auto; }
+.p-1 {
+    padding: $small;
+}
+.p-2 {
+    padding: $medium;
+}
+.p-4 {
+    padding: $large;
+}
+.p-6 {
+    padding: $xLarge;
+}
+.px-4 {
+    padding-inline: $large;
+}
+.py-2 {
+    padding-block: $medium;
+}
+.mt-auto {
+    margin-top: auto;
+}
+.mb-auto {
+    margin-bottom: auto;
+}
+.mx-auto {
+    margin-inline: auto;
+}
 
 // ─── Typography ───────────────────────────────────────────────────────────────
 
-.text-xs    { font-size: 0.72rem; }
-.text-sm    { font-size: 0.875rem; }
-.text-base  { font-size: 1rem; }
-.text-lg    { font-size: 1.2rem; }
-.text-xl    { font-size: 1.5rem; }
+.text-xs {
+    font-size: 0.72rem;
+}
+.text-sm {
+    font-size: 0.875rem;
+}
+.text-base {
+    font-size: 1rem;
+}
+.text-lg {
+    font-size: 1.2rem;
+}
+.text-xl {
+    font-size: 1.5rem;
+}
 
-.font-display { @include font-display; }
-.font-label   { @include font-label; }
-.font-ui      { @include font-ui-label; }
-.font-mono    { @include font-mono; }
+.font-display {
+    @include font-display;
+}
+.font-label {
+    @include font-label;
+}
+.font-ui {
+    @include font-ui-label;
+}
+.font-mono {
+    @include font-mono;
+}
 
-.uppercase    { text-transform: uppercase; }
-.lowercase    { text-transform: lowercase; }
-.capitalize   { text-transform: capitalize; }
-.truncate     { @include truncate; }
+.uppercase {
+    text-transform: uppercase;
+}
+.lowercase {
+    text-transform: lowercase;
+}
+.capitalize {
+    text-transform: capitalize;
+}
+.truncate {
+    @include truncate;
+}
 
-.text-left    { text-align: left; }
-.text-center  { text-align: center; }
-.text-right   { text-align: right; }
+.text-left {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
 
 // ─── Colour ───────────────────────────────────────────────────────────────────
 
-.text-primary   { color: var(--primary-color); }
-.text-accent    { color: var(--accent-color); }
-.text-muted     { color: var(--text-muted-color); }
-.text-heading   { color: var(--text-heading-color); }
-.text-danger    { color: var(--danger-color); }
-.text-success   { color: var(--success-color); }
-.text-warning   { color: var(--warning-color); }
+.text-primary {
+    color: var(--primary-color);
+}
+.text-accent {
+    color: var(--accent-color);
+}
+.text-muted {
+    color: var(--text-muted-color);
+}
+.text-heading {
+    color: var(--text-heading-color);
+}
+.text-danger {
+    color: var(--danger-color);
+}
+.text-success {
+    color: var(--success-color);
+}
+.text-warning {
+    color: var(--warning-color);
+}
 
 // ─── Dimensions ───────────────────────────────────────────────────────────────
 
-.w-full   { width: 100%; }
-.h-full   { height: 100%; }
-.min-h-screen { min-height: 100dvh; }
-.max-w-content { max-width: max-content; }
+.w-full {
+    width: 100%;
+}
+.h-full {
+    height: 100%;
+}
+.min-h-screen {
+    min-height: 100dvh;
+}
+.max-w-content {
+    max-width: max-content;
+}
 
 // ─── Overflow ─────────────────────────────────────────────────────────────────
 
-.overflow-hidden { overflow: hidden; }
-.overflow-auto   { overflow: auto; }
-.overflow-x-auto { overflow-x: auto; }
+.overflow-hidden {
+    overflow: hidden;
+}
+.overflow-auto {
+    overflow: auto;
+}
+.overflow-x-auto {
+    overflow-x: auto;
+}
 
 // ─── Position ────────────────────────────────────────────────────────────────
 
-.relative { position: relative; }
-.absolute { position: absolute; }
-.fixed    { position: fixed; }
-.sticky   { position: sticky; }
+.relative {
+    position: relative;
+}
+.absolute {
+    position: absolute;
+}
+.fixed {
+    position: fixed;
+}
+.sticky {
+    position: sticky;
+}
 
 // ─── Pointer ─────────────────────────────────────────────────────────────────
 
-.pointer         { cursor: pointer; }
-.no-select       { user-select: none; }
-.pointer-events-none { pointer-events: none; }
+.pointer {
+    cursor: pointer;
+}
+.no-select {
+    user-select: none;
+}
+.pointer-events-none {
+    pointer-events: none;
+}
 
 // ─── Brand surfaces ───────────────────────────────────────────────────────────
 
@@ -258,4 +393,8 @@
     border-top-color: var(--primary-color);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
+}
+
+.theme-toggle {
+    cursor: pointer;
 }

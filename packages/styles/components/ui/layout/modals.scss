@@ -1,5 +1,5 @@
-@use '../_variables' as *;
-@use '../_mixins' as *;
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
 
 // ─── Modal / Dialog Components ────────────────────────────────────────────────
 // Retro arcade overlay aesthetic — sharp borders, amber-edged panels,
@@ -63,9 +63,15 @@
     }
 
     // Size variants
-    &--sm { width: min(90vw, 380px); }
-    &--lg { width: min(90vw, 760px); }
-    &--xl { width: min(96vw, 1024px); }
+    &--sm {
+        width: min(90vw, 380px);
+    }
+    &--lg {
+        width: min(90vw, 760px);
+    }
+    &--xl {
+        width: min(96vw, 1024px);
+    }
 }
 
 // ─── Modal header ─────────────────────────────────────────────────────────────
@@ -173,8 +179,12 @@
     }
 
     @keyframes slide-in-left {
-        from { transform: translateX(-110%); }
-        to   { transform: translateX(0); }
+        from {
+            transform: translateX(-110%);
+        }
+        to {
+            transform: translateX(0);
+        }
     }
 }
 
@@ -205,9 +215,15 @@
 
     animation: fade-in-up 0.22s ease forwards;
 
-    &--success { border-left-color: var(--success-color); }
-    &--warning { border-left-color: var(--warning-color); }
-    &--danger  { border-left-color: var(--danger-color); }
+    &--success {
+        border-left-color: var(--success-color);
+    }
+    &--warning {
+        border-left-color: var(--warning-color);
+    }
+    &--danger {
+        border-left-color: var(--danger-color);
+    }
 }
 
 .toast-icon {
@@ -215,7 +231,13 @@
     font-size: 1rem;
     color: var(--primary-color);
 
-    .toast--success & { color: var(--success-color); }
-    .toast--warning & { color: var(--warning-color); }
-    .toast--danger  & { color: var(--danger-color); }
+    .toast--success & {
+        color: var(--success-color);
+    }
+    .toast--warning & {
+        color: var(--warning-color);
+    }
+    .toast--danger & {
+        color: var(--danger-color);
+    }
 }

@@ -8,10 +8,17 @@ import { I_Link, T_ObjectId } from '@rnb/types'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+/** A Lucide-style SVG component — any component accepting size/strokeWidth/className. */
+export type T_IconComponent = React.ComponentType<{
+    size?: number
+    strokeWidth?: number
+    className?: string
+}>
+
 export interface I_SidebarItem extends Omit<I_Link, 'icon'> {
     id: string
-    /** String emoji/class, or a Next.js StaticImageData import. */
-    icon?: string | StaticImageData
+    /** String emoji, a Next.js StaticImageData import, or a Lucide SVG component. */
+    icon?: string | StaticImageData | T_IconComponent
     children?: I_SidebarItem[]
 }
 
@@ -64,10 +71,25 @@ interface I_SidebarSearchProps {
 
 // ─── Icon renderer ────────────────────────────────────────────────────────────
 
-function SidebarIcon({ icon }: { icon: string | StaticImageData }) {
+function SidebarIcon({
+    icon,
+}: {
+    icon: string | StaticImageData | T_IconComponent
+}) {
+    if (typeof icon === 'function') {
+        const Icon = icon
+        return (
+            <span className="sidebar-icon sidebar-icon--svg" aria-hidden="true">
+                <Icon size={16} strokeWidth={1.5} />
+            </span>
+        )
+    }
     if (typeof icon === 'string') {
         return (
-            <span className="sidebar-icon sidebar-icon--text" aria-hidden="true">
+            <span
+                className="sidebar-icon sidebar-icon--text"
+                aria-hidden="true"
+            >
                 {icon}
             </span>
         )
@@ -228,7 +250,10 @@ const SidebarMenuItem = ({
         .join(' ')
 
     return (
-        <li className={liClass} style={{ '--depth': depth } as React.CSSProperties}>
+        <li
+            className={liClass}
+            style={{ '--depth': depth } as React.CSSProperties}
+        >
             <Link
                 href={hasChildren ? '#' : item.href}
                 className={`sidebar-link${hasChildren ? ' sidebar-link--parent' : ''}`}
@@ -250,7 +275,9 @@ const SidebarMenuItem = ({
             </Link>
 
             {hasChildren && (
-                <div className={`sidebar-submenu${expanded ? ' sidebar-submenu--open' : ''}`}>
+                <div
+                    className={`sidebar-submenu${expanded ? ' sidebar-submenu--open' : ''}`}
+                >
                     <ul className="sidebar-menu sidebar-submenu-inner">
                         {item.children!.map((child) => (
                             <SidebarMenuItem
@@ -311,14 +338,18 @@ export const Sidebar = ({
                 </span>
             </button>
 
-            <aside className={`sidebar-wrapper${open ? ' sidebar-open' : ' sidebar-collapsed'}`}>
+            <aside
+                className={`sidebar-wrapper${open ? ' sidebar-open' : ' sidebar-collapsed'}`}
+            >
                 {searchFn && <SidebarSearch open={open} searchFn={searchFn} />}
 
                 <nav className="sidebar-nav">
                     {sections.map((section, i) => (
                         <div key={i} className="sidebar-section">
                             {section.title && open && (
-                                <p className="sidebar-section-title">{section.title}</p>
+                                <p className="sidebar-section-title">
+                                    {section.title}
+                                </p>
                             )}
                             <ul className="sidebar-menu">
                                 {section.items.map((item) => (

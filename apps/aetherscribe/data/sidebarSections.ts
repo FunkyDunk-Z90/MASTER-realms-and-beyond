@@ -1,9 +1,11 @@
 import { I_SidebarSection } from '@rnb/ui'
 
+import { LucideEarth } from 'lucide-react'
+
 import Worlds from '@/public/map.png'
 import Npc from '@/public/wizard.png'
 import Ancestry from '@/public/knight.png'
-import Hub from '@/public/dragon.jpg'
+import Hub from '@/public/castle.png'
 import Items from '@/public/magic-potion.png'
 import Feat from '@/public/victory.png'
 import Spells from '@/public/spell-book.png'
@@ -14,13 +16,10 @@ import Campaigns from '@/public/book.png'
 // Only lists routes that have an actual page.tsx in the aetherscribe app.
 // Add entries here as new pages are created.
 export const sidebarData: I_SidebarSection[] = [
-
     // ─── Hub ──────────────────────────────────────────────────────────────────
     {
         title: 'Hub',
-        items: [
-            { id: 'hub', label: 'Adventure Hub', href: '/hub', icon: Hub },
-        ],
+        items: [{ id: 'hub', label: 'Adventure Hub', href: '/hub', icon: Hub }],
     },
 
     // ─── Characters ───────────────────────────────────────────────────────────
@@ -38,12 +37,6 @@ export const sidebarData: I_SidebarSection[] = [
                 label: 'NPCs',
                 href: '/hub/npcs',
                 icon: Npc,
-            },
-            {
-                id: 'bestiary',
-                label: 'Bestiary',
-                href: '/hub/bestiary',
-                icon: Beast,
             },
         ],
     },
@@ -63,6 +56,12 @@ export const sidebarData: I_SidebarSection[] = [
                 label: 'Worlds',
                 href: '/hub/worlds',
                 icon: Worlds,
+            },
+            {
+                id: 'bestiary',
+                label: 'Bestiary',
+                href: '/hub/bestiary',
+                icon: Beast,
             },
         ],
     },

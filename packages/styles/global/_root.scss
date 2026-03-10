@@ -1,122 +1,176 @@
 @use '../_variables' as *;
 
 // ─── Root — Design Token Defaults ────────────────────────────────────────────
-// Defines the default theme (arcade / dark) on :root.
+// Defines the default theme (regal — deep royal purple + darkgoldenrod) on :root.
 // Override at runtime by adding [data-theme="..."] to <html>.
-// All theme-switchable values are CSS custom properties.
-// Static layout and motion tokens are defined here regardless of theme.
 
 :root {
-    // ── Default theme: arcade (warm dark + antique gold) ──────────────────
-    --bg-color:             #0E0C09;
-    --bg-secondary-color:   #161310;
-    --bg-surface-color:     #1D1A14;
-    --bg-inset-color:       #090806;
+    // ── Default theme: regal ───────────────────────────────────────────────────
+    --bg-color: #120d20;
+    --bg-secondary-color: #1e1535;
+    --bg-surface-color: #2d2050;
+    --bg-inset-color: #0a0812;
 
-    --text-color:           #C2B79E;
-    --text-secondary-color: #8A7E6A;
-    --text-muted-color:     #4A4236;
-    --text-heading-color:   #D8CCAC;
+    --text-color: #c0c0d8;
+    --text-secondary-color: #9898b8;
+    --text-muted-color: #7070a0;
+    --text-heading-color: #f5dfa0;
 
-    --primary-color:        #B89038;
-    --primary-hover-color:  #CCA840;
-    --primary-deep-color:   #7A6020;
-    --primary-glow:         rgba(184, 144, 56, 0.16);
-    --primary-glow-strong:  rgba(184, 144, 56, 0.36);
+    --primary-color: #b8860b;
+    --primary-hover-color: #d4a83a;
+    --primary-deep-color: #7a5508;
+    --primary-glow: rgba(184, 134, 11, 0.2);
+    --primary-glow-strong: rgba(184, 134, 11, 0.4);
 
-    --accent-color:         #507040;
-    --accent-dim-color:     #304828;
-    --accent-glow:          rgba(80, 112, 64, 0.16);
+    --accent-color: #8b0020;
+    --accent-dim-color: #4a0010;
+    --accent-glow: rgba(139, 0, 32, 0.2);
 
-    --border-color:         #282318;
-    --border-strong-color:  #3A3428;
-    --border-radius:        #{$border-radius};
+    --border-color: rgba(255, 215, 0, 0.15);
+    --border-strong-color: rgba(255, 215, 0, 0.3);
+    --border-radius: #{$border-radius};
 
-    --rule-color:           #B89038;
-    --rule-glow:            0 0 8px rgba(184, 144, 56, 0.36);
-    --blur:                 rgba(14, 12, 9, 0.82);
+    --rule-color: #b8860b;
+    --rule-glow: 0 0 8px rgba(184, 134, 11, 0.36);
+    --blur: rgba(18, 13, 32, 0.84);
 
-    --shadow-sm:  0 1px 4px rgba(184, 144, 56, 0.12);
-    --shadow-md:  0 4px 16px rgba(184, 144, 56, 0.12);
-    --shadow-lg:  0 10px 40px rgba(184, 144, 56, 0.12);
+    --shadow-sm: 0 2px 8px rgba(184, 134, 11, 0.25);
+    --shadow-md: 0 4px 20px rgba(184, 134, 11, 0.35);
+    --shadow-lg: 0 8px 40px rgba(184, 134, 11, 0.4);
 
-    // ── Semantic colours ──────────────────────────────────────────────────
-    --danger-color:   #A83020;
-    --danger-glow:    rgba(168, 48, 32, 0.28);
-    --warning-color:  #C89030;
-    --success-color:  #4A7A3C;
-    --submit-color:   #2858A0;
-    --disabled-color: #3A3428;
+    // ── Semantic colours ──────────────────────────────────────────────────────
+    --danger-color: #c0152e;
+    --danger-glow: rgba(192, 21, 46, 0.28);
+    --warning-color: #d4a83a;
+    --success-color: #0a5c3a;
+    --submit-color: #1a4a8a;
+    --disabled-color: #3d2d6e;
 
-    // ── Layout ────────────────────────────────────────────────────────────
-    --sidebar-max:    #{$sidebar-max};
-    --sidebar-min:    #{$sidebar-min};
-    --header-height:  #{$header-height};
-    --navbar-height:  #{$header-height};
-    --footer-height:  #{$footer-height};
+    // ── Regal gold palette ────────────────────────────────────────────────────
+    --gold-100: #fdf6e3;
+    --gold-200: #f5dfa0;
+    --gold-300: #e8c56b;
+    --gold-400: #d4a83a;
+    --gold-500: #b8860b;
+    --gold-600: #9a6f0a;
+    --gold-700: #7a5508;
+    --gold-800: #5a3e06;
+    --gold-accent: #ffd700;
+    --gold-shine: #fffacd;
 
-    // ── Motion ────────────────────────────────────────────────────────────
+    // ── Regal royal palette ───────────────────────────────────────────────────
+    --royal-950: #0a0812;
+    --royal-900: #120d20;
+    --royal-800: #1e1535;
+    --royal-700: #2d2050;
+    --royal-600: #3d2d6e;
+    --royal-500: #4f3a8c;
+    --royal-400: #6b52b0;
+    --royal-300: #9178d4;
+
+    // ── Regal crimson palette ─────────────────────────────────────────────────
+    --crimson-dark: #4a0010;
+    --crimson: #8b0020;
+    --crimson-bright: #c0152e;
+
+    // ── Regal silver palette ──────────────────────────────────────────────────
+    --silver-100: #f8f8ff;
+    --silver-200: #e8e8f0;
+    --silver-300: #c0c0d8;
+    --silver-400: #9898b8;
+    --silver-500: #7070a0;
+
+    // ── Parchment palette ─────────────────────────────────────────────────────
+    --parchment-light: #fdf8ef;
+    --parchment: #f5ead8;
+    --parchment-dark: #e8d5b7;
+    --parchment-aged: #d4b896;
+
+    // ── Typography tokens ─────────────────────────────────────────────────────
+    --font-display: 'Cinzel Decorative', 'Palatino Linotype', serif;
+    --font-heading: 'Cinzel', 'Trajan Pro', serif;
+    --font-body: 'EB Garamond', 'Garamond', 'Georgia', serif;
+
+    // ── Regal gradients ───────────────────────────────────────────────────────
+    --gradient-gold: linear-gradient(
+        135deg,
+        #b8860b 0%,
+        #ffd700 40%,
+        #f5dfa0 60%,
+        #d4a83a 80%,
+        #b8860b 100%
+    );
+    --gradient-gold-subtle: linear-gradient(
+        180deg,
+        #f5dfa0 0%,
+        #d4a83a 50%,
+        #9a6f0a 100%
+    );
+    --gradient-royal: linear-gradient(180deg, #1e1535 0%, #0a0812 100%);
+    --gradient-parchment: linear-gradient(
+        135deg,
+        #fdf8ef 0%,
+        #f5ead8 50%,
+        #e8d5b7 100%
+    );
+    --gradient-crimson: linear-gradient(
+        135deg,
+        #4a0010 0%,
+        #8b0020 50%,
+        #4a0010 100%
+    );
+    --gradient-regal-bg: radial-gradient(
+        ellipse at top,
+        #2d2050 0%,
+        #120d20 40%,
+        #0a0812 100%
+    );
+
+    // ── Regal shadows ─────────────────────────────────────────────────────────
+    --shadow-gold-sm: 0 2px 8px rgba(184, 134, 11, 0.3);
+    --shadow-gold-md:
+        0 4px 20px rgba(184, 134, 11, 0.4), 0 0 40px rgba(184, 134, 11, 0.1);
+    --shadow-gold-lg:
+        0 8px 40px rgba(184, 134, 11, 0.5), 0 0 80px rgba(184, 134, 11, 0.2);
+    --shadow-royal:
+        0 4px 24px rgba(10, 8, 18, 0.8), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    --shadow-crimson: 0 4px 20px rgba(139, 0, 32, 0.5);
+
+    // ── Layout ────────────────────────────────────────────────────────────────
+    --sidebar-max: #{$sidebar-max};
+    --sidebar-min: #{$sidebar-min};
+    --header-height: #{$header-height};
+    --navbar-height: #{$header-height};
+    --footer-height: #{$footer-height};
+
+    // ── Motion ────────────────────────────────────────────────────────────────
     --transition-speed: #{$transition-speed};
-    --transition-slow:  #{$transition-speed-slow};
+    --transition-slow: #{$transition-speed-slow};
     --ease-snap: #{$ease-snap};
-    --ease-out:  #{$ease-out};
+    --ease-out: #{$ease-out};
+    --transition-regal: 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
-    // ── Spacing ───────────────────────────────────────────────────────────
-    --space-1:  4px;
-    --space-2:  8px;
-    --space-3:  12px;
-    --space-4:  16px;
-    --space-5:  20px;
-    --space-6:  24px;
-    --space-8:  32px;
+    // ── Spacing ───────────────────────────────────────────────────────────────
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
     --space-10: 40px;
     --space-12: 48px;
     --space-16: 64px;
 
-    // ── Border radius scale ───────────────────────────────────────────────
+    // ── Border radius scale ───────────────────────────────────────────────────
     --radius-none: 0;
-    --radius-xs:   2px;
-    --radius-sm:   #{$border-radius};
-    --radius-md:   #{$border-radius-lg};
-    --radius-lg:   12px;
+    --radius-xs: 2px;
+    --radius-sm: #{$border-radius};
+    --radius-md: #{$border-radius-lg};
+    --radius-lg: 12px;
     --radius-pill: 9999px;
-}
-
-// ─── Light mode OS preference ────────────────────────────────────────────────
-
-@media (prefers-color-scheme: light) {
-    :root:not([data-theme]) {
-        --bg-color:             #F2ECE0;
-        --bg-secondary-color:   #E8E0CE;
-        --bg-surface-color:     #FDFAF4;
-        --bg-inset-color:       #E2D9C8;
-
-        --text-color:           #2C2018;
-        --text-secondary-color: #5A4838;
-        --text-muted-color:     #8A7860;
-        --text-heading-color:   #18100A;
-
-        --primary-color:        #6A4820;
-        --primary-hover-color:  #7A5828;
-        --primary-deep-color:   #4A3010;
-        --primary-glow:         rgba(106, 72, 32, 0.14);
-        --primary-glow-strong:  rgba(106, 72, 32, 0.28);
-
-        --accent-color:         #486830;
-        --accent-dim-color:     #304820;
-        --accent-glow:          rgba(72, 104, 48, 0.14);
-
-        --border-color:         #D8CEB8;
-        --border-strong-color:  #B8A890;
-
-        --rule-color:           #6A4820;
-        --rule-glow:            0 0 6px rgba(106, 72, 32, 0.28);
-        --blur:                 rgba(242, 236, 224, 0.84);
-
-        --shadow-sm:  0 1px 4px rgba(106, 72, 32, 0.08);
-        --shadow-md:  0 4px 16px rgba(106, 72, 32, 0.08);
-        --shadow-lg:  0 10px 40px rgba(106, 72, 32, 0.08);
-    }
 }
 
 // ─── Layout shells ────────────────────────────────────────────────────────────
@@ -126,14 +180,15 @@
     position: relative;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    min-height: 100dvh;
+    // min-height: 100dvh;
 }
 
 .page-wrapper {
     overflow: visible;
     position: relative;
     width: 100%;
-    padding: $xLarge;
+    padding-block: $medium;
+    padding-inline: $large;
 }
 
 .section-wrapper {

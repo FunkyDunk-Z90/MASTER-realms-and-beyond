@@ -11,6 +11,7 @@ import React, {
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type T_ThemeName =
+    | 'global-theme'
     | 'arcade'
     | 'phosphor'
     | 'sovereign'
@@ -31,6 +32,7 @@ export interface I_ThemeContextValue {
 }
 
 const VALID_THEMES: T_ThemeName[] = [
+    'global-theme',
     'arcade',
     'phosphor',
     'sovereign',
@@ -63,7 +65,7 @@ export const ThemeProvider: React.FC<I_ThemeProviderProps> = ({
     children,
     themeStorageKey = 'rnb-theme',
     modeStorageKey = 'rnb-mode',
-    defaultTheme = 'arcade',
+    defaultTheme = 'global-theme',
     defaultMode = 'system',
 }) => {
     const [theme, setThemeState] = useState<T_ThemeName>(defaultTheme)
@@ -77,8 +79,12 @@ export const ThemeProvider: React.FC<I_ThemeProviderProps> = ({
             window.matchMedia('(prefers-color-scheme: dark)').matches)
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem(themeStorageKey) as T_ThemeName | null
-        const savedMode = localStorage.getItem(modeStorageKey) as T_ThemeMode | null
+        const savedTheme = localStorage.getItem(
+            themeStorageKey
+        ) as T_ThemeName | null
+        const savedMode = localStorage.getItem(
+            modeStorageKey
+        ) as T_ThemeMode | null
 
         if (savedTheme && VALID_THEMES.includes(savedTheme)) {
             setThemeState(savedTheme)
@@ -119,7 +125,9 @@ export const ThemeProvider: React.FC<I_ThemeProviderProps> = ({
     const setMode = (newMode: T_ThemeMode) => setModeState(newMode)
 
     return (
-        <ThemeContext.Provider value={{ theme, mode, setTheme, setMode, isDark }}>
+        <ThemeContext.Provider
+            value={{ theme, mode, setTheme, setMode, isDark }}
+        >
             {children}
         </ThemeContext.Provider>
     )

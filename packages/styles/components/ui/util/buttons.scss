@@ -1,0 +1,297 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Button Component ─────────────────────────────────────────────────────────
+// Canonical button definitions — Regal Fantasy variants + semantic utility variants.
+
+// ─── Base ─────────────────────────────────────────────────────────────────────
+
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-width: 80px;
+    max-width: max-content;
+    padding: var(--space-2) var(--space-6);
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    cursor: pointer;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    user-select: none;
+
+    transition: all var(--transition-regal, 0.4s ease);
+    animation: fadeInRegal 0.4s ease both;
+
+    // Shimmer sweep overlay
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.15),
+            transparent
+        );
+        transform: skewX(-20deg);
+        pointer-events: none;
+    }
+
+    // &:hover::after {
+    //     animation: shimmerSweep 0.7s ease forwards;
+    // }
+
+    &:hover {
+        background-color: var(--primary-hover-color);
+        box-shadow: var(--primary-glow-strong);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(1px) scale(0.99);
+    }
+
+    // ─── Regal variants ───────────────────────────────────────────────────────
+
+    &--gold,
+    &.primary {
+        background: var(--gradient-gold);
+        background-size: 200% auto;
+        color: var(--royal-950);
+        border: 1px solid var(--gold-400);
+        box-shadow:
+            var(--shadow-gold-sm),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        padding: var(--space-3) var(--space-8);
+        clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+
+        &:hover {
+            background-position: right center;
+            box-shadow: var(--shadow-gold-md);
+            transform: translateY(-2px);
+        }
+    }
+
+    &--royal {
+        background: linear-gradient(
+            180deg,
+            var(--royal-700) 0%,
+            var(--royal-900) 100%
+        );
+        color: var(--gold-300);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        box-shadow: var(--shadow-royal);
+        padding: var(--space-3) var(--space-6);
+        clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+
+        &:hover {
+            border-color: rgba(255, 215, 0, 0.7);
+            color: var(--gold-200);
+            box-shadow: var(--shadow-gold-md);
+            transform: translateY(-2px);
+        }
+    }
+
+    &--crimson {
+        background: var(--gradient-crimson);
+        color: var(--gold-200);
+        border: 1px solid rgba(192, 21, 46, 0.6);
+        box-shadow: var(--shadow-crimson);
+        padding: var(--space-3) var(--space-6);
+        clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+
+        &:hover {
+            box-shadow: 0 6px 30px rgba(139, 0, 32, 0.7);
+            transform: translateY(-2px);
+            border-color: var(--crimson-bright);
+        }
+    }
+
+    &--parchment {
+        background: var(--gradient-parchment);
+        color: var(--royal-900);
+        border: 1px solid var(--parchment-aged);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        padding: var(--space-3) var(--space-6);
+        clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+
+        &:hover {
+            background: var(--parchment-light);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+    }
+
+    // ─── Semantic variants (kept for backwards compat) ────────────────────────
+
+    &.accent {
+        background-color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+        color: var(--bg-color);
+        padding: var(--space-2) var(--space-6);
+
+        &:hover {
+            box-shadow:
+                0 0 12px var(--accent-glow),
+                inset 0 0 8px var(--accent-glow);
+        }
+    }
+
+    &.danger {
+        background-color: var(--danger-color);
+        border: 1px solid var(--danger-color);
+        color: var(--silver-100);
+        padding: var(--space-2) var(--space-6);
+
+        &:hover {
+            box-shadow:
+                0 0 12px var(--danger-glow),
+                inset 0 0 8px var(--danger-glow);
+        }
+    }
+
+    &.warning {
+        background-color: var(--warning-color);
+        border: 1px solid var(--warning-color);
+        color: var(--royal-950);
+        padding: var(--space-2) var(--space-6);
+    }
+
+    &.submit {
+        background-color: var(--submit-color);
+        border: 1px solid var(--submit-color);
+        color: var(--silver-100);
+        padding: var(--space-2) var(--space-6);
+    }
+
+    &.success {
+        background-color: var(--success-color);
+        border: 1px solid var(--success-color);
+        color: var(--silver-100);
+        padding: var(--space-2) var(--space-6);
+    }
+
+    &--ghost,
+    &.ghost {
+        background: transparent;
+        color: var(--gold-400);
+        border: 1px solid var(--gold-500);
+        box-shadow: none;
+        padding: var(--space-2) var(--space-6);
+        clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+
+        &:hover {
+            background: rgba(255, 215, 0, 0.06);
+            border-color: var(--gold-300);
+            color: var(--gold-200);
+            box-shadow: var(--shadow-gold-sm);
+            transform: translateY(-2px);
+        }
+    }
+
+    &.outline {
+        background-color: transparent;
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+        padding: var(--space-2) var(--space-6);
+
+        &:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 12px var(--primary-glow-strong);
+        }
+    }
+
+    // ─── Sizes ────────────────────────────────────────────────────────────────
+
+    &--sm,
+    &.btn-sm {
+        padding: var(--space-2) var(--space-4) !important;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        min-width: 60px;
+    }
+
+    &--md {
+        padding: var(--space-3) var(--space-6);
+        font-size: 0.85rem;
+    }
+
+    &--lg,
+    &.btn-lg {
+        padding: var(--space-4) var(--space-10) !important;
+        font-size: 0.95rem;
+        letter-spacing: 0.15em;
+    }
+
+    // ─── Icon button ──────────────────────────────────────────────────────────
+
+    &--icon {
+        width: 40px;
+        height: 40px;
+        min-width: unset;
+        padding: 0 !important;
+        clip-path: none;
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        background: linear-gradient(
+            180deg,
+            var(--royal-700) 0%,
+            var(--royal-900) 100%
+        );
+        color: var(--gold-400);
+
+        &:hover {
+            border-color: rgba(255, 215, 0, 0.7);
+            color: var(--gold-200);
+        }
+    }
+
+    // ─── Disabled ─────────────────────────────────────────────────────────────
+
+    &:disabled,
+    &.disabled,
+    &--disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+        background: var(--disabled-color);
+        border-color: var(--disabled-color);
+        clip-path: none;
+        box-shadow: none;
+        transform: none;
+    }
+
+    // ─── Sub-elements ─────────────────────────────────────────────────────────
+
+    &__ornament {
+        font-size: 0.7em;
+        opacity: 0.8;
+        transition: transform var(--transition-fast, 0.15s);
+    }
+
+    &:hover &__ornament {
+        transform: scale(1.2);
+    }
+
+    &__spinner {
+        animation: spin 1s linear infinite;
+        display: inline-block;
+    }
+}

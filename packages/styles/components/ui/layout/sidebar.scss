@@ -20,9 +20,8 @@
     border-right: 1px solid var(--primary-color);
     border-bottom: 1px solid var(--primary-color);
 
-    box-shadow:
-        1px 0 0 0 var(--primary-color),
-        2px 0 16px var(--primary-glow);
+    box-shadow: 1px 0 0 0 var(--primary-color);
+    // 2px 0 16px var(--primary-glow);
     overflow: visible;
     z-index: 100;
     transition: transform var(--transition-speed) ease;
@@ -84,7 +83,7 @@
 
     &:hover {
         background-color: var(--primary-color);
-        box-shadow: 2px 0 12px var(--primary-glow-strong);
+        box-shadow: 2px 0 12px var(--primary-glow);
         color: var(--bg-color);
 
         .sidebar-pill-bar {
@@ -200,7 +199,7 @@
     border: none;
     color: var(--text-muted-color);
     cursor: pointer;
-    font-size: 0.65rem;
+    font-size: 0.8rem;
     padding: 0;
     line-height: 1;
     flex-shrink: 0;
@@ -314,7 +313,6 @@
 .sidebar-section-title {
     @include font-label;
     padding: $small $large;
-    margin-block: $small;
     color: var(--accent-dim-color);
     white-space: nowrap;
 }
@@ -387,6 +385,21 @@
     .sidebar-link:hover & {
         opacity: 1;
     }
+
+    &--svg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: currentColor;
+
+        svg {
+            display: block;
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+        }
+    }
 }
 
 // ─── Label ────────────────────────────────────────────────────────────────────
@@ -418,7 +431,7 @@
     overflow: visible;
     text-overflow: unset;
     white-space: nowrap;
-    transition: opacity var(--transition-speed) ease;
+    transition: opacity var(--transition-speed-slow) ease;
 }
 
 .sidebar-collapsed .sidebar-link:hover .sidebar-label {

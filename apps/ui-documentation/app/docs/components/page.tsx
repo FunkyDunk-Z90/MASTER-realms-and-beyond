@@ -36,8 +36,7 @@ import { Button, Dropdown, EntityCard, CartridgeCard } from '@rnb/ui'
 import { ThemeProvider, ThemeInitializer, ThemeSwitcher } from '@rnb/ui'
 
 // Documentation primitives (for building docs pages)
-import { Section, H3, P, CodeBlock, PropsTable, Callout,
-         Switchgrid, Spacinggrid, CssVarsTable, ThemeTable } from '@rnb/ui'
+import { Section, H3, P, CodeBlock, PropsTable, Callout } from '@rnb/ui'
 
 // Sidebar types
 import { I_SidebarSection, I_SidebarItem, I_SearchResult,

@@ -22,7 +22,8 @@
     "dependencies": {
         "@rnb/styles": "workspace:*",
         "@rnb/types": "workspace:*",
-        "axios": "^1.13.5"
+        "axios": "^1.13.5",
+        "lucide-react": "^0.577.0"
     },
     "devDependencies": {
         "@types/react": "^19.2.14",

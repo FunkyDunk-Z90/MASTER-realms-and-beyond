@@ -1,5 +1,5 @@
-@use '../_variables' as *;
-@use '../_mixins' as *;
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
 
 // ─── Navigation Components ────────────────────────────────────────────────────
 // Breadcrumbs, tabs, pagination, and secondary navigation patterns.
@@ -60,7 +60,9 @@
     overflow-x: auto;
     scrollbar-width: none;
 
-    &::-webkit-scrollbar { display: none; }
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .tab {
@@ -233,6 +235,10 @@
     color: var(--text-muted-color);
     text-align: center;
 
-    .step.active &    { color: var(--primary-color); }
-    .step.completed & { color: var(--text-secondary-color); }
+    .step.active & {
+        color: var(--primary-color);
+    }
+    .step.completed & {
+        color: var(--text-secondary-color);
+    }
 }

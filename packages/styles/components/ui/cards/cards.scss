@@ -1,0 +1,364 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Card Components ──────────────────────────────────────────────────────────
+// Base card + Regal Fantasy variants (dark, parchment, crimson, relic)
+
+.card {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $large;
+    transition:
+        border-color var(--transition-speed, 0.18s) ease,
+        box-shadow var(--transition-speed, 0.18s) ease,
+        transform 0.4s ease;
+    animation: fadeInRegal 0.5s ease both;
+
+    &::before {
+        @include scanlines-light;
+    }
+    &:hover {
+        border-color: var(--border-strong-color);
+    }
+
+    &--glow {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-md);
+        &:hover {
+            box-shadow:
+                var(--shadow-lg),
+                0 0 0 1px var(--primary-color);
+        }
+    }
+
+    &--inset {
+        background-color: var(--bg-inset-color);
+        border-color: var(--border-color);
+    }
+
+    &--interactive,
+    &--clickable {
+        cursor: pointer;
+        &:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    &--dark {
+        background: linear-gradient(
+            160deg,
+            var(--royal-800) 0%,
+            var(--royal-900) 60%,
+            var(--royal-950) 100%
+        );
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        box-shadow:
+            var(--shadow-royal),
+            inset 0 0 60px rgba(255, 215, 0, 0.03);
+        &:hover {
+            border-color: rgba(255, 215, 0, 0.35);
+            box-shadow: var(--shadow-gold-md);
+            transform: translateY(-4px);
+        }
+    }
+
+    &--parchment {
+        background: var(--gradient-parchment);
+        border: 1px solid var(--parchment-aged);
+        box-shadow:
+            0 4px 24px rgba(0, 0, 0, 0.4),
+            inset 0 0 40px rgba(184, 134, 11, 0.05);
+        .card__title {
+            color: var(--royal-900);
+        }
+        .card__subtitle {
+            color: var(--royal-700);
+        }
+        .card__text {
+            color: var(--royal-800);
+        }
+        .card__eyebrow {
+            color: var(--gold-700);
+        }
+        .card__footer {
+            border-color: var(--parchment-aged);
+        }
+        .card__badge {
+            background: rgba(122, 85, 8, 0.12);
+            border-color: var(--gold-700);
+            color: var(--gold-700);
+        }
+        &:hover {
+            box-shadow:
+                0 8px 40px rgba(0, 0, 0, 0.5),
+                var(--shadow-gold-sm);
+            transform: translateY(-4px);
+        }
+    }
+
+    &--crimson {
+        background: var(--gradient-crimson);
+        border: 1px solid rgba(192, 21, 46, 0.4);
+        box-shadow: var(--shadow-crimson);
+        .card__title {
+            color: var(--gold-200);
+        }
+        .card__text {
+            color: rgba(255, 220, 220, 0.8);
+        }
+        .card__footer {
+            border-color: rgba(192, 21, 46, 0.3);
+        }
+        &:hover {
+            box-shadow: 0 8px 40px rgba(139, 0, 32, 0.7);
+            transform: translateY(-4px);
+        }
+    }
+
+    &--relic {
+        background: linear-gradient(
+            135deg,
+            var(--royal-800) 0%,
+            #1a1030 50%,
+            var(--royal-950) 100%
+        );
+        border: 1px solid var(--gold-500);
+        animation:
+            regalPulse 4s ease-in-out infinite,
+            fadeInRegal 0.5s ease both;
+        &:hover {
+            transform: translateY(-4px);
+            @include gold-glow(1.5);
+        }
+    }
+
+    &__corner {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        opacity: 0.7;
+        pointer-events: none;
+        color: var(--gold-500);
+        transition: opacity 0.3s;
+        &--tl {
+            top: 6px;
+            left: 6px;
+        }
+        &--tr {
+            top: 6px;
+            right: 6px;
+            transform: scaleX(-1);
+        }
+        &--bl {
+            bottom: 6px;
+            left: 6px;
+            transform: scaleY(-1);
+        }
+        &--br {
+            bottom: 6px;
+            right: 6px;
+            transform: scale(-1);
+        }
+    }
+
+    &:hover &__corner {
+        opacity: 1;
+    }
+
+    &__header {
+        padding: var(--space-6) var(--space-6) var(--space-4);
+        position: relative;
+    }
+    &__body {
+        padding: var(--space-4) var(--space-6) var(--space-6);
+    }
+    &__footer {
+        padding: var(--space-4) var(--space-6);
+        border-top: 1px solid rgba(255, 215, 0, 0.12);
+    }
+
+    &__divider {
+        @include regal-divider;
+        margin: 0 var(--space-6);
+        color: var(--gold-500);
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+    }
+
+    &__eyebrow {
+        font-family: var(--font-heading);
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold-500);
+        margin-bottom: var(--space-2);
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--gold-200);
+        line-height: 1.3;
+        margin: 0 0 var(--space-2);
+    }
+
+    &__subtitle {
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        color: var(--silver-400);
+        font-style: italic;
+        margin: 0;
+    }
+
+    &__text {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--silver-300);
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: 2px var(--space-3);
+        background: rgba(255, 215, 0, 0.12);
+        border: 1px solid rgba(255, 215, 0, 0.25);
+        border-radius: 2px;
+        font-family: var(--font-heading);
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold-400);
+    }
+}
+
+// ─── Legacy flat sub-elements (backwards compat) ──────────────────────────────
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $medium;
+    padding-bottom: $medium;
+    margin-bottom: $medium;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-title {
+    @include font-display;
+    font-size: 0.9rem;
+    color: var(--text-heading-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.card-subtitle {
+    @include font-ui-label;
+    font-size: 0.7rem;
+    color: var(--text-muted-color);
+    margin-top: 2px;
+}
+.card-body {
+    display: grid;
+    gap: $medium;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $medium;
+    padding-top: $medium;
+    margin-top: $medium;
+    border-top: 1px solid var(--border-color);
+}
+
+// ─── Stat card ────────────────────────────────────────────────────────────────
+
+.stat-card {
+    @include surface;
+    position: relative;
+    overflow: hidden;
+    padding: $large;
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+    border-left: 3px solid var(--primary-color);
+    box-shadow: -2px 0 12px var(--primary-glow);
+    &::before {
+        @include scanlines-light;
+    }
+}
+
+.stat-card__label {
+    @include font-ui-label;
+    font-size: 0.65rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.14em;
+}
+.stat-card__value {
+    @include font-display;
+    font-size: 1.8rem;
+    color: var(--text-heading-color);
+    line-height: 1.1;
+}
+.stat-card__delta {
+    @include font-ui-label;
+    font-size: 0.68rem;
+    color: var(--success-color);
+    &--negative {
+        color: var(--danger-color);
+    }
+    &--neutral {
+        color: var(--text-muted-color);
+    }
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: $medium;
+}
+
+// ─── Profile card ─────────────────────────────────────────────────────────────
+
+.profile-card {
+    @include surface;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $medium;
+    padding: $xLarge;
+    text-align: center;
+
+    &__avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 12px var(--primary-glow-strong);
+        object-fit: cover;
+    }
+
+    &__name {
+        @include font-display;
+        font-size: 1rem;
+        color: var(--text-heading-color);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    &__role {
+        @include font-ui-label;
+        font-size: 0.68rem;
+        color: var(--accent-color);
+    }
+}

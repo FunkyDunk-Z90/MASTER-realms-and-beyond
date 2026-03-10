@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation'
 import Image, { StaticImageData } from 'next/image'
 import { I_Link } from '@rnb/types'
 import BurgerIcon from '../utils/BurgerIcon'
+import { ThemeInitializer } from '../context/ThemeInitializer'
+import { ThemeProvider } from '../context/ThemeContext'
+import { ThemeSwitcher } from '../context/ThemeSwitcher'
 
 interface I_NavbarProps {
     navItems: I_Link[]
@@ -73,7 +76,9 @@ export const Navbar = ({
         <>
             <div className="header-spacer" />
             <header className="header-wrapper" ref={navRef}>
-                {headerIcon && <Image src={headerIcon} alt="icon" height={30} width={30} />}
+                {headerIcon && (
+                    <Image src={headerIcon} alt="icon" height={40} width={40} />
+                )}
                 <h1 className="header-title">{headerTitle}</h1>
                 <BurgerIcon isActive={isOpen} toggle={toggleNav} />
                 <nav className={menuClass}>
@@ -91,6 +96,11 @@ export const Navbar = ({
                         ))}
                     </ul>
                 </nav>
+                <ThemeSwitcher
+                    showThemePicker={false}
+                    showModePicker={false}
+                    showThemeToggle={true}
+                />
             </header>
         </>
     )

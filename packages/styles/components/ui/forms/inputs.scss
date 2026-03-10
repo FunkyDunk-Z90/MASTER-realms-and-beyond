@@ -1,5 +1,5 @@
-@use '../_variables' as *;
-@use '../_mixins' as *;
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
 
 // ─── Input Components ─────────────────────────────────────────────────────────
 // Form controls — monospaced, sharp-cornered, amber focus glow.
@@ -27,12 +27,12 @@
         letter-spacing: 0.06em;
     }
 
-    &:focus {
-        border-color: var(--primary-color);
-        box-shadow:
-            0 0 0 2px var(--primary-glow-strong),
-            inset 0 0 8px var(--primary-glow);
-    }
+    // &:focus {
+    //     border-color: var(--primary-color);
+    //     box-shadow:
+    //         0 0 0 2px var(--primary-glow-strong),
+    //         inset 0 0 8px var(--primary-glow);
+    // }
 
     &:disabled {
         background-color: var(--bg-surface-color);
@@ -44,11 +44,11 @@
     &--error {
         border-color: var(--danger-color);
 
-        &:focus {
-            box-shadow:
-                0 0 0 2px var(--danger-glow),
-                inset 0 0 6px var(--danger-glow);
-        }
+        // &:focus {
+        //     box-shadow:
+        //         0 0 0 2px var(--danger-glow),
+        //         inset 0 0 6px var(--danger-glow);
+        // }
     }
 
     &--success {

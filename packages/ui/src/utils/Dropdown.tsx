@@ -153,7 +153,7 @@ const DropdownMenu: React.FC<I_DropdownMenuProps> = ({
 
     return (
         <ul role="menu" className="dropdown-list-item-wrapper">
-            {options.map((option) => {
+            {options.map((option, value) => {
                 const isSelected =
                     !!option.value &&
                     option.value === selectedValue &&
@@ -168,7 +168,7 @@ const DropdownMenu: React.FC<I_DropdownMenuProps> = ({
                     <li
                         key={option.id}
                         role="menuitem"
-                        className="dropdown-list-item"
+                        className={`dropdown-list-item ${isSelected ? 'active' : ''}`}
                         aria-haspopup={hasChildren(option) || undefined}
                         aria-expanded={hasChildren(option) ? isOpen : undefined}
                         aria-disabled={option.disabled || undefined}

@@ -22,7 +22,7 @@ export interface I_ThemeInitializerProps {
 export const ThemeInitializer: React.FC<I_ThemeInitializerProps> = ({
     themeStorageKey = 'rnb-theme',
     modeStorageKey = 'rnb-mode',
-    defaultTheme = 'arcade',
+    defaultTheme = 'global-theme',
 }) => {
     const script = `
         (function() {

@@ -8,17 +8,22 @@
     top: 0;
     left: 0;
     right: 0;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    justify-items: end;
     align-items: center;
     height: var(--header-height, #{$header-height});
     padding-inline: $large;
     background-color: var(--bg-secondary-color);
-    // Teal bottom border acts as a glowing horizon line
     border-bottom: 1px solid var(--primary-color);
     box-shadow:
         0 1px 0 0 var(--primary-color),
         var(--rule-glow);
     z-index: 500;
+
+    & > .theme-switcher {
+        padding-right: 50px;
+    }
 
     // Scanline overlay — gives the header a screen/display aesthetic
     &::before {
@@ -35,6 +40,11 @@
 
     @include desktop {
         padding-inline: $xLarge;
+        grid-template-columns: repeat(2, auto) 1fr auto;
+
+        & > .theme-switcher {
+            padding-right: 0;
+        }
     }
 }
 
@@ -47,13 +57,11 @@
 // ─── Title ────────────────────────────────────────────────────────────────────
 
 .header-title {
-    @include font-display-italic;
     font-size: 1.35rem;
     // Italic at display size is where Cormorant Garamond truly sings.
     text-transform: uppercase;
     margin-right: $large;
     // Teal text glow — reinforces the "glowing display" feel
-    color: var(--primary-hover-color);
     text-shadow: 0 0 12px var(--primary-glow-strong);
     white-space: nowrap;
 }
@@ -78,7 +86,7 @@
         transform: translateX(110%);
         padding-block: $medium;
         // Teal glow on the revealed panel
-        box-shadow: -4px 4px 16px var(--primary-glow);
+        // box-shadow: -4px 4px 16px var(--primary-glow);
 
         &.opened {
             animation: slide-in #{$transition-speed-slow}

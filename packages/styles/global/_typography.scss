@@ -47,7 +47,7 @@ h6 {
 h1 {
     font-size: clamp(2rem, 5vw, 3.6rem);
     font-weight: 400;
-    letter-spacing: 0.10em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 
@@ -140,7 +140,7 @@ select {
 
     &:focus {
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px var(--primary-glow-strong);
+        // box-shadow: 0 0 0 2px var(--primary-glow);
     }
 
     &::placeholder {
