@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+    // Required so Next.js processes image imports (png/jpg) from @rnb/assets
+    transpilePackages: ['@rnb/assets'],
+}
 
-export default nextConfig;
+export default nextConfig

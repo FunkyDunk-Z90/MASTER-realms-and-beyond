@@ -23,7 +23,9 @@
       "@rnb/ui": ["../../packages/ui/src/index.ts"],
       "@rnb/ui/*": ["../../packages/ui/src/*"],
       "@rnb/types": ["../../packages/types/src/index.ts"],
-      "@rnb/types/*": ["../../packages/types/src/*"]
+      "@rnb/types/*": ["../../packages/types/src/*"],
+      "@rnb/assets": ["../../packages/assets/src/index.ts"],
+      "@rnb/assets/*": ["../../packages/assets/src/*"]
     }
   },
   "include": [

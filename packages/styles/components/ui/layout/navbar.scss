@@ -9,8 +9,8 @@
     left: 0;
     right: 0;
     display: grid;
+    // logo(auto) · title(auto) · nav(1fr — contains links + theme toggle)
     grid-template-columns: auto auto 1fr;
-    justify-items: end;
     align-items: center;
     height: var(--header-height, #{$header-height});
     padding-inline: $large;
@@ -21,30 +21,8 @@
         var(--rule-glow);
     z-index: 500;
 
-    & > .theme-switcher {
-        padding-right: 50px;
-    }
-
-    // Scanline overlay — gives the header a screen/display aesthetic
-    &::before {
-        @include scanlines;
-        border-radius: 0;
-    }
-
-    & > img {
-        border-radius: 50%;
-        margin-inline: $medium;
-        opacity: 0.92;
-        flex-shrink: 0;
-    }
-
     @include desktop {
         padding-inline: $xLarge;
-        grid-template-columns: repeat(2, auto) 1fr auto;
-
-        & > .theme-switcher {
-            padding-right: 0;
-        }
     }
 }
 
@@ -54,22 +32,40 @@
     flex-shrink: 0;
 }
 
+// ─── Logo ─────────────────────────────────────────────────────────────────────
+// Square container that stretches to fill the full header height.
+// No predefined size — driven entirely by --header-height via align-self: stretch.
+
+.header-logo {
+    position: relative;
+    align-self: stretch;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
 // ─── Title ────────────────────────────────────────────────────────────────────
 
 .header-title {
     font-size: 1.35rem;
-    // Italic at display size is where Cormorant Garamond truly sings.
     text-transform: uppercase;
     margin-right: $large;
-    // Teal text glow — reinforces the "glowing display" feel
     text-shadow: 0 0 12px var(--primary-glow-strong);
     white-space: nowrap;
 }
 
 // ─── Nav wrapper ──────────────────────────────────────────────────────────────
+// Desktop: flex row — nav links left, theme toggle far right.
+// Mobile: absolute panel that slides in; column layout stacks links above toggle.
 
 .nav-wrapper {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     width: 100%;
 
@@ -77,16 +73,14 @@
         position: absolute;
         top: calc(100% + 1px);
         right: 0;
+        flex-direction: column;
+        align-items: flex-end;
         background-color: var(--bg-secondary-color);
         border-bottom: 1px solid var(--primary-color);
         border-left: 1px solid var(--primary-color);
         border-radius: 0 0 0 $border-radius;
         width: max-content;
-        // Starts hidden off-screen to the right
         transform: translateX(110%);
-        padding-block: $medium;
-        // Teal glow on the revealed panel
-        // box-shadow: -4px 4px 16px var(--primary-glow);
 
         &.opened {
             animation: slide-in #{$transition-speed-slow}
@@ -124,9 +118,8 @@
     @include font-label;
     position: relative;
     color: var(--text-secondary-color);
-    transition: color var(--transition-speed) ease;
+    transition: color var(--transition-speed, #{$transition-speed}) ease;
 
-    // Animated teal underline — slides in from the left on hover/active
     &::after {
         content: '';
         position: absolute;
@@ -137,7 +130,7 @@
         background-color: var(--primary-color);
         transform: scaleX(0);
         transform-origin: left center;
-        transition: transform var(--transition-speed) ease;
+        transition: transform var(--transition-speed, #{$transition-speed}) ease;
     }
 
     &:hover {
@@ -156,6 +149,30 @@
             background-color: var(--primary-hover-color);
             box-shadow: 0 0 6px var(--primary-glow-strong);
         }
+    }
+}
+
+// ─── Theme toggle (inside nav-wrapper) ───────────────────────────────────────
+
+.nav-wrapper > .theme-switcher {
+    display: flex;
+    align-items: center;
+    padding-inline: $large;
+
+    @include mobile {
+        padding: $small $large $medium;
+    }
+}
+
+.theme-toggle {
+    width: 17px;
+    height: 17px;
+    color: var(--text-secondary-color);
+    cursor: pointer;
+    transition: color 0.12s ease;
+
+    &:hover {
+        color: var(--primary-color);
     }
 }
 
@@ -192,9 +209,9 @@
         background-color: var(--text-color);
         transform-origin: left center;
         transition:
-            transform var(--transition-speed) ease,
-            background-color var(--transition-speed) ease,
-            opacity var(--transition-speed) ease;
+            transform var(--transition-speed, #{$transition-speed}) ease,
+            background-color var(--transition-speed, #{$transition-speed}) ease,
+            opacity var(--transition-speed, #{$transition-speed}) ease;
     }
 
     &.active .line {

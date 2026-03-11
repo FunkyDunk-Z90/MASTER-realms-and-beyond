@@ -14,13 +14,13 @@ body {
     color: var(--text-color);
     background-color: var(--bg-color);
     // Grain texture — the R&B signature: barely perceptible film-grain feel
-    background-image: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 3px,
-        rgba(0, 0, 0, $scanline-opacity) 3px,
-        rgba(0, 0, 0, $scanline-opacity) 4px
-    );
+    // background-image: repeating-linear-gradient(
+    //     to bottom,
+    //     transparent 0px,
+    //     transparent 3px,
+    //     rgba(0, 0, 0, $scanline-opacity) 3px,
+    //     rgba(0, 0, 0, $scanline-opacity) 4px
+    // );
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition:

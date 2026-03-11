@@ -17,60 +17,22 @@ export interface I_ThemeSwitcherProps {
 const THEME_OPTIONS: I_DropdownOption[] = [
     {
         id: 'global-theme',
-        label: 'Global Theme',
+        label: 'Default',
         value: 'global-theme',
-        description: 'Antique gold & sage — SNES RPG warmth',
+        description: 'Sage olive & warm dark — the standard palette',
     },
     {
-        id: 'arcade',
-        label: 'Arcade',
-        value: 'arcade',
-        description: 'Antique gold & sage — SNES RPG warmth',
+        id: 'monochrome',
+        label: 'Monochrome',
+        value: 'monochrome',
+        description: 'Pure grayscale — minimal print aesthetic',
     },
-    {
-        id: 'phosphor',
-        label: 'Phosphor',
-        value: 'phosphor',
-        description: 'Forest green & leaf — Zelda / DKC palette',
-    },
-    {
-        id: 'sovereign',
-        label: 'Sovereign',
-        value: 'sovereign',
-        description: 'Battle crimson & pale gold — FFVI authority',
-    },
-    {
-        id: 'void',
-        label: 'Void',
-        value: 'void',
-        description: 'Cobalt steel & violet — N64 space odyssey',
-    },
-    {
-        id: 'dusk',
-        label: 'Dusk',
-        value: 'dusk',
-        description: 'Magic purple & rose flash — Chrono Trigger',
-    },
-    {
-        id: 'parchment',
-        label: 'Parchment',
-        value: 'parchment',
-        description: 'Aged paper & warm brown — SNES game manual',
-    },
-    {
-        id: 'snes',
-        label: 'SNES',
-        value: 'snes',
-        description:
-            'Authentic 16-bit — pixel font, hard shadows, Press Start 2P',
-    },
-    {
-        id: 'n64',
-        label: 'N64',
-        value: 'n64',
-        description:
-            'Console charcoal · logo gradient · A/B/C/Start button palette',
-    },
+    // {
+    //     id: 'n64',
+    //     label: 'N64',
+    //     value: 'n64',
+    //     description: 'Console charcoal · logo blue · controller buttons',
+    // },
 ]
 
 const MODE_OPTIONS: I_DropdownOption[] = [

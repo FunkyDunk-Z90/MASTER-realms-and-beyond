@@ -26,11 +26,11 @@
     z-index: 100;
     transition: transform var(--transition-speed) ease;
 
-    &::before {
-        @include scanlines;
-        pointer-events: none;
-        z-index: 0;
-    }
+    // &::before {
+    //     @include scanlines;
+    //     pointer-events: none;
+    //     z-index: 0;
+    // }
 
     &.sidebar-open {
         transform: translateX(0);
@@ -88,6 +88,9 @@
 
         .sidebar-pill-bar {
             background-color: var(--bg-color);
+        }
+        .sidebar-pill-chevron {
+            color: var(--text-color);
         }
     }
 

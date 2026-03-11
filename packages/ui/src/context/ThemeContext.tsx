@@ -10,16 +10,7 @@ import React, {
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type T_ThemeName =
-    | 'global-theme'
-    | 'arcade'
-    | 'phosphor'
-    | 'sovereign'
-    | 'void'
-    | 'dusk'
-    | 'parchment'
-    | 'snes'
-    | 'n64'
+export type T_ThemeName = 'global-theme' | 'monochrome' | 'n64'
 
 export type T_ThemeMode = 'light' | 'dark' | 'system'
 
@@ -31,17 +22,7 @@ export interface I_ThemeContextValue {
     isDark: boolean
 }
 
-const VALID_THEMES: T_ThemeName[] = [
-    'global-theme',
-    'arcade',
-    'phosphor',
-    'sovereign',
-    'void',
-    'dusk',
-    'parchment',
-    'snes',
-    'n64',
-]
+const VALID_THEMES: T_ThemeName[] = ['global-theme', 'monochrome', 'n64']
 
 const VALID_MODES: T_ThemeMode[] = ['light', 'dark', 'system']
 

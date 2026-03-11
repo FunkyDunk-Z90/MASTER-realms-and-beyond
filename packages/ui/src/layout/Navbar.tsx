@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation'
 import Image, { StaticImageData } from 'next/image'
 import { I_Link } from '@rnb/types'
 import BurgerIcon from '../utils/BurgerIcon'
-import { ThemeInitializer } from '../context/ThemeInitializer'
-import { ThemeProvider } from '../context/ThemeContext'
 import { ThemeSwitcher } from '../context/ThemeSwitcher'
 
 interface I_NavbarProps {
@@ -77,7 +75,14 @@ export const Navbar = ({
             <div className="header-spacer" />
             <header className="header-wrapper" ref={navRef}>
                 {headerIcon && (
-                    <Image src={headerIcon} alt="icon" height={40} width={40} />
+                    <div className="header-logo">
+                        <Image
+                            src={headerIcon}
+                            alt="icon"
+                            fill
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
                 )}
                 <h1 className="header-title">{headerTitle}</h1>
                 <BurgerIcon isActive={isOpen} toggle={toggleNav} />
@@ -95,12 +100,12 @@ export const Navbar = ({
                             </li>
                         ))}
                     </ul>
+                    <ThemeSwitcher
+                        showThemePicker={false}
+                        showModePicker={false}
+                        showThemeToggle={true}
+                    />
                 </nav>
-                <ThemeSwitcher
-                    showThemePicker={false}
-                    showModePicker={false}
-                    showThemeToggle={true}
-                />
             </header>
         </>
     )
