@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Magic circle -->
+  <circle cx="12" cy="12" r="8"/>
+  <circle cx="12" cy="12" r="5.5" stroke-dasharray="3 2"/>
+  <!-- Inner rune star -->
+  <path d="M12 6.5l1.8 3.5 3.7.5-2.7 2.7.7 3.8-3.5-1.8-3.5 1.8.7-3.8L6.5 10.5l3.7-.5z" stroke-width="1.2"/>
+  <!-- Sparkle accents -->
+  <path d="M19 3l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" stroke-width="1"/>
+  <path d="M3 5l.3.7.7.3-.7.3-.3.7-.3-.7-.7-.3.7-.3z" stroke-width="1"/>
+  <path d="M20 17l.3.7.7.3-.7.3-.3.7-.3-.7-.7-.3.7-.3z" stroke-width="1"/>
+</svg>

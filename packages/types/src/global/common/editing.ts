@@ -1,17 +1,8 @@
-import { T_ObjectId, T_Timestamp } from './commonIndex'
+// All editing types are derived from Zod schemas in @rnb/validators.
 
-export interface I_Note {
-    id: T_ObjectId
-    authorId: T_ObjectId
-    content: string
-    createdAt: T_Timestamp
-    updatedAt?: T_Timestamp
-    tags?: string[]
-}
+export type { T_Note, T_Paras } from '@rnb/validators'
 
-export interface I_Paras {
-    id: string
-    content: string
-    type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'
-    order: number
-}
+import type { T_Note, T_Paras } from '@rnb/validators'
+
+export type I_Note = T_Note
+export type I_Paras = T_Paras

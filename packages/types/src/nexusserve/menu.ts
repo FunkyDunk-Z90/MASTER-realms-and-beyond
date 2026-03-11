@@ -1,77 +1,15 @@
-/**
- * @rnb/types - NexusServe Menu Types
- * Menu items and product catalog
- */
+// All menu types are derived from Zod schemas in @rnb/validators.
 
-import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
+export type {
+    T_MenuItem,
+    T_CreateMenuItemRequest,
+    T_MenuCategory,
+    T_NutritionalInfo,
+} from '@rnb/validators'
 
-export interface I_MenuItem {
-    id: T_ObjectId
-    companyId: T_ObjectId
-    name: string
-    description?: string
-    price: number
-    category: string
-    image?: string
-    availability: boolean
-    ingredients?: string[]
-    allergens?: string[]
-    nutritionalInfo?: {
-        calories: number
-        protein: number
-        carbs: number
-        fat: number
-        fiber?: number
-        sugar?: number
-    }
-    preparationTime?: number
-    spiceLevel?: number
-    vegetarian?: boolean
-    vegan?: boolean
-    glutenFree?: boolean
-    createdAt: T_Timestamp
-    updatedAt: T_Timestamp
-}
+import type { T_MenuItem, T_CreateMenuItemRequest, T_MenuCategory, T_NutritionalInfo } from '@rnb/validators'
 
-export interface I_CreateMenuItemRequest {
-    name: string
-    description?: string
-    price: number
-    category: string
-    image?: string
-    ingredients?: string[]
-    allergens?: string[]
-    nutritionalInfo?: {
-        calories: number
-        protein: number
-        carbs: number
-        fat: number
-    }
-    preparationTime?: number
-}
-
-export interface I_UpdateMenuItemRequest {
-    name?: string
-    description?: string
-    price?: number
-    category?: string
-    image?: string
-    availability?: boolean
-    ingredients?: string[]
-    allergens?: string[]
-    nutritionalInfo?: Record<string, number>
-}
-
-export interface I_MenuCategory {
-    id: T_ObjectId
-    companyId: T_ObjectId
-    name: string
-    description?: string
-    image?: string
-    displayOrder: number
-}
-
-export interface I_MenuSection {
-    categoryId: T_ObjectId
-    items: I_MenuItem[]
-}
+export type I_MenuItem = T_MenuItem
+export type I_CreateMenuItemRequest = T_CreateMenuItemRequest
+export type I_MenuCategory = T_MenuCategory
+export type I_NutritionalInfo = T_NutritionalInfo

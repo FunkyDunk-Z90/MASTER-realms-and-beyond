@@ -1,32 +1,42 @@
-import { I_Pagination, I_PaginationQuery } from './pagination'
-import { T_ObjectId, T_Timestamp } from './common/commonIndex'
+// Non-generic API response types are derived from Zod schemas in @rnb/validators.
+// Generic types (I_ApiSuccess<T>, I_ApiError, etc.) are kept here because
+// Zod cannot express TypeScript generics at runtime.
 
-export interface I_FilterCriteria {
-    field: string
-    operator: 'eq' | 'ne' | 'gt' | 'gte' | 'lt' | 'lte' | 'in' | 'nin' | 'regex'
-    value: any
-}
+import type { T_Pagination } from '@rnb/validators'
 
-export interface I_SearchQuery {
-    q: string
-    fields?: string[]
-    pagination?: I_PaginationQuery
-    filters?: I_FilterCriteria[]
-}
+export type {
+    T_FilterCriteria,
+    T_SearchQuery,
+    T_FileInfo,
+    T_ApiSuccess,
+    T_ApiError,
+    T_BulkResponse,
+    T_HealthCheckResponse,
+    T_AsyncOperationsResponse,
+} from '@rnb/validators'
+
+import type {
+    T_FilterCriteria,
+    T_FileInfo,
+    T_BulkResponse,
+    T_HealthCheckResponse,
+    T_AsyncOperationsResponse,
+} from '@rnb/validators'
+
+// ─── I_* Aliases ──────────────────────────────────────────────────────────────
+
+export type I_FilterCriteria = T_FilterCriteria
+export type I_FileInfo = T_FileInfo
+export type I_BulkResponse = T_BulkResponse
+export type I_HealthCheckResponse = T_HealthCheckResponse
+export type I_AsyncOperationsResponse = T_AsyncOperationsResponse
+
+// ─── Generic Interfaces (kept here — Zod cannot express generics at runtime) ──
 
 export interface I_SearchResults<T> {
     results: T[]
     relevanceScores: Record<string, number>
     total: number
-}
-
-export interface I_FileInfo {
-    filename: string
-    mimeType: string
-    size: number
-    url: string
-    uploadedAt: T_Timestamp
-    publicId?: string
 }
 
 export interface I_ApiSuccess<T> {
@@ -52,43 +62,12 @@ export type T_ApiResponse<T> = I_ApiSuccess<T> | I_ApiError
 export interface I_PaginationResponse<T> {
     success: true
     data: T[]
-    pagination: I_Pagination
+    pagination: T_Pagination
     timestamp: string
     requestId: string
 }
 
 export type T_PaginatedResponse<T> = I_PaginationResponse<T> | I_ApiError
-
-export interface I_BulkResponse {
-    success: true
-    processed: number
-    succeeded: number
-    failed: number
-    results: Array<{
-        id: string
-        success: boolean
-        message?: string
-    }>
-    timestamp: string
-    requestId: string
-}
-
-export interface I_HealthCheckResponse {
-    status: 'healthy' | 'degraded' | 'down'
-    uptime: number
-    timestamp: string
-    checks: {
-        database: 'ok' | 'down'
-        memory: {
-            heapUsed: number
-            heapTotal: number
-            external: number
-            rss: number
-        }
-        cache?: 'ok' | 'down'
-        [key: string]: any
-    }
-}
 
 export interface I_ReadinessCheckResponse {
     ready: boolean
@@ -107,17 +86,7 @@ export interface I_ListMetadata {
     timestamp: string
 }
 
-export interface I_AsyncOperationsResponse {
-    operationId: string
-    status: 'pending' | 'processing' | 'completed' | 'failed'
-    progress?: number
-    result?: any
-    error?: string
-    estimatedTime?: string
-    timestamp: string
-}
-
-// Helpers
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 export function createSuccess<T>(data: T, requestId: string): I_ApiSuccess<T> {
     return {
@@ -130,7 +99,7 @@ export function createSuccess<T>(data: T, requestId: string): I_ApiSuccess<T> {
 
 export function createPaginationSuccess<T>(
     data: T[],
-    pagination: I_Pagination,
+    pagination: T_Pagination,
     requestId: string
 ): I_PaginationResponse<T> {
     return {
@@ -142,7 +111,7 @@ export function createPaginationSuccess<T>(
     }
 }
 
-// type guards
+// ─── Type Guards ──────────────────────────────────────────────────────────────
 
 export function isSuccess<T>(
     response: T_ApiResponse<unknown>

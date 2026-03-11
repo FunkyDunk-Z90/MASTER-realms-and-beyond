@@ -20,4 +20,5 @@ export const env = cleanEnv(process.env, {
     MAILTRAP_PORT: port(),
     MAILTRAP_PASSWORD: str(),
     MAILTRAP_USERNAME: str(),
+    FRONTEND_URL: str({ default: 'http://localhost:3000' }),
 })

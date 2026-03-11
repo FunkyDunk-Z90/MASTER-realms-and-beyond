@@ -3,9 +3,7 @@
 // app/hub/layout.tsx
 //
 // Client component so the searchFn (a function) can be passed to <Sidebar>
-// without crossing the RSC boundary. Page children are still server-rendered
-// via Next.js's RSC protocol — making a layout 'use client' does not opt
-// page children out of server rendering.
+// without crossing the RSC boundary.
 
 import { Sidebar, I_SearchResult } from '@rnb/ui'
 import { sidebarData } from '@/data/sidebarSections'
@@ -43,19 +41,24 @@ function buildSearchFn() {
     }
 }
 
-// Built once at module level — stable reference across re-renders.
 const searchFn = buildSearchFn()
 
 // ─── Layout ───────────────────────────────────────────────────────────────────
 
-export default function HubLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
+export default function HubLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
-            <Sidebar sections={sidebarData} searchFn={searchFn} />
+            <Sidebar
+                sections={sidebarData}
+                searchFn={searchFn}
+                defaultOpen={false}
+                // onSettingsClick={() => { /* open your settings modal here */ }}
+            />
+            {/*
+                .section-wrapper's margin-left is driven by --sidebar-current-width,
+                which Sidebar.tsx writes to <html> on every open/close toggle.
+                The transition in sidebar.scss keeps it perfectly in sync.
+            */}
             <section className="section-wrapper">{children}</section>
         </>
     )

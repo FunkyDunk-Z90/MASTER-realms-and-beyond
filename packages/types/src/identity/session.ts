@@ -1,64 +1,47 @@
-import { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
-import { I_UserProfile } from './user'
+// Session types derived from Zod schemas in @rnb/validators.
 
-export interface I_Session {
-    id: T_ObjectId
-    userId: T_ObjectId
-    refreshToken: string
-    ipAddress: string
-    userAgent: string
-    expiresAt: Date
-    createdAt: T_Timestamp
-}
+export type {
+    T_Session,
+    T_SessionRequest,
+    T_RefreshTokenRequest,
+    T_RefreshTokenResponse,
+    T_LogoutRequest,
+    T_TwoFactorSetup,
+    T_TwoFactorVerify,
+    T_SessionMetadata,
+    T_TwoFactorMethod,
+} from '@rnb/validators'
 
-export interface I_SessionRequest {
-    email: string
-    password: string
-    rememberMe?: boolean
-}
+// ─── I_* aliases for backward compatibility ───────────────────────────────────
+
+import type {
+    T_Session,
+    T_SessionRequest,
+    T_RefreshTokenRequest,
+    T_RefreshTokenResponse,
+    T_LogoutRequest,
+    T_TwoFactorSetup,
+    T_TwoFactorVerify,
+    T_SessionMetadata,
+    T_UserProfile,
+} from '@rnb/validators'
+
+export type I_Session = T_Session
+export type I_SessionRequest = T_SessionRequest
+export type I_RefreshTokenRequest = T_RefreshTokenRequest
+export type I_RefreshTokenResponse = T_RefreshTokenResponse
+export type I_LogoutRequest = T_LogoutRequest
+export type I_TwoFactorSetup = T_TwoFactorSetup
+export type I_TwoFactorVerify = T_TwoFactorVerify
+export type I_SessionMetadata = T_SessionMetadata
 
 export interface I_SessionResponse {
     accessToken: string
     refreshToken: string
     expiresIn: number
-    user: I_UserProfile
-}
-
-export interface I_RefreshTokenRequest {
-    accessToken: string
-}
-
-export interface I_RefreshTokenResponse {
-    accessToken: string
-    expiresIn: number
-}
-
-export interface I_LogoutRequest {
-    refreshToken?: string
+    user: T_UserProfile
 }
 
 export interface I_LogoutResponse {
     message: string
-}
-
-export type T_TwoFactorMethod = 'totp' | 'sms' | 'email' | 'passkey'
-
-export interface I_TwoFactorSetup {
-    method: T_TwoFactorMethod
-    secret?: string
-    backupCodes?: string[]
-    qrCode?: string
-}
-
-export interface I_TwoFactorVerify {
-    code: string
-    method: T_TwoFactorMethod
-}
-
-export interface I_SessionMetadata {
-    deviceName?: string
-    deviceType?: 'mobile' | 'tablet' | 'desktop' | 'console'
-    os?: string
-    browser?: string
-    lastActivity: T_Timestamp
 }

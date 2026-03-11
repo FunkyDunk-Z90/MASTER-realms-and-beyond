@@ -65,6 +65,7 @@
 @mixin scanlines {
     content: '';
     position: absolute;
+
     inset: 0;
     background-image: repeating-linear-gradient(
         to bottom,

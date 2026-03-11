@@ -1,6 +1,7 @@
 /**
- * @rnb/types - AetherScribe Entity Types (Refactored)
- * Polymorphic entities using separate ruleset type definitions
+ * @rnb/types - AetherScribe Entity Types
+ * Core enum and base types from @rnb/validators.
+ * Complex polymorphic entity variants live here (depend on ruleset types).
  */
 
 import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
@@ -19,64 +20,23 @@ import type {
     I_Artifact,
 } from './rulesets/rulesetsIndex'
 
-// ============================================================================
-// ENTITY TYPE ENUM
-// ============================================================================
+export type {
+    T_EntityType,
+    T_Ruleset,
+    T_BaseEntity,
+    T_EntityFilter,
+    T_EntityRelation,
+} from '@rnb/validators'
 
-export type E_EntityType =
-    | 'character'
-    | 'npc'
-    | 'location'
-    | 'item'
-    | 'faction'
-    // Ruleset-specific entities
-    | 'species' // D&D 5e
-    | 'class' // D&D 5e
-    | 'background' // D&D 5e
-    | 'spell' // D&D 5e
-    | 'belief' // Generic
-    | 'lore' // Generic
-    | 'archetype' // Aetherscape
-    | 'origin' // Aetherscape
-    | 'gift' // Aetherscape
-    | 'artifact' // Aetherscape
+import type { T_EntityType, T_Ruleset, T_BaseEntity } from '@rnb/validators'
 
-export type E_Ruleset = 'generic' | 'dnd_5e_24' | 'aetherscape'
+// ─── E_* / I_* Aliases ────────────────────────────────────────────────────────
 
-// ============================================================================
-// BASE ENTITY
-// ============================================================================
+export type E_EntityType = T_EntityType
+export type E_Ruleset = T_Ruleset
+export type I_BaseEntity = T_BaseEntity
 
-export interface I_BaseEntity {
-    id: T_ObjectId
-    worldId: T_ObjectId
-    userId: T_ObjectId
-    type: E_EntityType
-    name: string
-    slug: string
-    description?: string
-    tags: string[]
-    isPrivate: boolean
-    ruleset: E_Ruleset
-    createdAt: T_Timestamp
-    updatedAt: T_Timestamp
-    version: number
-}
-
-// ============================================================================
-// CHARACTER ENTITY
-// ============================================================================
-
-export interface I_CharacterEntity extends I_BaseEntity {
-    type: 'character'
-    data: I_DND5E_Character | I_Aetherscape_Character | I_GenericCharacter
-    metadata?: {
-        portraitUrl?: string
-        lastPlayed?: T_Timestamp
-        playingNotes?: string
-        campaignIds?: T_ObjectId[]
-    }
-}
+// ─── Generic Character Data ───────────────────────────────────────────────────
 
 export interface I_GenericCharacter {
     ruleset: 'generic'
@@ -92,14 +52,45 @@ export interface I_GenericCharacter {
     equipment?: string[]
     portrait?: string
     status?: string
-    customData?: {
-        [key: string]: any
-    }
+    customData?: Record<string, any>
 }
 
-// ============================================================================
-// NPC ENTITY
-// ============================================================================
+export interface I_GenericNPC {
+    ruleset: 'generic'
+    role?: string
+    affiliation?: string
+    personality?: string
+    goals?: string[]
+    knowledge?: string[]
+    portrait?: string
+    customData?: Record<string, any>
+}
+
+export interface I_GenericItem {
+    ruleset: 'generic'
+    itemType?: string
+    rarity?: string
+    properties?: string[]
+    value?: number
+    weight?: number
+    magical?: boolean
+    enchantments?: string[]
+    creator?: string
+    history?: string
+}
+
+// ─── Entity Variants ──────────────────────────────────────────────────────────
+
+export interface I_CharacterEntity extends I_BaseEntity {
+    type: 'character'
+    data: I_DND5E_Character | I_Aetherscape_Character | I_GenericCharacter
+    metadata?: {
+        portraitUrl?: string
+        lastPlayed?: T_Timestamp
+        playingNotes?: string
+        campaignIds?: T_ObjectId[]
+    }
+}
 
 export interface I_NPCEntity extends I_BaseEntity {
     type: 'npc'
@@ -114,33 +105,6 @@ export interface I_NPCEntity extends I_BaseEntity {
         affiliationIds?: T_ObjectId[]
         encounterNotes?: string
     }
-}
-
-export interface I_GenericNPC {
-    ruleset: 'generic'
-    role?: string
-    affiliation?: string
-    personality?: string
-    goals?: string[]
-    knowledge?: string[]
-    portrait?: string
-    customData?: {
-        [key: string]: any
-    }
-}
-
-// ============================================================================
-// LOCATION ENTITY
-// ============================================================================
-
-export interface I_LocationEntity extends I_BaseEntity {
-    type: 'location'
-    data: I_LocationData
-    inhabitants: T_ObjectId[]
-    relatedLocations: {
-        locationId: T_ObjectId
-        relationshipType: string
-    }[]
 }
 
 export interface I_LocationData {
@@ -164,9 +128,15 @@ export interface I_LocationData {
     }[]
 }
 
-// ============================================================================
-// ITEM ENTITY
-// ============================================================================
+export interface I_LocationEntity extends I_BaseEntity {
+    type: 'location'
+    data: I_LocationData
+    inhabitants: T_ObjectId[]
+    relatedLocations: {
+        locationId: T_ObjectId
+        relationshipType: string
+    }[]
+}
 
 export interface I_ItemEntity extends I_BaseEntity {
     type: 'item'
@@ -183,22 +153,20 @@ export interface I_ItemEntity extends I_BaseEntity {
     }
 }
 
-export interface I_GenericItem {
-    ruleset: 'generic'
-    itemType?: string
-    rarity?: string
-    properties?: string[]
-    value?: number
-    weight?: number
-    magical?: boolean
-    enchantments?: string[]
-    creator?: string
-    history?: string
+export interface I_FactionData {
+    factionType?: string
+    headquarters?: T_ObjectId
+    primaryLeader?: T_ObjectId
+    description?: string
+    goals?: string[]
+    resources?: string[]
+    influence?: number
+    size?: 'tiny' | 'small' | 'medium' | 'large' | 'huge'
+    alignment?: string
+    established?: T_Timestamp
+    knownSecrets?: string[]
+    customData?: Record<string, any>
 }
-
-// ============================================================================
-// FACTION ENTITY
-// ============================================================================
 
 export interface I_FactionEntity extends I_BaseEntity {
     type: 'faction'
@@ -214,27 +182,6 @@ export interface I_FactionEntity extends I_BaseEntity {
         description?: string
     }[]
 }
-
-export interface I_FactionData {
-    factionType?: string
-    headquarters?: T_ObjectId // Location reference
-    primaryLeader?: T_ObjectId // NPC reference
-    description?: string
-    goals?: string[]
-    resources?: string[]
-    influence?: number
-    size?: 'tiny' | 'small' | 'medium' | 'large' | 'huge'
-    alignment?: string
-    established?: T_Timestamp
-    knownSecrets?: string[]
-    customData?: {
-        [key: string]: any
-    }
-}
-
-// ============================================================================
-// RULESET-SPECIFIC ENTITIES (D&D 5e)
-// ============================================================================
 
 export interface I_SpeciesEntity extends I_BaseEntity {
     type: 'species'
@@ -259,10 +206,7 @@ export interface I_BackgroundEntity extends I_BaseEntity {
         languages?: string[]
         equipment?: string[]
         feat?: string
-        customFeature?: {
-            name: string
-            description: string
-        }
+        customFeature?: { name: string; description: string }
     }
 }
 
@@ -276,10 +220,6 @@ export interface I_SpellEntity extends I_BaseEntity {
         consumed: boolean
     }[]
 }
-
-// ============================================================================
-// GENERIC ENTITIES
-// ============================================================================
 
 export interface I_BeliefEntity extends I_BaseEntity {
     type: 'belief'
@@ -304,21 +244,10 @@ export interface I_LoreEntity extends I_BaseEntity {
         era?: string
         significance?: string
         sources?: string[]
-        timeline?: {
-            period: string
-            event: string
-            description?: string
-        }[]
-        relatedEntities: {
-            entityId: T_ObjectId
-            relationshipType: string
-        }[]
+        timeline?: { period: string; event: string; description?: string }[]
+        relatedEntities: { entityId: T_ObjectId; relationshipType: string }[]
     }
 }
-
-// ============================================================================
-// RULESET-SPECIFIC ENTITIES (AETHERSCAPE)
-// ============================================================================
 
 export interface I_ArchetypeEntity extends I_BaseEntity {
     type: 'archetype'
@@ -351,9 +280,7 @@ export interface I_ArtifactEntity extends I_BaseEntity {
     currentLocation?: T_ObjectId
 }
 
-// ============================================================================
-// POLYMORPHIC ENTITY TYPE
-// ============================================================================
+// ─── Polymorphic Union ────────────────────────────────────────────────────────
 
 export type I_Entity =
     | I_CharacterEntity
@@ -372,45 +299,7 @@ export type I_Entity =
     | I_GiftEntity
     | I_ArtifactEntity
 
-// ============================================================================
-// REQUEST TYPES
-// ============================================================================
-
-export interface I_EntityFilter {
-    type?: E_EntityType | E_EntityType[]
-    ruleset?: E_Ruleset | E_Ruleset[]
-    tags?: string[]
-    isPrivate?: boolean
-    createdAfter?: T_Timestamp
-    createdBefore?: T_Timestamp
-    userId?: T_ObjectId
-    search?: string
-}
-
-// ============================================================================
-// RELATIONSHIP TRACKING
-// ============================================================================
-
-export interface I_EntityRelation {
-    id: T_ObjectId
-    fromEntityId: T_ObjectId
-    toEntityId: T_ObjectId
-    relationshipType: string
-    description?: string
-    isDirectional: boolean
-    strength?: number // 1-10 for importance
-    metadata?: {
-        [key: string]: any
-    }
-    createdAt: T_Timestamp
-    updatedAt: T_Timestamp
-}
-
-// ============================================================================
-// UTILITIES
-// ============================================================================
-
-export type I_EntityByType<T extends E_EntityType> =
+export type I_EntityByType<T extends T_EntityType> =
     T extends 'character'
         ? I_CharacterEntity
         : T extends 'npc'
@@ -425,7 +314,7 @@ export type I_EntityByType<T extends E_EntityType> =
                   ? I_SpellEntity
                   : I_Entity
 
-export function isEntityType<T extends E_EntityType>(
+export function isEntityType<T extends T_EntityType>(
     entity: I_Entity,
     type: T
 ): entity is I_EntityByType<T> {

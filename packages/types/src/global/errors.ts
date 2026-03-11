@@ -1,104 +1,94 @@
 /**
  * @rnb/types - Global Error Types
  * Comprehensive error handling system for entire RnB ecosystem
+ *
+ * Core error types (T_ErrorCode, T_ErrorDetail, T_ValidationError, T_ErrorResponse)
+ * are derived from Zod schemas in @rnb/validators.
+ * Runtime constants and extended interfaces live here.
  */
 
 import type { T_Timestamp } from './common/commonIndex'
 
-// ============================================================================
-// ERROR CODES
-// ============================================================================
+export type {
+    T_ErrorCode,
+    T_ErrorDetail,
+    T_ValidationError,
+    T_ErrorResponse,
+} from '@rnb/validators'
 
-export type E_ErrorCode =
-    // Client Errors (4xx)
-    | 'BAD_REQUEST'
-    | 'INVALID_INPUT'
-    | 'VALIDATION_ERROR'
-    | 'MISSING_REQUIRED_FIELD'
-    | 'INVALID_FORMAT'
-    | 'INVALID_ENUM_VALUE'
-    | 'UNAUTHORIZED'
-    | 'INVALID_CREDENTIALS'
-    | 'TOKEN_EXPIRED'
-    | 'TOKEN_INVALID'
-    | 'SESSION_EXPIRED'
-    | 'INSUFFICIENT_PERMISSIONS'
-    | 'FORBIDDEN'
-    | 'ACCESS_DENIED'
-    | 'RESOURCE_NOT_ACCESSIBLE'
-    | 'NOT_FOUND'
-    | 'ENTITY_NOT_FOUND'
-    | 'WORLD_NOT_FOUND'
-    | 'USER_NOT_FOUND'
-    | 'RESOURCE_NOT_FOUND'
-    | 'CONFLICT'
-    | 'DUPLICATE_ENTITY'
-    | 'ENTITY_ALREADY_EXISTS'
-    | 'INVALID_STATE'
-    | 'STATE_CONFLICT'
-    | 'RATE_LIMITED'
-    | 'TOO_MANY_REQUESTS'
-    | 'QUOTA_EXCEEDED'
-    | 'STORAGE_QUOTA_EXCEEDED'
-    | 'UNPROCESSABLE_ENTITY'
-    | 'PAYMENT_REQUIRED'
-    | 'SUBSCRIPTION_REQUIRED'
-    // Server Errors (5xx)
-    | 'INTERNAL_SERVER_ERROR'
-    | 'INTERNAL_ERROR'
-    | 'UNKNOWN_ERROR'
-    | 'SERVICE_UNAVAILABLE'
-    | 'MAINTENANCE_MODE'
-    | 'DEPENDENCY_UNAVAILABLE'
-    | 'DATABASE_ERROR'
-    | 'TIMEOUT'
-    | 'REQUEST_TIMEOUT'
-    | 'OPERATION_TIMEOUT'
-    // Business Logic Errors
-    | 'OPERATION_FAILED'
-    | 'OPERATION_NOT_ALLOWED'
-    | 'OPERATION_NOT_SUPPORTED'
-    | 'INVALID_OPERATION'
-    | 'BUSINESS_RULE_VIOLATION'
-    | 'CONSTRAINT_VIOLATION'
-    | 'REFERENTIAL_INTEGRITY_VIOLATION'
-    // Payment Errors
-    | 'PAYMENT_FAILED'
-    | 'PAYMENT_DECLINED'
-    | 'INVALID_PAYMENT_METHOD'
-    | 'FRAUD_DETECTED'
-    | 'INSUFFICIENT_FUNDS'
-    // File/Upload Errors
-    | 'FILE_UPLOAD_FAILED'
-    | 'INVALID_FILE_TYPE'
-    | 'FILE_TOO_LARGE'
-    // Validation Errors
-    | 'INVALID_EMAIL'
-    | 'INVALID_PASSWORD'
-    | 'INVALID_PHONE'
-    | 'INVALID_URL'
-    // Relationship Errors
-    | 'RELATIONSHIP_CONFLICT'
-    | 'INVALID_RELATIONSHIP'
-    // Data Consistency Errors
-    | 'DATA_INCONSISTENCY'
-    | 'STALE_DATA'
-    | 'OPTIMISTIC_LOCK_FAILED'
-    // Import/Export Errors
-    | 'IMPORT_FAILED'
-    | 'EXPORT_FAILED'
-    | 'INVALID_FORMAT_FOR_IMPORT'
-    // External Service Errors
-    | 'EXTERNAL_SERVICE_ERROR'
-    | 'PAYMENT_GATEWAY_ERROR'
-    | 'EMAIL_SERVICE_ERROR'
-    | 'STORAGE_SERVICE_ERROR'
+import type { T_ErrorCode, T_ErrorDetail, T_ValidationError } from '@rnb/validators'
 
-// ============================================================================
-// HTTP STATUS CODE MAPPING
-// ============================================================================
+// ─── E_* Alias for backward compatibility ─────────────────────────────────────
 
-export const ERROR_CODE_STATUS_MAP: Record<E_ErrorCode, number> = {
+export type E_ErrorCode = T_ErrorCode
+
+// ─── I_* Aliases ──────────────────────────────────────────────────────────────
+
+export type I_ErrorDetail = T_ErrorDetail
+export type I_ValidationError = T_ValidationError
+
+// ─── Extended Error Types (not in validators) ──────────────────────────────────
+
+export interface I_BusinessRuleError extends T_ErrorDetail {
+    code: 'BUSINESS_RULE_VIOLATION'
+    rule: string
+    context?: Record<string, any>
+}
+
+export interface I_PaymentError extends T_ErrorDetail {
+    code: 'PAYMENT_FAILED' | 'PAYMENT_DECLINED'
+    gatewayCode?: string
+    gatewayMessage?: string
+    retryable?: boolean
+    retryAfter?: number
+}
+
+export interface I_ErrorResponse {
+    success: false
+    error: T_ErrorDetail
+    timestamp: string
+    requestId: string
+}
+
+export interface I_BatchErrorResponse {
+    success: false
+    errors: T_ErrorDetail[]
+    failedCount: number
+    successCount: number
+    timestamp: string
+    requestId: string
+}
+
+export interface I_ErrorLog {
+    id: string
+    code: T_ErrorCode
+    message: string
+    stack?: string
+    context?: {
+        userId?: string
+        worldId?: string
+        entityId?: string
+        orderId?: string
+        [key: string]: any
+    }
+    severity: 'low' | 'medium' | 'high' | 'critical'
+    resolved: boolean
+    resolvedAt?: T_Timestamp
+    createdAt: T_Timestamp
+}
+
+export interface I_ErrorRecoveryStrategy {
+    code: T_ErrorCode
+    retryable: boolean
+    maxRetries?: number
+    retryDelay?: number
+    strategy: 'exponential_backoff' | 'linear_backoff' | 'immediate'
+    fallbackAction?: 'fail' | 'queue' | 'cache' | 'ignore'
+}
+
+// ─── HTTP Status Code Map ──────────────────────────────────────────────────────
+
+export const ERROR_CODE_STATUS_MAP: Record<T_ErrorCode, number> = {
     BAD_REQUEST: 400,
     INVALID_INPUT: 400,
     VALIDATION_ERROR: 400,
@@ -174,165 +164,9 @@ export const ERROR_CODE_STATUS_MAP: Record<E_ErrorCode, number> = {
     STORAGE_SERVICE_ERROR: 502,
 }
 
-// ============================================================================
-// ERROR DETAIL TYPES
-// ============================================================================
+// ─── Recovery Strategies ──────────────────────────────────────────────────────
 
-export interface I_ErrorDetail {
-    code: E_ErrorCode
-    message: string
-    details?: Record<string, any>
-    timestamp?: T_Timestamp
-    requestId?: string
-    path?: string
-    method?: string
-    statusCode?: number
-}
-
-export interface I_ValidationError extends I_ErrorDetail {
-    code: 'VALIDATION_ERROR'
-    fields?: {
-        [fieldName: string]: {
-            message: string
-            value?: any
-            constraint?: string
-        }
-    }
-}
-
-export interface I_BusinessRuleError extends I_ErrorDetail {
-    code: 'BUSINESS_RULE_VIOLATION'
-    rule: string
-    context?: Record<string, any>
-}
-
-export interface I_PaymentError extends I_ErrorDetail {
-    code: 'PAYMENT_FAILED' | 'PAYMENT_DECLINED'
-    gatewayCode?: string
-    gatewayMessage?: string
-    retryable?: boolean
-    retryAfter?: number
-}
-
-export interface I_ErrorResponse {
-    success: false
-    error: I_ErrorDetail
-    timestamp: string
-    requestId: string
-}
-
-export interface I_BatchErrorResponse {
-    success: false
-    errors: I_ErrorDetail[]
-    failedCount: number
-    successCount: number
-    timestamp: string
-    requestId: string
-}
-
-// ============================================================================
-// ERROR FACTORY FUNCTIONS
-// ============================================================================
-
-export function createError(
-    code: E_ErrorCode,
-    message: string,
-    requestId?: string,
-    details?: Record<string, any>
-): I_ErrorDetail {
-    return {
-        code,
-        message,
-        requestId,
-        details,
-        timestamp: Date.now(),
-    }
-}
-
-export function createValidationError(
-    fields: { [fieldName: string]: { message: string; value?: any } },
-    requestId?: string
-): I_ValidationError {
-    return {
-        code: 'VALIDATION_ERROR',
-        message: 'Validation failed',
-        fields,
-        requestId,
-        timestamp: Date.now(),
-    }
-}
-
-export function createPaymentError(
-    message: string,
-    gatewayCode?: string,
-    retryable: boolean = false,
-    requestId?: string
-): I_PaymentError {
-    return {
-        code: 'PAYMENT_FAILED',
-        message,
-        gatewayCode,
-        retryable,
-        requestId,
-        timestamp: Date.now(),
-    }
-}
-
-export function createBusinessRuleError(
-    rule: string,
-    message: string,
-    context?: Record<string, any>,
-    requestId?: string
-): I_BusinessRuleError {
-    return {
-        code: 'BUSINESS_RULE_VIOLATION',
-        message,
-        rule,
-        context,
-        requestId,
-        timestamp: Date.now(),
-    }
-}
-
-// ============================================================================
-// ERROR LOGGING
-// ============================================================================
-
-export interface I_ErrorLog {
-    id: string
-    code: E_ErrorCode
-    message: string
-    stack?: string
-    context?: {
-        userId?: string
-        worldId?: string
-        entityId?: string
-        orderId?: string
-        [key: string]: any
-    }
-    severity: 'low' | 'medium' | 'high' | 'critical'
-    resolved: boolean
-    resolvedAt?: T_Timestamp
-    createdAt: T_Timestamp
-}
-
-// ============================================================================
-// ERROR RECOVERY STRATEGIES
-// ============================================================================
-
-export interface I_ErrorRecoveryStrategy {
-    code: E_ErrorCode
-    retryable: boolean
-    maxRetries?: number
-    retryDelay?: number
-    strategy: 'exponential_backoff' | 'linear_backoff' | 'immediate'
-    fallbackAction?: 'fail' | 'queue' | 'cache' | 'ignore'
-}
-
-export const ERROR_RECOVERY_STRATEGIES: Record<
-    E_ErrorCode,
-    I_ErrorRecoveryStrategy
-> = {
+export const ERROR_RECOVERY_STRATEGIES: Record<T_ErrorCode, I_ErrorRecoveryStrategy> = {
     BAD_REQUEST: { code: 'BAD_REQUEST', retryable: false, strategy: 'exponential_backoff' },
     INVALID_INPUT: { code: 'INVALID_INPUT', retryable: false, strategy: 'exponential_backoff' },
     VALIDATION_ERROR: { code: 'VALIDATION_ERROR', retryable: false, strategy: 'exponential_backoff' },
@@ -406,4 +240,66 @@ export const ERROR_RECOVERY_STRATEGIES: Record<
     PAYMENT_GATEWAY_ERROR: { code: 'PAYMENT_GATEWAY_ERROR', retryable: true, maxRetries: 2, retryDelay: 1000, strategy: 'exponential_backoff' },
     EMAIL_SERVICE_ERROR: { code: 'EMAIL_SERVICE_ERROR', retryable: true, maxRetries: 3, retryDelay: 5000, strategy: 'exponential_backoff', fallbackAction: 'queue' },
     STORAGE_SERVICE_ERROR: { code: 'STORAGE_SERVICE_ERROR', retryable: true, maxRetries: 3, retryDelay: 2000, strategy: 'exponential_backoff' },
+}
+
+// ─── Factory Functions ─────────────────────────────────────────────────────────
+
+export function createError(
+    code: T_ErrorCode,
+    message: string,
+    requestId?: string,
+    details?: Record<string, any>
+): T_ErrorDetail {
+    return {
+        code,
+        message,
+        requestId,
+        details,
+        timestamp: Date.now(),
+    }
+}
+
+export function createValidationError(
+    fields: { [fieldName: string]: { message: string; value?: any } },
+    requestId?: string
+): T_ValidationError {
+    return {
+        code: 'VALIDATION_ERROR',
+        message: 'Validation failed',
+        fields,
+        requestId,
+        timestamp: Date.now(),
+    }
+}
+
+export function createPaymentError(
+    message: string,
+    gatewayCode?: string,
+    retryable: boolean = false,
+    requestId?: string
+): I_PaymentError {
+    return {
+        code: 'PAYMENT_FAILED',
+        message,
+        gatewayCode,
+        retryable,
+        requestId,
+        timestamp: Date.now(),
+    }
+}
+
+export function createBusinessRuleError(
+    rule: string,
+    message: string,
+    context?: Record<string, any>,
+    requestId?: string
+): I_BusinessRuleError {
+    return {
+        code: 'BUSINESS_RULE_VIOLATION',
+        message,
+        rule,
+        context,
+        requestId,
+        timestamp: Date.now(),
+    }
 }

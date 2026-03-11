@@ -1,10 +1,8 @@
-export interface I_Distance {
-    value: number
-    unit: 'mi' | 'km' | 'ft' | 'm'
-}
+// All metrics types are derived from Zod schemas in @rnb/validators.
 
-export interface I_Weight {
-    value: number
-    unit: 'lb' | 'kg' | 'oz' | 'g'
-}
-export type T_Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+export type { T_Distance, T_Weight, T_Sizes } from '@rnb/validators'
+
+import type { T_Distance, T_Weight } from '@rnb/validators'
+
+export type I_Distance = T_Distance
+export type I_Weight = T_Weight

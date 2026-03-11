@@ -1,12 +1,25 @@
 @use '../../../_variables' as *;
 @use '../../../_mixins' as *;
 
+// ─── Layout token ─────────────────────────────────────────────────────────────
+//
+//  --sidebar-current-width   Set by Sidebar.tsx on <html> via JS.
+//                            Consumed by .section-wrapper to avoid overlap.
+//
+//  Default value covers the SSR/flash window before JS runs.
+
+:root {
+    --sidebar-icon-rail: 48px;
+    --sidebar-current-width: var(--sidebar-icon-rail);
+    // transition-speed is already in :root via _root.scss — no need to redeclare
+}
+
 // ─── Wrapper ──────────────────────────────────────────────────────────────────
 
 .sidebar-wrapper {
     position: fixed;
     top: var(--header-height, #{$header-height});
-    left: -1px;
+    left: 0;
     display: flex;
     flex-direction: column;
     height: calc(
@@ -15,132 +28,98 @@
                 #{$footer-height}
             )
     );
-    width: var(--sidebar-max, #{$sidebar-max});
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--primary-color);
     border-bottom: 1px solid var(--primary-color);
-
     box-shadow: 1px 0 0 0 var(--primary-color);
-    // 2px 0 16px var(--primary-glow);
+
+    // Width animates — overflow on the wrapper must be visible for the
+    // tooltip to escape, so we clip inside .sidebar-inner instead.
     overflow: visible;
     z-index: 100;
-    transition: transform var(--transition-speed) ease;
-
-    // &::before {
-    //     @include scanlines;
-    //     pointer-events: none;
-    //     z-index: 0;
-    // }
+    transition: width var(--transition-speed) #{$ease-snap};
 
     &.sidebar-open {
-        transform: translateX(0);
+        width: var(--sidebar-max, #{$sidebar-max});
     }
 
     &.sidebar-collapsed {
-        transform: translateX(-100%);
+        width: var(--sidebar-icon-rail, 48px);
     }
 }
 
-// ─── Pill toggle ──────────────────────────────────────────────────────────────
+// ─── Inner scroll container ───────────────────────────────────────────────────
+// Clips content to the animated sidebar width without clipping the tooltip.
 
-.sidebar-pill-toggle {
-    position: fixed;
-    top: calc(
-        var(--header-height, #{$header-height}) +
-            (
-                100dvh - var(--header-height, #{$header-height}) - var(
-                        --footer-height,
-                        #{$footer-height}
-                    )
-            ) /
-            6
-    );
-    left: 0;
-    z-index: 200;
-
+.sidebar-inner {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; // clips labels/text during width transition
+}
+
+// ─── Controls ─────────────────────────────────────────────────────────────────
+
+.sidebar-controls {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-controls-row {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
+    padding: $small;
+    gap: 2px;
+    min-height: 40px;
 
-    width: 16px;
-    height: 64px;
-    padding: $small 0;
+    .sidebar-open & {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
-    background-color: var(--bg-secondary-color);
-    border: 1px solid var(--primary-color);
-    border-left: none;
-    border-radius: 0 $border-radius-lg $border-radius-lg 0;
-    cursor: pointer;
+    .sidebar-collapsed & {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.sidebar-control-btn {
+    display: flex;
+    align-items: center;
+    gap: $small;
+    padding: 6px;
+    border-radius: $border-radius;
+    border: none;
+    background: transparent;
     color: var(--text-muted-color);
-
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
     transition:
-        left var(--transition-speed) ease,
         background-color var(--transition-speed) ease,
-        box-shadow var(--transition-speed) ease,
         color var(--transition-speed) ease;
 
     &:hover {
-        background-color: var(--primary-color);
-        box-shadow: 2px 0 12px var(--primary-glow);
-        color: var(--bg-color);
+        background-color: var(--primary-glow);
+        color: var(--primary-hover-color);
+    }
 
-        .sidebar-pill-bar {
-            background-color: var(--bg-color);
+    &--toggle {
+        // In open state: pushed to the far right
+        .sidebar-open & {
+            margin-left: auto;
         }
-        .sidebar-pill-chevron {
-            color: var(--text-color);
-        }
-    }
-
-    &.sidebar-pill-toggle--open {
-        left: var(--sidebar-max, #{$sidebar-max});
     }
 }
 
-.sidebar-pill-track {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-}
-
-.sidebar-pill-bar {
-    display: block;
-    width: 8px;
-    height: 1.5px;
-    border-radius: 1px;
-    background-color: var(--primary-color);
-    transition:
-        transform var(--transition-speed) ease,
-        opacity var(--transition-speed) ease,
-        background-color var(--transition-speed) ease;
-}
-
-.sidebar-pill-toggle--open {
-    .sidebar-pill-bar:nth-child(1) {
-        transform: translateY(5.5px) rotate(45deg);
-    }
-    .sidebar-pill-bar:nth-child(2) {
-        opacity: 0;
-        transform: scaleX(0);
-    }
-    .sidebar-pill-bar:nth-child(3) {
-        transform: translateY(-5.5px) rotate(-45deg);
-    }
-}
-
-.sidebar-pill-chevron {
-    display: inline-block;
-    font-size: 1rem;
-    line-height: 1;
-    color: var(--accent-color);
-    transition: transform var(--transition-speed) ease;
-
-    &.open {
-        transform: rotate(180deg);
-    }
+.sidebar-control-label {
+    font-family: $font-body;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
 }
 
 // ─── Search ───────────────────────────────────────────────────────────────────
@@ -291,25 +270,24 @@
 .sidebar-nav {
     flex: 1;
     overflow-y: auto;
-    overflow-x: visible;
+    overflow-x: hidden;
     padding-top: $medium;
     overscroll-behavior: contain;
-    z-index: 1;
 }
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
 
 .sidebar-section {
     margin-block: $medium;
-}
 
-.sidebar-collapsed .sidebar-section {
-    margin-block: 0;
-    padding-block: $medium;
-    border-top: 1px solid var(--border-color);
+    .sidebar-collapsed & {
+        margin-block: 0;
+        padding-block: $small;
+        border-top: 1px solid var(--border-color);
 
-    &:first-child {
-        border-top: none;
+        &:first-child {
+            border-top: none;
+        }
     }
 }
 
@@ -318,6 +296,7 @@
     padding: $small $large;
     color: var(--accent-dim-color);
     white-space: nowrap;
+    overflow: hidden;
 }
 
 .sidebar-menu {
@@ -334,6 +313,11 @@
     margin-inline: $small;
     border-radius: $border-radius;
 
+    .sidebar-collapsed & {
+        margin-inline: 0;
+        border-radius: 0;
+    }
+
     > .sidebar-link {
         border-radius: $border-radius;
         border-left: 2px solid transparent;
@@ -349,19 +333,22 @@
                 color: var(--primary-hover-color);
             }
         }
+
+        .sidebar-collapsed & {
+            border-left: none;
+            border-radius: 0;
+        }
     }
 
-    &.active {
-        > .sidebar-link {
-            @include active-indicator;
+    &.active > .sidebar-link {
+        @include active-indicator;
 
-            .sidebar-label {
-                color: var(--primary-hover-color);
-            }
+        .sidebar-label {
+            color: var(--primary-hover-color);
+        }
 
-            &:hover .sidebar-label {
-                color: var(--primary-hover-color);
-            }
+        &:hover .sidebar-label {
+            color: var(--primary-hover-color);
         }
     }
 }
@@ -373,114 +360,131 @@
     color: var(--text-color);
     text-decoration: none;
     width: 100%;
+
+    // In collapsed state: centre the icon within the rail
+    .sidebar-collapsed & {
+        justify-content: center;
+        width: var(--sidebar-icon-rail, 48px);
+    }
 }
+
+// ─── Icon ─────────────────────────────────────────────────────────────────────
 
 .sidebar-icon {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 28px;
     width: 28px;
     border-radius: $border-radius;
+    // Open state: breathing room between border and icon
     margin: $small $medium;
     padding: $small;
-    opacity: 0.7;
-    transition: opacity var(--transition-speed) ease;
+    color: var(--text-color);
+    transition: color var(--transition-speed) ease;
 
     .sidebar-link:hover & {
-        opacity: 1;
+        color: var(--primary-hover-color);
     }
 
-    &--svg {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    // Collapsed: no horizontal margin so the icon sits centred in the rail
+    .sidebar-collapsed & {
+        margin-inline: 0;
+    }
+
+    &--component {
         color: currentColor;
 
         svg {
             display: block;
             width: 16px;
             height: 16px;
-            stroke: currentColor;
-            fill: none;
+            stroke: currentColor; // Lucide
+            fill: currentColor; // SVGR fill-based assets
         }
+    }
+
+    &--image img {
+        display: block;
+        filter: brightness(0) saturate(100%) invert(var(--icon-invert, 0));
+    }
+
+    &--emoji {
+        font-size: 1rem;
+        line-height: 1;
     }
 }
 
 // ─── Label ────────────────────────────────────────────────────────────────────
+// In open mode: normal inline text.
+// In collapsed mode: hidden (tooltip rendered separately via JS).
 
 .sidebar-label {
     font-family: $font-body;
     font-size: 0.82rem;
     letter-spacing: 0.03em;
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
-    padding: $medium $large;
+    padding: $medium $large $medium 0;
     color: var(--text-secondary-color);
-    transition: color var(--transition-speed) ease;
+    transition:
+        color var(--transition-speed) ease,
+        opacity var(--transition-speed) ease;
+
+    .sidebar-open & {
+        overflow: hidden;
+        opacity: 1;
+    }
+
+    // Collapsed: hide label text — tooltip takes over
+    .sidebar-collapsed & {
+        display: none;
+    }
 }
 
-.sidebar-collapsed .sidebar-label {
-    position: absolute;
-    left: calc(var(--sidebar-min, 0px) + 20px + #{$small});
+// ─── Floating tooltip (collapsed mode) ───────────────────────────────────────
+// Rendered outside <aside> in the React tree so it is never clipped.
+// Position is set via --tooltip-y injected as an inline style from JS.
+
+.sidebar-tooltip {
+    position: fixed;
+    left: calc(var(--sidebar-icon-rail, 48px) + 8px);
+    top: var(--tooltip-y, 0px);
+    transform: translateY(-50%);
+    z-index: 500;
+    pointer-events: none;
+
+    // Appearance
+    font-family: $font-body;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
     color: var(--text-color);
     background-color: var(--bg-secondary-color);
     border: 1px solid var(--primary-color);
     border-radius: $border-radius;
     padding: $small $medium;
-    box-shadow: 2px 2px 12px var(--primary-glow);
+    box-shadow:
+        2px 2px 12px var(--primary-glow),
+        0 0 0 1px var(--bg-secondary-color); // 1px outline removes subpixel gap
+
+    // Hidden by default
     opacity: 0;
-    pointer-events: none;
-    z-index: 300;
-    overflow: visible;
-    text-overflow: unset;
-    white-space: nowrap;
-    transition: opacity var(--transition-speed-slow) ease;
-}
+    transition: opacity var(--transition-speed) ease;
 
-.sidebar-collapsed .sidebar-link:hover .sidebar-label {
-    opacity: 1;
-}
-
-// ─── Footer ───────────────────────────────────────────────────────────────────
-
-.sidebar-footer {
-    padding: $large;
-    border-top: 1px solid var(--border-color);
-    margin-top: auto;
-    flex-shrink: 0;
-    z-index: 1;
-}
-
-// ─── Nested items ─────────────────────────────────────────────────────────────
-
-.sidebar-item--nested {
-    margin-inline: 0;
-
-    > .sidebar-link {
-        padding-left: calc(#{$medium} + (var(--depth, 1) * #{$large}));
+    &--visible {
+        opacity: 1;
     }
-
-    .sidebar-label {
-        padding-block: $small;
-        font-size: 0.78rem;
-        color: var(--text-muted-color);
-    }
-}
-
-// ─── Parent link ──────────────────────────────────────────────────────────────
-
-.sidebar-link--parent {
-    cursor: pointer;
 }
 
 // ─── Chevron ──────────────────────────────────────────────────────────────────
 
 .sidebar-chevron {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     margin-left: auto;
     padding-right: $medium;
-    font-size: 1rem;
-    line-height: 1;
     color: var(--accent-dim-color);
     flex-shrink: 0;
     transition:
@@ -511,14 +515,47 @@
     overflow: hidden;
 }
 
-// ─── Collapsed state ──────────────────────────────────────────────────────────
+// ─── Nested items ─────────────────────────────────────────────────────────────
 
-.sidebar-collapsed {
-    .sidebar-submenu {
-        display: none;
+.sidebar-item--nested {
+    margin-inline: 0;
+
+    > .sidebar-link {
+        padding-left: calc(#{$medium} + (var(--depth, 1) * #{$large}));
     }
 
-    .sidebar-chevron {
-        display: none;
+    .sidebar-label {
+        padding-block: $small;
+        font-size: 0.78rem;
+        color: var(--text-muted-color);
     }
+}
+
+.sidebar-link--parent {
+    cursor: pointer;
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+.sidebar-footer {
+    padding: $large;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    flex-shrink: 0;
+
+    .sidebar-collapsed & {
+        padding: $small;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+// ─── Section wrapper offset ───────────────────────────────────────────────────
+// .section-wrapper sits next to the sidebar. margin-left tracks the sidebar
+// width via the CSS variable that Sidebar.tsx writes to <html>.
+// The transition duration matches the sidebar width transition exactly.
+
+.section-wrapper {
+    padding-left: var(--sidebar-current-width, var(--sidebar-icon-rail, 48px));
+    transition: padding-left var(--transition-speed) ease;
 }

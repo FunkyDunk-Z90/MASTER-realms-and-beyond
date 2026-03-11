@@ -1,6 +1,8 @@
 export { setAuthCookie } from './setAuthCookie'
 export { createToken } from './createToken'
 export { extractToken } from './extractToken'
+export { verifyToken } from './verifyToken'
+export type { I_TokenPayload } from './verifyToken'
 export { clearCookie } from './clearCookie'
 export { formatEmail } from './formatEmail'
 export { formatDate } from './formatDate'

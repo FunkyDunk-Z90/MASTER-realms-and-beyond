@@ -1,17 +1,22 @@
 import { I_SidebarSection } from '@rnb/ui'
 
-import { LucideEarth } from 'lucide-react'
+import {
+    svgAncestries,
+    svgBestiary,
+    svgCampaigns,
+    svgFeats,
+    svgItems,
+    svgLocations,
+    svgNpcs,
+    svgOrigins,
+    svgPlayerCharacters,
+    svgSpells,
+    svgWorlds,
+} from '@rnb/assets'
+import { rnbicon } from '../public/rnbicon'
+import { EarthIcon } from 'lucide-react'
 
-import Worlds from '@/public/map.png'
-import Npc from '@/public/wizard.png'
-import Ancestry from '@/public/knight.png'
-import Hub from '@/public/castle.png'
-import Items from '@/public/magic-potion.png'
-import Feat from '@/public/victory.png'
-import Spells from '@/public/spell-book.png'
-import Beast from '@/public/dragon.png'
-import Background from '@/public/ice.png'
-import Campaigns from '@/public/book.png'
+console.log(typeof svgFeats)
 
 // Only lists routes that have an actual page.tsx in the aetherscribe app.
 // Add entries here as new pages are created.
@@ -19,7 +24,14 @@ export const sidebarData: I_SidebarSection[] = [
     // ─── Hub ──────────────────────────────────────────────────────────────────
     {
         title: 'Hub',
-        items: [{ id: 'hub', label: 'Adventure Hub', href: '/hub' }],
+        items: [
+            {
+                id: 'hub',
+                label: 'Adventure Hub',
+                href: '/hub',
+                icon: rnbicon,
+            },
+        ],
     },
 
     // ─── Characters ───────────────────────────────────────────────────────────
@@ -30,13 +42,13 @@ export const sidebarData: I_SidebarSection[] = [
                 id: 'player-characters',
                 label: 'Player Characters',
                 href: '/hub/player-characters',
-                // icon: Hub,
+                icon: svgPlayerCharacters,
             },
             {
                 id: 'npcs',
                 label: 'NPCs',
                 href: '/hub/npcs',
-                // icon: Npc,
+                icon: EarthIcon,
             },
         ],
     },
@@ -49,19 +61,19 @@ export const sidebarData: I_SidebarSection[] = [
                 id: 'campaigns',
                 label: 'Campaigns',
                 href: '/hub/campaigns',
-                // icon: Campaigns,
+                icon: svgCampaigns,
             },
             {
                 id: 'worlds',
                 label: 'Worlds',
                 href: '/hub/worlds',
-                // icon: Worlds,
+                icon: svgWorlds,
             },
             {
                 id: 'bestiary',
                 label: 'Bestiary',
                 href: '/hub/bestiary',
-                // icon: Beast,
+                icon: svgBestiary,
             },
         ],
     },
@@ -74,19 +86,19 @@ export const sidebarData: I_SidebarSection[] = [
                 id: 'ancestries',
                 label: 'Ancestries',
                 href: '/hub/ancestries',
-                // icon: Ancestry,
+                icon: svgAncestries,
             },
             {
                 id: 'backgrounds',
                 label: 'Backgrounds',
                 href: '/hub/backgrounds',
-                // icon: Background,
+                icon: svgOrigins,
             },
             {
                 id: 'feats',
                 label: 'Feats',
                 href: '/hub/feats',
-                // icon: Feat,
+                icon: svgFeats,
             },
         ],
     },
@@ -99,13 +111,13 @@ export const sidebarData: I_SidebarSection[] = [
                 id: 'spells',
                 label: 'Spells',
                 href: '/hub/spells',
-                // icon: Spells,
+                icon: svgSpells,
             },
             {
                 id: 'items',
                 label: 'Items',
                 href: '/hub/items',
-                // icon: Items,
+                icon: svgItems,
             },
         ],
     },

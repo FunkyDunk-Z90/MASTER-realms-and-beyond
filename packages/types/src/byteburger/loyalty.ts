@@ -1,74 +1,25 @@
-/**
- * @rnb/types - Byte Burger Loyalty Program Types
- * Points, rewards, achievements, and gamification
- */
+// All loyalty types are derived from Zod schemas in @rnb/validators.
 
-import type { T_ObjectId, T_Timestamp } from '../global/common/commonIndex'
+export type {
+    T_TierLevel,
+    T_LoyaltyAccount,
+    T_Achievement,
+    T_Reward,
+    T_PointsTransaction,
+} from '@rnb/validators'
 
-export type E_TierLevel = 'basic' | 'silver' | 'gold' | 'platinum' | 'retro_legend'
+import type { T_TierLevel, T_LoyaltyAccount, T_Achievement, T_Reward, T_PointsTransaction } from '@rnb/validators'
 
-export interface I_LoyaltyAccount {
-    id: T_ObjectId
-    customerId: T_ObjectId
-    points: number
-    totalPointsEarned: number
-    totalPointsRedeemed: number
-    tier: E_TierLevel
-    joinDate: T_Timestamp
-    lastPointsEarned?: T_Timestamp
-    nextTierAt?: number
-}
+export type I_LoyaltyAccount = T_LoyaltyAccount
+export type I_Achievement = T_Achievement
+export type I_Reward = T_Reward
+export type I_PointsTransaction = T_PointsTransaction
+export type E_TierLevel = T_TierLevel
 
-export interface I_Achievement {
-    id: string
-    name: string
-    description: string
-    icon: string
-    unlockedAt?: T_Timestamp
-    progress?: number
-    maxProgress?: number
-}
-
-export interface I_Reward {
-    id: T_ObjectId
-    name: string
-    description: string
-    pointsCost: number
-    discount?: number
-    freeItem?: T_ObjectId
-    expiresAt?: Date
-}
-
-export interface I_LoyaltyRedeemRequest {
-    rewardId: T_ObjectId
-}
-
-export interface I_PointsTransaction {
-    id: T_ObjectId
-    customerId: T_ObjectId
-    amount: number
-    type: 'earn' | 'redeem' | 'adjust' | 'bonus'
-    description: string
-    relatedOrderId?: T_ObjectId
-    timestamp: T_Timestamp
-}
-
-export interface I_GamificationData {
-    customerId: T_ObjectId
-    level: number
-    experience: number
-    achievements: I_Achievement[]
-    badges: Array<{
-        id: string
-        name: string
-        unlockedAt: T_Timestamp
-    }>
-    streakDays: number
-    lastGamePlayDate?: T_Timestamp
-}
+// ─── Tier Benefits (runtime data, kept here) ──────────────────────────────────
 
 export const TIER_BENEFITS: Record<
-    E_TierLevel,
+    T_TierLevel,
     {
         minPoints: number
         pointsMultiplier: number
@@ -83,11 +34,7 @@ export const TIER_BENEFITS: Record<
     silver: {
         minPoints: 500,
         pointsMultiplier: 1.25,
-        benefits: [
-            '1.25x points',
-            'Free item on birthday',
-            'Early access to promos',
-        ],
+        benefits: ['1.25x points', 'Free item on birthday', 'Early access to promos'],
     },
     gold: {
         minPoints: 2000,
