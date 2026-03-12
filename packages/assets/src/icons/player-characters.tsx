@@ -1,0 +1,34 @@
+import type { SVGProps } from 'react'
+
+export const svgPlayerCharacters = (props: SVGProps<SVGSVGElement>) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
+    >
+        {/* Head */}
+        <circle cx={12} cy={5.5} r={2.5} />
+        {/* Helmet crest */}
+        <path d="M12 3C12 1.5 13 1 13.5 1.5" />
+        {/* Body/armor */}
+        <path d="M8 11c0-2 1.8-3 4-3s4 1 4 3" />
+        <path d="M8 11v5l4 2 4-2v-5" />
+        {/* Armor center line */}
+        <path d="M12 11v7" />
+        {/* Shield (left hand) */}
+        <path d="M3 11.5c0 3 2.5 5.5 4.5 6.5V10.5C7.5 10 6 9.5 5 9.5c-1 0-2 .8-2 2z" />
+        {/* Sword (right hand) */}
+        <path d="M18 9l.5-5.5" />
+        <path d="M17 4h3" strokeWidth={1.2} />
+        <path d="M18 9v8" />
+        <path d="M17 9.5h2" />
+        {/* Feet */}
+        <path d="M10 18l-1 3" />
+        <path d="M14 18l1 3" />
+    </svg>
+)

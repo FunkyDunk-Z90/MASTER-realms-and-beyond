@@ -260,7 +260,11 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/assets: {}
+  packages/assets:
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
 
   packages/errors:
     devDependencies:

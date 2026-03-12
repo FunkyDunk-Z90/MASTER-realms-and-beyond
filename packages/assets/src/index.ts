@@ -19,16 +19,23 @@ export { default as iconWizard } from './images/icons/wizard.png'
 
 export { default as rnbCoverImage } from './images/backgrounds/rnb-cover.jpg'
 
-// ─── SVGS ────────────────────────────────────────────────────────────────────
+// ─── SVG Icon Components ──────────────────────────────────────────────────────
+// Inline TSX components — always React functions, always use currentColor.
+// The .svg source files in images/icons/svg/ are kept as design references
+// but NOT imported here (Next.js without SVGR config returns them as static
+// asset URLs, which cannot inherit CSS color/theme values).
 
-export { default as svgAncestries } from './images/icons/svg/ancestries.svg'
-export { default as svgBestiary } from './images/icons/svg/bestiary.svg'
-export { default as svgCampaigns } from './images/icons/svg/campaigns.svg'
-export { default as svgFeats } from './images/icons/svg/feats.svg'
-export { default as svgItems } from './images/icons/svg/items.svg'
-export { default as svgLocations } from './images/icons/svg/locations.svg'
-export { default as svgNpcs } from './images/icons/svg/npcs.svg'
-export { default as svgOrigins } from './images/icons/svg/origins.svg'
-export { default as svgPlayerCharacters } from './images/icons/svg/player-characters.svg'
-export { default as svgSpells } from './images/icons/svg/spells.svg'
-export { default as svgWorlds } from './images/icons/svg/worlds.svg'
+export {
+    svgHub,
+    svgAncestries,
+    svgBestiary,
+    svgCampaigns,
+    svgFeats,
+    svgItems,
+    svgLocations,
+    svgNpcs,
+    svgOrigins,
+    svgPlayerCharacters,
+    svgSpells,
+    svgWorlds,
+} from './icons'

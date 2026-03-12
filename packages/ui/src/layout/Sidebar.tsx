@@ -9,13 +9,15 @@ import {
     ChevronsLeft,
     ChevronsRight,
     Settings,
+    Menu,
 } from 'lucide-react'
 import { I_Link, T_ObjectId } from '@rnb/types'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const SIDEBAR_OPEN_WIDTH = 260 // px — must match $sidebar-max / --sidebar-max
+const SIDEBAR_OPEN_WIDTH = 220 // px — must match $sidebar-max / --sidebar-max
 const SIDEBAR_RAIL_WIDTH = 48 // px — icon-only collapsed rail
+const MOBILE_BREAKPOINT = 768 // px — matches $tablet in _variables.scss
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -74,18 +76,30 @@ interface I_TooltipState {
 }
 
 // ─── Icon renderer ────────────────────────────────────────────────────────────
+// Handles two function-component icon types:
+//   • Lucide icons    — consume size / strokeWidth / color
+//   • TSX SVG icons   — consume width / height / strokeWidth / color (SVGProps)
+// Both prop sets are passed so each type takes what it needs.
+// color="currentColor" lets the SVG inherit CSS color: var(--text-color) from
+// the parent .sidebar-icon span, making icons respond to theme changes.
 
 function SidebarIcon({ icon }: { icon: I_SidebarItem['icon'] }) {
     if (!icon) return null
 
     if (typeof icon === 'function') {
-        const Icon = icon as T_IconComponent
+        const Icon = icon as React.ComponentType<Record<string, unknown>>
         return (
             <span
                 className="sidebar-icon sidebar-icon--component"
                 aria-hidden="true"
             >
-                <Icon size={16} strokeWidth={1.5} color="currentColor" />
+                <Icon
+                    size={16}
+                    width={16}
+                    height={16}
+                    strokeWidth={1.5}
+                    color="currentColor"
+                />
             </span>
         )
     }
@@ -316,44 +330,80 @@ export const Sidebar = ({
 }: I_SidebarProps) => {
     const pathName = usePathname()
     const [open, setOpen] = useState<boolean | null>(null)
+    const [isMobile, setIsMobile] = useState(false)
+    const [isResizing, setIsResizing] = useState(false)
     const [tooltip, setTooltip] = useState<I_TooltipState>({
         label: '',
         y: 0,
         visible: false,
     })
 
-    // Restore from localStorage
+    // Init: detect mobile breakpoint and restore desktop state from localStorage.
+    // On mobile, sidebar always starts hidden — not persisted.
     useEffect(() => {
-        const stored = localStorage.getItem(storageKey)
-        setOpen(stored === null ? defaultOpen : stored === 'true')
+        const mq = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+        const mobile = mq.matches
+        setIsMobile(mobile)
+
+        if (mobile) {
+            setOpen(false)
+        } else {
+            const stored = localStorage.getItem(storageKey)
+            setOpen(stored === null ? defaultOpen : stored === 'true')
+        }
+
+        const handler = (e: MediaQueryListEvent) => {
+            // Suppress sidebar transitions during breakpoint crossings so the
+            // sidebar snaps instantly rather than playing a close/open animation.
+            setIsResizing(true)
+            setIsMobile(e.matches)
+            if (e.matches) setOpen(false)
+            // Two rAFs: first lets React flush the render, second lets the
+            // browser paint — then transitions are safe to re-enable.
+            requestAnimationFrame(() =>
+                requestAnimationFrame(() => setIsResizing(false))
+            )
+        }
+        mq.addEventListener('change', handler)
+        return () => mq.removeEventListener('change', handler)
     }, [storageKey, defaultOpen])
 
-    // Keep --sidebar-current-width in sync so .section-wrapper can offset itself
+    // Keep --sidebar-current-width in sync so .section-wrapper can offset itself.
+    // On mobile: 0 (hidden) or full open width (overlaid). No rail on mobile.
     useEffect(() => {
         if (open === null) return
-        const w = open ? SIDEBAR_OPEN_WIDTH : SIDEBAR_RAIL_WIDTH
+        const w = isMobile
+            ? open
+                ? SIDEBAR_OPEN_WIDTH
+                : 0
+            : open
+              ? SIDEBAR_OPEN_WIDTH
+              : SIDEBAR_RAIL_WIDTH
         document.documentElement.style.setProperty(
             '--sidebar-current-width',
             `${w}px`
         )
-    }, [open])
+    }, [open, isMobile])
 
     const toggle = () => {
         const next = !open
         setOpen(next)
-        localStorage.setItem(storageKey, String(next))
+        // Persist desktop state only — mobile state is always transient
+        if (!isMobile) {
+            localStorage.setItem(storageKey, String(next))
+        }
     }
 
-    // Tooltip — only fires when sidebar is collapsed
+    // Tooltip — only fires when sidebar is collapsed in desktop rail mode
     const handleLinkMouseEnter = useCallback(
         (e: React.MouseEvent<HTMLElement>, label: string) => {
-            if (open) return
+            if (open || isMobile) return
             const rect = (
                 e.currentTarget as HTMLElement
             ).getBoundingClientRect()
             setTooltip({ label, y: rect.top + rect.height / 2, visible: true })
         },
-        [open]
+        [open, isMobile]
     )
 
     const handleLinkMouseLeave = useCallback(() => {
@@ -362,11 +412,39 @@ export const Sidebar = ({
 
     if (open === null) return null
 
+    const asideClasses = [
+        'sidebar-wrapper',
+        open ? 'sidebar-open' : 'sidebar-collapsed',
+        isMobile ? 'sidebar-mobile' : '',
+        isResizing ? 'sidebar-no-transition' : '',
+    ]
+        .filter(Boolean)
+        .join(' ')
+
     return (
         <>
-            <aside
-                className={`sidebar-wrapper${open ? ' sidebar-open' : ' sidebar-collapsed'}`}
-            >
+            {/* Mobile backdrop overlay — closes sidebar on tap */}
+            {isMobile && open && (
+                <div
+                    className="sidebar-overlay"
+                    onClick={toggle}
+                    aria-hidden="true"
+                />
+            )}
+
+            {/* Mobile open trigger — floats in content area when sidebar is hidden */}
+            {isMobile && !open && (
+                <button
+                    className="sidebar-mobile-trigger"
+                    onClick={toggle}
+                    aria-label="Open sidebar"
+                    type="button"
+                >
+                    <Menu size={18} strokeWidth={1.5} color="currentColor" />
+                </button>
+            )}
+
+            <aside className={asideClasses}>
                 <div className="sidebar-inner">
                     {/* ── Controls ── */}
                     <div className="sidebar-controls">
@@ -406,13 +484,6 @@ export const Sidebar = ({
                                     open ? 'Collapse sidebar' : 'Expand sidebar'
                                 }
                                 type="button"
-                                onMouseEnter={(e) =>
-                                    handleLinkMouseEnter(
-                                        e,
-                                        open ? 'Collapse' : 'Expand'
-                                    )
-                                }
-                                onMouseLeave={handleLinkMouseLeave}
                             >
                                 {open ? (
                                     <ChevronsLeft
@@ -465,9 +536,10 @@ export const Sidebar = ({
                 </div>
             </aside>
 
-            {/* Floating tooltip — lives outside <aside> so it's never clipped */}
+            {/* Floating tooltip — lives outside <aside> so it's never clipped.
+                Hidden on mobile (tooltips aren't useful for touch targets). */}
             <div
-                className={`sidebar-tooltip${tooltip.visible ? ' sidebar-tooltip--visible' : ''}`}
+                className={`sidebar-tooltip${tooltip.visible && !isMobile ? ' sidebar-tooltip--visible' : ''}`}
                 style={
                     { '--tooltip-y': `${tooltip.y}px` } as React.CSSProperties
                 }

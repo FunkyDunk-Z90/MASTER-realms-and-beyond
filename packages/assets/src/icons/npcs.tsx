@@ -1,0 +1,30 @@
+import type { SVGProps } from 'react'
+
+export const svgNpcs = (props: SVGProps<SVGSVGElement>) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
+    >
+        {/* Hood/cloak silhouette */}
+        <path d="M8 11c0-2.2 1.8-4 4-4s4 1.8 4 4" />
+        <path d="M6 18c0-4 2.5-7 6-7s6 3 6 7" />
+        {/* Hood peak */}
+        <path d="M9.5 7C10 4.5 11 3 12 3s2 1.5 2.5 4" />
+        {/* Face shadow (simple) */}
+        <circle cx={10.5} cy={11.5} r={0.6} fill="currentColor" />
+        <circle cx={13.5} cy={11.5} r={0.6} fill="currentColor" />
+        {/* Quest marker / exclamation */}
+        <circle cx={19.5} cy={6} r={3} strokeWidth={1.2} />
+        <path d="M19.5 4.5v1.5" strokeWidth={1.8} />
+        <circle cx={19.5} cy={7.2} r={0.3} fill="currentColor" />
+        {/* Robe bottom */}
+        <path d="M6 18h12" />
+        <path d="M8 18l-1 3h10l-1-3" />
+    </svg>
+)

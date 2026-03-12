@@ -1,0 +1,22 @@
+import type { SVGProps } from 'react'
+
+export const svgHub = (props: SVGProps<SVGSVGElement>) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
+    >
+        {/* Compass outer ring */}
+        <circle cx={12} cy={12} r={9} />
+        {/* Cardinal direction tick marks */}
+        <path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2" />
+        {/* Compass needle — north half (filled) pointing up, south half (hollow) */}
+        <path d="M12 7L14 12L12 17L10 12Z" />
+        <path d="M12 7L14 12L10 12Z" fill="currentColor" stroke="none" />
+    </svg>
+)

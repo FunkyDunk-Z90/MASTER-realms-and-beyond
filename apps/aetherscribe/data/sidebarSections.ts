@@ -1,22 +1,18 @@
 import { I_SidebarSection } from '@rnb/ui'
 
 import {
+    svgHub,
     svgAncestries,
     svgBestiary,
     svgCampaigns,
     svgFeats,
     svgItems,
-    svgLocations,
     svgNpcs,
     svgOrigins,
     svgPlayerCharacters,
     svgSpells,
     svgWorlds,
 } from '@rnb/assets'
-import { rnbicon } from '../public/rnbicon'
-import { EarthIcon } from 'lucide-react'
-
-console.log(typeof svgFeats)
 
 // Only lists routes that have an actual page.tsx in the aetherscribe app.
 // Add entries here as new pages are created.
@@ -29,7 +25,7 @@ export const sidebarData: I_SidebarSection[] = [
                 id: 'hub',
                 label: 'Adventure Hub',
                 href: '/hub',
-                icon: rnbicon,
+                icon: svgHub,
             },
         ],
     },
@@ -48,7 +44,7 @@ export const sidebarData: I_SidebarSection[] = [
                 id: 'npcs',
                 label: 'NPCs',
                 href: '/hub/npcs',
-                icon: EarthIcon,
+                icon: svgNpcs,
             },
         ],
     },

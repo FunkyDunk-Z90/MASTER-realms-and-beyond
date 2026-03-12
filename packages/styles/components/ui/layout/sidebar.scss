@@ -11,7 +11,15 @@
 :root {
     --sidebar-icon-rail: 48px;
     --sidebar-current-width: var(--sidebar-icon-rail);
-    // transition-speed is already in :root via _root.scss — no need to redeclare
+}
+
+// ─── Resize transition suppression ───────────────────────────────────────────
+// Applied by JS during viewport-breakpoint crossings so the sidebar snaps
+// instantly instead of animating. Removed after the next browser paint.
+
+.sidebar-no-transition,
+.sidebar-no-transition * {
+    transition: none !important;
 }
 
 // ─── Wrapper ──────────────────────────────────────────────────────────────────
@@ -45,6 +53,95 @@
 
     &.sidebar-collapsed {
         width: var(--sidebar-icon-rail, 48px);
+    }
+
+    // ── Mobile ──────────────────────────────────────────────────────────────
+    // On mobile the sidebar slides in/out via transform instead of changing
+    // width. It overlays content as a drawer and is always full-open width.
+
+    &.sidebar-mobile {
+        @media (max-width: #{$tablet - 1px}) {
+            width: min(#{$sidebar-max}, 85vw);
+            // Full height on mobile — no footer subtraction (drawer pattern)
+            height: calc(100dvh - var(--header-height, #{$header-height}));
+            border-bottom: none;
+            // Start off-screen
+            transform: translateX(-100%);
+            // Transition on transform only, not width
+            transition: transform var(--transition-speed) #{$ease-snap};
+            // Drop shadow when open to separate from content
+            box-shadow:
+                1px 0 0 0 var(--primary-color),
+                4px 0 24px var(--primary-glow);
+
+            &.sidebar-open {
+                transform: translateX(0);
+                // Keep open width consistent — override the width-based rules
+                width: min(#{$sidebar-max}, 85vw);
+            }
+        }
+    }
+}
+
+// ─── Mobile overlay ───────────────────────────────────────────────────────────
+// Dark backdrop rendered behind the mobile drawer. Clicking it closes the
+// sidebar. Hidden on desktop.
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    top: var(--header-height, #{$header-height});
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 99; // just below sidebar (z-index: 100)
+    animation: overlayFadeIn var(--transition-speed) ease both;
+
+    @media (min-width: $tablet) {
+        display: none;
+    }
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+// ─── Mobile open trigger ──────────────────────────────────────────────────────
+// Small button that appears in the content area when the sidebar is hidden
+// on mobile. Gives the user a way to re-open the drawer.
+
+.sidebar-mobile-trigger {
+    position: fixed;
+    top: calc(var(--header-height, #{$header-height}) + #{$medium});
+    left: $medium;
+    z-index: 99;
+    display: none; // flex on mobile, hidden on desktop
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    color: var(--text-muted-color);
+    cursor: pointer;
+    transition:
+        background-color var(--transition-speed) ease,
+        color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease;
+
+    &:hover {
+        background-color: var(--primary-glow);
+        color: var(--primary-hover-color);
+        border-color: var(--primary-color);
+    }
+
+    @media (max-width: #{$tablet - 1px}) {
+        display: flex;
     }
 }
 
@@ -112,6 +209,25 @@
         // In open state: pushed to the far right
         .sidebar-open & {
             margin-left: auto;
+        }
+
+        // In collapsed state: fill the rail and centre the icon,
+        // matching how nav links behave in the icon-only rail.
+        .sidebar-collapsed & {
+            padding: 8px;
+            color: var(--text-secondary-color);
+            width: 100%;
+            justify-content: center;
+        }
+
+        // Toggle only changes text/icon colour on hover — no background fill.
+        &:hover {
+            background-color: transparent;
+            @include active-indicator;
+        }
+
+        > svg:hover {
+            color: var(--primary-hover-color);
         }
     }
 }
@@ -236,7 +352,14 @@
     gap: 2px;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden; // prevent horizontal scroll at the list level
     overscroll-behavior: contain;
+
+    // Grid items default to min-width: auto which lets content overflow.
+    // min-width: 0 allows them to shrink below min-content so text truncation works.
+    > li {
+        min-width: 0;
+    }
 }
 
 .sidebar-search-result-item {
@@ -244,6 +367,7 @@
     padding: $small $medium;
     border-radius: $border-radius;
     width: 100%;
+    min-width: 0; // belt-and-suspenders alongside parent li
     text-decoration: none;
     font-family: $font-body;
     font-size: 0.8rem;
@@ -271,7 +395,6 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-top: $medium;
     overscroll-behavior: contain;
 }
 
@@ -301,7 +424,7 @@
 
 .sidebar-menu {
     display: grid;
-    gap: 2px;
+    gap: $small;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -335,13 +458,26 @@
         }
 
         .sidebar-collapsed & {
-            border-left: none;
+            // Keep border structure identical to open state so there is no
+            // border-color to interpolate when switching states — only the
+            // colour stays transparent, preventing the flash on expand.
+            border-left: 0 solid transparent;
             border-radius: 0;
+
+            // Don't flood the full rail on hover — icon handles its own highlight.
+            &:hover {
+                background-color: transparent;
+                border-left-color: transparent;
+            }
         }
     }
 
     &.active > .sidebar-link {
         @include active-indicator;
+
+        .sidebar-icon > svg {
+            color: var(--primary-hover-color);
+        }
 
         .sidebar-label {
             color: var(--primary-hover-color);
@@ -352,6 +488,25 @@
         }
     }
 }
+
+// ─── Collapsed active state override ──────────────────────────────────────────
+// In the rail, border-left doesn't render (link has border-left: none), so we
+// use a full-width background + coloured icon to signal the active route.
+
+.sidebar-collapsed .sidebar-item.active > .sidebar-link {
+    // Strip the full-row indicator — the icon pill carries it instead.
+    // Use transparent rather than none so border-color has nothing to
+    // interpolate from on expand, preventing the indicator flash.
+    background: transparent;
+    border-left: 0 solid transparent;
+
+    .sidebar-icon {
+        @include active-indicator; // glow background + left-border accent on the pill
+        color: var(--primary-hover-color);
+    }
+}
+
+// ─── Link ─────────────────────────────────────────────────────────────────────
 
 .sidebar-link {
     position: relative;
@@ -364,7 +519,7 @@
     // In collapsed state: centre the icon within the rail
     .sidebar-collapsed & {
         justify-content: center;
-        width: var(--sidebar-icon-rail, 48px);
+        // width: var(--sidebar-icon-rail, 48px);
     }
 }
 
@@ -382,26 +537,42 @@
     margin: $small $medium;
     padding: $small;
     color: var(--text-color);
-    transition: color var(--transition-speed) ease;
+    transition:
+        color var(--transition-speed) ease,
+        background-color var(--transition-speed) ease;
 
     .sidebar-link:hover & {
         color: var(--primary-hover-color);
     }
 
-    // Collapsed: no horizontal margin so the icon sits centred in the rail
+    // Collapsed: no horizontal margin so the icon sits centred in the rail.
+    // Slightly larger hit area in rail mode for touch-friendliness.
     .sidebar-collapsed & {
         margin-inline: 0;
+        width: 35px;
+        height: 35px;
+    }
+
+    // Collapsed hover: highlight just the icon pill (not the full-width rail).
+    // The link itself stays transparent — only the icon gets the glow.
+    .sidebar-collapsed .sidebar-link:hover & {
+        @include active-indicator;
     }
 
     &--component {
-        color: currentColor;
+        // No color override here — inherits color: var(--text-color) from
+        // .sidebar-icon, which also handles hover/active state changes.
+        // SVG currentColor resolves to that inherited value, so icons update
+        // automatically whenever the theme changes --text-color.
 
         svg {
             display: block;
             width: 16px;
             height: 16px;
-            stroke: currentColor; // Lucide
-            fill: currentColor; // SVGR fill-based assets
+            overflow: visible;
+            stroke: currentColor; // resolves to --text-color (or --primary-hover-color on hover)
+            // fill intentionally unset — per-path fill="none" / fill="currentColor"
+            // attributes in the SVG source take precedence over inheritance.
         }
     }
 
@@ -554,8 +725,15 @@
 // .section-wrapper sits next to the sidebar. margin-left tracks the sidebar
 // width via the CSS variable that Sidebar.tsx writes to <html>.
 // The transition duration matches the sidebar width transition exactly.
+//
+// On mobile, the sidebar overlays content as a drawer, so no offset is applied.
 
 .section-wrapper {
     padding-left: var(--sidebar-current-width, var(--sidebar-icon-rail, 48px));
     transition: padding-left var(--transition-speed) ease;
+
+    @media (max-width: #{$tablet - 1px}) {
+        padding-left: 0;
+        transition: none;
+    }
 }
