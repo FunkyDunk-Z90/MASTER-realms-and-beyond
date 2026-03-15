@@ -203,4 +203,37 @@
         animation: spin 1s linear infinite;
         display: inline-block;
     }
+
+    &--gold {
+        background-color: $pale-gold;
+        border-color: $pale-gold-dim;
+
+        &:hover {
+            background-color: $pale-gold-dim;
+        }
+    }
+    &--royal {
+        background-color: $steel-blue-glow-str;
+        border-color: $pale-gold-dim;
+
+        &:hover {
+            background-color: $steel-blue;
+        }
+    }
+    &--crimson {
+        background-color: $crimson-deep;
+        border-color: $crimson-glow;
+
+        &:hover {
+            background-color: $crimson-regal;
+        }
+    }
+    &--parchment {
+        background-color: $parchment-base;
+        border-color: $regal-pale-gold;
+
+        &:hover {
+            background-color: $amber-deep;
+        }
+    }
 }
