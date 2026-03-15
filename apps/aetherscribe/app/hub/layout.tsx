@@ -1,12 +1,10 @@
 'use client'
 
-// app/hub/layout.tsx
-//
-// Client component so the searchFn (a function) can be passed to <Sidebar>
-// without crossing the RSC boundary.
-
-import { Sidebar, I_SearchResult } from '@rnb/ui'
+import { Navbar, Footer, Sidebar, AuthGuard, useAuth } from '@rnb/ui'
+import type { I_SearchResult } from '@rnb/ui'
+import { aetherscribeLogo } from '@rnb/assets'
 import { sidebarData } from '@/data/sidebarSections'
+import { navLinks } from '@/data/navLinks'
 import {
     testAccountContent,
     categoryMeta,
@@ -46,20 +44,25 @@ const searchFn = buildSearchFn()
 // ─── Layout ───────────────────────────────────────────────────────────────────
 
 export default function HubLayout({ children }: { children: React.ReactNode }) {
+    const { logout } = useAuth()
+
     return (
-        <>
-            <Sidebar
-                sections={sidebarData}
-                searchFn={searchFn}
-                defaultOpen={false}
-                // onSettingsClick={() => { /* open your settings modal here */ }}
+        <AuthGuard>
+            <Navbar
+                headerIcon={aetherscribeLogo}
+                headerTitle="Aetherscribe"
+                navItems={navLinks}
+                onLogout={logout}
             />
-            {/*
-                .section-wrapper's margin-left is driven by --sidebar-current-width,
-                which Sidebar.tsx writes to <html> on every open/close toggle.
-                The transition in sidebar.scss keeps it perfectly in sync.
-            */}
-            <section className="section-wrapper">{children}</section>
-        </>
+            <main className="page-wrapper">
+                <Sidebar
+                    sections={sidebarData}
+                    searchFn={searchFn}
+                    defaultOpen={false}
+                />
+                <section className="section-wrapper">{children}</section>
+            </main>
+            <Footer appName="Aetherscribe" />
+        </AuthGuard>
     )
 }

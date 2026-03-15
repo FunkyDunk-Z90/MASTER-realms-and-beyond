@@ -1,22 +1,29 @@
 import { Request, Response } from 'express'
-import { I_IdentityProfile, I_ContactProps } from '@rnb/types'
-import { IdentityModel } from '../models/identityModel'
-import { buildIdentityDefaults } from '../utils/buildIdentityDefaults'
+import { Identity } from '@rnb/database'
 import { AppError } from '@rnb/errors'
 import { catchAsync } from '@rnb/middleware'
-import { validate } from '@rnb/validators'
-import { setAuthCookie, formatEmail } from '@rnb/security'
-import { env } from '@rnb/validators'
+import { setAuthCookie, clearCookie, formatEmail } from '@rnb/security'
+import { env, Z_SetPassword } from '@rnb/validators'
+import { buildIdentityDefaults } from '../utils/buildIdentityDefaults'
 
-interface I_SuccessResponse {
-    accessToken: void
-    user: ReturnType<InstanceType<typeof IdentityModel>['getPublicInfo']>
+const IS_DEV = env.NODE_ENV === 'development'
+
+// ─── Shared Response Types ────────────────────────────────────────────────────
+
+interface I_UserResponse {
+    user: Record<string, unknown>
+}
+
+interface I_MessageResponse {
+    message: string
 }
 
 interface I_ErrorResponse {
     message: string
     field?: string
 }
+
+// ─── Signup ───────────────────────────────────────────────────────────────────
 
 interface I_SignupBody {
     firstName: string
@@ -30,8 +37,8 @@ interface I_SignupBody {
 
 export const signup = catchAsync(
     async (
-        req: Request<{}, I_SuccessResponse | I_ErrorResponse, I_SignupBody>,
-        res: Response<I_SuccessResponse | I_ErrorResponse>
+        req: Request<{}, I_UserResponse | I_ErrorResponse, I_SignupBody>,
+        res: Response<I_UserResponse | I_ErrorResponse>
     ): Promise<void> => {
         const {
             firstName,
@@ -43,52 +50,69 @@ export const signup = catchAsync(
             nationality,
         } = req.body
 
+        // ── Validate ──────────────────────────────────────────────────────────
+
+        if (!firstName?.trim() || !lastName?.trim()) {
+            throw new AppError(
+                'First name and last name are required.',
+                400,
+                'name'
+            )
+        }
+
+        if (password !== passwordConfirm) {
+            throw new AppError(
+                'Passwords do not match.',
+                400,
+                'passwordConfirm'
+            )
+        }
+
+        const passwordCheck = Z_SetPassword.safeParse({ plaintext: password })
+        if (!passwordCheck.success) {
+            const message =
+                passwordCheck.error.issues[0]?.message ?? 'Invalid password.'
+            throw new AppError(message, 400, 'password')
+        }
+
         const normalizedEmail = formatEmail(email)
 
-        validate({ field: 'firstName', firstName, lastName })
-        validate({ field: 'email', value: normalizedEmail })
-        validate({ field: 'passwordWithConfirm', password, passwordConfirm })
+        // ── Duplicate check ───────────────────────────────────────────────────
 
-        const existingIdentity = await IdentityModel.findOne({
-            'contact.email': normalizedEmail,
-        }).lean()
-
-        if (existingIdentity) {
+        const existing = await Identity.findByEmail(normalizedEmail)
+        if (existing) {
             throw new AppError(
-                'An account with this email already exists',
+                'An account with this email already exists.',
                 409,
                 'email'
             )
         }
 
-        const profile: I_IdentityProfile = {
-            firstName: firstName.trim(),
-            lastName: lastName.trim(),
-            ...(dateOfBirth && { dateOfBirth }),
-            ...(nationality && { nationality }),
-        }
+        // ── Create ────────────────────────────────────────────────────────────
 
-        const contact: I_ContactProps = { email: normalizedEmail }
-
-        const identity = new IdentityModel(
-            buildIdentityDefaults({ profile, contact, password, req })
+        const identity = new Identity(
+            buildIdentityDefaults({
+                profile: {
+                    firstName: firstName.trim(),
+                    lastName: lastName.trim(),
+                    email: normalizedEmail,
+                    ...(dateOfBirth && { dateOfBirth }),
+                    ...(nationality && { nationality }),
+                },
+                req,
+            })
         )
 
-        identity.passwordConfirm = passwordConfirm
-        await identity.save()
+        // Validates, hashes, and saves the document
+        await identity.setPassword({ plaintext: password })
 
-        const accessToken = setAuthCookie(
-            res,
-            identity._id.toString(),
-            env.JWT_SECRET
-        )
+        setAuthCookie(res, identity._id.toString(), env.JWT_SECRET, IS_DEV)
 
-        res.status(201).json({
-            accessToken,
-            user: identity.getPublicInfo(),
-        })
+        res.status(201).json({ user: identity.toClient() })
     }
 )
+
+// ─── Login ────────────────────────────────────────────────────────────────────
 
 interface I_LoginBody {
     email: string
@@ -97,44 +121,167 @@ interface I_LoginBody {
 
 export const login = catchAsync(
     async (
-        req: Request<{}, I_SuccessResponse | I_ErrorResponse, I_LoginBody>,
-        res: Response<I_SuccessResponse | I_ErrorResponse>
+        req: Request<{}, I_UserResponse | I_ErrorResponse, I_LoginBody>,
+        res: Response<I_UserResponse | I_ErrorResponse>
     ): Promise<void> => {
         const { email, password } = req.body
 
-        const normalizedEmail = formatEmail(email)
+        if (!email || !password) {
+            throw new AppError('Email and password are required.', 400)
+        }
 
-        const errorMessage = 'Invalid email or password'
+        const identity = await Identity.findByEmail(formatEmail(email))
 
-        validate({ field: 'email', value: normalizedEmail })
-        validate({ field: 'password', password })
-
-        const identity = await IdentityModel.findOne({
-            'contact.email': normalizedEmail,
-        }).select('+security.passwordHash')
-
+        // Vague error — don't leak whether the email exists
         if (!identity) {
-            throw new AppError('Invalid email or password', 401)
+            throw new AppError('Invalid email or password.', 401)
         }
 
-        const isPasswordCorrect = await identity.correctPassword(password)
-
-        if (!isPasswordCorrect) {
-            throw new AppError('Invalid email or password', 401)
+        const isValid = await identity.verifyPassword({ plaintext: password })
+        if (!isValid) {
+            throw new AppError('Invalid email or password.', 401)
         }
 
-        identity.lastLoginAt = new Date()
+        // Normalize IP: strip IPv6-mapped IPv4 prefix (::ffff:x.x.x.x → x.x.x.x)
+        const rawIp = req.ip ?? req.socket.remoteAddress ?? '0.0.0.0'
+        const ip = rawIp.startsWith('::ffff:') ? rawIp.slice(7) : rawIp
+        await identity.recordLogin({ ip })
+
+        setAuthCookie(res, identity._id.toString(), env.JWT_SECRET, IS_DEV)
+
+        res.status(200).json({ user: identity.toClient() })
+    }
+)
+
+// ─── Logout ───────────────────────────────────────────────────────────────────
+
+export const logout = catchAsync(
+    async (req: Request, res: Response<I_MessageResponse>): Promise<void> => {
+        clearCookie(res, IS_DEV)
+        res.status(200).json({ message: 'Logged out successfully.' })
+    }
+)
+
+// ─── Check Auth ───────────────────────────────────────────────────────────────
+// Lightweight ping — returns whether the session is valid and who owns it.
+// Use GET /me for the full profile.
+
+export const checkAuth = catchAsync(
+    async (req: Request, res: Response): Promise<void> => {
+        res.status(200).json({
+            authenticated: true,
+            userId: req.identity!._id.toString(),
+        })
+    }
+)
+
+// ─── Get My Account ───────────────────────────────────────────────────────────
+
+export const getMyAccount = catchAsync(
+    async (req: Request, res: Response<I_UserResponse>): Promise<void> => {
+        res.status(200).json({ user: req.identity!.toClient() })
+    }
+)
+
+// ─── Update My Account ────────────────────────────────────────────────────────
+
+interface I_UpdateAccountBody {
+    firstName?: string
+    lastName?: string
+    dateOfBirth?: string
+    nationality?: string
+    gender?: string
+    pronouns?: string
+    language?: string
+    timezone?: string
+    theme?: 'light' | 'dark' | 'system'
+    currency?: string
+    dateFormat?: string
+}
+
+export const updateMyAccount = catchAsync(
+    async (
+        req: Request<{}, I_UserResponse | I_ErrorResponse, I_UpdateAccountBody>,
+        res: Response<I_UserResponse | I_ErrorResponse>
+    ): Promise<void> => {
+        const identity = req.identity!
+
+        const {
+            firstName,
+            lastName,
+            dateOfBirth,
+            nationality,
+            gender,
+            pronouns,
+            language,
+            timezone,
+            theme,
+            currency,
+            dateFormat,
+        } = req.body
+
+        // ── Profile fields ────────────────────────────────────────────────────
+
+        if (firstName !== undefined) {
+            if (!firstName.trim())
+                throw new AppError(
+                    'First name cannot be empty.',
+                    400,
+                    'firstName'
+                )
+            identity.profile.firstName = firstName.trim()
+        }
+        if (lastName !== undefined) {
+            if (!lastName.trim())
+                throw new AppError(
+                    'Last name cannot be empty.',
+                    400,
+                    'lastName'
+                )
+            identity.profile.lastName = lastName.trim()
+        }
+        if (dateOfBirth !== undefined)
+            identity.profile.dateOfBirth = dateOfBirth
+        if (nationality !== undefined)
+            identity.profile.nationality = nationality
+        if (gender !== undefined) identity.profile.gender = gender
+        if (pronouns !== undefined) identity.profile.pronouns = pronouns
+
+        // ── Preference fields ─────────────────────────────────────────────────
+
+        if (language !== undefined) identity.preferences.language = language
+        if (timezone !== undefined) identity.preferences.timezone = timezone
+        if (theme !== undefined) identity.preferences.theme = theme
+        if (currency !== undefined) identity.preferences.currency = currency
+        if (dateFormat !== undefined)
+            identity.preferences.dateFormat = dateFormat
+
         await identity.save({ validateModifiedOnly: true })
 
-        const accessToken = setAuthCookie(
-            res,
-            identity._id.toString(),
-            env.JWT_SECRET
-        )
+        res.status(200).json({ user: identity.toClient() })
+    }
+)
+
+// ─── Delete My Account ────────────────────────────────────────────────────────
+
+export const deleteMyAccount = catchAsync(
+    async (
+        req: Request,
+        res: Response<I_MessageResponse | I_ErrorResponse>
+    ): Promise<void> => {
+        const identity = req.identity!
+
+        // Soft-delete with default 30-day recovery window
+        await identity.softDelete()
+
+        // Record GDPR deletion request in audit log
+        await identity.requestDeletion()
+
+        clearCookie(res, IS_DEV)
 
         res.status(200).json({
-            accessToken,
-            user: identity.getPublicInfo(),
+            message:
+                'Your account has been scheduled for deletion. You have 30 days to recover it.',
         })
     }
 )

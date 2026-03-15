@@ -17,6 +17,7 @@ export const Z_IdentityProfile = z.object({
     nationality: z.string().optional(),
     gender: z.string().optional(),
     pronouns: z.string().optional(),
+    email: z.email(),
 })
 
 export const Z_IdentityMedia = z.object({
@@ -43,7 +44,7 @@ export const Z_IdentityVerification = z.object({
 })
 
 export const Z_IdentitySecurity = z.object({
-    passwordHash: z.string().optional(),
+    password: z.string().optional(),
     passwordChangedAt: z.iso.datetime().optional(),
     passwordResetToken: z.string().optional(),
     passwordResetExpiresIn: z.iso.datetime().optional(),
@@ -58,7 +59,7 @@ export const Z_IdentitySecurity = z.object({
 export const Z_LinkedService = z.object({
     serviceName: z.string(),
     serviceId: Z_ObjectId,
-    linkedAt: Z_Timestamp,
+    linkedAt: z.iso.datetime(),
     scopes: z.array(z.string()),
     status: Z_IdentityStatus,
 })
@@ -84,7 +85,8 @@ export const Z_IdentitySchema = z.object({
     id: Z_ObjectId,
     profile: Z_IdentityProfile,
     media: Z_IdentityMedia,
-    contact: Z_Contact,
+    // Contact is optional at signup — collected post-registration
+    contact: Z_Contact.partial().optional(),
     preferences: Z_IdentityPreferences,
     verification: Z_IdentityVerification,
     security: Z_IdentitySecurity,

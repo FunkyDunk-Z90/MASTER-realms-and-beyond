@@ -1,47 +1,45 @@
 import { Request } from 'express'
-import { I_IdentityProfile, I_ContactProps, T_IdentityStatus } from '@rnb/types'
+import { T_IdentityProfile } from '@rnb/validators'
 
-interface I_BuildIdentityDefaultsParams {
-    profile: I_IdentityProfile
-    contact: I_ContactProps
-    password: string
+interface I_BuildIdentityDefaultsInput {
+    profile: T_IdentityProfile
     req: Request
 }
 
 export const buildIdentityDefaults = ({
     profile,
-    contact,
-    password,
     req,
-}: I_BuildIdentityDefaultsParams) => ({
-    profile,
-    contact,
-    security: {
-        passwordHash: password,
-        lastKnownIp: req.ip,
-        trustedDevices: [],
-    },
-    verification: {
-        emailVerified: false,
-        phoneVerified: false,
-        identityVerified: false,
-        twoFactorEnabled: false,
-    },
-    preferences: {
-        language: req.headers['accept-language']?.split(',')[0] ?? 'en-US',
-        timezone: 'UTC',
-        theme: 'system',
-    },
-    lifecycle: {
-        status: 'active' as T_IdentityStatus,
-    },
-    audit: {
-        marketingConsent: false,
-    },
-    accounts: {
-        linkedAccounts: [],
-        managedIdentities: [],
-    },
-    media: {},
-    lastLoginAt: new Date(),
-})
+}: I_BuildIdentityDefaultsInput) => {
+    // Infer language from Accept-Language header, fall back to 'en'
+    const acceptLanguage = req.headers['accept-language']
+    const language = acceptLanguage
+        ? acceptLanguage.split(',')[0].split('-')[0].trim()
+        : 'en'
+
+    // Infer timezone from custom header if set by client, fall back to UTC
+    const timezone = (req.headers['x-timezone'] as string | undefined) ?? 'UTC'
+
+    return {
+        profile,
+        security: {
+            trustedDevices: [],
+        },
+        preferences: {
+            language,
+            timezone,
+            theme: 'system' as const,
+        },
+        verification: {
+            emailVerified: false,
+            phoneVerified: false,
+            identityVerified: false,
+            twoFactorEnabled: false,
+        },
+        lifecycle: {
+            status: 'active' as const,
+        },
+        audit: {
+            marketingConsent: false,
+        },
+    }
+}

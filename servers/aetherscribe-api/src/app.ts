@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
+import { errorHandler } from '@rnb/middleware'
+import aetherscribeRouter from './routes/aetherscribeRouter'
 
 const app = express()
 
@@ -16,7 +18,11 @@ app.use(
     })
 )
 
-app.use(express.json({ limit: '100mb' }))
+app.use(express.json({ limit: '10mb' }))
 app.use(cookieParser())
+
+app.use('/api/v1/account', aetherscribeRouter)
+
+app.use(errorHandler)
 
 export default app

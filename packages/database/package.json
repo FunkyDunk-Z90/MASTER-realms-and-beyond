@@ -1,0 +1,29 @@
+{
+    "name": "@rnb/database",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "default": "./src/index.ts"
+        }
+    },
+    "scripts": {
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^6.0.0",
+        "@types/node": "^25.2.3",
+        "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "@rnb/types": "workspace:*",
+        "@rnb/validators": "workspace:*",
+        "@rnb/middleware": "workspace:*",
+        "bcrypt": "^6.0.0",
+        "mongoose": "^9.2.1"
+    }
+}

@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { connect } from 'mongoose'
-import { env } from './utils/validateEnv'
+import { env } from '@rnb/validators'
 import app from './app'
 
 const database = env.DATABASE.replace('<PASSWORD>', env.DATABASE_PASSWORD)
@@ -22,11 +22,11 @@ const startServer = async function () {
         await connectToDatabase()
 
         app.listen(port, () => {
-            console.log(`App running on port ${port}`)
+            console.log(`Aetherscribe API running on port ${port}`)
         })
     } catch (error) {
         console.error(error)
-        console.log("Couldn't connect to server")
+        console.log("Couldn't start server")
     }
 }
 

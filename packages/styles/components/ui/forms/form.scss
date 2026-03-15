@@ -181,3 +181,257 @@
 .signup-wrapper {
     margin-block: auto;
 }
+
+// ─── Landing page ─────────────────────────────────────────────────────────────
+
+.landing-page {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $xLarge;
+    padding: $xLarge $large;
+}
+
+.landing-hero {
+    display: grid;
+    gap: $small;
+    text-align: center;
+}
+
+.landing-title {
+    font-family: $font-display;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-heading-color);
+    text-shadow: 0 0 24px var(--primary-glow-strong);
+    margin: 0;
+}
+
+.landing-subtitle {
+    font-family: $font-body;
+    font-size: 0.875rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.06em;
+    margin: 0;
+}
+
+// ─── AuthForm overrides ───────────────────────────────────────────────────────
+
+.auth-form {
+    width: min(100%, 480px);
+}
+
+// Side-by-side row (first + last name on signup)
+.auth-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $medium;
+    width: 100%;
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.auth-form__error {
+    text-align: center;
+}
+
+// ─── Onboarding page ──────────────────────────────────────────────────────────
+
+.onboarding-page {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: $xLarge;
+    padding: $xLarge $large;
+    padding-top: clamp(2rem, 6vh, 4rem);
+}
+
+.onboarding-hero {
+    display: grid;
+    gap: $small;
+    text-align: center;
+}
+
+// ─── Onboarding form ──────────────────────────────────────────────────────────
+
+.onboarding-form {
+    display: grid;
+    gap: $xLarge;
+    width: min(100%, 860px);
+}
+
+.onboarding-form__section {
+    display: grid;
+    gap: $large;
+}
+
+.onboarding-form__section-title {
+    font-family: $font-display;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-heading-color);
+    margin: 0;
+}
+
+.onboarding-form__section-desc {
+    font-family: $font-body;
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    margin: 0;
+    margin-top: -$medium;
+}
+
+.onboarding-form__error {
+    text-align: center;
+}
+
+// ─── Plan grid ────────────────────────────────────────────────────────────────
+
+.plan-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $medium;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ─── Plan card ────────────────────────────────────────────────────────────────
+
+.plan-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $medium;
+    padding: $large;
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    cursor: pointer;
+    text-align: left;
+    transition:
+        border-color var(--transition-speed, 0.18s) ease,
+        box-shadow var(--transition-speed, 0.18s) ease,
+        background-color var(--transition-speed, 0.18s) ease;
+
+    &:hover {
+        border-color: var(--border-strong-color);
+    }
+
+    &--selected {
+        border-color: var(--primary-color);
+        background-color: var(--bg-inset-color);
+        box-shadow: 0 0 0 1px var(--primary-color), 0 0 12px var(--primary-glow);
+    }
+
+    &--highlight {
+        border-color: var(--accent-color);
+
+        &.plan-card--selected {
+            border-color: var(--primary-color);
+        }
+    }
+
+    &__badge {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: $font-ui;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--bg-color);
+        background-color: var(--accent-color);
+        padding: 2px $medium;
+        border-radius: $border-radius;
+        white-space: nowrap;
+    }
+
+    &__name {
+        font-family: $font-display;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-heading-color);
+    }
+
+    &__price {
+        font-family: $font-body;
+        font-size: 0.8rem;
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    &__features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: $small;
+
+        li {
+            font-family: $font-body;
+            font-size: 0.75rem;
+            color: var(--text-secondary-color);
+            letter-spacing: 0.02em;
+
+            &::before {
+                content: '— ';
+                color: var(--text-muted-color);
+            }
+        }
+    }
+}
+
+// ─── Username status icon ─────────────────────────────────────────────────────
+
+.username-status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--ok { color: var(--success-color); }
+    &--error { color: var(--danger-color); }
+
+    &.spinning {
+        animation: auth-spin 0.65s linear infinite;
+        color: var(--text-muted-color);
+    }
+}
+
+// ─── Auth loading spinner ─────────────────────────────────────────────────────
+
+.auth-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40dvh;
+    width: 100%;
+}
+
+.auth-loading__spinner {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: auth-spin 0.65s linear infinite;
+}
+
+@keyframes auth-spin {
+    to { transform: rotate(360deg); }
+}

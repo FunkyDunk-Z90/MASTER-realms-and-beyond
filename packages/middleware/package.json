@@ -2,6 +2,7 @@
     "name": "@rnb/middleware",
     "version": "0.1.0",
     "private": true,
+    "type": "module",
     "main": "src/index.ts",
     "types": "src/index.ts",
     "scripts": {
@@ -18,11 +19,13 @@
     },
     "devDependencies": {
         "@types/express": "^5.0.6",
-        "@types/mongoose": "^5.11.97",
         "typescript": "^5.9.3"
     },
     "dependencies": {
         "@rnb/errors": "workspace:*",
+        "@rnb/security": "workspace:*",
+        "@rnb/validators": "workspace:*",
+        "@rnb/database": "workspace:*",
         "mongoose": "^9.2.1"
     }
 }

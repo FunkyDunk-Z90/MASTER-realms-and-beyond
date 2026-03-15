@@ -1,4 +1,4 @@
-export { setAuthCookie } from './setAuthCookie'
+export { setAuthCookie, AUTH_COOKIE_NAME } from './setAuthCookie'
 export { createToken } from './createToken'
 export { extractToken } from './extractToken'
 export { verifyToken } from './verifyToken'

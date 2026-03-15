@@ -6,7 +6,6 @@ import morgan from 'morgan'
 import { errorHandler } from '@rnb/middleware'
 
 import identityRouter from './routes/identityRouter'
-import emailRouter from './routes/emailRouter'
 
 const app = express()
 
@@ -25,7 +24,6 @@ app.use(express.json({ limit: '100mb' }))
 app.use(cookieParser())
 
 app.use('/api/v1/user', identityRouter)
-app.use('/api/v1/mail', emailRouter)
 
 app.use(errorHandler)
 

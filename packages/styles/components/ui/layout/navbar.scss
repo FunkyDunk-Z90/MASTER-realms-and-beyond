@@ -9,8 +9,8 @@
     left: 0;
     right: 0;
     display: grid;
-    // logo(auto) · title(auto) · nav(1fr — contains links + theme toggle)
-    grid-template-columns: auto auto 1fr;
+    // logo(auto) · title(auto) · nav(1fr) · nav-actions(auto)
+    grid-template-columns: auto auto 1fr auto;
     align-items: center;
     height: var(--header-height, #{$header-height});
     padding-inline: $large;
@@ -33,8 +33,6 @@
 }
 
 // ─── Logo ─────────────────────────────────────────────────────────────────────
-// Square container that stretches to fill the full header height.
-// No predefined size — driven entirely by --header-height via align-self: stretch.
 
 .header-logo {
     position: relative;
@@ -60,8 +58,8 @@
 }
 
 // ─── Nav wrapper ──────────────────────────────────────────────────────────────
-// Desktop: flex row — nav links left, theme toggle far right.
-// Mobile: absolute panel that slides in; column layout stacks links above toggle.
+// Desktop: flex row — nav links left, logout right.
+// Mobile: absolute panel that slides in from the right.
 
 .nav-wrapper {
     display: flex;
@@ -152,17 +150,54 @@
     }
 }
 
-// ─── Theme toggle (inside nav-wrapper) ───────────────────────────────────────
+// ─── Logout button (inside slide-in nav) ──────────────────────────────────────
 
-.nav-wrapper > .theme-switcher {
-    display: flex;
-    align-items: center;
-    padding-inline: $large;
+.nav-logout {
+    @include font-label;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted-color);
+    cursor: pointer;
+    padding: $small $large $medium;
+    width: 100%;
+    text-align: right;
+    transition: color var(--transition-speed, #{$transition-speed}) ease;
 
-    @include mobile {
-        padding: $small $large $medium;
+    &:hover {
+        color: var(--danger-color);
+    }
+
+    @include desktop {
+        border-top: none;
+        padding: 0;
+        padding-inline: $large;
+        width: auto;
+        text-align: left;
     }
 }
+
+// ─── Nav actions (theme toggle — always visible in the header) ────────────────
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: $medium;
+    // On mobile, leave room for the absolutely-positioned burger icon
+    // (28px icon + $large right padding + $small buffer)
+    padding-right: calc(28px + #{$large} + #{$small});
+
+    @include desktop {
+        padding-right: 0;
+    }
+}
+
+.nav-actions .theme-switcher {
+    display: flex;
+    align-items: center;
+}
+
+// ─── Theme toggle icon ────────────────────────────────────────────────────────
 
 .theme-toggle {
     width: 17px;
@@ -233,19 +268,11 @@
 // ─── Animations ───────────────────────────────────────────────────────────────
 
 @keyframes slide-in {
-    from {
-        transform: translateX(110%);
-    }
-    to {
-        transform: translateX(0);
-    }
+    from { transform: translateX(110%); }
+    to   { transform: translateX(0); }
 }
 
 @keyframes slide-out {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(110%);
-    }
+    from { transform: translateX(0); }
+    to   { transform: translateX(110%); }
 }

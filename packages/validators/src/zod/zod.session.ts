@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { Z_ObjectId, Z_Timestamp } from './zod.common'
-import { Z_TwoFactorMethod } from './zod.identitySchema'
+import { Z_TwoFactorMethod } from './zod.identity.schema'
 
 // ─── Session ──────────────────────────────────────────────────────────────────
 

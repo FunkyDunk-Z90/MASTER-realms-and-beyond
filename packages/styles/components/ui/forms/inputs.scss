@@ -107,6 +107,38 @@
     letter-spacing: 0.03em;
 }
 
+// ─── Input with inline action (e.g. visibility toggle) ───────────────────────
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .input {
+        padding-right: 2.5rem; // make room for toggle button
+    }
+}
+
+.input-visibility-toggle {
+    position: absolute;
+    right: $medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $small;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted-color);
+    transition: color var(--transition-speed, 0.18s) ease;
+    flex-shrink: 0;
+
+    &:hover {
+        color: var(--text-color);
+    }
+}
+
 // ─── Search input ─────────────────────────────────────────────────────────────
 
 .search-input-wrapper {

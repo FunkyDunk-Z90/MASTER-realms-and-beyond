@@ -6,7 +6,7 @@ import { Z_RnBApp } from './zod.user'
 export const Z_RegisterRequest = z
     .object({
         email: z.email(),
-        password: z.string().min(9),
+        password: z.string().min(8),
         confirmPassword: z.string(),
         firstName: z.string().min(1),
         lastName: z.string().min(1),

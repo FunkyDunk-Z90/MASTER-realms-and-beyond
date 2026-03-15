@@ -1,8 +1,7 @@
 import { Response } from 'express'
-import jwt from 'jsonwebtoken'
+import { createToken } from './createToken'
 
-const JWT_EXPIRY = '7d'
-const COOKIE_NAME = 'auth_token'
+export const AUTH_COOKIE_NAME = 'auth_token'
 
 export const setAuthCookie = (
     res: Response,
@@ -10,11 +9,9 @@ export const setAuthCookie = (
     jwtSecret: string,
     isDev?: boolean
 ): void => {
-    const token = jwt.sign({ sub: identityId }, jwtSecret, {
-        expiresIn: JWT_EXPIRY,
-    })
+    const token = createToken(identityId, jwtSecret)
 
-    res.cookie(COOKIE_NAME, token, {
+    res.cookie(AUTH_COOKIE_NAME, token, {
         httpOnly: true,
         secure: !isDev,
         sameSite: 'strict',

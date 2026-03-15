@@ -12,6 +12,8 @@ interface I_NavbarProps {
     navItems: I_Link[]
     headerTitle: string
     headerIcon?: string | StaticImageData
+    /** Optional — when provided, a Log Out button is rendered in the nav. */
+    onLogout?: () => void
 }
 
 const MOBILE_BREAKPOINT = 1025
@@ -20,6 +22,7 @@ export const Navbar = ({
     navItems,
     headerTitle,
     headerIcon,
+    onLogout,
 }: I_NavbarProps) => {
     const [isMobile, setIsMobile] = useState<boolean>(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -84,8 +87,10 @@ export const Navbar = ({
                         />
                     </div>
                 )}
+
                 <h1 className="header-title">{headerTitle}</h1>
-                <BurgerIcon isActive={isOpen} toggle={toggleNav} />
+
+                {/* ── Slide-in nav (links + logout on mobile/desktop) ── */}
                 <nav className={menuClass}>
                     <ul className="nav-menu">
                         {navItems.map((item) => (
@@ -100,12 +105,30 @@ export const Navbar = ({
                             </li>
                         ))}
                     </ul>
+
+                    {onLogout && (
+                        <button
+                            className="nav-logout"
+                            onClick={() => {
+                                closeNav()
+                                onLogout()
+                            }}
+                        >
+                            Log Out
+                        </button>
+                    )}
+                </nav>
+
+                {/* ── Persistent header actions (theme toggle, always visible) ── */}
+                <div className="nav-actions">
                     <ThemeSwitcher
                         showThemePicker={false}
                         showModePicker={false}
                         showThemeToggle={true}
                     />
-                </nav>
+                </div>
+
+                <BurgerIcon isActive={isOpen} toggle={toggleNav} />
             </header>
         </>
     )

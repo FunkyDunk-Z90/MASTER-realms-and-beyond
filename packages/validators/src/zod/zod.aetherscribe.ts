@@ -1,5 +1,11 @@
 import { z } from 'zod'
 import { Z_ObjectId, Z_Timestamp } from './zod.common'
+import {
+    Z_SubscriptionPlan,
+    Z_SubscriptionStatus,
+    Z_SubscriptionLimits,
+} from './zod.subscription'
+import type { T_SubscriptionLimits } from './zod.subscription'
 
 // ─── Enums ─────────────────────────────────────────────────────────────────
 
@@ -310,6 +316,100 @@ export const Z_ExportWorldRequest = z.object({
         })
         .optional(),
 })
+
+// ─── Aetherscribe Account ─────────────────────────────────────────────────────
+
+export const Z_AetherscribeUsername = z
+    .string()
+    .min(3, 'Username must be at least 3 characters.')
+    .max(20, 'Username must be at most 20 characters.')
+    .regex(
+        /^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$/,
+        'Username may only contain letters, numbers, underscores, and hyphens, and must start and end with a letter or number.'
+    )
+    .refine(
+        (v) => !/[_-]{2}/.test(v),
+        'Username cannot contain consecutive hyphens or underscores.'
+    )
+
+export const Z_AetherscribeSubscriptionDoc = z.object({
+    plan: Z_SubscriptionPlan,
+    status: Z_SubscriptionStatus,
+    startDate: z.string(),
+    limits: Z_SubscriptionLimits,
+})
+
+export const Z_AetherscribeAccount = z.object({
+    id: Z_ObjectId,
+    identityId: Z_ObjectId,
+    username: z.string(),
+    subscription: Z_AetherscribeSubscriptionDoc,
+    status: z.enum(['active', 'banned']),
+    createdAt: Z_Timestamp,
+    updatedAt: Z_Timestamp,
+})
+
+export const Z_CreateAetherscribeAccount = z.object({
+    username: Z_AetherscribeUsername,
+    plan: Z_SubscriptionPlan,
+})
+
+// ─── Subscription plan limits map ─────────────────────────────────────────────
+// Defines per-plan resource limits. -1 = unlimited.
+
+export const SUBSCRIPTION_LIMITS: Record<
+    z.infer<typeof Z_SubscriptionPlan>,
+    T_SubscriptionLimits
+> = {
+    free: {
+        maxWorlds: 1,
+        maxCharacters: 10,
+        maxStorageGB: 1,
+        maxCollaborators: 0,
+        advancedFeatures: false,
+        apiAccess: false,
+        customDomain: false,
+        prioritySupport: false,
+    },
+    starter: {
+        maxWorlds: 5,
+        maxCharacters: 50,
+        maxStorageGB: 5,
+        maxCollaborators: 3,
+        advancedFeatures: false,
+        apiAccess: false,
+        customDomain: false,
+        prioritySupport: false,
+    },
+    pro: {
+        maxWorlds: -1,
+        maxCharacters: -1,
+        maxStorageGB: 20,
+        maxCollaborators: 10,
+        advancedFeatures: true,
+        apiAccess: true,
+        customDomain: false,
+        prioritySupport: false,
+    },
+    enterprise: {
+        maxWorlds: -1,
+        maxCharacters: -1,
+        maxStorageGB: 100,
+        maxCollaborators: -1,
+        advancedFeatures: true,
+        apiAccess: true,
+        customDomain: true,
+        prioritySupport: true,
+    },
+}
+
+export type T_AetherscribeSubscriptionDoc = z.infer<
+    typeof Z_AetherscribeSubscriptionDoc
+>
+export type T_AetherscribeAccount = z.infer<typeof Z_AetherscribeAccount>
+export type T_CreateAetherscribeAccount = z.infer<
+    typeof Z_CreateAetherscribeAccount
+>
 
 // ─── Inferred Types ─────────────────────────────────────────────────────────────
 

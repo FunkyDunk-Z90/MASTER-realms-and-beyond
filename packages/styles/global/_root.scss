@@ -2,140 +2,73 @@
 @use '../_mixins' as *;
 
 // ─── Root — Design Token Defaults ────────────────────────────────────────────
-// Defines the default theme (regal — deep royal purple + darkgoldenrod) on :root.
+// Defines the default theme (global-theme dark — warm dark + sage olive) on :root.
 // Override at runtime by adding [data-theme="..."] to <html>.
 
 :root {
-    // ── Default theme: regal ───────────────────────────────────────────────────
-    --bg-color: #120d20;
-    --bg-secondary-color: #1e1535;
-    --bg-surface-color: #2d2050;
-    --bg-inset-color: #0a0812;
+    // ── Default theme: global-theme (dark) ────────────────────────────────────
 
-    --text-color: #c0c0d8;
-    --text-secondary-color: #9898b8;
-    --text-muted-color: #7070a0;
-    --text-heading-color: #f5dfa0;
+    // ── Backgrounds ───────────────────────────────────────────────────────────
+    --bg-color: #262425;
+    --bg-secondary-color: #1c1a1b;
+    --bg-surface-color: #2e2c2d;
+    --bg-inset-color: #141314;
 
-    --primary-color: #b8860b;
-    --primary-hover-color: #d4a83a;
-    --primary-deep-color: #7a5508;
-    --primary-glow: rgba(184, 134, 11, 0.2);
-    --primary-glow-strong: rgba(184, 134, 11, 0.4);
+    // ── Text ──────────────────────────────────────────────────────────────────
+    --text-color: #f0e5d9;
+    --text-secondary-color: #b8aea3;
+    --text-muted-color: #7a7268;
+    --text-heading-color: #ffffff;
 
-    --accent-color: #8b0020;
-    --accent-dim-color: #4a0010;
-    --accent-glow: rgba(139, 0, 32, 0.2);
+    // ── Primary — Sage Olive ──────────────────────────────────────────────────
+    --primary-color: #8c9657;
+    --primary-hover-color: #a1ab68;
+    --primary-deep-color: #6e7744;
+    --primary-glow: rgba(140, 150, 87, 0.16);
+    --primary-glow-strong: rgba(140, 150, 87, 0.34);
 
-    --border-color: rgba(255, 215, 0, 0.15);
-    --border-strong-color: rgba(255, 215, 0, 0.3);
+    // ── Accent — Muted Moss ───────────────────────────────────────────────────
+    --accent-color: #a87a3a;
+    --accent-dim-color: #7a5426;
+    --accent-glow: rgba(168, 122, 58, 0.18);
+
+    // ── Highlight ─────────────────────────────────────────────────────────────
+    --highlight-color: #b8c07a;
+    --highlight-glow: rgba(184, 192, 122, 0.18);
+
+    // ── Borders ───────────────────────────────────────────────────────────────
+    --border-color: #3a3839;
+    --border-strong-color: #4a4849;
     --border-radius: #{$border-radius};
 
-    --rule-color: #b8860b;
-    --rule-glow: 0 0 8px rgba(184, 134, 11, 0.36);
-    --blur: rgba(18, 13, 32, 0.84);
+    // ── Semantic ──────────────────────────────────────────────────────────────
+    --danger-color: #a84a3a;
+    --danger-glow: rgba(168, 74, 58, 0.28);
+    --warning-color: #c2a84a;
+    --success-color: #6c8a4a;
+    --submit-color: #4a6c8a;
+    --disabled-color: #4a4849;
 
-    --shadow-sm: 0 2px 8px rgba(184, 134, 11, 0.25);
-    --shadow-md: 0 4px 20px rgba(184, 134, 11, 0.35);
-    --shadow-lg: 0 8px 40px rgba(184, 134, 11, 0.4);
+    // ── Decorative ────────────────────────────────────────────────────────────
+    --rule-color: #8c9657;
+    --rule-glow: 0 0 8px rgba(140, 150, 87, 0.34);
+    --blur: rgba(20, 19, 20, 0.82);
 
-    // ── Semantic colours ──────────────────────────────────────────────────────
-    --danger-color: #c0152e;
-    --danger-glow: rgba(192, 21, 46, 0.28);
-    --warning-color: #d4a83a;
-    --success-color: #0a5c3a;
-    --submit-color: #1a4a8a;
-    --disabled-color: #3d2d6e;
+    --surface-tint: linear-gradient(
+        135deg,
+        rgba(140, 150, 87, 0.05) 0%,
+        transparent 65%
+    );
 
-    // ── Regal gold palette ────────────────────────────────────────────────────
-    --gold-100: #fdf6e3;
-    --gold-200: #f5dfa0;
-    --gold-300: #e8c56b;
-    --gold-400: #d4a83a;
-    --gold-500: #b8860b;
-    --gold-600: #9a6f0a;
-    --gold-700: #7a5508;
-    --gold-800: #5a3e06;
-    --gold-accent: #ffd700;
-    --gold-shine: #fffacd;
-
-    // ── Regal royal palette ───────────────────────────────────────────────────
-    --royal-950: #0a0812;
-    --royal-900: #120d20;
-    --royal-800: #1e1535;
-    --royal-700: #2d2050;
-    --royal-600: #3d2d6e;
-    --royal-500: #4f3a8c;
-    --royal-400: #6b52b0;
-    --royal-300: #9178d4;
-
-    // ── Regal crimson palette ─────────────────────────────────────────────────
-    --crimson-dark: #4a0010;
-    --crimson: #8b0020;
-    --crimson-bright: #c0152e;
-
-    // ── Regal silver palette ──────────────────────────────────────────────────
-    --silver-100: #f8f8ff;
-    --silver-200: #e8e8f0;
-    --silver-300: #c0c0d8;
-    --silver-400: #9898b8;
-    --silver-500: #7070a0;
-
-    // ── Parchment palette ─────────────────────────────────────────────────────
-    --parchment-light: #fdf8ef;
-    --parchment: #f5ead8;
-    --parchment-dark: #e8d5b7;
-    --parchment-aged: #d4b896;
+    // ── Shadows ───────────────────────────────────────────────────────────────
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.45);
 
     // ── Typography tokens ─────────────────────────────────────────────────────
-    --font-display: 'Cinzel Decorative', 'Palatino Linotype', serif;
-    --font-heading: 'Cinzel', 'Trajan Pro', serif;
-    --font-body: 'EB Garamond', 'Garamond', 'Georgia', serif;
-
-    // ── Regal gradients ───────────────────────────────────────────────────────
-    --gradient-gold: linear-gradient(
-        135deg,
-        #b8860b 0%,
-        #ffd700 40%,
-        #f5dfa0 60%,
-        #d4a83a 80%,
-        #b8860b 100%
-    );
-    --gradient-gold-subtle: linear-gradient(
-        180deg,
-        #f5dfa0 0%,
-        #d4a83a 50%,
-        #9a6f0a 100%
-    );
-    --gradient-royal: linear-gradient(180deg, #1e1535 0%, #0a0812 100%);
-    --gradient-parchment: linear-gradient(
-        135deg,
-        #fdf8ef 0%,
-        #f5ead8 50%,
-        #e8d5b7 100%
-    );
-    --gradient-crimson: linear-gradient(
-        135deg,
-        #4a0010 0%,
-        #8b0020 50%,
-        #4a0010 100%
-    );
-    --gradient-regal-bg: radial-gradient(
-        ellipse at top,
-        #2d2050 0%,
-        #120d20 40%,
-        #0a0812 100%
-    );
-
-    // ── Regal shadows ─────────────────────────────────────────────────────────
-    --shadow-gold-sm: 0 2px 8px rgba(184, 134, 11, 0.3);
-    --shadow-gold-md:
-        0 4px 20px rgba(184, 134, 11, 0.4), 0 0 40px rgba(184, 134, 11, 0.1);
-    --shadow-gold-lg:
-        0 8px 40px rgba(184, 134, 11, 0.5), 0 0 80px rgba(184, 134, 11, 0.2);
-    --shadow-royal:
-        0 4px 24px rgba(10, 8, 18, 0.8), inset 0 1px 0 rgba(255, 215, 0, 0.1);
-    --shadow-crimson: 0 4px 20px rgba(139, 0, 32, 0.5);
+    --font-display: 'Cinzel', serif;
+    --font-body: 'Share Tech Mono', monospace;
+    --font-ui: 'Barlow Condensed', sans-serif;
 
     // ── Layout ────────────────────────────────────────────────────────────────
     --sidebar-max: #{$sidebar-max};

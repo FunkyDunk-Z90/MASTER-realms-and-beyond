@@ -16,6 +16,7 @@
         "@rnb/security": "workspace:*",
         "@rnb/types": "workspace:*",
         "@rnb/validators": "workspace:*",
+        "@rnb/database": "workspace:*",
         "bcrypt": "^6.0.0",
         "cloudinary": "^2.9.0",
         "cookie-parser": "^1.4.7",

@@ -27,7 +27,7 @@
 .sidebar-wrapper {
     position: fixed;
     top: var(--header-height, #{$header-height});
-    left: 0;
+    left: -1px;
     display: flex;
     flex-direction: column;
     height: calc(
@@ -70,9 +70,7 @@
             // Transition on transform only, not width
             transition: transform var(--transition-speed) #{$ease-snap};
             // Drop shadow when open to separate from content
-            box-shadow:
-                1px 0 0 0 var(--primary-color),
-                4px 0 24px var(--primary-glow);
+            box-shadow: 1px 0 0 0 var(--primary-color);
 
             &.sidebar-open {
                 transform: translateX(0);
