@@ -108,7 +108,9 @@
 .form-input-wrapper .input.warning {
     outline-color: var(--danger-color);
 
-    &:focus { outline-color: var(--danger-color); }
+    &:focus {
+        outline-color: var(--danger-color);
+    }
 }
 
 // /* Error Messages */
@@ -334,14 +336,29 @@
     &--selected {
         border-color: var(--primary-color);
         background-color: var(--bg-inset-color);
-        box-shadow: 0 0 0 1px var(--primary-color), 0 0 12px var(--primary-glow);
+        box-shadow:
+            0 0 0 1px var(--primary-color),
+            0 0 12px var(--primary-glow);
     }
 
     &--highlight {
-        border-color: var(--accent-color);
+        border-color: var(--accent-dim-color);
+        box-shadow:
+            0 0 0 1px var(--accent-color),
+            0 0 12px var(--accent-glow);
 
         &.plan-card--selected {
             border-color: var(--primary-color);
+            box-shadow:
+                0 0 0 1px var(--primary-color),
+                0 0 12px var(--primary-glow);
+            &:hover {
+                border-color: var(--border-strong-color);
+            }
+        }
+
+        &:hover {
+            border-color: var(--accent-color);
         }
     }
 
@@ -404,8 +421,12 @@
     align-items: center;
     justify-content: center;
 
-    &--ok { color: var(--success-color); }
-    &--error { color: var(--danger-color); }
+    &--ok {
+        color: var(--success-color);
+    }
+    &--error {
+        color: var(--danger-color);
+    }
 
     &.spinning {
         animation: auth-spin 0.65s linear infinite;
@@ -433,5 +454,7 @@
 }
 
 @keyframes auth-spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }

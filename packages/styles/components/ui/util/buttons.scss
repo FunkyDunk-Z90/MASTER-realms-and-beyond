@@ -205,35 +205,63 @@
     }
 
     &--gold {
-        background-color: $pale-gold;
-        border-color: $pale-gold-dim;
+        background-color: $amber;
+        border-color: $amber-deep;
+        color: $obsidian;
 
         &:hover {
-            background-color: $pale-gold-dim;
+            background-color: $amber-mid;
+            border-color: $amber;
+            box-shadow: 0 0 0 2px $amber-glow;
+        }
+
+        &:active {
+            filter: brightness(0.88);
         }
     }
     &--royal {
-        background-color: $steel-blue-glow-str;
-        border-color: $pale-gold-dim;
+        background-color: $steel-blue;
+        border-color: $teal-deep;
+        color: $ghost;
 
         &:hover {
-            background-color: $steel-blue;
+            background-color: $steel-blue-mid;
+            border-color: $steel-blue;
+            box-shadow: 0 0 0 2px $steel-blue-glow;
+        }
+
+        &:active {
+            filter: brightness(0.88);
         }
     }
     &--crimson {
-        background-color: $crimson-deep;
-        border-color: $crimson-glow;
+        background-color: $crimson;
+        border-color: $crimson-deep;
+        color: $ghost;
 
         &:hover {
-            background-color: $crimson-regal;
+            background-color: $crimson-mid;
+            border-color: $crimson;
+            box-shadow: 0 0 0 2px $crimson-glow;
+        }
+
+        &:active {
+            filter: brightness(0.88);
         }
     }
     &--parchment {
-        background-color: $parchment-base;
-        border-color: $regal-pale-gold;
+        background-color: $parchment;
+        border-color: $mist;
+        color: $parchment-brown-deep;
 
         &:hover {
-            background-color: $amber-deep;
+            background-color: $parchment-mid;
+            border-color: $slate;
+            box-shadow: 0 0 0 2px $parchment-brown-glow;
+        }
+
+        &:active {
+            filter: brightness(0.94);
         }
     }
 }

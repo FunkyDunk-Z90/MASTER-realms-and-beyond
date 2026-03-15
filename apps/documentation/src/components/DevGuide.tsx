@@ -35,7 +35,12 @@ const SEARCH_INDEX: I_SearchResult[] = [
   { title: '@rnb/middleware — authenticate', section: 'Packages', href: '#pkg-middleware' },
   { title: '@rnb/security — JWT & cookies', section: 'Packages', href: '#pkg-security' },
   { title: '@rnb/database — Identity model', section: 'Packages', href: '#pkg-database' },
-  { title: 'Authentication & Identity', section: 'Auth', href: '#auth' },
+  { title: 'Authentication & Identity — IAM overview', section: 'Auth', href: '#auth' },
+  { title: 'AuthProvider · useAuth hook', section: 'Auth', href: '#auth-provider' },
+  { title: 'AuthForm — login & signup form', section: 'Auth', href: '#auth-form' },
+  { title: 'OnboardingForm — username & plan picker', section: 'Auth', href: '#auth-onboarding' },
+  { title: 'AuthGuard — route protection', section: 'Auth', href: '#auth-guard' },
+  { title: 'Server login flow & cookie config', section: 'Auth', href: '#auth-flow' },
   { title: 'API Reference', section: 'API', href: '#api' },
   { title: 'Code Conventions — Naming', section: 'Conventions', href: '#conventions' },
   { title: 'Zod Schema Conventions', section: 'Conventions', href: '#conventions' },
@@ -541,21 +546,262 @@ export const Z_Timestamp = z.iso.datetime()
           <div className="section-body">
             <div className="prose">
               <p>
-                All auth flows go through the <span className="ic">realms-and-beyond-api</span> IAM server.
-                JWT tokens are signed with HS256, stored in httpOnly cookies, and verified by the
-                <span className="ic"> authenticate</span> middleware in every protected route.
+                The platform uses a single centralised IAM server (<span className="ic">realms-and-beyond-api</span>)
+                for all identity operations — login, signup, logout, and session rehydration.
+                Product-specific accounts (e.g. Aetherscribe) are created separately against their own API after the
+                identity is established. The entire auth surface is exposed to frontend apps through four components
+                in <span className="ic">@rnb/ui</span>: <span className="ic">AuthProvider</span>, <span className="ic">AuthForm</span>,{' '}
+                <span className="ic">OnboardingForm</span>, and <span className="ic">AuthGuard</span>.
               </p>
             </div>
 
+            {/* ── Full flow diagram ────────────────────────────────────── */}
             <div className="subsection">
-              <SubsectionTitle>Login Flow</SubsectionTitle>
+              <SubsectionTitle>IAM Flow</SubsectionTitle>
+              <div className="dep-graph">
+                <pre><code>{`
+/ (unauthenticated)
+ └─ AuthForm ──────────────────────────────────────────────────────────────
+      ├─ login  → POST /api/v1/user/login  → sets httpOnly JWT cookie
+      └─ signup → POST /api/v1/user/signup → sets httpOnly JWT cookie
+           │
+           ▼ onSuccess() callback
+/onboarding  (!hasAetherscribeAccount)
+ └─ OnboardingForm
+      ├─ GET /api/v1/account/check-username/:u  (debounced, 500ms)
+      └─ POST /api/v1/account  ──────────────────────────────────────────
+           │  creates AetherscribeProfile
+           │  pushes { serviceName: 'aetherscribe' } to identity.services
+           │  returns { account, user } — AuthContext sets user state
+           ▼ onSuccess() callback
+/hub  (AuthGuard passes — user + hasAetherscribeAccount both true)
+ └─ full app: /hub, /my-account, /settings — all behind AuthGuard
+
+AuthGuard redirect logic
+ isLoading      → spinner (.auth-loading__spinner)
+ !user          → router.replace('/')
+ !hasAccount    → router.replace('/onboarding')
+ else           → render children
+                `}</code></pre>
+              </div>
+            </div>
+
+            {/* ── AuthProvider & useAuth ───────────────────────────────── */}
+            <div id="auth-provider" data-section="auth-provider" className="subsection">
+              <SubsectionTitle>AuthProvider &amp; useAuth</SubsectionTitle>
+              <div className="prose">
+                <p>
+                  <span className="ic">AuthProvider</span> wraps the entire app in the root layout.
+                  On mount it calls <span className="ic">GET /api/v1/user/me</span> with the httpOnly cookie to rehydrate the
+                  session — no localStorage involved. <span className="ic">hasAetherscribeAccount</span> is derived
+                  from <span className="ic">user.services.some(s =&gt; s.serviceName === &apos;aetherscribe&apos;)</span>.
+                </p>
+              </div>
+              <CodeSnippet lang="tsx" filename="apps/aetherscribe/app/layout.tsx" code={`
+import { ThemeProvider, ThemeInitializer, AuthProvider } from '@rnb/ui'
+import '@rnb/styles'
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeInitializer themeStorageKey="aether-theme" modeStorageKey="aether-mode" />
+      </head>
+      <body>
+        <ThemeProvider themeStorageKey="aether-theme" modeStorageKey="aether-mode">
+          <AuthProvider>{children}</AuthProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  )
+}
+              `} />
+              <div className="table-wrap">
+                <table className="data-table">
+                  <thead>
+                    <tr><th>Value</th><th>Type</th><th>Description</th></tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { val: 'user', type: 'I_AuthUser | null', desc: 'Authenticated identity, or null if logged out' },
+                      { val: 'isLoading', type: 'boolean', desc: 'True while the /me session check is in-flight on mount' },
+                      { val: 'hasAetherscribeAccount', type: 'boolean', desc: "Derived: user.services includes { serviceName: 'aetherscribe' }" },
+                      { val: 'login(email, password)', type: 'Promise<void>', desc: 'POST /api/v1/user/login — sets cookie, updates user state' },
+                      { val: 'signup(data)', type: 'Promise<void>', desc: 'POST /api/v1/user/signup — sets cookie, updates user state' },
+                      { val: 'logout()', type: 'Promise<void>', desc: 'POST /api/v1/user/logout — clears cookie, sets user to null' },
+                      { val: 'createAetherscribeAccount(username, plan)', type: 'Promise<void>', desc: 'POST /api/v1/account — creates profile, updates user.services' },
+                    ].map((row) => (
+                      <tr key={row.val}>
+                        <td className="td-primary">{row.val}</td>
+                        <td className="td-accent">{row.type}</td>
+                        <td>{row.desc}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* ── AuthForm ────────────────────────────────────────────── */}
+            <div id="auth-form" data-section="auth-form" className="subsection">
+              <SubsectionTitle>AuthForm</SubsectionTitle>
+              <div className="prose">
+                <p>
+                  Login/signup form with a mode toggle. Validates all fields on blur before submission —
+                  email format, password strength (8 chars, upper, lower, number, special), and confirm match.
+                  Uses <span className="ic">useAuth().login</span> / <span className="ic">signup</span> internally.
+                  Pass an <span className="ic">onSuccess</span> callback to redirect after authentication.
+                </p>
+              </div>
+              <CodeSnippet lang="tsx" filename="apps/aetherscribe/app/page.tsx" code={`
+'use client'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth, AuthForm } from '@rnb/ui'
+
+export default function Landing() {
+  const { user, isLoading, hasAetherscribeAccount } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isLoading) return
+    if (!user) return           // show the form
+    if (hasAetherscribeAccount) router.replace('/hub')
+    else router.replace('/onboarding')
+  }, [user, isLoading, hasAetherscribeAccount, router])
+
+  if (isLoading || user) return null
+
+  return (
+    <main className="landing-page">
+      <div className="landing-hero">
+        <h1 className="landing-title">Aetherscribe</h1>
+        <p className="landing-subtitle">Chronicle your worlds. Begin your legend.</p>
+      </div>
+      <AuthForm onSuccess={() => router.push('/onboarding')} />
+    </main>
+  )
+}
+              `} />
+              <Callout type="info">
+                The landing page renders nothing while <span className="ic">isLoading</span> or <span className="ic">user</span> is truthy — this prevents a flash of the auth form during session rehydration.
+              </Callout>
+            </div>
+
+            {/* ── OnboardingForm ───────────────────────────────────────── */}
+            <div id="auth-onboarding" data-section="auth-onboarding" className="subsection">
+              <SubsectionTitle>OnboardingForm</SubsectionTitle>
+              <div className="prose">
+                <p>
+                  Shown once to authenticated users who don&apos;t yet have a product account. Two sections:
+                  a username field with debounced availability checking (500 ms, hits <span className="ic">GET /api/v1/account/check-username/:u</span>),
+                  and a plan picker with four tiers. Submits via <span className="ic">createAetherscribeAccount(username, plan)</span>.
+                  Username rules are validated server-side via the same <span className="ic">Z_CreateAetherscribeAccount</span> Zod schema used by the POST endpoint.
+                </p>
+              </div>
+              <CodeSnippet lang="tsx" filename="apps/aetherscribe/app/onboarding/page.tsx" code={`
+'use client'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth, OnboardingForm } from '@rnb/ui'
+
+export default function Onboarding() {
+  const { user, isLoading, hasAetherscribeAccount } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isLoading) return
+    if (!user) { router.replace('/'); return }
+    if (hasAetherscribeAccount) router.replace('/hub')
+  }, [user, isLoading, hasAetherscribeAccount, router])
+
+  if (isLoading || !user || hasAetherscribeAccount) return null
+
+  return (
+    <main className="onboarding-page">
+      <div className="onboarding-hero">
+        <h1 className="landing-title">Set Up Your Account</h1>
+        <p className="landing-subtitle">Welcome, {user.profile.firstName}.</p>
+      </div>
+      <OnboardingForm onSuccess={() => router.replace('/hub')} />
+    </main>
+  )
+}
+              `} />
+              <div className="table-wrap">
+                <table className="data-table">
+                  <thead>
+                    <tr><th>Plan</th><th>Price</th><th>Limits</th></tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { plan: 'free', price: 'Free forever', limits: '1 World · 10 Characters · 1 GB' },
+                      { plan: 'starter', price: '$4.99 / mo', limits: '5 Worlds · 50 Characters · 5 GB · 3 collaborators' },
+                      { plan: 'pro', price: '$12.99 / mo', limits: 'Unlimited · 20 GB · 10 collaborators · API access' },
+                      { plan: 'enterprise', price: '$29.99 / mo', limits: 'Everything in Pro · Unlimited collaborators · 100 GB · Custom domain' },
+                    ].map((row) => (
+                      <tr key={row.plan}>
+                        <td className="td-primary">{row.plan}</td>
+                        <td className="td-accent">{row.price}</td>
+                        <td>{row.limits}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* ── AuthGuard ────────────────────────────────────────────── */}
+            <div id="auth-guard" data-section="auth-guard" className="subsection">
+              <SubsectionTitle>AuthGuard</SubsectionTitle>
+              <div className="prose">
+                <p>
+                  Wrap any protected layout with <span className="ic">AuthGuard</span>.
+                  It renders a spinner while the session check is in-flight, then redirects based on auth state.
+                  Because it lives in a layout, it protects every nested page without repeating the guard logic.
+                  Use <span className="ic">useAuth().logout</span> in the same layout to wire up the navbar logout button.
+                </p>
+              </div>
+              <CodeSnippet lang="tsx" filename="apps/aetherscribe/app/hub/layout.tsx" code={`
+'use client'
+import { Navbar, Footer, Sidebar, AuthGuard, useAuth } from '@rnb/ui'
+
+export default function HubLayout({ children }) {
+  const { logout } = useAuth()
+
+  return (
+    <AuthGuard>
+      <Navbar
+        headerIcon={aetherscribeLogo}
+        headerTitle="Aetherscribe"
+        navItems={navLinks}
+        onLogout={logout}        // wires navbar logout button
+      />
+      <main className="page-wrapper">
+        <Sidebar sections={sidebarData} searchFn={searchFn} />
+        <section className="section-wrapper">{children}</section>
+      </main>
+      <Footer appName="Aetherscribe" />
+    </AuthGuard>
+  )
+}
+              `} />
+              <Callout type="info">
+                AuthGuard only redirects <em>after</em> <span className="ic">isLoading</span> is false. This prevents a redirect flash during the initial session rehydration on page load.
+              </Callout>
+            </div>
+
+            {/* ── Server-side login flow ───────────────────────────────── */}
+            <div id="auth-flow" data-section="auth-flow" className="subsection">
+              <SubsectionTitle>Server · Login Flow</SubsectionTitle>
               <div className="auth-flow">
                 {[
-                  { n: '01', title: 'POST /api/v1/auth/login', desc: 'Client sends email + password. Controller calls Z_Login.safeParse().' },
-                  { n: '02', title: 'Email lookup', desc: 'Identity.findOne({ email }). Returns "Invalid email or password" for both missing email and wrong password — prevents user enumeration.' },
+                  { n: '01', title: 'POST /api/v1/user/login', desc: 'Client sends email + password. AuthForm calls useAuth().login() which fires this request with credentials: include.' },
+                  { n: '02', title: 'Email lookup', desc: 'Identity.findByEmail(). Returns "Invalid email or password" for both missing email and wrong password — prevents user enumeration.' },
                   { n: '03', title: 'verifyPassword()', desc: 'bcrypt.compare(plaintext, hash). Timing-safe via bcrypt internals.' },
                   { n: '04', title: 'setAuthCookie()', desc: 'Creates HS256 JWT (sub: identityId, 7d expiry), sets httpOnly + SameSite=Strict cookie.' },
-                  { n: '05', title: 'toClient() serialisation', desc: 'Strips all sensitive fields (password hash, tokens, IPs) before sending the Identity document to the client.' },
+                  { n: '05', title: 'identity.toClient()', desc: 'Strips all sensitive security fields (password hash, reset tokens, IPs) from the document before returning { user }.' },
+                  { n: '06', title: 'AuthContext.setUser(data.user)', desc: 'Frontend receives the sanitised user object. hasAetherscribeAccount is computed from user.services.' },
                 ].map((step) => (
                   <div key={step.n} className="flow-step">
                     <span className="flow-step-number">{step.n}</span>

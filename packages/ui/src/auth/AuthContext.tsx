@@ -24,7 +24,7 @@ const aetherscribeApiBase = (): string => {
         typeof process !== 'undefined' &&
         process.env?.NEXT_PUBLIC_AETHERSCRIBE_API_URL
             ? process.env.NEXT_PUBLIC_AETHERSCRIBE_API_URL
-            : 'http://localhost:2612'
+            : 'http://localhost:8811'
     return `${root}/api/v1/account`
 }
 
@@ -81,10 +81,7 @@ interface I_AuthContextValue {
     login: (email: string, password: string) => Promise<void>
     logout: () => Promise<void>
     signup: (data: I_SignupData) => Promise<void>
-    createAetherscribeAccount: (
-        username: string,
-        plan: string
-    ) => Promise<void>
+    createAetherscribeAccount: (username: string, plan: string) => Promise<void>
 }
 
 // ─── Context ──────────────────────────────────────────────────────────────────
@@ -156,7 +153,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         })
         const json = await res.json()
         if (!res.ok)
-            throw new Error(json.message ?? 'Failed to create Aetherscribe account.')
+            throw new Error(
+                json.message ?? 'Failed to create Aetherscribe account.'
+            )
         // Response includes updated user (with services array populated)
         setUser(json.user)
     }

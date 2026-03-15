@@ -88,7 +88,8 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
 
     const [username, setUsername] = useState('')
     const [selectedPlan, setSelectedPlan] = useState<T_Plan>('free')
-    const [usernameStatus, setUsernameStatus] = useState<T_UsernameStatus>('idle')
+    const [usernameStatus, setUsernameStatus] =
+        useState<T_UsernameStatus>('idle')
     const [usernameMessage, setUsernameMessage] = useState<string | undefined>()
     const [submitError, setSubmitError] = useState<string | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -100,7 +101,7 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
         (typeof process !== 'undefined' &&
         process.env?.NEXT_PUBLIC_AETHERSCRIBE_API_URL
             ? process.env.NEXT_PUBLIC_AETHERSCRIBE_API_URL
-            : 'http://localhost:2612')
+            : 'http://localhost:8811')
 
     // ── Username availability check (debounced) ──────────────────────────────
 
@@ -181,7 +182,9 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
 
     const renderUsernameIcon = () => {
         if (usernameStatus === 'checking')
-            return <Loader size={14} className="username-status-icon spinning" />
+            return (
+                <Loader size={14} className="username-status-icon spinning" />
+            )
         if (usernameStatus === 'available')
             return (
                 <CheckCircle
@@ -202,11 +205,7 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
     // ── Render ───────────────────────────────────────────────────────────────
 
     return (
-        <form
-            className="onboarding-form"
-            onSubmit={handleSubmit}
-            noValidate
-        >
+        <form className="onboarding-form" onSubmit={handleSubmit} noValidate>
             {/* ── Username ── */}
             <section className="onboarding-form__section">
                 <h3 className="onboarding-form__section-title">
@@ -228,8 +227,8 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
                                 usernameStatus === 'invalid'
                                     ? ' input--error'
                                     : usernameStatus === 'available'
-                                    ? ' input--success'
-                                    : ''
+                                      ? ' input--success'
+                                      : ''
                             }`}
                             type="text"
                             placeholder="chronicler"
@@ -280,7 +279,9 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
                                     </span>
                                 )}
                                 <span className="plan-card__name">{label}</span>
-                                <span className="plan-card__price">{price}</span>
+                                <span className="plan-card__price">
+                                    {price}
+                                </span>
                                 <ul className="plan-card__features">
                                     {features.map((f) => (
                                         <li key={f}>{f}</li>
@@ -294,7 +295,9 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
 
             {/* ── Error ── */}
             {submitError && (
-                <p className="field-error onboarding-form__error">{submitError}</p>
+                <p className="field-error onboarding-form__error">
+                    {submitError}
+                </p>
             )}
 
             {/* ── Submit ── */}

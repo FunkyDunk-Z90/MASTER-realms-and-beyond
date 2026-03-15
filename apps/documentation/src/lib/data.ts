@@ -49,7 +49,18 @@ export const NAV_SECTIONS: T_NavSection[] = [
       { id: "pkg-styles", label: "@rnb/styles", href: "#pkg-styles" },
     ],
   },
-  { id: "auth", label: "Auth & Identity", href: "#auth" },
+  {
+    id: "auth",
+    label: "Auth & Identity",
+    href: "#auth",
+    subsections: [
+      { id: "auth-provider", label: "AuthProvider · useAuth", href: "#auth-provider" },
+      { id: "auth-form", label: "AuthForm", href: "#auth-form" },
+      { id: "auth-onboarding", label: "OnboardingForm", href: "#auth-onboarding" },
+      { id: "auth-guard", label: "AuthGuard", href: "#auth-guard" },
+      { id: "auth-flow", label: "Server · Login Flow", href: "#auth-flow" },
+    ],
+  },
   { id: "api", label: "API Reference", href: "#api" },
   { id: "conventions", label: "Code Conventions", href: "#conventions" },
   {
@@ -206,7 +217,7 @@ export const PACKAGES: T_Package[] = [
     description:
       "Shared React component library. All UI primitives (buttons, inputs, cards, modals) with full theme support.",
     consumedBy: "All Next.js apps",
-    exports: ["Button", "Input", "Card", "Modal", "Navbar", "AuthGuard"],
+    exports: ["Button", "Card", "Navbar", "Dropdown", "AuthProvider", "useAuth", "AuthForm", "OnboardingForm", "AuthGuard"],
   },
   {
     name: "@rnb/styles",

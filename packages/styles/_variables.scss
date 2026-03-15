@@ -24,7 +24,7 @@ $amber-glow-strong: rgba(184, 144, 56, 0.36); // focus rings / glows
 
 // ─── Accent — Sage Green (SNES forest / nature) ───────────────────────────────
 // Muted sage — the secondary frequency. Zelda ALTTP field tiles.
-$phosphor: #507040; // main accent (sage)
+$phosphor: #507040; // main accent (sage green)
 $phosphor-dim: #304828; // dimmer, for labels / borders
 $phosphor-glow: rgba(80, 112, 64, 0.16); // ambient glow
 
@@ -33,8 +33,9 @@ $crt-green: #4a7a3c;
 $crt-green-mid: #5a9248;
 $crt-green-glow: rgba(74, 122, 60, 0.16);
 $crt-green-glow-str: rgba(74, 122, 60, 0.36);
-$crt-amber: #80b840; // bright leaf accent
-$crt-amber-glow: rgba(128, 184, 64, 0.16);
+// was $crt-amber — colour is lime green, not amber
+$crt-lime: #80b840; // bright leaf accent
+$crt-lime-glow: rgba(128, 184, 64, 0.16);
 
 // ─── Theme: Sovereign — Imperial Battle (SNES RPG crimson) ────────────────────
 $crimson-deep: #5a1010;
@@ -61,11 +62,13 @@ $steel-blue: #4878b0; // N64 cobalt steel
 $steel-blue-mid: #5890cc;
 $steel-blue-glow: rgba(72, 120, 176, 0.18);
 $steel-blue-glow-str: rgba(72, 120, 176, 0.4);
-$space-purple: #7058a8; // violet accent (slot repurposed)
-$space-purple-mid: #8068c0;
-$space-purple-glow: rgba(112, 88, 168, 0.16);
-$space-purple-glow-str: rgba(112, 88, 168, 0.38);
-$cool-gray: #6878a0; // highlight — cool blue-gray
+// was $space-orange — colour is violet/purple, not orange
+$space-violet: #7058a8; // violet accent — same hue as $violet
+$space-violet-mid: #8068c0;
+$space-violet-glow: rgba(112, 88, 168, 0.16);
+$space-violet-glow-str: rgba(112, 88, 168, 0.38);
+// was $cool-gray — colour is noticeably blue, not neutral gray
+$cool-blue-gray: #6878a0; // highlight — cool blue-gray
 
 // ─── Theme: Dusk — Mystical Twilight (SNES magic / Chrono Trigger) ────────────
 $amethyst-deep: #602870;
@@ -77,38 +80,96 @@ $rose: #b86090; // SNES rose — magic flash
 $rose-dim: #7a3a58;
 $rose-glow: rgba(184, 96, 144, 0.16);
 // Dusk full palette
-$magenta-deep: #602870;
-$magenta: #9040a0;
-$magenta-mid: #a850b8;
-$magenta-glow: rgba(144, 64, 160, 0.18);
-$magenta-glow-str: rgba(144, 64, 160, 0.4);
-$dusk-emerald: #b86090;
-$dusk-emerald-mid: #cc78a8;
-$dusk-emerald-glow: rgba(184, 96, 144, 0.16);
-$steel-sky: #7870a8; // lavender — highlight
-$steel-sky-glow: rgba(120, 112, 168, 0.14);
+// was $magenta-* — identical values to $amethyst-*, colour is purple not magenta
+$dusk-purple-deep: #602870; // = $amethyst-deep
+$dusk-purple: #9040a0; // = $amethyst
+$dusk-purple-mid: #a850b8; // = $amethyst-mid
+$dusk-purple-glow: rgba(144, 64, 160, 0.18);
+$dusk-purple-glow-str: rgba(144, 64, 160, 0.4);
+// was $dusk-emerald — colour is dusty rose/mauve, not emerald
+$dusk-rose: #b86090; // dusty rose (= $rose)
+$dusk-rose-mid: #cc78a8; // mauve
+$dusk-rose-glow: rgba(184, 96, 144, 0.16);
+// was $steel-sky — colour is lavender-purple, not sky blue
+$dusk-lavender: #7870a8; // lavender — highlight
+$dusk-lavender-glow: rgba(120, 112, 168, 0.14);
 
 // ─── Theme: Parchment — Old Map Light (SNES game manual / cartridge art) ──────
-$olive-deep: #4a3010;
-$olive: #6a4820; // warm brown — SNES cartridge text
-$olive-mid: #7a5828;
-$olive-glow: rgba(106, 72, 32, 0.14);
-$olive-glow-strong: rgba(106, 72, 32, 0.28);
-$terracotta: #486830; // forest olive — SNES map
-$terracotta-dim: #304820;
-$terracotta-glow: rgba(72, 104, 48, 0.14);
-// Parchment palette
-$map-cream: #f2ece0;
-$map-terracotta: #6a4820;
-$map-terracotta-mid: #7a5828;
-$map-terracotta-glow: rgba(106, 72, 32, 0.14);
-$map-terracotta-glow-str: rgba(106, 72, 32, 0.28);
-$dusty-rose: #8a7060;
+// was $olive / $olive-mid — colours are warm brown, not olive green
+$parchment-brown-deep: #4a3010; // dark warm brown (was $olive-deep)
+$parchment-brown: #6a4820; // warm brown ink (was $olive)
+$parchment-brown-mid: #7a5828; // lighter warm brown (was $olive-mid)
+$parchment-brown-glow: rgba(106, 72, 32, 0.14);
+$parchment-brown-glow-strong: rgba(106, 72, 32, 0.28);
+// was $terracotta — colour is forest/olive green, not terracotta
+$parchment-forest: #486830; // forest olive green (was $terracotta)
+$parchment-forest-dim: #304820; // dark forest green (was $terracotta-dim)
+$parchment-forest-glow: rgba(72, 104, 48, 0.14);
+
+// Parchment backgrounds — aged paper ramp (light → deep)
+$parchment-lightest: #fdf8ef; // near-white warm parchment
+$parchment-light: #f5ead8; // warm cream
+$parchment: #f2ece0; // standard parchment (= $map-cream / $ghost)
+$parchment-mid: #e8d5b7; // deeper aged parchment
+$parchment-dark: #d4bc96; // tanned/foxed parchment
+$parchment-deep: #c0a478; // worn leather edge
+$parchment-shadow: rgba(74, 48, 16, 0.12); // ambient shadow cast over parchment
+
+// Parchment ink — warm brown writing on aged paper (light → deepest)
+$ink-light: #7a5828; // light ink — secondary text
+$ink: #6a4820; // standard ink — body text
+$ink-dark: #4a3010; // dark ink — headings
+$ink-deep: #2e1c08; // deepest ink — near black-brown
+
+// Parchment map accent — forest / cartographic detail
+$map-green: #486830; // forest olive (= $parchment-forest)
+$map-green-dim: #304820; // dark forest, borders / rules
+$map-green-glow: rgba(72, 104, 48, 0.14);
+$map-green-mid: #5a7e3a; // brighter forest — hover / active
+
+// Parchment decorative — foxing, age spots, illuminated moments
+$parchment-sienna: #8a5a2a; // warm sienna — decorative borders, drop caps
+$parchment-umber: #5a3818; // raw umber — deep accent, wax seal
+$parchment-ochre: #c49040; // ochre — illuminated letter highlight
+$parchment-foxing: rgba(106, 72, 32, 0.06); // barely-there age-spot tint
+
+// Legacy aliases — kept for backwards compatibility
+$olive-deep: $parchment-brown-deep;
+$olive: $parchment-brown;
+$olive-mid: $parchment-brown-mid;
+$olive-glow: $parchment-brown-glow;
+$olive-glow-strong: $parchment-brown-glow-strong;
+$terracotta: $parchment-forest;
+$terracotta-dim: $parchment-forest-dim;
+$terracotta-glow: $parchment-forest-glow;
+$map-cream: $parchment;
+$map-terracotta: $parchment-brown;
+$map-terracotta-mid: $parchment-brown-mid;
+$map-terracotta-glow: $parchment-brown-glow;
+$map-terracotta-glow-str: $parchment-brown-glow-strong;
+$dusty-rose: #8a7060; // warm taupe (legacy name — colour is not rose)
 $dusty-rose-glow: rgba(138, 112, 96, 0.12);
-$map-teal: #486830;
-$map-teal-deep: #304820;
-$map-teal-glow: rgba(72, 104, 48, 0.14);
-// Legacy
+$map-teal: $parchment-forest; // was misnamed — colour is olive green
+$map-teal-deep: $parchment-forest-dim; // was misnamed — colour is dark green
+$map-teal-glow: $parchment-forest-glow;
+$space-orange: $space-violet; // was misnamed — colour is violet
+$space-orange-mid: $space-violet-mid;
+$space-orange-glow: $space-violet-glow;
+$space-orange-glow-str: $space-violet-glow-str;
+$cool-gray: $cool-blue-gray; // was misnamed — colour has clear blue cast
+$magenta-deep: $dusk-purple-deep; // was misnamed — colour is purple
+$magenta: $dusk-purple;
+$magenta-mid: $dusk-purple-mid;
+$magenta-glow: $dusk-purple-glow;
+$magenta-glow-str: $dusk-purple-glow-str;
+$dusk-emerald: $dusk-rose; // was misnamed — colour is dusty rose
+$dusk-emerald-mid: $dusk-rose-mid;
+$dusk-emerald-glow: $dusk-rose-glow;
+$steel-sky: $dusk-lavender; // was misnamed — colour is lavender
+$steel-sky-glow: $dusk-lavender-glow;
+$crt-amber: $crt-lime; // was misnamed — colour is lime green
+
+// Legacy Parchment extras
 $army-green: #6a8060;
 $sage-green: #a8bca0;
 $bright-emerald: #5a9248;
@@ -133,7 +194,6 @@ $xLarge: 1.5rem; // 24px  — page padding
 $xxLarge: 2.5rem; // 40px  — hero spacing
 
 // ─── Borders & Radius ────────────────────────────────────────────────────────
-// Refined corners — editorial precision, subtle not bubbly
 $border-radius: 4px;
 $border-radius-lg: 8px;
 
@@ -154,39 +214,34 @@ $ease-snap: cubic-bezier(0.25, 0, 0, 1);
 $ease-out: cubic-bezier(0, 0, 0.2, 1);
 
 // ─── Typography ──────────────────────────────────────────────────────────────
-// Cormorant Garamond — ultra-thin fantasy serif; editorial, ancient, elegant
-//                      Weight 300 for brand moments, 400 for headings
-// Inter              — clean geometric sans; readable body copy, crisp at small sizes
-// Barlow Condensed   — condensed sans; compact labels, status tags, HUD text
-// Share Tech Mono    — monospaced readout; code blocks, data terminals
 $font-display: 'Cormorant Garamond', 'Palatino Linotype', 'Georgia', serif;
 $font-body: 'Inter', 'DM Sans', 'Segoe UI', sans-serif;
 $font-ui: 'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif;
 $font-mono: 'Share Tech Mono', 'DM Mono', 'Courier New', monospace;
 
 // ─── Decorative ──────────────────────────────────────────────────────────────
-// Grain texture — barely perceptible film grain; elegant, not heavy CRT scanlines
 $scanline-opacity: 0.014;
 
 // ─── Regal Fantasy SCSS vars ──────────────────────────────────────────────────
-// These map to the Regal default palette for use in mixin functions
-$midnight-realm: #0a0812; // royal-950
-$royal-900-val: #120d20; // royal-900
-$shadow-court: #1e1535; // royal-800
-$dusk-manor: #2d2050; // royal-700
-$twilight-veil: #3d2d6e; // royal-600
-$sovereign-gold: #b8860b; // gold-500 (DarkGoldenrod)
-$ancient-gold: #d4a83a; // gold-400
-$regal-pale-gold: #f5dfa0; // gold-200
-$ivory-scroll: #fdf8ef; // parchment-light
-$aged-vellum: #f5ead8; // parchment
-$parchment-base: #e8d5b7; // parchment-dark
+$midnight-realm: #0a0812;
+$royal-900-val: #120d20;
+$shadow-court: #1e1535;
+$dusk-manor: #2d2050;
+$twilight-veil: #3d2d6e;
+$sovereign-gold: #b8860b;
+$ancient-gold: #d4a83a;
+$regal-pale-gold: #f5dfa0;
+$ivory-scroll: #fdf8ef;
+$aged-vellum: #f5ead8;
+$parchment-base: #e8d5b7;
 $crimson-regal: #8b0020;
 $crimson-bright: #c0152e;
 
 $n64-orange: #c47818;
 $n64-green: #4a8a52;
 $n64-purple: #7a4a9a;
-$n64-blue: #1a7280;
+// was $n64-blue — colour is teal, not blue
+$n64-teal: #1a7280;
 $n64-red: #8a2820;
-$n64-yellow: #c4a018;
+// was $n64-yellow — colour is dark gold/amber, not yellow
+$n64-gold: #c4a018;

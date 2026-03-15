@@ -15,7 +15,7 @@ export const env = cleanEnv(process.env, {
     CLOUDINARY_SECRET: str(),
     CLOUDINARY_URL: str(),
     USER_DEFAULT_AVATAR: str(),
-    RESEND_API_KEY: str(),
+    // RESEND_API_KEY: str(),
     MAILTRAP_HOST: str(),
     MAILTRAP_PORT: port(),
     MAILTRAP_PASSWORD: str(),
