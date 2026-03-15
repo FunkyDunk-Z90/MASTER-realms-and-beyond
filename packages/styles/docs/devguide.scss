@@ -1,0 +1,909 @@
+@use '../_variables' as *;
+@use '../_mixins' as *;
+
+// ─── Layout ──────────────────────────────────────────────────────────────────
+
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-max) 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+  min-height: 100dvh;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+
+.header {
+  grid-column: 1 / -1;
+  height: var(--header-height);
+  background-color: var(--bg-secondary-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: $xLarge;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+
+  &::after {
+    @include scanlines;
+  }
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: $large;
+}
+
+.brand-logo {
+  @include font-display;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: amber-flicker 8s infinite;
+
+  span {
+    color: var(--accent-color);
+  }
+}
+
+.brand-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+}
+
+.brand-label {
+  @include font-label;
+  font-size: 0.65rem;
+  color: var(--text-muted-color);
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: $large;
+}
+
+.version-badge {
+  @include font-mono;
+  font-size: 0.72rem;
+  color: var(--primary-color);
+  background: var(--primary-glow);
+  border: 1px solid var(--primary-color);
+  border-radius: $border-radius;
+  padding: 2px 8px;
+}
+
+.header-date {
+  @include font-label;
+  color: var(--text-muted-color);
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: $medium;
+  background: var(--bg-inset-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius;
+  padding: 5px 12px;
+  width: 220px;
+  transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+
+  &:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-glow);
+  }
+
+  input {
+    background: none;
+    border: none;
+    font-size: 0.78rem;
+    color: var(--text-color);
+    width: 100%;
+    padding: 0;
+
+    &::placeholder {
+      color: var(--text-muted-color);
+    }
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  svg {
+    color: var(--text-muted-color);
+    flex-shrink: 0;
+  }
+
+  @include mobile {
+    width: 160px;
+  }
+}
+
+// ─── Sidebar ─────────────────────────────────────────────────────────────────
+
+.sidebar {
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg-secondary-color);
+  border-right: 1px solid var(--border-color);
+  padding: $large 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong-color) transparent;
+
+  @include mobile {
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-strong-color);
+    border-radius: 2px;
+  }
+}
+
+.sidebar-section-title {
+  @include font-label;
+  font-size: 0.6rem;
+  color: var(--text-muted-color);
+  padding: $large $large $small;
+  letter-spacing: 0.18em;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-link {
+  @include font-mono;
+  font-size: 0.75rem;
+  color: var(--text-secondary-color);
+  padding: 7px $large;
+  transition: all var(--transition-speed) ease;
+  border-left: 2px solid transparent;
+  width: 100%;
+  text-align: left;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    color: var(--text-color);
+    background: var(--primary-glow);
+    border-left-color: var(--primary-deep-color);
+  }
+
+  &.active {
+    @include active-indicator;
+    color: var(--primary-color);
+  }
+}
+
+.sub-nav {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+  margin-left: $xLarge;
+}
+
+.sub-nav-link {
+  @include font-mono;
+  font-size: 0.7rem;
+  color: var(--text-muted-color);
+  padding: 5px $medium;
+  transition: color var(--transition-speed) ease;
+  letter-spacing: 0.02em;
+
+  &:hover { color: var(--primary-color); }
+  &.active { color: var(--primary-color); }
+}
+
+// ─── Main content ─────────────────────────────────────────────────────────────
+
+.main {
+  overflow: visible;
+  padding: $xxLarge;
+  max-width: 860px;
+  width: 100%;
+
+  @include mobile {
+    padding: $xLarge $large;
+  }
+}
+
+// ─── Section ──────────────────────────────────────────────────────────────────
+
+.section {
+  margin-bottom: 80px;
+  animation: fade-in-up 0.4s ease both;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: $large;
+  margin-bottom: $xLarge;
+  padding-bottom: $large;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 1px;
+    background: var(--primary-color);
+    box-shadow: var(--rule-glow);
+  }
+}
+
+.section-number {
+  @include font-mono;
+  font-size: 0.7rem;
+  color: var(--primary-color);
+  opacity: 0.7;
+  min-width: 2ch;
+}
+
+.section-title {
+  font-family: $font-display;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 400;
+  color: var(--text-heading-color);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.section-body {
+  display: flex;
+  flex-direction: column;
+  gap: $xLarge;
+}
+
+.prose {
+  p {
+    color: var(--text-secondary-color);
+    font-size: 0.88rem;
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+.hero {
+  margin-bottom: $xxLarge;
+  padding: $xxLarge;
+  background: var(--bg-surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-lg;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    @include scanlines-light;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+.hero-eyebrow {
+  @include font-label;
+  color: var(--primary-color);
+  margin-bottom: $large;
+  font-size: 0.68rem;
+}
+
+.hero-title {
+  font-family: $font-display;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 300;
+  color: var(--text-heading-color);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: $large;
+
+  span {
+    color: var(--primary-color);
+    @include text-glow-primary;
+  }
+}
+
+.hero-subtitle {
+  @include font-mono;
+  font-size: 0.82rem;
+  color: var(--text-secondary-color);
+  margin-bottom: $xLarge;
+  letter-spacing: 0.04em;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $medium;
+}
+
+.tag {
+  @include font-label;
+  font-size: 0.62rem;
+  padding: 3px 10px;
+  border-radius: $border-radius;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted-color);
+  background: var(--bg-inset-color);
+  transition: all var(--transition-speed) ease;
+
+  &:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-glow);
+  }
+
+  &--primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-glow);
+  }
+
+  &--accent {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    background: var(--accent-glow);
+  }
+}
+
+// ─── Table ────────────────────────────────────────────────────────────────────
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-lg;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background: var(--bg-inset-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  th {
+    @include font-label;
+    font-size: 0.62rem;
+    color: var(--text-muted-color);
+    text-align: left;
+    padding: 10px 16px;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+  }
+
+  td {
+    @include font-mono;
+    font-size: 0.78rem;
+    color: var(--text-secondary-color);
+    padding: 10px 16px;
+    border-top: 1px solid var(--border-color);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tr:hover td {
+    background: var(--primary-glow);
+  }
+
+  .td-primary {
+    color: var(--primary-color);
+    font-weight: 500;
+  }
+
+  .td-accent {
+    color: var(--accent-color);
+  }
+
+  .td-muted {
+    color: var(--text-muted-color);
+    font-size: 0.72rem;
+  }
+}
+
+// ─── Products grid ────────────────────────────────────────────────────────────
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: $large;
+}
+
+.product-card {
+  @include surface;
+  padding: $xLarge $large;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-speed) ease;
+
+  &::before {
+    @include scanlines-light;
+  }
+
+  &:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.product-icon {
+  font-size: 1.6rem;
+  margin-bottom: $medium;
+  display: block;
+}
+
+.product-name {
+  @include font-display;
+  font-size: 1rem;
+  color: var(--text-heading-color);
+  margin-bottom: 4px;
+}
+
+.product-type {
+  @include font-label;
+  font-size: 0.6rem;
+  color: var(--primary-color);
+  margin-bottom: $medium;
+}
+
+.product-purpose {
+  font-size: 0.78rem;
+  color: var(--text-muted-color);
+  line-height: 1.5;
+}
+
+// ─── Tech stack ───────────────────────────────────────────────────────────────
+
+.stack-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: $large;
+}
+
+.stack-group {
+  @include surface;
+  overflow: hidden;
+}
+
+.stack-group-header {
+  @include font-label;
+  font-size: 0.62rem;
+  color: var(--primary-color);
+  padding: 10px 16px;
+  background: var(--bg-inset-color);
+  border-bottom: 1px solid var(--border-color);
+  letter-spacing: 0.16em;
+}
+
+.stack-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 9px 16px;
+  border-top: 1px solid var(--border-color);
+  gap: $medium;
+
+  &:first-of-type { border-top: none; }
+
+  &:hover {
+    background: var(--primary-glow);
+  }
+}
+
+.stack-concern {
+  @include font-mono;
+  font-size: 0.72rem;
+  color: var(--text-muted-color);
+  flex-shrink: 0;
+}
+
+.stack-tech {
+  @include font-mono;
+  font-size: 0.72rem;
+  color: var(--text-color);
+  text-align: right;
+}
+
+// ─── Packages ─────────────────────────────────────────────────────────────────
+
+.packages-list {
+  display: flex;
+  flex-direction: column;
+  gap: $large;
+}
+
+.package-card {
+  @include surface;
+  overflow: hidden;
+  transition: border-color var(--transition-speed) ease;
+
+  &:hover {
+    border-color: var(--primary-deep-color);
+  }
+}
+
+.package-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $large $xLarge;
+  background: var(--bg-inset-color);
+  border-bottom: 1px solid var(--border-color);
+  gap: $large;
+  flex-wrap: wrap;
+}
+
+.package-name {
+  @include font-mono;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+}
+
+.package-path {
+  @include font-mono;
+  font-size: 0.7rem;
+  color: var(--text-muted-color);
+}
+
+.package-body {
+  padding: $large $xLarge;
+  display: flex;
+  flex-direction: column;
+  gap: $medium;
+}
+
+.package-description {
+  font-size: 0.83rem;
+  color: var(--text-secondary-color);
+  line-height: 1.65;
+  max-width: 60ch;
+}
+
+.package-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $medium;
+  align-items: center;
+}
+
+.package-meta-label {
+  @include font-label;
+  font-size: 0.6rem;
+  color: var(--text-muted-color);
+}
+
+.package-exports {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $small;
+}
+
+.export-badge {
+  @include font-mono;
+  font-size: 0.66rem;
+  color: var(--accent-color);
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-dim-color);
+  border-radius: $border-radius;
+  padding: 2px 7px;
+}
+
+// ─── Callout ──────────────────────────────────────────────────────────────────
+
+.callout {
+  padding: $large $xLarge;
+  border-radius: $border-radius;
+  border: 1px solid var(--border-color);
+  border-left: 2px solid var(--warning-color);
+  background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--warning-color) 10%);
+  display: flex;
+  gap: $medium;
+  align-items: flex-start;
+
+  &--info {
+    border-left-color: var(--primary-color);
+    background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--primary-color) 10%);
+  }
+
+  &--danger {
+    border-left-color: var(--danger-color);
+    background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--danger-color) 10%);
+  }
+}
+
+.callout-icon {
+  color: var(--warning-color);
+  flex-shrink: 0;
+  margin-top: 2px;
+
+  .callout--info & { color: var(--primary-color); }
+  .callout--danger & { color: var(--danger-color); }
+}
+
+.callout-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary-color);
+  line-height: 1.65;
+  max-width: 64ch;
+}
+
+// ─── Conventions ──────────────────────────────────────────────────────────────
+
+.conventions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $medium;
+}
+
+.convention-card {
+  @include surface;
+  padding: $large;
+  display: flex;
+  flex-direction: column;
+  gap: $small;
+}
+
+.convention-type {
+  @include font-label;
+  font-size: 0.6rem;
+  color: var(--primary-color);
+}
+
+.convention-rule {
+  @include font-mono;
+  font-size: 0.78rem;
+  color: var(--text-color);
+}
+
+.convention-example {
+  @include font-mono;
+  font-size: 0.7rem;
+  color: var(--text-muted-color);
+  font-style: italic;
+}
+
+// ─── Auth flow ────────────────────────────────────────────────────────────────
+
+.auth-flow {
+  display: flex;
+  flex-direction: column;
+  gap: $medium;
+}
+
+.flow-step {
+  display: flex;
+  gap: $large;
+  align-items: flex-start;
+}
+
+.flow-step-number {
+  @include font-mono;
+  font-size: 0.7rem;
+  color: var(--primary-color);
+  background: var(--primary-glow);
+  border: 1px solid var(--primary-color);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.flow-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: $medium;
+  border-bottom: 1px solid var(--border-color);
+  flex: 1;
+
+  &:last-child { border-bottom: none; }
+}
+
+.flow-step-title {
+  @include font-mono;
+  font-size: 0.82rem;
+  color: var(--text-color);
+}
+
+.flow-step-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted-color);
+  line-height: 1.55;
+}
+
+// ─── Dep graph ────────────────────────────────────────────────────────────────
+
+.dep-graph {
+  @include surface;
+  padding: $xLarge;
+  background: var(--bg-inset-color);
+
+  pre {
+    background: none;
+    border: none;
+    border-left: none;
+    padding: 0;
+    font-size: 0.75rem;
+    color: var(--text-secondary-color);
+    line-height: 1.8;
+    overflow-x: auto;
+
+    code {
+      background: none;
+      border: none;
+      color: inherit;
+    }
+  }
+}
+
+// ─── Subheading ───────────────────────────────────────────────────────────────
+
+.subsection {
+  display: flex;
+  flex-direction: column;
+  gap: $large;
+}
+
+.subsection-title {
+  @include font-display;
+  font-size: 1rem;
+  color: var(--text-heading-color);
+  letter-spacing: 0.04em;
+  padding-bottom: $medium;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: $medium;
+
+  &::before {
+    content: '//';
+    @include font-mono;
+    font-size: 0.72rem;
+    color: var(--primary-color);
+    opacity: 0.6;
+  }
+}
+
+// ─── Divider ─────────────────────────────────────────────────────────────────
+
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: $xxLarge 0;
+  position: relative;
+
+  &::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    background: var(--bg-color);
+    padding: 0 $medium;
+    font-size: 0.5rem;
+    opacity: 0.5;
+  }
+}
+
+// ─── Inline code ─────────────────────────────────────────────────────────────
+
+.ic {
+  @include font-mono;
+  font-size: 0.82em;
+  color: var(--primary-color);
+  background: var(--bg-inset-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius;
+  padding: 0.1em 0.35em;
+}
+
+// ─── Search results ───────────────────────────────────────────────────────────
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  width: 320px;
+  background: var(--bg-surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-lg;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: slide-down 0.15s ease both;
+  z-index: 200;
+}
+
+.search-result-item {
+  padding: $medium $large;
+  border-top: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background var(--transition-speed) ease;
+
+  &:first-child { border-top: none; }
+
+  &:hover {
+    background: var(--primary-glow);
+  }
+}
+
+.search-result-title {
+  @include font-mono;
+  font-size: 0.78rem;
+  color: var(--text-color);
+  margin-bottom: 2px;
+}
+
+.search-result-section {
+  @include font-label;
+  font-size: 0.6rem;
+  color: var(--text-muted-color);
+}
+
+.search-no-results {
+  padding: $large;
+  text-align: center;
+
+  p {
+    @include font-mono;
+    font-size: 0.75rem;
+    color: var(--text-muted-color);
+    max-width: none;
+  }
+}
+
+.search-wrapper {
+  position: relative;
+}

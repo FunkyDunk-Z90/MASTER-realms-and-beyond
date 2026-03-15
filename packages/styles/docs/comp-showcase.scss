@@ -1,0 +1,168 @@
+@use '../_variables' as *;
+@use '../_mixins' as *;
+
+// ─── Showcase wrapper ─────────────────────────────────────────────────────────
+
+.showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
+// ─── Individual component section ─────────────────────────────────────────────
+
+.comp-section {
+    display: flex;
+    flex-direction: column;
+    gap: $xLarge;
+}
+
+.comp-title {
+    @include font-display;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--text-heading-color);
+    letter-spacing: 0.05em;
+    padding-bottom: $medium;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: $medium;
+
+    &::before {
+        content: '//';
+        @include font-mono;
+        font-size: 0.72rem;
+        color: var(--primary-color);
+        opacity: 0.6;
+    }
+}
+
+.comp-desc {
+    font-size: 0.86rem;
+    color: var(--text-secondary-color);
+    line-height: 1.75;
+    max-width: 70ch;
+
+    // inline code within desc
+    .ic {
+        @include font-mono;
+        font-size: 0.82em;
+        color: var(--primary-color);
+        background: var(--bg-inset-color);
+        border: 1px solid var(--border-color);
+        border-radius: $border-radius;
+        padding: 0.1em 0.35em;
+    }
+}
+
+// ─── Labels ───────────────────────────────────────────────────────────────────
+
+.comp-label {
+    @include font-label;
+    font-size: 0.6rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.18em;
+    margin-bottom: calc(-1 * #{$medium});
+}
+
+.comp-sublabel {
+    @include font-label;
+    font-size: 0.6rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.18em;
+    margin-top: $medium;
+    margin-bottom: calc(-1 * #{$medium});
+}
+
+// ─── Demo containers ──────────────────────────────────────────────────────────
+
+.comp-demo {
+    padding: $xLarge;
+    background: var(--bg-surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $xLarge;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        @include scanlines-light;
+    }
+
+    &--col {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    &--grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: $large;
+    }
+}
+
+// ─── Individual item ──────────────────────────────────────────────────────────
+
+.comp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $small;
+}
+
+.comp-item-label {
+    @include font-mono;
+    font-size: 0.62rem;
+    color: var(--text-muted-color);
+}
+
+// ─── Card wrap (for grid) ─────────────────────────────────────────────────────
+
+.comp-card-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+}
+
+.comp-card-full {
+    max-width: 340px;
+    width: 100%;
+}
+
+// ─── Frame sample content ─────────────────────────────────────────────────────
+
+.frame-sample {
+    padding: $large $xLarge;
+    font-size: 0.78rem;
+    color: var(--text-secondary-color);
+    text-align: center;
+    @include font-mono;
+}
+
+.panel-sample {
+    padding: $medium $large $large;
+    font-size: 0.78rem;
+    color: var(--text-secondary-color);
+}
+
+// ─── Divider row ──────────────────────────────────────────────────────────────
+
+.divider-row {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+    width: 100%;
+}
+
+// ─── Dropdown wrap ────────────────────────────────────────────────────────────
+
+.comp-dropdown-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+    min-width: 240px;
+}

@@ -1,0 +1,98 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Code Snippet ─────────────────────────────────────────────────────────────
+
+.code-snippet {
+    position: relative;
+    border-radius: $border-radius;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-left: 2px solid var(--primary-color);
+}
+
+.code-snippet__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 16px;
+    background: var(--bg-secondary-color);
+    border-bottom: 1px solid var(--border-color);
+    gap: $medium;
+    min-height: 32px;
+}
+
+.code-snippet__lang {
+    @include font-label;
+    font-size: 0.58rem;
+    color: var(--primary-color);
+    letter-spacing: 0.12em;
+    flex-shrink: 0;
+}
+
+.code-snippet__filename {
+    @include font-mono;
+    font-size: 0.68rem;
+    color: var(--text-muted-color);
+    flex: 1;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.code-snippet__copy {
+    @include font-label;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.58rem;
+    color: var(--text-muted-color);
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    flex-shrink: 0;
+    line-height: 1.6;
+
+    &:hover {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        background: var(--primary-glow);
+    }
+
+    &--copied {
+        color: var(--success-color);
+        border-color: var(--success-color);
+        background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--success-color) 10%);
+    }
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.code-snippet__body {
+    background: var(--bg-inset-color);
+    overflow-x: auto;
+
+    pre {
+        margin: 0;
+        padding: $large $xLarge;
+        overflow-x: auto;
+        background: none;
+        border: none;
+
+        code {
+            @include font-mono;
+            font-size: 0.8rem;
+            line-height: 1.65;
+            color: var(--text-color);
+            background: none;
+            border: none;
+            padding: 0;
+        }
+    }
+}

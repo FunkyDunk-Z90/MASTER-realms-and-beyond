@@ -1,0 +1,286 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Documentation utility styles ─────────────────────────────────────────────
+// Backs the @rnb/ui ui-docs-page components:
+// Section, H3, P, CodeBlock, Callout, PropsTable, SpacingGrid
+
+// ─── Section ──────────────────────────────────────────────────────────────────
+
+.docs-section {
+    margin-bottom: 60px;
+}
+
+.docs-h2 {
+    @include font-display;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 400;
+    color: var(--text-heading-color);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-bottom: $large;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: $xLarge;
+    display: flex;
+    align-items: center;
+    gap: $medium;
+
+    .docs-tag {
+        @include font-label;
+        font-size: 0.6rem;
+        color: var(--accent-color);
+        background: var(--accent-glow);
+        border: 1px solid var(--accent-dim-color);
+        border-radius: $border-radius;
+        padding: 2px 8px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        vertical-align: middle;
+        font-style: normal;
+    }
+}
+
+.docs-h3 {
+    @include font-display;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-heading-color);
+    letter-spacing: 0.04em;
+    padding-bottom: $medium;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: $large;
+
+    &::before {
+        content: '//';
+        @include font-mono;
+        font-size: 0.72rem;
+        color: var(--primary-color);
+        opacity: 0.6;
+        margin-right: $medium;
+    }
+}
+
+.docs-p {
+    color: var(--text-secondary-color);
+    font-size: 0.88rem;
+    line-height: 1.75;
+    max-width: 68ch;
+    margin-bottom: $large;
+}
+
+// ─── Code block ───────────────────────────────────────────────────────────────
+
+.docs-code-block {
+    border-radius: $border-radius;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-left: 2px solid var(--primary-color);
+    margin-bottom: $large;
+}
+
+.docs-code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 16px;
+    background: var(--bg-secondary-color);
+    border-bottom: 1px solid var(--border-color);
+    min-height: 32px;
+}
+
+.docs-code-lang {
+    @include font-label;
+    font-size: 0.58rem;
+    color: var(--primary-color);
+    letter-spacing: 0.12em;
+}
+
+.docs-pre {
+    @include font-mono;
+    background: var(--bg-inset-color);
+    padding: $large $xLarge;
+    overflow-x: auto;
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: var(--text-color);
+}
+
+// ─── Inline code ──────────────────────────────────────────────────────────────
+
+.docs-code-inline {
+    @include font-mono;
+    font-size: 0.82em;
+    background: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 0.1em 0.35em;
+
+    &.prop-name {
+        color: var(--primary-color);
+    }
+
+    &.prop-type {
+        color: var(--accent-color);
+    }
+
+    &.prop-default {
+        color: var(--text-muted-color);
+    }
+}
+
+// ─── Callout ──────────────────────────────────────────────────────────────────
+
+.docs-callout {
+    padding: $large $xLarge;
+    border-radius: $border-radius;
+    border: 1px solid var(--border-color);
+    border-left: 2px solid var(--warning-color);
+    background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--warning-color) 10%);
+    display: flex;
+    gap: $medium;
+    align-items: flex-start;
+    margin-bottom: $large;
+
+    .docs-callout-icon {
+        color: var(--warning-color);
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+
+    &-info {
+        border-left-color: var(--primary-color);
+        background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--primary-color) 10%);
+
+        .docs-callout-icon {
+            color: var(--primary-color);
+        }
+    }
+
+    &-tip {
+        border-left-color: var(--success-color);
+        background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--success-color) 10%);
+
+        .docs-callout-icon {
+            color: var(--success-color);
+        }
+    }
+
+    &-warn {
+        border-left-color: var(--warning-color);
+        background: color-mix(in srgb, var(--bg-inset-color) 90%, var(--warning-color) 10%);
+
+        .docs-callout-icon {
+            color: var(--warning-color);
+        }
+    }
+
+    > div {
+        font-size: 0.82rem;
+        color: var(--text-secondary-color);
+        line-height: 1.65;
+    }
+}
+
+// ─── Props table ──────────────────────────────────────────────────────────────
+
+.docs-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    margin-bottom: $large;
+}
+
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+        background: var(--bg-inset-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+        @include font-label;
+        font-size: 0.62rem;
+        color: var(--text-muted-color);
+        text-align: left;
+        padding: 10px 16px;
+        letter-spacing: 0.14em;
+        white-space: nowrap;
+    }
+
+    td {
+        @include font-mono;
+        font-size: 0.76rem;
+        color: var(--text-secondary-color);
+        padding: 10px 16px;
+        border-top: 1px solid var(--border-color);
+        vertical-align: top;
+        line-height: 1.5;
+    }
+
+    tr:hover td {
+        background: var(--primary-glow);
+    }
+
+    .docs-td-desc {
+        font-family: var(--font-body, sans-serif);
+        font-size: 0.78rem;
+        color: var(--text-secondary-color);
+        line-height: 1.6;
+    }
+
+    .docs-req {
+        @include font-label;
+        font-size: 0.55rem;
+        color: var(--danger-color);
+        border: 1px solid var(--danger-color);
+        border-radius: $border-radius;
+        padding: 1px 5px;
+        margin-left: $small;
+        vertical-align: middle;
+        display: inline-block;
+    }
+}
+
+// ─── Spacing grid ─────────────────────────────────────────────────────────────
+
+.docs-spacing-grid {
+    display: flex;
+    flex-direction: column;
+    gap: $medium;
+}
+
+.docs-spacing-row {
+    display: flex;
+    align-items: center;
+    gap: $large;
+}
+
+.docs-spacing-label {
+    @include font-mono;
+    font-size: 0.75rem;
+    color: var(--text-muted-color);
+    min-width: 14ch;
+}
+
+.docs-spacing-bar {
+    height: 12px;
+    background: var(--primary-color);
+    border-radius: $border-radius;
+    opacity: 0.6;
+}
+
+// ─── Tag ──────────────────────────────────────────────────────────────────────
+
+.docs-tag {
+    @include font-label;
+    font-size: 0.6rem;
+    color: var(--accent-color);
+    background: var(--accent-glow);
+    border: 1px solid var(--accent-dim-color);
+    border-radius: $border-radius;
+    padding: 2px 8px;
+}

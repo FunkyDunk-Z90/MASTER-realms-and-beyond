@@ -12,6 +12,7 @@ export interface I_AetherscribeDoc {
     status: 'active' | 'banned'
     createdAt: Date
     updatedAt: Date
+    toClient(): Record<string, unknown>
 }
 
 // ─── Methods ──────────────────────────────────────────────────────────────────
@@ -22,7 +23,11 @@ export interface I_AetherscribeMethods {
 
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
-const aetherscribeSchema = new Schema<I_AetherscribeDoc, {}, I_AetherscribeMethods>(
+const aetherscribeSchema = new Schema<
+    I_AetherscribeDoc,
+    {},
+    I_AetherscribeMethods
+>(
     {
         identityId: {
             type: Schema.Types.ObjectId,
