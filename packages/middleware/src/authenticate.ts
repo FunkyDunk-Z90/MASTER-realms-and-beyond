@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { HydratedDocument } from 'mongoose'
+import { HydratedDocument, Types } from 'mongoose'
 import { Identity } from '@rnb/database'
 import { AppError } from '@rnb/errors'
 import { extractToken, verifyToken } from '@rnb/security'
@@ -9,11 +9,13 @@ import { T_IdentityMethods } from '@rnb/database'
 // ─── Request Augmentation ─────────────────────────────────────────────────────
 // Attach the hydrated identity to req so downstream controllers have full
 // access to all instance methods (toClient, verifyPassword, etc.)
+// We intersect with { _id: Types.ObjectId } because T_Identity is a Zod-inferred
+// type that has no _id field, causing Mongoose to default it to unknown.
 
 declare global {
     namespace Express {
         interface Request {
-            identity?: HydratedDocument<T_Identity, T_IdentityMethods>
+            identity?: HydratedDocument<T_Identity, T_IdentityMethods> & { _id: Types.ObjectId }
         }
     }
 }

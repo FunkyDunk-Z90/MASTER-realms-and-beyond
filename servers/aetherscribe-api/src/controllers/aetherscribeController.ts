@@ -1,13 +1,18 @@
 import { Request, Response } from 'express'
-import { Identity, AetherscribeProfile } from '@rnb/database'
+import { Identity, AetherscribeProfile, Codex } from '@rnb/database'
 import { AppError } from '@rnb/errors'
 import { catchAsync } from '@rnb/middleware'
-import { Z_CreateAetherscribeAccount, SUBSCRIPTION_LIMITS } from '@rnb/validators'
+import {
+    Z_CreateAetherscribeAccount,
+    Z_UpdateAetherscribeAccount,
+    SUBSCRIPTION_LIMITS,
+} from '@rnb/validators'
 
 // ─── Shared response types ────────────────────────────────────────────────────
 
 interface I_AccountResponse {
     account: Record<string, unknown>
+    codex: Record<string, unknown>
     user: Record<string, unknown>
 }
 
@@ -18,17 +23,16 @@ interface I_MessageResponse {
 // ─── Create Account ───────────────────────────────────────────────────────────
 // POST /api/v1/account
 // Protected — requires a valid R&B auth cookie.
-// Creates an AetherscribeProfile and links it into the identity's services array.
+// Creates an AetherscribeProfile, a default Codex, and links to identity.services.
 
 export const createAccount = catchAsync(
     async (
-        req: Request<{}, I_AccountResponse, { username: string; plan: string }>,
+        req: Request<{}, I_AccountResponse, { username: string; plan: string; firstCodexName?: string }>,
         res: Response<I_AccountResponse>
     ): Promise<void> => {
         const identity = req.identity!
 
         // ── Already has an account ────────────────────────────────────────────
-
         const existing = await AetherscribeProfile.findOne({
             identityId: identity._id,
         })
@@ -37,20 +41,19 @@ export const createAccount = catchAsync(
         }
 
         // ── Validate input ────────────────────────────────────────────────────
-
         const parsed = Z_CreateAetherscribeAccount.safeParse({
             username: req.body.username,
             plan: req.body.plan,
+            firstCodexName: req.body.firstCodexName,
         })
         if (!parsed.success) {
             const issue = parsed.error.issues[0]
             throw new AppError(issue.message, 400, issue.path[0] as string)
         }
 
-        const { username, plan } = parsed.data
+        const { username, plan, firstCodexName } = parsed.data
 
         // ── Username uniqueness ───────────────────────────────────────────────
-
         const taken = await AetherscribeProfile.findOne({
             username: username.toLowerCase(),
         })
@@ -59,7 +62,6 @@ export const createAccount = catchAsync(
         }
 
         // ── Create profile ────────────────────────────────────────────────────
-
         const profile = await AetherscribeProfile.create({
             identityId: identity._id,
             username: username.toLowerCase(),
@@ -72,8 +74,16 @@ export const createAccount = catchAsync(
             status: 'active',
         })
 
-        // ── Link to identity ──────────────────────────────────────────────────
+        // ── Create default Codex ──────────────────────────────────────────────
+        const codexName = firstCodexName ?? `${username}'s Codex`
+        const codex = await Codex.create({
+            accountId: profile._id,
+            name: codexName,
+            description: 'My first worldbuilding codex.',
+            isDefault: true,
+        })
 
+        // ── Link to identity ──────────────────────────────────────────────────
         identity.services.push({
             serviceName: 'aetherscribe',
             serviceId: profile._id,
@@ -85,6 +95,7 @@ export const createAccount = catchAsync(
 
         res.status(201).json({
             account: profile.toClient(),
+            codex: codex.toClient(),
             user: identity.toClient(),
         })
     }
@@ -115,7 +126,6 @@ export const checkUsername = catchAsync(
     ): Promise<void> => {
         const { username } = req.params
 
-        // Run the username validation rules
         const parsed = Z_CreateAetherscribeAccount.shape.username.safeParse(username)
         if (!parsed.success) {
             res.status(200).json({
@@ -147,15 +157,15 @@ export const updateMyAccount = catchAsync(
             throw new AppError('Aetherscribe account not found.', 404)
         }
 
-        if (req.body.plan) {
-            const planParsed = Z_CreateAetherscribeAccount.shape.plan.safeParse(
-                req.body.plan
-            )
-            if (!planParsed.success) {
-                throw new AppError(planParsed.error.issues[0].message, 400, 'plan')
-            }
-            profile.subscription.plan = planParsed.data
-            profile.subscription.limits = SUBSCRIPTION_LIMITS[planParsed.data]
+        const parsed = Z_UpdateAetherscribeAccount.safeParse(req.body)
+        if (!parsed.success) {
+            const issue = parsed.error.issues[0]
+            throw new AppError(issue.message, 400, issue.path[0] as string)
+        }
+
+        if (parsed.data.plan) {
+            profile.subscription.plan = parsed.data.plan
+            profile.subscription.limits = SUBSCRIPTION_LIMITS[parsed.data.plan]
         }
 
         await profile.save()
@@ -170,12 +180,15 @@ export const deleteMyAccount = catchAsync(
     async (req: Request, res: Response<I_MessageResponse>): Promise<void> => {
         const identity = req.identity!
 
-        await AetherscribeProfile.findOneAndUpdate(
-            { identityId: identity._id },
-            { status: 'banned' }
-        )
+        const profile = await AetherscribeProfile.findOne({ identityId: identity._id })
 
-        // Remove the linked service from identity
+        if (profile) {
+            await AetherscribeProfile.findOneAndUpdate(
+                { identityId: identity._id },
+                { status: 'banned' }
+            )
+        }
+
         identity.services = identity.services.filter(
             (s) => s.serviceName !== 'aetherscribe'
         ) as typeof identity.services

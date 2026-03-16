@@ -15,11 +15,15 @@ export const Z_BillingCycle = z.enum(['monthly', 'quarterly', 'yearly'])
 
 // ─── AetherScribe (user-level) ────────────────────────────────────────────────
 
-export const Z_SubscriptionPlan = z.enum(['free', 'starter', 'pro', 'enterprise'])
+export const Z_SubscriptionPlan = z.enum([
+    'free',
+    'starter',
+    'pro',
+    'enterprise',
+])
 
 export const Z_SubscriptionLimits = z.object({
-    maxWorlds: z.number(),
-    maxCharacters: z.number(),
+    maxCodices: z.number(),
     maxStorageGB: z.number(),
     maxCollaborators: z.number(),
     advancedFeatures: z.boolean(),
@@ -70,7 +74,12 @@ export const Z_CancelSubscriptionRequest = z.object({
 
 // ─── NexusServe (company-level) ───────────────────────────────────────────────
 
-export const Z_NexusServePlan = z.enum(['trial', 'basic', 'professional', 'enterprise'])
+export const Z_NexusServePlan = z.enum([
+    'trial',
+    'basic',
+    'professional',
+    'enterprise',
+])
 
 export const Z_NexusServeSubscription = z.object({
     id: Z_ObjectId,
@@ -99,8 +108,14 @@ export type T_BillingCycle = z.infer<typeof Z_BillingCycle>
 export type T_SubscriptionPlan = z.infer<typeof Z_SubscriptionPlan>
 export type T_SubscriptionLimits = z.infer<typeof Z_SubscriptionLimits>
 export type T_Subscription = z.infer<typeof Z_Subscription>
-export type T_CreateSubscriptionRequest = z.infer<typeof Z_CreateSubscriptionRequest>
-export type T_UpdateSubscriptionRequest = z.infer<typeof Z_UpdateSubscriptionRequest>
-export type T_CancelSubscriptionRequest = z.infer<typeof Z_CancelSubscriptionRequest>
+export type T_CreateSubscriptionRequest = z.infer<
+    typeof Z_CreateSubscriptionRequest
+>
+export type T_UpdateSubscriptionRequest = z.infer<
+    typeof Z_UpdateSubscriptionRequest
+>
+export type T_CancelSubscriptionRequest = z.infer<
+    typeof Z_CancelSubscriptionRequest
+>
 export type T_NexusServePlan = z.infer<typeof Z_NexusServePlan>
 export type T_NexusServeSubscription = z.infer<typeof Z_NexusServeSubscription>

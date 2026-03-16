@@ -18,8 +18,7 @@ export const aetherscribeSubscriptionSchema =
             },
             startDate: { type: String, required: true },
             limits: {
-                maxWorlds: Number,
-                maxCharacters: Number,
+                maxCodices: Number,
                 maxStorageGB: Number,
                 maxCollaborators: Number,
                 advancedFeatures: Boolean,

@@ -123,6 +123,39 @@
         }
     }
 
+    // ─── BEM modifier aliases ─────────────────────────────────────────────────
+    // Allow btn--primary / btn--secondary / btn--danger alongside the
+    // class-modifier variants (.btn.danger etc.)
+
+    &--primary {
+        // Same as base .btn — no overrides needed
+    }
+
+    &--secondary {
+        background-color: transparent;
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+
+        &:hover {
+            background-color: var(--primary-glow);
+            border-color: var(--primary-hover-color);
+            color: var(--primary-hover-color);
+            box-shadow: none;
+            filter: none;
+        }
+    }
+
+    &--danger {
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+        color: var(--text-heading-color);
+
+        &:hover {
+            box-shadow: 0 0 0 2px var(--danger-glow);
+            filter: brightness(1.1);
+        }
+    }
+
     // ─── Ghost ────────────────────────────────────────────────────────────────
 
     &--ghost,

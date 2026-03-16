@@ -1,0 +1,173 @@
+@use 'sass:list';
+
+// ─── Landing page particle field ──────────────────────────────────────────────
+// 4 independent layers moving in different directions (up, down, right, left).
+// Each layer uses field duplication so its seamless loop never glitches:
+//   UP/DOWN   → duplicate offset ±900px  in Y, animate translateY ±900px
+//   RIGHT/LEFT → duplicate offset ±1400px in X, animate translateX ±1400px
+// overflow:hidden on .landing-page clips whatever exits the viewport.
+
+// ── Particle colors (CSS vars → respond to theme at runtime) ──────────────────
+
+.landing-page,
+.landing-particles {
+    --_color-up:    color-mix(in srgb, var(--text-color)    18%, transparent);
+    --_color-down:  color-mix(in srgb, var(--text-color)    25%, transparent);
+    --_color-right: color-mix(in srgb, var(--primary-color) 20%, transparent);
+    --_color-left:  color-mix(in srgb, var(--accent-color)  18%, transparent);
+}
+
+// Light mode — boost opacity so particles stay visible on pale backgrounds
+[data-theme='monochrome'][data-mode='light'] {
+    .landing-page,
+    .landing-particles {
+        --_color-up:    color-mix(in srgb, var(--text-color)    42%, transparent);
+        --_color-down:  color-mix(in srgb, var(--text-color)    55%, transparent);
+        --_color-right: color-mix(in srgb, var(--primary-color) 45%, transparent);
+        --_color-left:  color-mix(in srgb, var(--accent-color)  42%, transparent);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='monochrome']:not([data-mode='dark']) {
+        .landing-page,
+        .landing-particles {
+            --_color-up:    color-mix(in srgb, var(--text-color)    42%, transparent);
+            --_color-down:  color-mix(in srgb, var(--text-color)    55%, transparent);
+            --_color-right: color-mix(in srgb, var(--primary-color) 45%, transparent);
+            --_color-left:  color-mix(in srgb, var(--accent-color)  42%, transparent);
+        }
+    }
+}
+
+// ── SCSS shadow generation (compile-time, colors are CSS var references) ──────
+
+$_pw: 1400;
+$_ph: 900;
+$_c-up:    unquote("var(--_color-up)");
+$_c-down:  unquote("var(--_color-down)");
+$_c-right: unquote("var(--_color-right)");
+$_c-left:  unquote("var(--_color-left)");
+
+// UP: y+900px duplicate, animate translateY(0 → -900px)
+$_s-up: ();
+@for $i from 1 through 120 {
+    $_x: ((($i * 173) + ($i * $i * 7))  % $_pw) * 1px;
+    $_y: ((($i * 113) + ($i * $i * 11)) % $_ph) * 1px;
+    $_s-up: list.append($_s-up,  $_x  $_y          0 0 $_c-up, comma);
+    $_s-up: list.append($_s-up,  $_x ($_y + 900px) 0 0 $_c-up, comma);
+}
+
+// DOWN: y-900px duplicate (above viewport), animate translateY(0 → +900px)
+$_s-down: ();
+@for $i from 1 through 80 {
+    $_x: ((($i * 211) + ($i * $i * 13)) % $_pw) * 1px;
+    $_y: ((($i * 157) + ($i * $i * 17)) % $_ph) * 1px;
+    $_s-down: list.append($_s-down,  $_x  $_y           1px 0 $_c-down, comma);
+    $_s-down: list.append($_s-down,  $_x ($_y - 900px)  1px 0 $_c-down, comma);
+}
+
+// RIGHT: x-1400px duplicate (left of viewport), animate translateX(0 → +1400px)
+$_s-right: ();
+@for $i from 1 through 70 {
+    $_x: ((($i * 257) + ($i * $i * 19)) % $_pw) * 1px;
+    $_y: ((($i * 193) + ($i * $i * 23)) % $_ph) * 1px;
+    $_s-right: list.append($_s-right,  $_x           $_y 0 0 $_c-right, comma);
+    $_s-right: list.append($_s-right, ($_x - 1400px) $_y 0 0 $_c-right, comma);
+}
+
+// LEFT: x+1400px duplicate (right of viewport), animate translateX(0 → -1400px)
+$_s-left: ();
+@for $i from 1 through 55 {
+    $_x: ((($i * 307) + ($i * $i * 29)) % $_pw) * 1px;
+    $_y: ((($i * 241) + ($i * $i * 31)) % $_ph) * 1px;
+    $_s-left: list.append($_s-left,  $_x           $_y 1px 0 $_c-left, comma);
+    $_s-left: list.append($_s-left, ($_x + 1400px) $_y 1px 0 $_c-left, comma);
+}
+
+// ── Keyframes ─────────────────────────────────────────────────────────────────
+// UP/DOWN: X wander returns to 0 → no horizontal seam at loop restart
+// RIGHT/LEFT: Y wander returns to 0 → no vertical seam at loop restart
+
+@keyframes particle-field-up {
+    0%   { transform: translateY(0)      translateX(0);     }
+    25%  { transform: translateY(-225px) translateX(22px);  }
+    50%  { transform: translateY(-450px) translateX(-14px); }
+    75%  { transform: translateY(-675px) translateX(18px);  }
+    100% { transform: translateY(-900px) translateX(0);     }
+}
+
+@keyframes particle-field-down {
+    0%   { transform: translateY(0)     translateX(0);     }
+    25%  { transform: translateY(225px) translateX(-26px); }
+    50%  { transform: translateY(450px) translateX(16px);  }
+    75%  { transform: translateY(675px) translateX(-20px); }
+    100% { transform: translateY(900px) translateX(0);     }
+}
+
+@keyframes particle-field-right {
+    0%   { transform: translateX(0)      translateY(0);     }
+    25%  { transform: translateX(350px)  translateY(-18px); }
+    50%  { transform: translateX(700px)  translateY(12px);  }
+    75%  { transform: translateX(1050px) translateY(-14px); }
+    100% { transform: translateX(1400px) translateY(0);     }
+}
+
+@keyframes particle-field-left {
+    0%   { transform: translateX(0)       translateY(0);    }
+    25%  { transform: translateX(-350px)  translateY(20px); }
+    50%  { transform: translateX(-700px)  translateY(-10px);}
+    75%  { transform: translateX(-1050px) translateY(16px); }
+    100% { transform: translateX(-1400px) translateY(0);    }
+}
+
+// ── Shared pseudo-element base ─────────────────────────────────────────────────
+
+%particle-layer {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    pointer-events: none;
+    will-change: transform;
+}
+
+// ── Layer assignments ──────────────────────────────────────────────────────────
+
+.landing-page {
+    &::before {
+        @extend %particle-layer;
+        z-index: -2;
+        box-shadow: $_s-up;
+        animation: particle-field-up 220s linear infinite;
+    }
+
+    &::after {
+        @extend %particle-layer;
+        z-index: -2;
+        box-shadow: $_s-down;
+        animation: particle-field-down 180s linear infinite;
+    }
+}
+
+// <div className="landing-particles" aria-hidden="true" /> — first child of .landing-page
+.landing-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    &::before {
+        @extend %particle-layer;
+        box-shadow: $_s-right;
+        animation: particle-field-right 200s linear infinite;
+    }
+
+    &::after {
+        @extend %particle-layer;
+        box-shadow: $_s-left;
+        animation: particle-field-left 160s linear infinite;
+    }
+}

@@ -1,0 +1,624 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Codex Styles ─────────────────────────────────────────────────────────────
+// All styles scoped to the Aetherscribe codex feature:
+//   • .codex-selector   — sidebar footer dropdown widget
+//   • .setup-codex      — first-run page to create a codex
+//   • .sidebar-header-name — active codex name in the sidebar controls row
+
+// ─── Sidebar header name ──────────────────────────────────────────────────────
+// Plain text codex name injected via headerSlot. Word-wraps for long names.
+
+.sidebar-header-name {
+    font-family: $font-body;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--text-muted-color);
+    white-space: nowrap;
+    line-height: 1.35;
+}
+
+// ─── Codex Selector (sidebar footer widget) ───────────────────────────────────
+// Appears in .sidebar-footer. In open mode shows icon + name + caret.
+// In collapsed rail mode only the icon is visible (name/caret are hidden).
+// The dropdown uses position:fixed (set by JS) to escape overflow:hidden.
+
+.codex-selector {
+    width: 100%;
+}
+
+.codex-selector__trigger {
+    display: flex;
+    align-items: center;
+    gap: $small;
+    width: 100%;
+    padding: $small $medium;
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    background-color: var(--bg-inset-color);
+    color: var(--text-secondary-color);
+    cursor: pointer;
+    text-align: left;
+    transition:
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &:hover,
+    &--open {
+        background-color: var(--primary-glow);
+        border-color: var(--primary-color);
+        color: var(--primary-hover-color);
+    }
+
+    &--loading {
+        cursor: default;
+        opacity: 0.5;
+    }
+
+    // Collapsed rail: shrink to icon-only pill (same size as sidebar icons)
+    .sidebar-collapsed & {
+        width: 35px;
+        height: 35px;
+        padding: 0;
+        justify-content: center;
+        border-radius: $border-radius;
+        border-color: transparent;
+        background: transparent;
+
+        &:hover {
+            @include active-indicator;
+            color: var(--primary-hover-color);
+        }
+    }
+}
+
+.codex-selector__icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--accent-dim-color);
+
+    .codex-selector__trigger:hover &,
+    .codex-selector__trigger--open & {
+        color: var(--primary-hover-color);
+    }
+}
+
+.codex-selector__name {
+    flex: 1;
+    font-family: $font-body;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+
+    .sidebar-collapsed & {
+        display: none;
+    }
+}
+
+.codex-selector__caret {
+    flex-shrink: 0;
+    font-size: 0.6rem;
+    color: var(--text-muted-color);
+    line-height: 1;
+
+    .sidebar-collapsed & {
+        display: none;
+    }
+}
+
+// ── Dropdown (position:fixed, coords set by JS) ───────────────────────────────
+
+.codex-selector__dropdown {
+    z-index: 500;
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: $border-radius;
+    box-shadow:
+        0 -4px 24px var(--primary-glow),
+        0 0 0 1px var(--primary-glow);
+    overflow: hidden;
+    animation: codexDropIn 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes codexDropIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scaleY(0.96);
+        transform-origin: bottom;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+.codex-selector__dropdown-label {
+    @include font-label;
+    font-size: 0.65rem;
+    color: var(--accent-dim-color);
+    padding: $small $medium;
+    border-bottom: 1px solid var(--border-color);
+    margin: 0;
+}
+
+.codex-selector__list {
+    list-style: none;
+    margin: 0;
+    padding: $small;
+    display: grid;
+    gap: 2px;
+    max-height: 200px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.codex-selector__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $small;
+    width: 100%;
+    padding: $small $medium;
+    border-radius: $border-radius;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary-color);
+    font-family: $font-body;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    text-align: left;
+    border-left: 2px solid transparent;
+    transition:
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &:hover {
+        background-color: var(--primary-glow);
+        border-left-color: var(--primary-color);
+        color: var(--primary-hover-color);
+    }
+
+    &--active {
+        @include active-indicator;
+        color: var(--primary-hover-color);
+    }
+}
+
+.codex-selector__item-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.codex-selector__default-badge {
+    @include font-label;
+    font-size: 0.6rem;
+    color: var(--accent-dim-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 1px 4px;
+    flex-shrink: 0;
+}
+
+.codex-selector__divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: $small $medium;
+}
+
+.codex-selector__manage-link {
+    display: block;
+    width: calc(100% - $medium);
+    padding: $small $medium;
+    margin: $small;
+    color: var(--text-secondary-color);
+    font-family: $font-body;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border-radius: $border-radius;
+    border-left: 2px solid transparent;
+    transition:
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &:hover {
+        background-color: var(--primary-glow);
+        border-left-color: var(--primary-color);
+        color: var(--primary-hover-color);
+    }
+}
+
+.codex-selector__new-btn {
+    display: block;
+    width: 100%;
+    padding: $small $medium;
+    background: transparent;
+    border: none;
+    color: var(--accent-dim-color);
+    font-family: $font-body;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    text-align: left;
+    transition: color var(--transition-speed) ease;
+
+    &:hover {
+        color: var(--primary-hover-color);
+    }
+}
+
+.codex-selector__create-form {
+    padding: $small $medium $medium;
+    display: grid;
+    gap: $small;
+}
+
+.codex-selector__input {
+    width: 100%;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    color: var(--text-color);
+    font-family: $font-body;
+    font-size: 0.8rem;
+    padding: $small $medium;
+    outline: none;
+    transition:
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px var(--primary-glow);
+    }
+
+    &::placeholder {
+        color: var(--text-muted-color);
+    }
+}
+
+.codex-selector__error {
+    font-family: $font-body;
+    font-size: 0.72rem;
+    color: var(--danger-color);
+    margin: 0;
+}
+
+.codex-selector__limit-msg {
+    font-family: $font-body;
+    font-size: 0.72rem;
+    color: var(--warning-color);
+    border: 1px solid var(--warning-color);
+    border-radius: $border-radius;
+    padding: $small $medium;
+    margin: 0;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.codex-selector__create-actions {
+    display: flex;
+    gap: $small;
+}
+
+.codex-selector__btn {
+    flex: 1;
+    padding: $small $medium;
+    border-radius: $border-radius;
+    border: 1px solid var(--border-color);
+    font-family: $font-body;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &--primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--bg-color);
+
+        &:hover {
+            background-color: var(--primary-hover-color);
+            border-color: var(--primary-hover-color);
+        }
+    }
+
+    &--secondary {
+        background: transparent;
+        color: var(--text-muted-color);
+
+        &:hover {
+            background-color: var(--primary-glow);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+        }
+    }
+}
+
+// ─── Setup Codex Page ─────────────────────────────────────────────────────────
+// First-run flow — shown when a user has no codices.
+
+.setup-codex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: $xLarge $large;
+}
+
+.setup-codex__card {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $xLarge;
+    display: grid;
+    gap: $xLarge;
+    box-shadow: var(--shadow-md);
+}
+
+.setup-codex__header {
+    display: grid;
+    gap: $medium;
+}
+
+.setup-codex__title {
+    @include font-display;
+    font-size: 1.4rem;
+    color: var(--text-heading-color);
+    margin: 0;
+}
+
+.setup-codex__subtitle {
+    font-family: $font-body;
+    font-size: 0.85rem;
+    color: var(--text-muted-color);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.setup-codex__form {
+    display: grid;
+    gap: $large;
+}
+
+// ─── Manage Codex Page ────────────────────────────────────────────────────────
+
+.manage-codex {
+    display: grid;
+    gap: $xLarge;
+    align-content: start;
+    padding: $xLarge $large;
+
+    @media (max-width: $tablet) {
+        padding: $large $medium;
+    }
+}
+
+.manage-codex__loading {
+    font-family: $font-body;
+    font-size: 0.85rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.04em;
+}
+
+.manage-codex__header {
+    display: grid;
+    gap: $small;
+    padding-bottom: $large;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.manage-codex__title {
+    @include font-display;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-heading-color);
+    margin: 0;
+    text-shadow: 0 0 16px var(--primary-glow);
+}
+
+.manage-codex__subtitle {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.03em;
+    margin: 0;
+}
+
+.manage-codex__body {
+    display: grid;
+    gap: $large;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    align-items: start;
+}
+
+.manage-codex__card {
+    display: grid;
+    gap: $large;
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $xLarge;
+
+    &--danger {
+        border-color: var(--danger-color);
+    }
+}
+
+.manage-codex__card-title {
+    @include font-display;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-heading-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $medium;
+
+    &--danger {
+        color: var(--danger-color);
+    }
+}
+
+.manage-codex__count {
+    @include font-label;
+    font-size: 0.62rem;
+    color: var(--accent-dim-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 1px 6px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.manage-codex__form {
+    display: grid;
+    gap: $large;
+}
+
+.manage-codex__form-actions {
+    display: flex;
+    align-items: center;
+    gap: $medium;
+    flex-wrap: wrap;
+}
+
+.manage-codex__success {
+    font-family: $font-body;
+    font-size: 0.8rem;
+    color: var(--success-color);
+    letter-spacing: 0.03em;
+    margin: 0;
+}
+
+.manage-codex__default-tag {
+    @include font-label;
+    font-size: 0.62rem;
+    color: var(--accent-dim-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 3px 8px;
+}
+
+.field-label--optional {
+    font-family: $font-body;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--text-muted-color);
+    font-weight: 400;
+}
+
+.manage-codex__list {
+    display: grid;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.manage-codex__codex-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $medium;
+    padding: $small $medium;
+    border-radius: $border-radius;
+    border-left: 2px solid transparent;
+    transition:
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease;
+
+    &:hover {
+        background-color: var(--primary-glow);
+        border-left-color: var(--border-color);
+    }
+
+    &--active {
+        @include active-indicator;
+    }
+}
+
+.manage-codex__codex-meta {
+    display: flex;
+    align-items: center;
+    gap: $small;
+    min-width: 0;
+}
+
+.manage-codex__codex-name {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    color: var(--text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.manage-codex__default-badge {
+    @include font-label;
+    font-size: 0.58rem;
+    color: var(--accent-dim-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 1px 4px;
+    flex-shrink: 0;
+}
+
+.manage-codex__danger-desc {
+    font-family: $font-body;
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+.manage-codex__danger-blocked {
+    font-family: $font-body;
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.03em;
+    margin: 0;
+    padding: $small $medium;
+    border: 1px dashed var(--border-color);
+    border-radius: $border-radius;
+}
+
+.manage-codex__confirm {
+    display: grid;
+    gap: $medium;
+}
+
+.manage-codex__confirm-text {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    color: var(--danger-color);
+    letter-spacing: 0.03em;
+    margin: 0;
+}
+
+.manage-codex__confirm-actions {
+    display: flex;
+    gap: $medium;
+    flex-wrap: wrap;
+}

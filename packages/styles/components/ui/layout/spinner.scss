@@ -1,0 +1,63 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Spinner ──────────────────────────────────────────────────────────────────
+// Retro amber loading indicator matching the R&B design system.
+// Square with sharp corners (var(--border-radius) = 2px) spins with an amber
+// glow — consistent with the arcade aesthetic.
+
+@keyframes spinner-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $medium;
+    padding: $xLarge;
+
+    &--full {
+        min-height: 40vh;
+        width: 100%;
+    }
+}
+
+.spinner {
+    flex-shrink: 0;
+    border-style: solid;
+    border-color: var(--bg-inset-color);
+    border-top-color: var(--primary-color);
+    border-right-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    animation: spinner-rotate 0.75s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--primary-glow);
+
+    &--sm {
+        width: 18px;
+        height: 18px;
+        border-width: 1.5px;
+    }
+
+    &--md {
+        width: 28px;
+        height: 28px;
+        border-width: 2px;
+    }
+
+    &--lg {
+        width: 44px;
+        height: 44px;
+        border-width: 3px;
+    }
+}
+
+.spinner-label {
+    font-size: 0.7rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}

@@ -8,7 +8,7 @@ const MODE_KEY = 'aether-mode'
 
 export const metadata: Metadata = {
     title: 'Aetherscribe',
-    description: 'Chronicle your worlds. Begin your legend.',
+    description: 'Inscribe Infinity',
 }
 
 export default function RootLayout({

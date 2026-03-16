@@ -1,53 +1,36 @@
 'use client'
 
+import { useCallback } from 'react'
 import { Navbar, Footer, Sidebar, AuthGuard, useAuth } from '@rnb/ui'
-import type { I_SearchResult } from '@rnb/ui'
 import { aetherscribeLogo } from '@rnb/assets'
-import { sidebarData } from '@/data/sidebarSections'
 import { navLinks } from '@/data/navLinks'
-import {
-    testAccountContent,
-    categoryMeta,
-    T_ContentCategory,
-} from '@/data/aetherscribeData'
+import { CodexProvider, useCodex } from '@/src/context/CodexContext'
+import { getSidebarSections } from '@/data/sidebarSections'
+import CodexSelector from '@/src/components/CodexSelector'
+import CodexNameBadge from '@/src/components/CodexNameBadge'
+import CodexGuard from '@/src/components/CodexGuard'
 
-// ─── Search ───────────────────────────────────────────────────────────────────
+// ─── HubInner ─────────────────────────────────────────────────────────────────
+// Rendered inside <CodexProvider> so it can call useCodex().
+// Passes a stable factory function to <Sidebar> so sections update whenever
+// the active codex changes without recreating the Sidebar from scratch.
 
-const MAX_RESULTS = 8
+function HubInner({
+    children,
+    logout,
+}: {
+    children: React.ReactNode
+    logout: () => void
+}) {
+    const { activeCodex } = useCodex()
 
-function buildSearchFn() {
-    return (query: string): I_SearchResult[] => {
-        if (!query.trim()) return []
-        const q = query.toLowerCase()
-        const results: I_SearchResult[] = []
-
-        for (const key in testAccountContent) {
-            const category = key as T_ContentCategory
-            const meta = categoryMeta[category]
-            for (const item of testAccountContent[category]) {
-                if (item.contentName.toLowerCase().includes(q)) {
-                    results.push({
-                        id: item.contentId,
-                        label: item.contentName,
-                        href: `${meta.href}/${item.contentId as string}`,
-                    })
-                    if (results.length >= MAX_RESULTS) return results
-                }
-            }
-        }
-        return results
-    }
-}
-
-const searchFn = buildSearchFn()
-
-// ─── Layout ───────────────────────────────────────────────────────────────────
-
-export default function HubLayout({ children }: { children: React.ReactNode }) {
-    const { logout } = useAuth()
+    const sections = useCallback(
+        () => getSidebarSections(activeCodex?.id ?? ''),
+        [activeCodex?.id]
+    )
 
     return (
-        <AuthGuard>
+        <>
             <Navbar
                 headerIcon={aetherscribeLogo}
                 headerTitle="Aetherscribe"
@@ -56,13 +39,30 @@ export default function HubLayout({ children }: { children: React.ReactNode }) {
             />
             <main className="page-wrapper">
                 <Sidebar
-                    sections={sidebarData}
-                    searchFn={searchFn}
+                    sections={sections}
+                    footer={<CodexSelector />}
+                    headerSlot={<CodexNameBadge />}
                     defaultOpen={false}
                 />
-                <section className="section-wrapper">{children}</section>
+                <section className="section-wrapper">
+                    <CodexGuard>{children}</CodexGuard>
+                </section>
             </main>
             <Footer appName="Aetherscribe" />
+        </>
+    )
+}
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+
+export default function HubLayout({ children }: { children: React.ReactNode }) {
+    const { logout } = useAuth()
+
+    return (
+        <AuthGuard>
+            <CodexProvider>
+                <HubInner logout={logout}>{children}</HubInner>
+            </CodexProvider>
         </AuthGuard>
     )
 }

@@ -5,116 +5,134 @@ import {
     svgAncestries,
     svgBestiary,
     svgCampaigns,
-    svgFeats,
     svgItems,
+    svgLocations,
     svgNpcs,
-    svgOrigins,
     svgPlayerCharacters,
     svgSpells,
     svgWorlds,
 } from '@rnb/assets'
 
-// Only lists routes that have an actual page.tsx in the aetherscribe app.
-// Add entries here as new pages are created.
-export const sidebarData: I_SidebarSection[] = [
-    // ─── Hub ──────────────────────────────────────────────────────────────────
-    {
-        title: 'Hub',
-        items: [
-            {
-                id: 'hub',
-                label: 'Adventure Hub',
-                href: '/hub',
-                icon: svgHub,
-            },
-        ],
-    },
+// ─── getSidebarSections ───────────────────────────────────────────────────────
+// Returns sidebar nav with links scoped to the active codex.
+// When codexId is empty (loading / no codex) links fall back to '#' so
+// the sidebar renders without broken hrefs — CodexGuard handles navigation.
 
-    // ─── Characters ───────────────────────────────────────────────────────────
-    {
-        title: 'Characters',
-        items: [
-            {
-                id: 'player-characters',
-                label: 'Player Characters',
-                href: '/hub/player-characters',
-                icon: svgPlayerCharacters,
-            },
-            {
-                id: 'npcs',
-                label: 'NPCs',
-                href: '/hub/npcs',
-                icon: svgNpcs,
-            },
-        ],
-    },
+export function getSidebarSections(codexId: string): I_SidebarSection[] {
+    const base = codexId ? `/hub/${codexId}` : '#'
 
-    // ─── Campaigns & Worlds ───────────────────────────────────────────────────
-    {
-        title: 'Campaigns & Worlds',
-        items: [
-            {
-                id: 'campaigns',
-                label: 'Campaigns',
-                href: '/hub/campaigns',
-                icon: svgCampaigns,
-            },
-            {
-                id: 'worlds',
-                label: 'Worlds',
-                href: '/hub/worlds',
-                icon: svgWorlds,
-            },
-            {
-                id: 'bestiary',
-                label: 'Bestiary',
-                href: '/hub/bestiary',
-                icon: svgBestiary,
-            },
-        ],
-    },
+    return [
+        // ─── Hub ──────────────────────────────────────────────────────────────
+        {
+            title: 'Hub',
+            items: [
+                {
+                    id: 'hub',
+                    label: 'Adventure Hub',
+                    href: '/hub',
+                    icon: svgHub,
+                },
+            ],
+        },
 
-    // ─── Rules & Lore ─────────────────────────────────────────────────────────
-    {
-        title: 'Rules & Lore',
-        items: [
-            {
-                id: 'ancestries',
-                label: 'Ancestries',
-                href: '/hub/ancestries',
-                icon: svgAncestries,
-            },
-            {
-                id: 'backgrounds',
-                label: 'Backgrounds',
-                href: '/hub/backgrounds',
-                icon: svgOrigins,
-            },
-            {
-                id: 'feats',
-                label: 'Feats',
-                href: '/hub/feats',
-                icon: svgFeats,
-            },
-        ],
-    },
+        // ─── Characters ───────────────────────────────────────────────────────
+        {
+            title: 'Characters',
+            items: [
+                {
+                    id: 'player-characters',
+                    label: 'Player Characters',
+                    href: `${base}/player-characters`,
+                    icon: svgPlayerCharacters,
+                },
+                {
+                    id: 'npcs',
+                    label: 'NPCs',
+                    href: `${base}/npcs`,
+                    icon: svgNpcs,
+                },
+            ],
+        },
 
-    // ─── Magic & Items ────────────────────────────────────────────────────────
-    {
-        title: 'Magic & Items',
-        items: [
-            {
-                id: 'spells',
-                label: 'Spells',
-                href: '/hub/spells',
-                icon: svgSpells,
-            },
-            {
-                id: 'items',
-                label: 'Items',
-                href: '/hub/items',
-                icon: svgItems,
-            },
-        ],
-    },
-]
+        // ─── Campaigns & Worlds ───────────────────────────────────────────────
+        {
+            title: 'Campaigns & Worlds',
+            items: [
+                {
+                    id: 'campaigns',
+                    label: 'Campaigns',
+                    href: `${base}/campaigns`,
+                    icon: svgCampaigns,
+                },
+                {
+                    id: 'worlds',
+                    label: 'Worlds',
+                    href: `${base}/worlds`,
+                    icon: svgWorlds,
+                },
+                {
+                    id: 'bestiary',
+                    label: 'Bestiary',
+                    href: `${base}/bestiary`,
+                    icon: svgBestiary,
+                },
+            ],
+        },
+
+        // ─── World Building ───────────────────────────────────────────────────
+        {
+            title: 'World Building',
+            items: [
+                {
+                    id: 'ancestries',
+                    label: 'Ancestries',
+                    href: `${base}/ancestries`,
+                    icon: svgAncestries,
+                },
+                {
+                    id: 'lore',
+                    label: 'Lore',
+                    href: `${base}/lore`,
+                    icon: svgWorlds,
+                },
+                {
+                    id: 'nations',
+                    label: 'Nations',
+                    href: `${base}/nations`,
+                    icon: svgLocations,
+                },
+                {
+                    id: 'factions',
+                    label: 'Factions',
+                    href: `${base}/factions`,
+                    icon: svgNpcs,
+                },
+                {
+                    id: 'locations',
+                    label: 'Locations',
+                    href: `${base}/locations`,
+                    icon: svgLocations,
+                },
+            ],
+        },
+
+        // ─── Magic & Items ────────────────────────────────────────────────────
+        {
+            title: 'Magic & Items',
+            items: [
+                {
+                    id: 'arcana',
+                    label: 'Arcana',
+                    href: `${base}/arcana`,
+                    icon: svgSpells,
+                },
+                {
+                    id: 'items',
+                    label: 'Items',
+                    href: `${base}/items`,
+                    icon: svgItems,
+                },
+            ],
+        },
+    ]
+}

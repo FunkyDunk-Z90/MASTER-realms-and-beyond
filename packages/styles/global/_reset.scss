@@ -40,6 +40,11 @@ select {
     font: inherit;
 }
 
+textarea {
+    resize: none;
+    field-sizing: content;
+}
+
 button {
     cursor: pointer;
     border: none;

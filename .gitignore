@@ -89,3 +89,5 @@ Thumbs.db
 *.temp
 *.tmp
 *.bak
+
+.vscode/

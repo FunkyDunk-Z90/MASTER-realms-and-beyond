@@ -2,21 +2,10 @@
     "$schema": "https://turbo.build/schema.json",
     "ui": "tui",
     "tasks": {
-
-        // ── Build ────────────────────────────────────────────────────────────
-        // Packages must build before the apps/services that depend on them.
-
         "build": {
             "dependsOn": ["^build"],
-            "outputs": [
-                "dist/**",
-                ".next/**",
-                "!.next/cache/**"
-            ]
+            "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
         },
-
-        // ── Dev ─────────────────────────────────────────────────────────────
-        // All dev servers run in parallel; package builds must complete first.
 
         "dev": {
             "dependsOn": ["^build"],
@@ -24,30 +13,21 @@
             "persistent": true
         },
 
-        // ── Start ────────────────────────────────────────────────────────────
-        // Production start — depends on the local build being complete.
-
         "start": {
             "dependsOn": ["build"],
             "cache": false,
             "persistent": true
         },
 
-        // ── Lint ─────────────────────────────────────────────────────────────
-
         "lint": {
             "dependsOn": ["^build"],
             "outputs": []
         },
 
-        // ── Type-check ───────────────────────────────────────────────────────
-
         "typecheck": {
             "dependsOn": ["^build"],
             "outputs": []
         },
-
-        // ── Clean ────────────────────────────────────────────────────────────
 
         "clean": {
             "cache": false

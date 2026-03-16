@@ -34,17 +34,15 @@ function validateEmail(value: string): string | undefined {
 function validatePassword(value: string): string | undefined {
     if (!value) return 'Password is required.'
     if (value.length < 8) return 'Password must be at least 8 characters.'
-    if (!/[A-Z]/.test(value)) return 'Password must contain an uppercase letter.'
+    if (!/[A-Z]/.test(value))
+        return 'Password must contain an uppercase letter.'
     if (!/[a-z]/.test(value)) return 'Password must contain a lowercase letter.'
     if (!/[0-9]/.test(value)) return 'Password must contain a number.'
     if (!/[^A-Za-z0-9]/.test(value))
         return 'Password must contain a special character.'
 }
 
-function validateConfirm(
-    value: string,
-    password: string
-): string | undefined {
+function validateConfirm(value: string, password: string): string | undefined {
     if (!value) return 'Please confirm your password.'
     if (value !== password) return 'Passwords do not match.'
 }
@@ -89,8 +87,7 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
     const onBlurLastName = () =>
         setFieldError('lastName', validateRequired(lastName, 'Last name'))
 
-    const onBlurEmail = () =>
-        setFieldError('email', validateEmail(email))
+    const onBlurEmail = () => setFieldError('email', validateEmail(email))
 
     const onBlurPassword = () => {
         setFieldError('password', validatePassword(password))
@@ -103,7 +100,10 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
     }
 
     const onBlurConfirm = () =>
-        setFieldError('passwordConfirm', validateConfirm(passwordConfirm, password))
+        setFieldError(
+            'passwordConfirm',
+            validateConfirm(passwordConfirm, password)
+        )
 
     // ── Full form validation before submit ───────────────────────────────────
 
@@ -144,7 +144,13 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
             if (mode === 'login') {
                 await login(email, password)
             } else {
-                await signup({ firstName, lastName, email, password, passwordConfirm })
+                await signup({
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    passwordConfirm,
+                })
             }
             onSuccess?.()
         } catch (err) {
@@ -159,56 +165,77 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
     // ── Render ───────────────────────────────────────────────────────────────
 
     return (
-        <form className="form-wrapper auth-form" onSubmit={handleSubmit} noValidate>
+        <form
+            className="form-wrapper auth-form"
+            onSubmit={handleSubmit}
+            noValidate
+        >
             <div className="form-contents">
-                <h2 className="form-title">
-                    {mode === 'login' ? 'Welcome Back' : 'Create Account'}
-                </h2>
+                <div>
+                    <h2 className="form-title">
+                        {mode === 'login' ? 'Sign In' : 'Create Account'}
+                    </h2>
+                    <p className="landing-subtitle">
+                        sign in with your Realms & Beyond account
+                    </p>
+                </div>
 
                 {/* ── Name fields (signup only) ── */}
                 {mode === 'signup' && (
                     <div className="auth-form__row">
                         <div className="field">
-                            <label className="field-label" htmlFor="auth-firstName">
+                            <label
+                                className="field-label"
+                                htmlFor="auth-firstName"
+                            >
                                 First Name
                             </label>
                             <input
                                 id="auth-firstName"
                                 className={`input${fieldErrors.firstName ? ' input--error' : ''}`}
                                 type="text"
-                                placeholder="Duncan"
+                                placeholder="Kolgart"
                                 value={firstName}
                                 onChange={(e) => {
                                     setFirstName(e.target.value)
-                                    if (fieldErrors.firstName) setFieldError('firstName', undefined)
+                                    if (fieldErrors.firstName)
+                                        setFieldError('firstName', undefined)
                                 }}
                                 onBlur={onBlurFirstName}
                                 autoComplete="given-name"
                             />
                             {fieldErrors.firstName && (
-                                <p className="field-error">{fieldErrors.firstName}</p>
+                                <p className="field-error">
+                                    {fieldErrors.firstName}
+                                </p>
                             )}
                         </div>
 
                         <div className="field">
-                            <label className="field-label" htmlFor="auth-lastName">
+                            <label
+                                className="field-label"
+                                htmlFor="auth-lastName"
+                            >
                                 Last Name
                             </label>
                             <input
                                 id="auth-lastName"
                                 className={`input${fieldErrors.lastName ? ' input--error' : ''}`}
                                 type="text"
-                                placeholder="Saul"
+                                placeholder="Broadmaster Valenthi"
                                 value={lastName}
                                 onChange={(e) => {
                                     setLastName(e.target.value)
-                                    if (fieldErrors.lastName) setFieldError('lastName', undefined)
+                                    if (fieldErrors.lastName)
+                                        setFieldError('lastName', undefined)
                                 }}
                                 onBlur={onBlurLastName}
                                 autoComplete="family-name"
                             />
                             {fieldErrors.lastName && (
-                                <p className="field-error">{fieldErrors.lastName}</p>
+                                <p className="field-error">
+                                    {fieldErrors.lastName}
+                                </p>
                             )}
                         </div>
                     </div>
@@ -227,7 +254,8 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
                         value={email}
                         onChange={(e) => {
                             setEmail(e.target.value)
-                            if (fieldErrors.email) setFieldError('email', undefined)
+                            if (fieldErrors.email)
+                                setFieldError('email', undefined)
                         }}
                         onBlur={onBlurEmail}
                         autoComplete="email"
@@ -251,18 +279,29 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
                             value={password}
                             onChange={(e) => {
                                 setPassword(e.target.value)
-                                if (fieldErrors.password) setFieldError('password', undefined)
+                                if (fieldErrors.password)
+                                    setFieldError('password', undefined)
                             }}
                             onBlur={onBlurPassword}
-                            autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                            autoComplete={
+                                mode === 'login'
+                                    ? 'current-password'
+                                    : 'new-password'
+                            }
                         />
                         <button
                             type="button"
                             className="input-visibility-toggle"
                             onClick={() => setShowPassword((v) => !v)}
-                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            aria-label={
+                                showPassword ? 'Hide password' : 'Show password'
+                            }
                         >
-                            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                            {showPassword ? (
+                                <Eye size={16} />
+                            ) : (
+                                <EyeOff size={16} />
+                            )}
                         </button>
                     </div>
                     {fieldErrors.password && (
@@ -273,7 +312,10 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
                 {/* ── Confirm password (signup only) ── */}
                 {mode === 'signup' && (
                     <div className="field">
-                        <label className="field-label" htmlFor="auth-passwordConfirm">
+                        <label
+                            className="field-label"
+                            htmlFor="auth-passwordConfirm"
+                        >
                             Confirm Password
                         </label>
                         <div className="input-wrapper">
@@ -286,7 +328,10 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
                                 onChange={(e) => {
                                     setPasswordConfirm(e.target.value)
                                     if (fieldErrors.passwordConfirm)
-                                        setFieldError('passwordConfirm', undefined)
+                                        setFieldError(
+                                            'passwordConfirm',
+                                            undefined
+                                        )
                                 }}
                                 onBlur={onBlurConfirm}
                                 autoComplete="new-password"
@@ -295,26 +340,38 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
                                 type="button"
                                 className="input-visibility-toggle"
                                 onClick={() => setShowConfirm((v) => !v)}
-                                aria-label={showConfirm ? 'Hide password' : 'Show password'}
+                                aria-label={
+                                    showConfirm
+                                        ? 'Hide password'
+                                        : 'Show password'
+                                }
                             >
-                                {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
+                                {showConfirm ? (
+                                    <Eye size={16} />
+                                ) : (
+                                    <EyeOff size={16} />
+                                )}
                             </button>
                         </div>
                         {fieldErrors.passwordConfirm && (
-                            <p className="field-error">{fieldErrors.passwordConfirm}</p>
+                            <p className="field-error">
+                                {fieldErrors.passwordConfirm}
+                            </p>
                         )}
                     </div>
                 )}
 
                 {/* ── Submit error ── */}
                 {submitError && (
-                    <p className="field-error auth-form__error">{submitError}</p>
+                    <p className="field-error auth-form__error">
+                        {submitError}
+                    </p>
                 )}
 
                 {/* ── Submit ── */}
                 <Button
                     btnType="submit"
-                    variant="submit"
+                    // variant="submit"
                     size="lg"
                     isLoading={isSubmitting}
                     isDisabled={isSubmitting}
@@ -332,7 +389,9 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
                     <button
                         type="button"
                         className="form-link"
-                        onClick={() => switchMode(mode === 'login' ? 'signup' : 'login')}
+                        onClick={() =>
+                            switchMode(mode === 'login' ? 'signup' : 'login')
+                        }
                     >
                         {mode === 'login' ? 'Sign up' : 'Log in'}
                     </button>

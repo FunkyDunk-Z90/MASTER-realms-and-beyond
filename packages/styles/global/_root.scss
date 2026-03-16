@@ -134,3 +134,50 @@
     width: 100%;
     gap: $medium;
 }
+
+.step-indicator .step-dot.active {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.signup-wrapper {
+    margin-block: auto;
+}
+
+// ─── Landing page ─────────────────────────────────────────────────────────────
+// Particle animations live in global/_particles.scss
+
+.landing-page {
+    position: relative;
+    overflow: hidden;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $xLarge;
+    padding: 7rem $large;
+}
+
+.landing-hero {
+    display: grid;
+    gap: $small;
+    text-align: center;
+}
+
+.landing-title {
+    font-family: $font-display;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-heading-color);
+    text-shadow: 0 0 24px var(--primary-glow-strong);
+    margin: 0;
+}
+
+.landing-subtitle {
+    font-family: $font-body;
+    font-size: 0.875rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.06em;
+    margin: 0;
+}

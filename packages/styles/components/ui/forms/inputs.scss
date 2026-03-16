@@ -60,9 +60,10 @@
 
 .textarea {
     @extend .input;
-    resize: vertical;
+    resize: none;
     min-height: 80px;
     line-height: 1.6;
+    field-sizing: content;
 }
 
 // ─── Select ───────────────────────────────────────────────────────────────────

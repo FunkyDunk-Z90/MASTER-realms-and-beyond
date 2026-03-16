@@ -1,0 +1,353 @@
+@use '../../../_variables' as *;
+@use '../../../_mixins' as *;
+
+// ─── Content List Page ────────────────────────────────────────────────────────
+// Styles for ContentListPage — the generic hub category page (worlds, npcs, etc.)
+// Covers: page shell, header, controls row, form panel, empty/error states,
+// the content-card grid, and individual card items.
+
+// ─── Page shell ───────────────────────────────────────────────────────────────
+
+.content-page {
+    display: grid;
+    gap: $xLarge;
+    align-content: start;
+    padding: $xLarge $large;
+
+    @media (max-width: $tablet) {
+        padding: $large $medium;
+    }
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+
+.content-page__header {
+    display: grid;
+    gap: $large;
+    padding-bottom: $large;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.content-page__title-row {
+    display: flex;
+    align-items: center;
+    gap: $medium;
+
+    h1 {
+        @include font-display;
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-heading-color);
+        margin: 0;
+        text-shadow: 0 0 16px var(--primary-glow);
+    }
+}
+
+.content-page__count {
+    @include font-label;
+    font-size: 0.65rem;
+    color: var(--accent-dim-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 2px 6px;
+    min-width: 24px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+// ─── Controls row ─────────────────────────────────────────────────────────────
+
+.content-page__controls {
+    display: flex;
+    align-items: center;
+    gap: $medium;
+    flex-wrap: wrap;
+}
+
+.content-page__search {
+    flex: 1;
+    min-width: 160px;
+    padding: $small $medium;
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    color: var(--text-color);
+    font-family: $font-body;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition:
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &::placeholder {
+        color: var(--text-muted-color);
+        letter-spacing: 0.06em;
+    }
+
+    &:focus {
+        border-color: var(--primary-color);
+        box-shadow:
+            0 0 0 2px var(--primary-glow-strong),
+            inset 0 0 8px var(--primary-glow);
+    }
+}
+
+.content-page__filter {
+    padding: $small $large $small $medium;
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    color: var(--text-secondary-color);
+    font-family: $font-body;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C47818' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    cursor: pointer;
+    transition:
+        border-color var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    &:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+}
+
+.content-page__add-btn {
+    @include font-ui-label;
+    padding: $small $large;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-deep-color);
+    border-radius: $border-radius;
+    color: var(--text-color);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition:
+        background-color var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &:hover {
+        background-color: var(--primary-hover-color);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px var(--primary-glow);
+    }
+}
+
+// ─── Inline form panel ────────────────────────────────────────────────────────
+
+.content-page__form-panel {
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $xLarge;
+    animation: contentPanelIn 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+
+    // Scope form-wrapper inside the panel — flatten the double-border
+    .form-wrapper {
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        max-width: none;
+    }
+}
+
+@keyframes contentPanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// ─── Status / error / empty ───────────────────────────────────────────────────
+
+.content-page__status {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.04em;
+}
+
+.content-page__error {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    color: var(--danger-color);
+    letter-spacing: 0.03em;
+    padding: $medium $large;
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--danger-color);
+    border-radius: $border-radius;
+}
+
+.content-page__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $large;
+    padding: $xLarge * 2 $large;
+    text-align: center;
+    border: 1px dashed var(--border-color);
+    border-radius: $border-radius;
+    color: var(--text-muted-color);
+
+    p {
+        font-family: $font-body;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        margin: 0;
+    }
+}
+
+// ─── Content card grid ────────────────────────────────────────────────────────
+// Override the categoryCard.scss .card-wrapper when scoped to a content-page.
+
+.content-page .card-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: $medium;
+    width: 100%;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+// Clamp description text to 2 lines inside the grid cards
+.content-page .card__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.82rem;
+}
+
+// ─── Content card ─────────────────────────────────────────────────────────────
+
+.content-card {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    transition:
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 12px var(--primary-glow);
+    }
+}
+
+.content-card__link {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+    padding: $large;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    border-left: 2px solid transparent;
+    transition:
+        border-color var(--transition-speed) ease,
+        background-color var(--transition-speed) ease;
+
+    &:hover {
+        border-left-color: var(--primary-color);
+        background-color: var(--primary-glow);
+    }
+}
+
+.content-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: $small;
+    flex-wrap: wrap;
+}
+
+.content-card__name {
+    font-family: $font-body;
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+    color: var(--text-color);
+    line-height: 1.35;
+    flex: 1;
+    min-width: 0;
+
+    .content-card__link:hover & {
+        color: var(--primary-hover-color);
+    }
+}
+
+.content-card__badge {
+    @include font-label;
+    font-size: 0.6rem;
+    color: var(--accent-dim-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 2px 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: flex-start;
+}
+
+.content-card__private {
+    @include font-label;
+    font-size: 0.6rem;
+    color: var(--text-muted-color);
+    border: 1px dashed var(--border-color);
+    border-radius: $border-radius;
+    padding: 2px 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: flex-start;
+}
+
+.content-card__desc {
+    font-family: $font-body;
+    font-size: 0.78rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.02em;
+    line-height: 1.55;
+    margin: 0;
+    // Clamp to 2 lines
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.content-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: auto;
+    padding-top: $small;
+}
+
+.content-card__tag {
+    font-family: $font-ui;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted-color);
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: 1px 5px;
+}

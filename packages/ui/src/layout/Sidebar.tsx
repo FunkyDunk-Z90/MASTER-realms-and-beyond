@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import Image, { type StaticImageData } from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -48,8 +48,17 @@ export interface I_SearchResult {
 }
 
 export interface I_SidebarProps {
-    sections: I_SidebarSection[]
+    /**
+     * Nav sections to render.
+     * Pass a static array for fixed navigation, or a zero-argument factory
+     * function for dynamic navigation (e.g. sections that depend on React
+     * context).  The factory is called on every render so the caller should
+     * stabilise it with useCallback when the source value changes infrequently.
+     */
+    sections: I_SidebarSection[] | (() => I_SidebarSection[])
     footer?: React.ReactNode
+    /** Rendered on the left side of the controls row when the sidebar is expanded. */
+    headerSlot?: React.ReactNode
     searchFn?: (query: string) => I_SearchResult[]
     storageKey?: string
     defaultOpen?: boolean
@@ -323,12 +332,17 @@ const SidebarMenuItem = ({
 export const Sidebar = ({
     sections,
     footer,
+    headerSlot,
     searchFn,
     storageKey = 'rnb-sidebar-open',
     defaultOpen = false,
     onSettingsClick,
 }: I_SidebarProps) => {
     const pathName = usePathname()
+    const resolvedSections = useMemo(
+        () => (typeof sections === 'function' ? sections() : sections),
+        [sections]
+    )
     const [open, setOpen] = useState<boolean | null>(null)
     const [isMobile, setIsMobile] = useState(false)
     const [isResizing, setIsResizing] = useState(false)
@@ -453,6 +467,12 @@ export const Sidebar = ({
                         )}
 
                         <div className="sidebar-controls-row">
+                            {/* {open && headerSlot && (
+                                <div className="sidebar-header-slot">
+                                    {headerSlot}
+                                </div>
+                            )} */}
+
                             {onSettingsClick && (
                                 <button
                                     className="sidebar-control-btn"
@@ -509,7 +529,7 @@ export const Sidebar = ({
 
                     {/* ── Nav ── */}
                     <nav className="sidebar-nav">
-                        {sections.map((section, i) => (
+                        {resolvedSections.map((section, i) => (
                             <div key={i} className="sidebar-section">
                                 {section.title && open && (
                                     <p className="sidebar-section-title">
@@ -517,7 +537,7 @@ export const Sidebar = ({
                                     </p>
                                 )}
                                 <ul className="sidebar-menu">
-                                    {sections[i].items.map((item) => (
+                                    {section.items.map((item) => (
                                         <SidebarMenuItem
                                             key={item.id}
                                             item={item}

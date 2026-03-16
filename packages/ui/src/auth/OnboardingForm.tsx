@@ -303,7 +303,6 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
             {/* ── Submit ── */}
             <Button
                 btnType="submit"
-                variant="submit"
                 size="lg"
                 isLoading={isSubmitting}
                 isDisabled={isSubmitting || usernameStatus === 'checking'}

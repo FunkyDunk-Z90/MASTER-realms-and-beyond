@@ -28,6 +28,7 @@ export default function Landing() {
 
     return (
         <main className="landing-page">
+            <div className="landing-particles" aria-hidden="true" />
             <div className="landing-hero">
                 <h1 className="landing-title">Aetherscribe</h1>
                 <p className="landing-subtitle">

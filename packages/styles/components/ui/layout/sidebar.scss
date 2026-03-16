@@ -230,6 +230,15 @@
     }
 }
 
+// ─── Header slot ──────────────────────────────────────────────────────────────
+// Injected via headerSlot prop; sits on the far left of the controls row.
+// Only rendered when the sidebar is open — the prop conditional handles hiding.
+
+.sidebar-header-slot {
+    flex: 1;
+    min-width: 0;
+}
+
 .sidebar-control-label {
     font-family: $font-body;
     font-size: 0.78rem;

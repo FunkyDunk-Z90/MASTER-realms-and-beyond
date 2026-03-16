@@ -7,6 +7,7 @@ import Image, { StaticImageData } from 'next/image'
 import { I_Link } from '@rnb/types'
 import BurgerIcon from '../utils/BurgerIcon'
 import { ThemeSwitcher } from '../context/ThemeSwitcher'
+import { Button } from '../utils/Button'
 
 interface I_NavbarProps {
     navItems: I_Link[]
@@ -107,7 +108,9 @@ export const Navbar = ({
                     </ul>
 
                     {onLogout && (
-                        <button
+                        <Button
+                            variant="ghost"
+                            size="sm"
                             className="nav-logout"
                             onClick={() => {
                                 closeNav()
@@ -115,7 +118,7 @@ export const Navbar = ({
                             }}
                         >
                             Log Out
-                        </button>
+                        </Button>
                     )}
                 </nav>
 
