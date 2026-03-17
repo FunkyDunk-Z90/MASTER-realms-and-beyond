@@ -11,20 +11,24 @@
 
 .landing-page,
 .landing-particles {
-    --_color-up:    color-mix(in srgb, var(--text-color)    18%, transparent);
-    --_color-down:  color-mix(in srgb, var(--text-color)    25%, transparent);
+    --_color-up: color-mix(in srgb, var(--text-color) 18%, transparent);
+    --_color-down: color-mix(in srgb, var(--text-color) 25%, transparent);
     --_color-right: color-mix(in srgb, var(--primary-color) 20%, transparent);
-    --_color-left:  color-mix(in srgb, var(--accent-color)  18%, transparent);
+    --_color-left: color-mix(in srgb, var(--accent-color) 18%, transparent);
 }
 
 // Light mode — boost opacity so particles stay visible on pale backgrounds
 [data-theme='monochrome'][data-mode='light'] {
     .landing-page,
     .landing-particles {
-        --_color-up:    color-mix(in srgb, var(--text-color)    42%, transparent);
-        --_color-down:  color-mix(in srgb, var(--text-color)    55%, transparent);
-        --_color-right: color-mix(in srgb, var(--primary-color) 45%, transparent);
-        --_color-left:  color-mix(in srgb, var(--accent-color)  42%, transparent);
+        --_color-up: color-mix(in srgb, var(--text-color) 42%, transparent);
+        --_color-down: color-mix(in srgb, var(--text-color) 55%, transparent);
+        --_color-right: color-mix(
+            in srgb,
+            var(--primary-color) 45%,
+            transparent
+        );
+        --_color-left: color-mix(in srgb, var(--accent-color) 42%, transparent);
     }
 }
 
@@ -32,10 +36,22 @@
     [data-theme='monochrome']:not([data-mode='dark']) {
         .landing-page,
         .landing-particles {
-            --_color-up:    color-mix(in srgb, var(--text-color)    42%, transparent);
-            --_color-down:  color-mix(in srgb, var(--text-color)    55%, transparent);
-            --_color-right: color-mix(in srgb, var(--primary-color) 45%, transparent);
-            --_color-left:  color-mix(in srgb, var(--accent-color)  42%, transparent);
+            --_color-up: color-mix(in srgb, var(--text-color) 42%, transparent);
+            --_color-down: color-mix(
+                in srgb,
+                var(--text-color) 55%,
+                transparent
+            );
+            --_color-right: color-mix(
+                in srgb,
+                var(--primary-color) 45%,
+                transparent
+            );
+            --_color-left: color-mix(
+                in srgb,
+                var(--accent-color) 42%,
+                transparent
+            );
         }
     }
 }
@@ -44,18 +60,18 @@
 
 $_pw: 1400;
 $_ph: 900;
-$_c-up:    unquote("var(--_color-up)");
-$_c-down:  unquote("var(--_color-down)");
-$_c-right: unquote("var(--_color-right)");
-$_c-left:  unquote("var(--_color-left)");
+$_c-up: unquote('var(--_color-up)');
+$_c-down: unquote('var(--_color-down)');
+$_c-right: unquote('var(--_color-right)');
+$_c-left: unquote('var(--_color-left)');
 
 // UP: y+900px duplicate, animate translateY(0 → -900px)
 $_s-up: ();
 @for $i from 1 through 120 {
-    $_x: ((($i * 173) + ($i * $i * 7))  % $_pw) * 1px;
+    $_x: ((($i * 173) + ($i * $i * 7)) % $_pw) * 1px;
     $_y: ((($i * 113) + ($i * $i * 11)) % $_ph) * 1px;
-    $_s-up: list.append($_s-up,  $_x  $_y          0 0 $_c-up, comma);
-    $_s-up: list.append($_s-up,  $_x ($_y + 900px) 0 0 $_c-up, comma);
+    $_s-up: list.append($_s-up, $_x $_y 0 0 $_c-up, comma);
+    $_s-up: list.append($_s-up, $_x ($_y + 900px) 0 0 $_c-up, comma);
 }
 
 // DOWN: y-900px duplicate (above viewport), animate translateY(0 → +900px)
@@ -63,8 +79,8 @@ $_s-down: ();
 @for $i from 1 through 80 {
     $_x: ((($i * 211) + ($i * $i * 13)) % $_pw) * 1px;
     $_y: ((($i * 157) + ($i * $i * 17)) % $_ph) * 1px;
-    $_s-down: list.append($_s-down,  $_x  $_y           1px 0 $_c-down, comma);
-    $_s-down: list.append($_s-down,  $_x ($_y - 900px)  1px 0 $_c-down, comma);
+    $_s-down: list.append($_s-down, $_x $_y 1px 0 $_c-down, comma);
+    $_s-down: list.append($_s-down, $_x ($_y - 900px) 1px 0 $_c-down, comma);
 }
 
 // RIGHT: x-1400px duplicate (left of viewport), animate translateX(0 → +1400px)
@@ -72,7 +88,7 @@ $_s-right: ();
 @for $i from 1 through 70 {
     $_x: ((($i * 257) + ($i * $i * 19)) % $_pw) * 1px;
     $_y: ((($i * 193) + ($i * $i * 23)) % $_ph) * 1px;
-    $_s-right: list.append($_s-right,  $_x           $_y 0 0 $_c-right, comma);
+    $_s-right: list.append($_s-right, $_x $_y 0 0 $_c-right, comma);
     $_s-right: list.append($_s-right, ($_x - 1400px) $_y 0 0 $_c-right, comma);
 }
 
@@ -81,7 +97,7 @@ $_s-left: ();
 @for $i from 1 through 55 {
     $_x: ((($i * 307) + ($i * $i * 29)) % $_pw) * 1px;
     $_y: ((($i * 241) + ($i * $i * 31)) % $_ph) * 1px;
-    $_s-left: list.append($_s-left,  $_x           $_y 1px 0 $_c-left, comma);
+    $_s-left: list.append($_s-left, $_x $_y 1px 0 $_c-left, comma);
     $_s-left: list.append($_s-left, ($_x + 1400px) $_y 1px 0 $_c-left, comma);
 }
 
@@ -90,35 +106,75 @@ $_s-left: ();
 // RIGHT/LEFT: Y wander returns to 0 → no vertical seam at loop restart
 
 @keyframes particle-field-up {
-    0%   { transform: translateY(0)      translateX(0);     }
-    25%  { transform: translateY(-225px) translateX(22px);  }
-    50%  { transform: translateY(-450px) translateX(-14px); }
-    75%  { transform: translateY(-675px) translateX(18px);  }
-    100% { transform: translateY(-900px) translateX(0);     }
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-225px) translateX(22px);
+    }
+    50% {
+        transform: translateY(-450px) translateX(-14px);
+    }
+    75% {
+        transform: translateY(-675px) translateX(18px);
+    }
+    100% {
+        transform: translateY(-900px) translateX(0);
+    }
 }
 
 @keyframes particle-field-down {
-    0%   { transform: translateY(0)     translateX(0);     }
-    25%  { transform: translateY(225px) translateX(-26px); }
-    50%  { transform: translateY(450px) translateX(16px);  }
-    75%  { transform: translateY(675px) translateX(-20px); }
-    100% { transform: translateY(900px) translateX(0);     }
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(225px) translateX(-26px);
+    }
+    50% {
+        transform: translateY(450px) translateX(16px);
+    }
+    75% {
+        transform: translateY(675px) translateX(-20px);
+    }
+    100% {
+        transform: translateY(900px) translateX(0);
+    }
 }
 
 @keyframes particle-field-right {
-    0%   { transform: translateX(0)      translateY(0);     }
-    25%  { transform: translateX(350px)  translateY(-18px); }
-    50%  { transform: translateX(700px)  translateY(12px);  }
-    75%  { transform: translateX(1050px) translateY(-14px); }
-    100% { transform: translateX(1400px) translateY(0);     }
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateX(350px) translateY(-18px);
+    }
+    50% {
+        transform: translateX(700px) translateY(12px);
+    }
+    75% {
+        transform: translateX(1050px) translateY(-14px);
+    }
+    100% {
+        transform: translateX(1400px) translateY(0);
+    }
 }
 
 @keyframes particle-field-left {
-    0%   { transform: translateX(0)       translateY(0);    }
-    25%  { transform: translateX(-350px)  translateY(20px); }
-    50%  { transform: translateX(-700px)  translateY(-10px);}
-    75%  { transform: translateX(-1050px) translateY(16px); }
-    100% { transform: translateX(-1400px) translateY(0);    }
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateX(-350px) translateY(20px);
+    }
+    50% {
+        transform: translateX(-700px) translateY(-10px);
+    }
+    75% {
+        transform: translateX(-1050px) translateY(16px);
+    }
+    100% {
+        transform: translateX(-1400px) translateY(0);
+    }
 }
 
 // ── Shared pseudo-element base ─────────────────────────────────────────────────
@@ -149,6 +205,68 @@ $_s-left: ();
         z-index: -2;
         box-shadow: $_s-down;
         animation: particle-field-down 180s linear infinite;
+    }
+}
+
+// ─── Ethereal amethyst mist ───────────────────────────────────────────────────
+// Wide flat elliptical radial gradients on full-size elements.
+// Ellipses 4–6× wider than tall → fog streaks, not circles.
+// filter:blur on the element adds wispy, smoke-like edges.
+// Slight skewX in keyframes deforms the fog organically as it drifts.
+
+@keyframes mist-breathe-1 {
+    0%   { transform: translate(0,     0)    skewX(0deg);    }
+    25%  { transform: translate(65px,  -22px) skewX(-1.2deg); }
+    50%  { transform: translate(105px,  18px) skewX(0.8deg);  }
+    75%  { transform: translate(45px,   35px) skewX(-0.6deg); }
+    100% { transform: translate(0,     0)    skewX(0deg);    }
+}
+
+@keyframes mist-breathe-2 {
+    0%   { transform: translate(0,      0)     skewX(0deg);   }
+    30%  { transform: translate(-85px,  28px)  skewX(1.4deg); }
+    65%  { transform: translate(-38px, -38px)  skewX(-1deg);  }
+    100% { transform: translate(0,      0)     skewX(0deg);   }
+}
+
+// <div className="landing-mist" aria-hidden="true" /> — deepest background layer
+.landing-mist {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    // Layer 1 — deep violet fog banks, slow rightward drift
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 560px 110px at 12% 22%,  rgba(78,  32, 168, 0.28), transparent 70%),
+            radial-gradient(ellipse 420px  88px at 58% 65%,  rgba(105, 52, 192, 0.22), transparent 70%),
+            radial-gradient(ellipse 640px 130px at 82% 38%,  rgba(72,  28, 158, 0.20), transparent 70%),
+            radial-gradient(ellipse 380px  80px at 28% 82%,  rgba(112, 56, 198, 0.25), transparent 70%),
+            radial-gradient(ellipse 500px 105px at 68% 8%,   rgba(88,  40, 175, 0.18), transparent 70%),
+            radial-gradient(ellipse 310px  70px at 44% 48%,  rgba(95,  45, 182, 0.22), transparent 70%);
+        filter: blur(22px);
+        animation: mist-breathe-1 360s ease-in-out infinite;
+        will-change: transform;
+    }
+
+    // Layer 2 — lighter amethyst wisps, slow leftward drift, offset phase
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 480px 100px at 38% 42%,  rgba(102, 50, 190, 0.24), transparent 70%),
+            radial-gradient(ellipse 590px 118px at 74% 72%,  rgba(78,  33, 162, 0.20), transparent 70%),
+            radial-gradient(ellipse 350px  75px at  8% 58%,  rgba(122, 62, 205, 0.18), transparent 70%),
+            radial-gradient(ellipse 520px 108px at 90% 18%,  rgba(92,  44, 180, 0.22), transparent 70%),
+            radial-gradient(ellipse 290px  65px at 52% 88%,  rgba(110, 55, 196, 0.20), transparent 70%);
+        filter: blur(28px);
+        animation: mist-breathe-2 460s ease-in-out infinite;
+        will-change: transform;
     }
 }
 

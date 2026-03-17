@@ -154,17 +154,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: $xLarge;
-    padding: 7rem $large;
+    gap: 3.5rem;
+    padding: $xLarge $large;
 }
 
 .landing-hero {
-    display: grid;
-    gap: $small;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    // Extra bottom padding so the title reflection has room to breathe
+    padding-top: 2.5rem;
 }
 
 .landing-title {
+    position: relative;
     font-family: $font-display;
     font-size: clamp(2rem, 6vw, 3.5rem);
     text-transform: uppercase;
@@ -172,12 +176,71 @@
     color: var(--text-heading-color);
     text-shadow: 0 0 24px var(--primary-glow-strong);
     margin: 0;
+
+    // Water reflection — flipped below the text, angled, blurred, fading out
+    &::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        text-shadow: none;
+        // scaleY(-1) flips it; translateY(-100%) in that flipped space
+        // positions the reflection directly below the original.
+        // skewX + translateX give the slight off-angle of a tilted water surface.
+        transform-origin: center center;
+        transform: scaleY(-1) translateY(calc(-100% + 15px));
+        filter: blur(1.9px);
+        opacity: 0.48;
+        // Fade from just below the text outward — top of reflection is most visible
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.7) 0%,
+            transparent 70%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.7) 0%,
+            transparent 70%
+        );
+        pointer-events: none;
+        user-select: none;
+    }
 }
 
 .landing-subtitle {
+    position: relative;
     font-family: $font-body;
     font-size: 0.875rem;
     color: var(--text-muted-color);
     letter-spacing: 0.06em;
     margin: 0;
+    text-align: center;
+
+    &::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        text-shadow: none;
+        transform-origin: center center;
+        transform: scaleY(-1) translateY(calc(-100% - 14px)) translateX(4px);
+        filter: blur(1.8px);
+        opacity: 0.28;
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.7) 0%,
+            transparent 65%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.7) 0%,
+            transparent 65%
+        );
+        pointer-events: none;
+        user-select: none;
+    }
 }

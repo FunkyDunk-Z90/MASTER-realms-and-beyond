@@ -82,8 +82,9 @@
 .form-contents {
     display: grid;
     justify-items: center;
-    gap: $xLarge;
+    gap: $large;
     min-width: 310px;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .form-title {
@@ -149,10 +150,6 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.form-contents {
-    animation: fadeIn 0.3s ease-out;
 }
 
 // ─── Form actions row ─────────────────────────────────────────────────────────

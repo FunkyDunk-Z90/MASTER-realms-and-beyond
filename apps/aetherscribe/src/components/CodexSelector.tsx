@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useCodex } from '@/src/context/CodexContext'
+import { Settings2Icon } from 'lucide-react'
 
 // ─── Codex Selector ───────────────────────────────────────────────────────────
 // Sidebar-footer widget: shows active codex name + dropdown to switch or create.
@@ -11,13 +12,18 @@ import { useCodex } from '@/src/context/CodexContext'
 // Dropdown uses position:fixed so it escapes sidebar overflow:hidden.
 
 export default function CodexSelector() {
-    const { codices, activeCodex, limits, setActiveCodex, createCodex, isLoading } =
-        useCodex()
+    const {
+        codices,
+        activeCodex,
+        limits,
+        setActiveCodex,
+        createCodex,
+        isLoading,
+    } = useCodex()
 
     const atLimit =
         limits.maxCodices !== null && codices.length >= limits.maxCodices
     const router = useRouter()
-    const pathname = usePathname()
     const [open, setOpen] = useState(false)
     const [creating, setCreating] = useState(false)
     const [newName, setNewName] = useState('')
@@ -118,54 +124,52 @@ export default function CodexSelector() {
                     style={dropdownStyle}
                 >
                     <p className="codex-selector__dropdown-label">
-                        Your Codices
+                        Choose your Codex
                     </p>
 
                     <ul className="codex-selector__list">
                         {codices.map((c) => (
                             <li key={c.id}>
-                                <button
+                                <div
                                     className={`codex-selector__item${c.id === activeCodex?.id ? ' codex-selector__item--active' : ''}`}
-                                    onClick={() => {
-                                        setActiveCodex(c)
-                                        setOpen(false)
-                                        // Navigate to the same category under the new codex
-                                        // pathname: /hub/[codexId]/[category]/...
-                                        const segments = pathname.split('/')
-                                        if (segments.length >= 4 && segments[1] === 'hub') {
-                                            router.push(`/hub/${c.id}/${segments[3]}`)
-                                        }
-                                    }}
-                                    type="button"
                                 >
-                                    <span className="codex-selector__item-name">
-                                        {c.name}
-                                    </span>
-                                    {c.isDefault && (
-                                        <span className="codex-selector__default-badge">
-                                            default
+                                    <button
+                                        className="codex-selector__item-btn"
+                                        onClick={() => {
+                                            setActiveCodex(c)
+                                            setOpen(false)
+                                            router.push(`/hub/${c.id}`)
+                                        }}
+                                        type="button"
+                                    >
+                                        <span className="codex-selector__item-name">
+                                            {c.name}
                                         </span>
-                                    )}
-                                </button>
+                                        {c.isDefault && (
+                                            <span className="codex-selector__default-badge">
+                                                default
+                                            </span>
+                                        )}
+                                    </button>
+                                    <Link
+                                        href={`/hub/${c.id}/manage`}
+                                        className="codex-selector__manage-link"
+                                        onClick={() => setOpen(false)}
+                                        title="Manage codex"
+                                    >
+                                        <Settings2Icon size={16} />
+                                    </Link>
+                                </div>
                             </li>
                         ))}
                     </ul>
 
                     <div className="codex-selector__divider" />
 
-                    <Link
-                        href={`/hub/${activeCodex?.id}/manage`}
-                        className="codex-selector__manage-link"
-                        onClick={() => setOpen(false)}
-                    >
-                        Manage Codex
-                    </Link>
-
-                    <div className="codex-selector__divider" />
-
                     {atLimit ? (
                         <p className="codex-selector__limit-msg">
-                            Codex limit reached ({limits.maxCodices}). Upgrade your plan to create more.
+                            Codex limit reached ({limits.maxCodices}). Upgrade
+                            your plan to create more.
                         </p>
                     ) : creating ? (
                         <form

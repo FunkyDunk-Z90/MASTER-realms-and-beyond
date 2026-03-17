@@ -175,9 +175,13 @@ export const AuthForm: React.FC<I_AuthFormProps> = ({ onSuccess }) => {
                     <h2 className="form-title">
                         {mode === 'login' ? 'Sign In' : 'Create Account'}
                     </h2>
-                    <p className="landing-subtitle">
-                        sign in with your Realms & Beyond account
-                    </p>
+                    {mode === 'login' ? (
+                        <p className="landing-subtitle">
+                            with your Realms & Beyond account
+                        </p>
+                    ) : (
+                        <p className="landing-subtitle">with Realms & Beyond</p>
+                    )}
                 </div>
 
                 {/* ── Name fields (signup only) ── */}

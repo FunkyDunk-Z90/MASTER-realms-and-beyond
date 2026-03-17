@@ -197,6 +197,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: var(--text-color);
+    padding-right: $medium;
 }
 
 .codex-selector__default-badge {
@@ -217,25 +219,26 @@
 
 .codex-selector__manage-link {
     display: block;
-    width: calc(100% - $medium);
-    padding: $small $medium;
-    margin: $small;
+    // width: calc(100% - $medium);
+    // padding: $small $medium;
+    padding-inline: $small;
+    // margin: $small;
     color: var(--text-secondary-color);
-    font-family: $font-body;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    border-radius: $border-radius;
-    border-left: 2px solid transparent;
-    transition:
-        background-color var(--transition-speed) ease,
-        border-color var(--transition-speed) ease,
-        color var(--transition-speed) ease;
+    // font-family: $font-body;
+    // font-size: 0.78rem;
+    // letter-spacing: 0.04em;
+    // text-decoration: none;
+    // border-radius: $border-radius;
+    // // border-left: 2px solid transparent;
+    // transition:
+    //     background-color var(--transition-speed) ease,
+    //     border-color var(--transition-speed) ease,
+    //     color var(--transition-speed) ease;
 
     &:hover {
-        background-color: var(--primary-glow);
-        border-left-color: var(--primary-color);
-        color: var(--primary-hover-color);
+        // background-color: var(--primary-glow);
+        // border-left-color: var(--primary-color);
+        color: var(--accent-color);
     }
 }
 

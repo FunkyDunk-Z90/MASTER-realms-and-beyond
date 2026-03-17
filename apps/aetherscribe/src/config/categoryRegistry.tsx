@@ -46,6 +46,7 @@ export interface I_CategoryConfig {
             offset?: number
         }) => Promise<{ items: any[]; pagination: any }>
         get: (id: string) => Promise<any>
+        delete: (id: string) => Promise<{ message: string }>
     }
     FormComponent: React.ComponentType<T_CategoryFormProps>
     subCategories?: { value: string; label: string }[]

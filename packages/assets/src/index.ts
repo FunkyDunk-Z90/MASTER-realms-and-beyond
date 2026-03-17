@@ -18,6 +18,7 @@ export { default as iconWizard } from './images/icons/wizard.png'
 // ─── Images ────────────────────────────────────────────────────────────────────
 
 export { default as rnbCoverImage } from './images/backgrounds/rnb-cover.jpg'
+export { default as tapestry } from './images/backgrounds/tapestry-of-time.jpg'
 
 // ─── SVG Icon Components ──────────────────────────────────────────────────────
 // Inline TSX components — always React functions, always use currentColor.

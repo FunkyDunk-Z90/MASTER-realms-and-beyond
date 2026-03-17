@@ -28,15 +28,15 @@ export default function Landing() {
 
     return (
         <main className="landing-page">
+            {/* <div className="landing-mist"      aria-hidden="true" /> */}
             <div className="landing-particles" aria-hidden="true" />
             <div className="landing-hero">
-                <h1 className="landing-title">Aetherscribe</h1>
-                <p className="landing-subtitle">
-                    Chronicle your worlds. Begin your legend.
-                </p>
+                <h1 className="landing-title" data-text="Aetherscribe">
+                    Aetherscribe
+                </h1>
             </div>
 
-            <AuthForm onSuccess={() => router.push('/onboarding')} />
+            <AuthForm />
         </main>
     )
 }

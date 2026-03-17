@@ -13,6 +13,8 @@
     gap: $xLarge;
     align-content: start;
     padding: $xLarge $large;
+    width: 100%;
+    max-width: $tablet;
 
     @media (max-width: $tablet) {
         padding: $large $medium;
@@ -231,6 +233,113 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 0.82rem;
+}
+
+// ─── Delete confirmation modal ────────────────────────────────────────────────
+
+.delete-modal__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $large;
+    animation: contentPanelIn 0.15s ease;
+}
+
+.delete-modal {
+    background-color: var(--bg-surface-color);
+    border: 1px solid var(--danger-color);
+    border-radius: $border-radius;
+    box-shadow:
+        0 0 0 1px var(--danger-glow),
+        0 20px 60px rgba(0, 0, 0, 0.6);
+    padding: $xLarge;
+    width: 100%;
+    max-width: 440px;
+    display: grid;
+    gap: $large;
+}
+
+.delete-modal__title {
+    @include font-display;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--danger-color);
+    margin: 0;
+}
+
+.delete-modal__warning {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    color: var(--text-secondary-color);
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    margin: 0;
+
+    strong {
+        color: var(--text-color);
+    }
+}
+
+.delete-modal__field {
+    display: grid;
+    gap: $small;
+}
+
+.delete-modal__label {
+    font-family: $font-body;
+    font-size: 0.78rem;
+    color: var(--text-muted-color);
+    letter-spacing: 0.04em;
+
+    strong {
+        color: var(--text-color);
+    }
+}
+
+.delete-modal__input {
+    width: 100%;
+    padding: $small $medium;
+    background-color: var(--bg-inset-color);
+    border: 1px solid var(--border-strong-color);
+    border-radius: $border-radius;
+    color: var(--text-color);
+    font-family: $font-body;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition:
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+
+    &::placeholder {
+        color: var(--text-muted-color);
+        opacity: 0.5;
+    }
+
+    &:focus {
+        border-color: var(--danger-color);
+        box-shadow: 0 0 0 2px var(--danger-glow);
+    }
+}
+
+.delete-modal__error {
+    font-family: $font-body;
+    font-size: 0.78rem;
+    color: var(--danger-color);
+    letter-spacing: 0.03em;
+    margin: 0;
+}
+
+.delete-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $medium;
 }
 
 // ─── Content card ─────────────────────────────────────────────────────────────

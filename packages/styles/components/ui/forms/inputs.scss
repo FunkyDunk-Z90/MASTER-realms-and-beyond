@@ -61,7 +61,7 @@
 .textarea {
     @extend .input;
     resize: none;
-    min-height: 80px;
+    min-height: 120px;
     line-height: 1.6;
     field-sizing: content;
 }
