@@ -1,4 +1,5 @@
 @use 'sass:list';
+@use 'sass:string';
 
 // ─── Landing page particle field ──────────────────────────────────────────────
 // 4 independent layers moving in different directions (up, down, right, left).
@@ -18,7 +19,7 @@
 }
 
 // Light mode — boost opacity so particles stay visible on pale backgrounds
-[data-theme='monochrome'][data-mode='light'] {
+[data-mode='light'] {
     .landing-page,
     .landing-particles {
         --_color-up: color-mix(in srgb, var(--text-color) 42%, transparent);
@@ -33,7 +34,7 @@
 }
 
 @media (prefers-color-scheme: light) {
-    [data-theme='monochrome']:not([data-mode='dark']) {
+    :not([data-mode='dark']) {
         .landing-page,
         .landing-particles {
             --_color-up: color-mix(in srgb, var(--text-color) 42%, transparent);
@@ -60,10 +61,10 @@
 
 $_pw: 1400;
 $_ph: 900;
-$_c-up: unquote('var(--_color-up)');
-$_c-down: unquote('var(--_color-down)');
-$_c-right: unquote('var(--_color-right)');
-$_c-left: unquote('var(--_color-left)');
+$_c-up: string.unquote('var(--_color-up)');
+$_c-down: string.unquote('var(--_color-down)');
+$_c-right: string.unquote('var(--_color-right)');
+$_c-left: string.unquote('var(--_color-left)');
 
 // UP: y+900px duplicate, animate translateY(0 → -900px)
 $_s-up: ();
@@ -215,18 +216,36 @@ $_s-left: ();
 // Slight skewX in keyframes deforms the fog organically as it drifts.
 
 @keyframes mist-breathe-1 {
-    0%   { transform: translate(0,     0)    skewX(0deg);    }
-    25%  { transform: translate(65px,  -22px) skewX(-1.2deg); }
-    50%  { transform: translate(105px,  18px) skewX(0.8deg);  }
-    75%  { transform: translate(45px,   35px) skewX(-0.6deg); }
-    100% { transform: translate(0,     0)    skewX(0deg);    }
+    0% {
+        transform: translate(0, 0) skewX(0deg);
+    }
+    25% {
+        transform: translate(65px, -22px) skewX(-1.2deg);
+    }
+    50% {
+        transform: translate(105px, 18px) skewX(0.8deg);
+    }
+    75% {
+        transform: translate(45px, 35px) skewX(-0.6deg);
+    }
+    100% {
+        transform: translate(0, 0) skewX(0deg);
+    }
 }
 
 @keyframes mist-breathe-2 {
-    0%   { transform: translate(0,      0)     skewX(0deg);   }
-    30%  { transform: translate(-85px,  28px)  skewX(1.4deg); }
-    65%  { transform: translate(-38px, -38px)  skewX(-1deg);  }
-    100% { transform: translate(0,      0)     skewX(0deg);   }
+    0% {
+        transform: translate(0, 0) skewX(0deg);
+    }
+    30% {
+        transform: translate(-85px, 28px) skewX(1.4deg);
+    }
+    65% {
+        transform: translate(-38px, -38px) skewX(-1deg);
+    }
+    100% {
+        transform: translate(0, 0) skewX(0deg);
+    }
 }
 
 // <div className="landing-mist" aria-hidden="true" /> — deepest background layer
@@ -242,12 +261,36 @@ $_s-left: ();
         position: absolute;
         inset: 0;
         background:
-            radial-gradient(ellipse 560px 110px at 12% 22%,  rgba(78,  32, 168, 0.28), transparent 70%),
-            radial-gradient(ellipse 420px  88px at 58% 65%,  rgba(105, 52, 192, 0.22), transparent 70%),
-            radial-gradient(ellipse 640px 130px at 82% 38%,  rgba(72,  28, 158, 0.20), transparent 70%),
-            radial-gradient(ellipse 380px  80px at 28% 82%,  rgba(112, 56, 198, 0.25), transparent 70%),
-            radial-gradient(ellipse 500px 105px at 68% 8%,   rgba(88,  40, 175, 0.18), transparent 70%),
-            radial-gradient(ellipse 310px  70px at 44% 48%,  rgba(95,  45, 182, 0.22), transparent 70%);
+            radial-gradient(
+                ellipse 560px 110px at 12% 22%,
+                rgba(78, 32, 168, 0.28),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 420px 88px at 58% 65%,
+                rgba(105, 52, 192, 0.22),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 640px 130px at 82% 38%,
+                rgba(72, 28, 158, 0.2),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 380px 80px at 28% 82%,
+                rgba(112, 56, 198, 0.25),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 500px 105px at 68% 8%,
+                rgba(88, 40, 175, 0.18),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 310px 70px at 44% 48%,
+                rgba(95, 45, 182, 0.22),
+                transparent 70%
+            );
         filter: blur(22px);
         animation: mist-breathe-1 360s ease-in-out infinite;
         will-change: transform;
@@ -259,11 +302,31 @@ $_s-left: ();
         position: absolute;
         inset: 0;
         background:
-            radial-gradient(ellipse 480px 100px at 38% 42%,  rgba(102, 50, 190, 0.24), transparent 70%),
-            radial-gradient(ellipse 590px 118px at 74% 72%,  rgba(78,  33, 162, 0.20), transparent 70%),
-            radial-gradient(ellipse 350px  75px at  8% 58%,  rgba(122, 62, 205, 0.18), transparent 70%),
-            radial-gradient(ellipse 520px 108px at 90% 18%,  rgba(92,  44, 180, 0.22), transparent 70%),
-            radial-gradient(ellipse 290px  65px at 52% 88%,  rgba(110, 55, 196, 0.20), transparent 70%);
+            radial-gradient(
+                ellipse 480px 100px at 38% 42%,
+                rgba(102, 50, 190, 0.24),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 590px 118px at 74% 72%,
+                rgba(78, 33, 162, 0.2),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 350px 75px at 8% 58%,
+                rgba(122, 62, 205, 0.18),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 520px 108px at 90% 18%,
+                rgba(92, 44, 180, 0.22),
+                transparent 70%
+            ),
+            radial-gradient(
+                ellipse 290px 65px at 52% 88%,
+                rgba(110, 55, 196, 0.2),
+                transparent 70%
+            );
         filter: blur(28px);
         animation: mist-breathe-2 460s ease-in-out infinite;
         will-change: transform;

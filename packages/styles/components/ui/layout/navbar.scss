@@ -16,9 +16,7 @@
     padding-inline: $large;
     background-color: var(--bg-secondary-color);
     border-bottom: 1px solid var(--primary-color);
-    box-shadow:
-        0 1px 0 0 var(--primary-color),
-        var(--rule-glow);
+
     z-index: 500;
 
     @include desktop {
@@ -268,11 +266,19 @@
 // ─── Animations ───────────────────────────────────────────────────────────────
 
 @keyframes slide-in {
-    from { transform: translateX(110%); }
-    to   { transform: translateX(0); }
+    from {
+        transform: translateX(110%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 @keyframes slide-out {
-    from { transform: translateX(0); }
-    to   { transform: translateX(110%); }
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(110%);
+    }
 }

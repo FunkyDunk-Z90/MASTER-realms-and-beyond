@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0f1a24"/>
+
+  <defs>
+    <radialGradient id="ns-glow-c" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#2a7abf" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#0f1a24" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ns-glow-tl" cx="10%" cy="20%" r="35%">
+      <stop offset="0%"   stop-color="#4abfab" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0f1a24" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ns-glow-c)"/>
+  <rect width="1200" height="630" fill="url(#ns-glow-tl)"/>
+
+  <!-- Background network grid (subtle hex pattern) -->
+  <!-- Large hex rings decorative -->
+  <polygon points="600,80 780,184 780,392 600,496 420,392 420,184"
+           fill="none" stroke="#2a7abf" stroke-width="1" opacity="0.06"/>
+  <polygon points="600,160 720,228 720,364 600,432 480,364 480,228"
+           fill="none" stroke="#2a7abf" stroke-width="0.8" opacity="0.08"/>
+
+  <!-- Network node connections (background decoration) -->
+  <circle cx="100"  cy="120" r="3.5" fill="#4abfab" opacity="0.25"/>
+  <circle cx="300"  cy="80"  r="3"   fill="#4abfab" opacity="0.2"/>
+  <circle cx="200"  cy="200" r="4"   fill="#2a7abf" opacity="0.2"/>
+  <line x1="100" y1="120" x2="300" y2="80"  stroke="#4abfab" stroke-width="0.8" opacity="0.18"/>
+  <line x1="100" y1="120" x2="200" y2="200" stroke="#4abfab" stroke-width="0.8" opacity="0.18"/>
+  <line x1="300" y1="80"  x2="200" y2="200" stroke="#4abfab" stroke-width="0.8" opacity="0.18"/>
+
+  <circle cx="1100" cy="120" r="3.5" fill="#4abfab" opacity="0.25"/>
+  <circle cx="900"  cy="80"  r="3"   fill="#4abfab" opacity="0.2"/>
+  <circle cx="1000" cy="200" r="4"   fill="#2a7abf" opacity="0.2"/>
+  <line x1="1100" y1="120" x2="900" y2="80"   stroke="#4abfab" stroke-width="0.8" opacity="0.18"/>
+  <line x1="1100" y1="120" x2="1000" y2="200" stroke="#4abfab" stroke-width="0.8" opacity="0.18"/>
+  <line x1="900"  y1="80"  x2="1000" y2="200" stroke="#4abfab" stroke-width="0.8" opacity="0.18"/>
+
+  <circle cx="150"  cy="500" r="3.5" fill="#4abfab" opacity="0.2"/>
+  <circle cx="350"  cy="540" r="3"   fill="#4abfab" opacity="0.18"/>
+  <line x1="150" y1="500" x2="350" y2="540" stroke="#4abfab" stroke-width="0.8" opacity="0.15"/>
+
+  <circle cx="1050" cy="500" r="3.5" fill="#4abfab" opacity="0.2"/>
+  <circle cx="850"  cy="540" r="3"   fill="#4abfab" opacity="0.18"/>
+  <line x1="1050" y1="500" x2="850" y2="540" stroke="#4abfab" stroke-width="0.8" opacity="0.15"/>
+
+  <!-- Central hex icon (large) -->
+  <polygon points="600,118 672,160 672,244 600,286 528,244 528,160"
+           fill="#2a7abf" fill-opacity="0.12" stroke="#2a7abf" stroke-width="2.5" opacity="0.6"/>
+  <circle cx="600" cy="202" r="20" fill="#2a7abf" opacity="0.85"/>
+  <circle cx="600" cy="202" r="10" fill="#5aafdf"/>
+
+  <!-- Satellite lines from hex vertices -->
+  <line x1="600" y1="118" x2="600" y2="98"  stroke="#4abfab" stroke-width="2" opacity="0.5"/>
+  <line x1="672" y1="160" x2="694" y2="148" stroke="#4abfab" stroke-width="2" opacity="0.5"/>
+  <line x1="672" y1="244" x2="694" y2="256" stroke="#4abfab" stroke-width="2" opacity="0.5"/>
+  <line x1="600" y1="286" x2="600" y2="306" stroke="#4abfab" stroke-width="2" opacity="0.5"/>
+  <line x1="528" y1="244" x2="506" y2="256" stroke="#4abfab" stroke-width="2" opacity="0.5"/>
+  <line x1="528" y1="160" x2="506" y2="148" stroke="#4abfab" stroke-width="2" opacity="0.5"/>
+  <circle cx="600" cy="96"  r="6" fill="#4abfab"/>
+  <circle cx="696" cy="146" r="6" fill="#4abfab"/>
+  <circle cx="696" cy="258" r="6" fill="#4abfab"/>
+  <circle cx="600" cy="308" r="6" fill="#4abfab"/>
+  <circle cx="504" cy="258" r="6" fill="#4abfab"/>
+  <circle cx="504" cy="146" r="6" fill="#4abfab"/>
+
+  <!-- Title rules -->
+  <line x1="160" y1="340" x2="1040" y2="340" stroke="#2a7abf" stroke-width="1" opacity="0.28"/>
+
+  <!-- Main title -->
+  <text x="600" y="408" text-anchor="middle"
+        font-family="Cinzel, Palatino Linotype, Georgia, serif"
+        font-size="74" font-weight="700" fill="#e4f0f8" letter-spacing="10">NEXUS</text>
+  <text x="600" y="480" text-anchor="middle"
+        font-family="Cinzel, Palatino Linotype, Georgia, serif"
+        font-size="74" font-weight="700" fill="#4abfab" letter-spacing="10">SERVE</text>
+
+  <line x1="160" y1="500" x2="1040" y2="500" stroke="#2a7abf" stroke-width="1" opacity="0.28"/>
+
+  <!-- Tagline -->
+  <text x="600" y="540" text-anchor="middle"
+        font-family="Barlow Condensed, Arial Narrow, sans-serif"
+        font-size="20" fill="#2a7abf" letter-spacing="6" opacity="0.82">COMMAND CENTER FOR EVERY SERVICE</text>
+
+  <!-- Sub-tagline -->
+  <text x="600" y="570" text-anchor="middle"
+        font-family="Barlow Condensed, Arial Narrow, sans-serif"
+        font-size="13" fill="#4abfab" letter-spacing="3.5" opacity="0.5">POINT OF SALE  ·  EMPLOYEE MANAGEMENT  ·  OPERATIONS</text>
+
+  <!-- Footer -->
+  <text x="600" y="610" text-anchor="middle"
+        font-family="Share Tech Mono, Courier New, monospace"
+        font-size="11" fill="#2a7abf" letter-spacing="2" opacity="0.38">nexus-serve.realms-and-beyond.com</text>
+</svg>

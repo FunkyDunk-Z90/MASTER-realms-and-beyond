@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="4" fill="#262425"/>
+  <!-- Left pillar -->
+  <rect x="10" y="30" width="7" height="22" fill="#a87a3a"/>
+  <!-- Right pillar -->
+  <rect x="47" y="30" width="7" height="22" fill="#a87a3a"/>
+  <!-- Arch curve -->
+  <path d="M10 30 Q32 8 54 30" fill="none" stroke="#a87a3a" stroke-width="4" stroke-linecap="round"/>
+  <!-- Stars / world beyond -->
+  <circle cx="22" cy="38" r="1.5" fill="#8c9657" opacity="0.95"/>
+  <circle cx="32" cy="30" r="2"   fill="#8c9657" opacity="0.95"/>
+  <circle cx="42" cy="38" r="1.5" fill="#8c9657" opacity="0.95"/>
+  <circle cx="26" cy="46" r="1"   fill="#8c9657" opacity="0.65"/>
+  <circle cx="38" cy="46" r="1"   fill="#8c9657" opacity="0.65"/>
+  <circle cx="32" cy="44" r="1.5" fill="#8c9657" opacity="0.75"/>
+  <!-- Ground line -->
+  <line x1="8" y1="52" x2="56" y2="52" stroke="#a87a3a" stroke-width="1.5" opacity="0.35"/>
+</svg>

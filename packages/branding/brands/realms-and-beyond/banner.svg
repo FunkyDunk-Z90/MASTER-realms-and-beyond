@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#262425"/>
+
+  <!-- Atmospheric gradient overlay -->
+  <defs>
+    <radialGradient id="glow-center" cx="50%" cy="45%" r="50%">
+      <stop offset="0%"   stop-color="#a87a3a" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#262425" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-sage" cx="50%" cy="60%" r="40%">
+      <stop offset="0%"   stop-color="#8c9657" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#262425" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow-center)"/>
+  <rect width="1200" height="630" fill="url(#glow-sage)"/>
+
+  <!-- Decorative arch (large, centered background motif) -->
+  <rect x="490" y="330" width="22" height="180" fill="#a87a3a" opacity="0.18"/>
+  <rect x="688" y="330" width="22" height="180" fill="#a87a3a" opacity="0.18"/>
+  <path d="M490 330 Q600 190 710 330" fill="none" stroke="#a87a3a" stroke-width="12"
+        stroke-linecap="round" opacity="0.18"/>
+
+  <!-- Repeated small arch motifs (left) -->
+  <rect x="80"  y="400" width="8" height="60" fill="#a87a3a" opacity="0.12"/>
+  <rect x="108" y="400" width="8" height="60" fill="#a87a3a" opacity="0.12"/>
+  <path d="M80 400 Q96 368 116 400" fill="none" stroke="#a87a3a" stroke-width="4" opacity="0.12"/>
+
+  <!-- Repeated small arch motifs (right) -->
+  <rect x="1092" y="400" width="8" height="60" fill="#a87a3a" opacity="0.12"/>
+  <rect x="1120" y="400" width="8" height="60" fill="#a87a3a" opacity="0.12"/>
+  <path d="M1092 400 Q1108 368 1128 400" fill="none" stroke="#a87a3a" stroke-width="4" opacity="0.12"/>
+
+  <!-- Stars scattered -->
+  <circle cx="200" cy="160" r="2"   fill="#8c9657" opacity="0.5"/>
+  <circle cx="340" cy="100" r="1.5" fill="#8c9657" opacity="0.4"/>
+  <circle cx="480" cy="200" r="2.5" fill="#8c9657" opacity="0.35"/>
+  <circle cx="600" cy="140" r="2"   fill="#8c9657" opacity="0.5"/>
+  <circle cx="720" cy="190" r="1.5" fill="#8c9657" opacity="0.4"/>
+  <circle cx="860" cy="120" r="2"   fill="#8c9657" opacity="0.45"/>
+  <circle cx="980" cy="170" r="2.5" fill="#8c9657" opacity="0.35"/>
+  <circle cx="1100" cy="100" r="2"  fill="#8c9657" opacity="0.4"/>
+  <circle cx="150"  cy="280" r="1.5" fill="#8c9657" opacity="0.3"/>
+  <circle cx="420"  cy="310" r="1"   fill="#8c9657" opacity="0.3"/>
+  <circle cx="790"  cy="260" r="1.5" fill="#8c9657" opacity="0.3"/>
+  <circle cx="1050" cy="300" r="1"   fill="#8c9657" opacity="0.3"/>
+
+  <!-- Icon (arch) centered above text -->
+  <rect x="566" y="170" width="16" height="52" fill="#a87a3a"/>
+  <rect x="618" y="170" width="16" height="52" fill="#a87a3a"/>
+  <path d="M566 170 Q600 130 634 170" fill="none" stroke="#a87a3a" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="583" cy="192" r="4"   fill="#8c9657"/>
+  <circle cx="600" cy="178" r="5"   fill="#8c9657"/>
+  <circle cx="617" cy="192" r="4"   fill="#8c9657"/>
+  <circle cx="590" cy="208" r="2.5" fill="#8c9657" opacity="0.7"/>
+  <circle cx="610" cy="208" r="2.5" fill="#8c9657" opacity="0.7"/>
+  <line x1="562" y1="222" x2="638" y2="222" stroke="#a87a3a" stroke-width="2" opacity="0.4"/>
+
+  <!-- Horizontal rule above title -->
+  <line x1="200" y1="272" x2="1000" y2="272" stroke="#a87a3a" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- Main title -->
+  <text x="600" y="350" text-anchor="middle"
+        font-family="Cinzel, Palatino Linotype, Georgia, serif"
+        font-size="72" font-weight="700" fill="#f0e5d9" letter-spacing="10">REALMS &amp; BEYOND</text>
+
+  <!-- Horizontal rule below title -->
+  <line x1="200" y1="372" x2="1000" y2="372" stroke="#a87a3a" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- Tagline -->
+  <text x="600" y="418" text-anchor="middle"
+        font-family="Barlow Condensed, Arial Narrow, sans-serif"
+        font-size="22" font-weight="400" fill="#a87a3a" letter-spacing="8" opacity="0.85">WHERE IDEAS BECOME WORLDS</text>
+
+  <!-- URL / identifier -->
+  <text x="600" y="570" text-anchor="middle"
+        font-family="Share Tech Mono, Courier New, monospace"
+        font-size="13" fill="#8c9657" letter-spacing="2" opacity="0.45">realms-and-beyond.com</text>
+</svg>

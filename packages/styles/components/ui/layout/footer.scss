@@ -11,18 +11,10 @@
     gap: $small;
     height: var(--footer-height, #{$footer-height});
     background-color: var(--bg-secondary-color);
-    // Teal top border mirrors the navbar bottom border — bookending the app
     border-top: 1px solid var(--primary-color);
-    box-shadow:
-        0 -1px 0 0 var(--primary-color),
-        0 -1px 12px var(--primary-glow);
+
     z-index: 10;
     padding-block: $medium;
-
-    // // Scanline overlay
-    // &::before {
-    //     @include scanlines;
-    // }
 }
 
 // ─── Footer text ──────────────────────────────────────────────────────────────

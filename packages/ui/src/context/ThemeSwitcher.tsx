@@ -22,6 +22,12 @@ const THEME_OPTIONS: I_DropdownOption[] = [
         description: 'Sage olive & warm dark — the standard palette',
     },
     {
+        id: 'aetherscribe',
+        label: 'Aetherscribe',
+        value: 'aetherscribe',
+        description: 'Deep forest green — the native Aetherscribe palette',
+    },
+    {
         id: 'monochrome',
         label: 'Monochrome',
         value: 'monochrome',

@@ -39,10 +39,7 @@
     background-color: var(--bg-secondary-color);
     border-right: 1px solid var(--primary-color);
     border-bottom: 1px solid var(--primary-color);
-    box-shadow: 1px 0 0 0 var(--primary-color);
 
-    // Width animates — overflow on the wrapper must be visible for the
-    // tooltip to escape, so we clip inside .sidebar-inner instead.
     overflow: visible;
     z-index: 100;
     transition: width var(--transition-speed) #{$ease-snap};

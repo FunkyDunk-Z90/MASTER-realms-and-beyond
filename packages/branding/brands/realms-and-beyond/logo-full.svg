@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 90">
+  <rect width="400" height="90" fill="#262425"/>
+
+  <!-- Gateway arch icon -->
+  <rect x="14" y="32" width="6" height="22" fill="#a87a3a"/>
+  <rect x="46" y="32" width="6" height="22" fill="#a87a3a"/>
+  <path d="M14 32 Q33 12 52 32" fill="none" stroke="#a87a3a" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="24" cy="40" r="1.5" fill="#8c9657" opacity="0.9"/>
+  <circle cx="33" cy="33" r="1.8" fill="#8c9657" opacity="0.9"/>
+  <circle cx="42" cy="40" r="1.5" fill="#8c9657" opacity="0.9"/>
+  <circle cx="28" cy="47" r="1"   fill="#8c9657" opacity="0.6"/>
+  <circle cx="38" cy="47" r="1"   fill="#8c9657" opacity="0.6"/>
+  <line x1="12" y1="54" x2="54" y2="54" stroke="#a87a3a" stroke-width="1" opacity="0.3"/>
+
+  <!-- Vertical divider -->
+  <line x1="72" y1="18" x2="72" y2="72" stroke="#a87a3a" stroke-width="1" opacity="0.28"/>
+
+  <!-- Wordmark -->
+  <text x="88" y="38" font-family="Cinzel, Palatino Linotype, Georgia, serif"
+        font-size="16" font-weight="700" fill="#f0e5d9" letter-spacing="3.5">REALMS &amp;</text>
+  <text x="88" y="60" font-family="Cinzel, Palatino Linotype, Georgia, serif"
+        font-size="16" font-weight="700" fill="#a87a3a" letter-spacing="6">BEYOND</text>
+
+  <!-- Rule + sub-tagline -->
+  <line x1="88" y1="68" x2="340" y2="68" stroke="#a87a3a" stroke-width="0.5" opacity="0.22"/>
+  <text x="88" y="78" font-family="Barlow Condensed, Arial Narrow, sans-serif"
+        font-size="9" font-weight="400" fill="#8c9657" letter-spacing="3.5" opacity="0.75">WHERE IDEAS BECOME WORLDS</text>
+</svg>

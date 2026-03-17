@@ -4,16 +4,13 @@ export { default as aetherscribeLogo } from './images/logos/aetherscribe-logo.pn
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
-export { default as iconBook } from './images/icons/book.png'
-export { default as iconCastle } from './images/icons/castle.png'
-export { default as iconDragon } from './images/icons/dragon.png'
-export { default as iconIce } from './images/icons/ice.png'
-export { default as iconKnight } from './images/icons/knight.png'
-export { default as iconMagicPotion } from './images/icons/magic-potion.png'
-export { default as iconMap } from './images/icons/map.png'
-export { default as iconSpellBook } from './images/icons/spell-book.png'
-export { default as iconVictory } from './images/icons/victory.png'
-export { default as iconWizard } from './images/icons/wizard.png'
+export { default as aetherscribeInvertedLogo } from './images/icons/aetherscribe-inverted-square-logo.png'
+export { default as aetherscribeInvertedSymbol } from './images/icons/aetherscribe-inverted-symbol.png'
+export { default as aetherscribeMainSquareLogo } from './images/icons/aetherscribe-main-square-logo.png'
+export { default as aetherscribeMainSymbol } from './images/icons/aetherscribe-main-symbol.png'
+export { default as aetherscribeMonoSquareLogo } from './images/icons/aetherscribe-mono-square-logo.png'
+export { default as aetherscribeMonoSymbol } from './images/icons/aetherscribe-mono-symbol.png'
+export { default as aetherscribeTransparentLogo } from './images/icons/aetherscribe-transparent-logo.png'
 
 // ─── Images ────────────────────────────────────────────────────────────────────
 

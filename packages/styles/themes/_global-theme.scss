@@ -1,121 +1,187 @@
 @use '../_mixins' as *;
 @use '../_variables' as *;
 
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  GLOBAL THEME — Forest Botanical                                         ║
+// ║  Deep forest canopy · sage mist · natural ink                            ║
+// ║  Derived from the R&B logo colour ramp:                                  ║
+// ║    forest-deep #2D5A27 · canopy #3E7A35 · leaf #5FA84E                  ║
+// ║    sprout #8CC87A · mist #B8DFB0 · paper #F0F7EE                        ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
+
+// ─── Palette reference ────────────────────────────────────────────────────────
+$gt-forest-deep:   #2d5a27;
+$gt-canopy:        #3e7a35;
+$gt-leaf:          #5fa84e;
+$gt-sprout:        #8cc87a;
+$gt-mist:          #b8dfb0;
+$gt-ink:           #1a2e18;
+$gt-shadow-fern:   #4a6644;
+$gt-haze:          #d4e8ce;
+$gt-paper:         #f0f7ee;
+
+
+// ─── Dark mode (default) ──────────────────────────────────────────────────────
+
 [data-theme='global-theme'],
 [data-theme='global-theme'][data-mode='dark'] {
-    // ── Backgrounds ───────────────────────────────────────────────────────
-    --bg-color: #262425;
-    --bg-secondary-color: #1c1a1b;
-    --bg-surface-color: #2e2c2d;
-    --bg-inset-color: #141314;
+    // ── Backgrounds — warm-dark with a whisper of forest ──────────────────
+    --bg-color:           #232824;
+    --bg-secondary-color: #1a1e1b;
+    --bg-surface-color:   #2b302c;
+    --bg-inset-color:     #131713;
 
     // ── Text ──────────────────────────────────────────────────────────────
-    --text-color: #f0e5d9;
-    --text-secondary-color: #b8aea3;
-    --text-muted-color: #7a7268;
-    --text-heading-color: #ffffff;
+    --text-color:           #e8f0e4;
+    --text-secondary-color: #b0c4ac;
+    --text-muted-color:     #728068;
+    --text-heading-color:   #ffffff;
 
-    // ── Primary — Sage Olive ──────────────────────────────────────────────
-    --primary-color: #8c9657;
-    --primary-hover-color: #a1ab68;
-    --primary-deep-color: #6e7744;
-    --primary-glow: rgba(140, 150, 87, 0.16);
-    --primary-glow-strong: rgba(140, 150, 87, 0.34);
+    // ── Primary — Forest Canopy ───────────────────────────────────────────
+    --primary-color:       #{$gt-canopy};
+    --primary-hover-color: #{$gt-leaf};
+    --primary-deep-color:  #{$gt-forest-deep};
+    --primary-glow:        rgba(62, 122, 53, 0.22);
+    --primary-glow-strong: rgba(62, 122, 53, 0.42);
 
-    // ── Accent — Muted Moss ───────────────────────────────────────────────
-    --accent-color: #a87a3a;
-    --accent-dim-color: #7a5426;
-    --accent-glow: rgba(168, 122, 58, 0.18);
+    // ── Accent — Sprout ───────────────────────────────────────────────────
+    --accent-color:     #{$gt-sprout};
+    --accent-dim-color: #{$gt-leaf};
+    --accent-glow:      rgba(140, 200, 122, 0.18);
 
     // ── Highlight ─────────────────────────────────────────────────────────
-    --highlight-color: #b8c07a;
-    --highlight-glow: rgba(184, 192, 122, 0.18);
+    --highlight-color: #{$gt-mist};
+    --highlight-glow:  rgba(184, 223, 176, 0.15);
 
     // ── Borders ───────────────────────────────────────────────────────────
-    --border-color: #3a3839;
-    --border-strong-color: #4a4849;
-    --border-radius: #{$border-radius};
+    --border-color:        #2a3428;
+    --border-strong-color: #{$gt-shadow-fern};
+    --border-radius:       #{$border-radius};
 
     // ── Semantic ──────────────────────────────────────────────────────────
-    --danger-color: #a84a3a;
-    --danger-glow: rgba(168, 74, 58, 0.28);
-    --warning-color: #c2a84a;
-    --success-color: #6c8a4a;
-    --submit-color: #4a6c8a;
-    --disabled-color: #4a4849;
+    --danger-color:   #a84a3a;
+    --danger-glow:    rgba(168, 74, 58, 0.28);
+    --warning-color:  #c2a84a;
+    --success-color:  #{$gt-leaf};
+    --submit-color:   #{$gt-canopy};
+    --disabled-color: #3a3e3a;
 
     // ── Decorative ────────────────────────────────────────────────────────
-    --rule-color: #8c9657;
-    --rule-glow: 0 0 8px rgba(140, 150, 87, 0.34);
-    --blur: rgba(20, 19, 20, 0.82);
+    --rule-color: #{$gt-leaf};
+    --rule-glow:  0 0 8px rgba(95, 168, 78, 0.30);
+    --blur:       rgba(18, 20, 18, 0.82);
 
     --surface-tint: linear-gradient(
         135deg,
-        rgba(140, 150, 87, 0.05) 0%,
+        rgba(62, 122, 53, 0.06) 0%,
         transparent 65%
     );
 
     // ── Shadows ───────────────────────────────────────────────────────────
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.25);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.45);
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.28);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.38);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.48);
 }
 
+
+// ─── Light mode ───────────────────────────────────────────────────────────────
+
 [data-theme='global-theme'][data-mode='light'] {
-    // ── Backgrounds — clean neutral, barely warm, not cream ───────────────
-    --bg-color: #f4f3f1;
-    --bg-secondary-color: #e0dfdd;
-    --bg-surface-color: #ffffff;
-    --bg-inset-color: #dedddb;
+    // ── Backgrounds — green paper (from the logo's light bg) ──────────────
+    --bg-color:           #{$gt-paper};
+    --bg-secondary-color: #{$gt-haze};
+    --bg-surface-color:   #ffffff;
+    --bg-inset-color:     #c8e0c0;
 
     // ── Text ──────────────────────────────────────────────────────────────
-    --text-color: #2a2729;
-    --text-secondary-color: #585456;
-    --text-muted-color: #8a8688;
-    --text-heading-color: #1a181a;
+    --text-color:           #{$gt-ink};
+    --text-secondary-color: #{$gt-shadow-fern};
+    --text-muted-color:     #6a8060;
+    --text-heading-color:   #{$gt-ink};
 
-    // ── Primary — same sage olive as dark mode ────────────────────────────
-    --primary-color: #8c9657;
-    --primary-hover-color: #7d874b;
-    --primary-deep-color: #5f6738;
-    --primary-glow: rgba(140, 150, 87, 0.16);
-    --primary-glow-strong: rgba(140, 150, 87, 0.3);
+    // ── Primary — Forest Canopy ────────────────────────────────────────────
+    --primary-color:       #{$gt-canopy};
+    --primary-hover-color: #{$gt-forest-deep};
+    --primary-deep-color:  #{$gt-forest-deep};
+    --primary-glow:        rgba(62, 122, 53, 0.16);
+    --primary-glow-strong: rgba(62, 122, 53, 0.30);
 
-    // ── Accent — same amber as dark mode ──────────────────────────────────
-    --accent-color: #a87a3a;
-    --accent-dim-color: #7a5426;
-    --accent-glow: rgba(168, 122, 58, 0.16);
+    // ── Accent ────────────────────────────────────────────────────────────
+    --accent-color:     #{$gt-canopy};
+    --accent-dim-color: #{$gt-leaf};
+    --accent-glow:      rgba(62, 122, 53, 0.14);
 
     // ── Highlight ─────────────────────────────────────────────────────────
-    --highlight-color: #8a9048;
-    --highlight-glow: rgba(138, 144, 72, 0.14);
+    --highlight-color: #{$gt-shadow-fern};
+    --highlight-glow:  rgba(74, 102, 68, 0.14);
 
     // ── Borders ───────────────────────────────────────────────────────────
-    --border-color: #d0cecc;
-    --border-strong-color: #b4b2b0;
-    --border-radius: #{$border-radius};
+    --border-color:        #{$gt-mist};
+    --border-strong-color: #{$gt-shadow-fern};
+    --border-radius:       #{$border-radius};
 
     // ── Semantic ──────────────────────────────────────────────────────────
-    --danger-color: #9a3828;
-    --danger-glow: rgba(154, 56, 40, 0.2);
-    --warning-color: #a88630;
-    --success-color: #4e7232;
-    --submit-color: #3a5a80;
-    --disabled-color: #c4c2c0;
+    --danger-color:   #9a3828;
+    --danger-glow:    rgba(154, 56, 40, 0.18);
+    --warning-color:  #a88630;
+    --success-color:  #{$gt-canopy};
+    --submit-color:   #{$gt-forest-deep};
+    --disabled-color: #{$gt-mist};
 
     // ── Decorative ────────────────────────────────────────────────────────
-    --rule-color: #8c9657;
-    --rule-glow: 0 0 6px rgba(140, 150, 87, 0.22);
-    --blur: rgba(244, 243, 241, 0.9);
+    --rule-color: #{$gt-canopy};
+    --rule-glow:  0 0 6px rgba(62, 122, 53, 0.20);
+    --blur:       rgba(240, 247, 238, 0.92);
 
     --surface-tint: linear-gradient(
         135deg,
-        rgba(140, 150, 87, 0.04) 0%,
+        rgba(62, 122, 53, 0.04) 0%,
         transparent 65%
     );
 
     // ── Shadows ───────────────────────────────────────────────────────────
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.07);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.09);
-    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+    --shadow-sm: 0 1px 4px rgba(45, 90, 39, 0.08);
+    --shadow-md: 0 4px 16px rgba(45, 90, 39, 0.10);
+    --shadow-lg: 0 10px 40px rgba(45, 90, 39, 0.14);
+}
+
+// ─── System light preference ──────────────────────────────────────────────────
+
+@media (prefers-color-scheme: light) {
+    [data-theme='global-theme']:not([data-mode='dark']) {
+        --bg-color:           #{$gt-paper};
+        --bg-secondary-color: #{$gt-haze};
+        --bg-surface-color:   #ffffff;
+        --bg-inset-color:     #c8e0c0;
+        --text-color:           #{$gt-ink};
+        --text-secondary-color: #{$gt-shadow-fern};
+        --text-muted-color:     #6a8060;
+        --text-heading-color:   #{$gt-ink};
+        --primary-color:       #{$gt-canopy};
+        --primary-hover-color: #{$gt-forest-deep};
+        --primary-deep-color:  #{$gt-forest-deep};
+        --primary-glow:        rgba(62, 122, 53, 0.16);
+        --primary-glow-strong: rgba(62, 122, 53, 0.30);
+        --accent-color:     #{$gt-canopy};
+        --accent-dim-color: #{$gt-leaf};
+        --accent-glow:      rgba(62, 122, 53, 0.14);
+        --highlight-color: #{$gt-shadow-fern};
+        --highlight-glow:  rgba(74, 102, 68, 0.14);
+        --border-color:        #{$gt-mist};
+        --border-strong-color: #{$gt-shadow-fern};
+        --border-radius:       #{$border-radius};
+        --danger-color:   #9a3828;
+        --danger-glow:    rgba(154, 56, 40, 0.18);
+        --warning-color:  #a88630;
+        --success-color:  #{$gt-canopy};
+        --submit-color:   #{$gt-forest-deep};
+        --disabled-color: #{$gt-mist};
+        --rule-color: #{$gt-canopy};
+        --rule-glow:  0 0 6px rgba(62, 122, 53, 0.20);
+        --blur:       rgba(240, 247, 238, 0.92);
+        --surface-tint: linear-gradient(135deg, rgba(62, 122, 53, 0.04) 0%, transparent 65%);
+        --shadow-sm: 0 1px 4px rgba(45, 90, 39, 0.08);
+        --shadow-md: 0 4px 16px rgba(45, 90, 39, 0.10);
+        --shadow-lg: 0 10px 40px rgba(45, 90, 39, 0.14);
+    }
 }

@@ -1,0 +1,208 @@
+@use '../_mixins' as *;
+@use '../_variables' as *;
+
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  AETHERSCRIBE THEME — Forest Green                                       ║
+// ║  Default theme for the Aetherscribe app.                                 ║
+// ║  Deep forest canopy · sage mist · natural ink                            ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
+
+// ─── Palette ──────────────────────────────────────────────────────────────────
+$color-forest-deep: #2d5a27;
+$color-canopy: #3e7a35;
+$color-leaf: #5fa84e;
+$color-sprout: #8cc87a;
+$color-mist: #b8dfb0;
+$color-ink: #1a2e18;
+$color-shadow-fern: #4a6644;
+$color-haze: #d4e8ce;
+$color-paper: #f0f7ee;
+$color-charcoal: #1c1c1c;
+$color-dark-surface: #2e2e2e;
+$color-off-white: #f5f5f5;
+
+// ─── Dark mode (default) ──────────────────────────────────────────────────────
+
+[data-theme='aetherscribe'],
+[data-theme='aetherscribe'][data-mode='dark'] {
+    // ── Backgrounds ───────────────────────────────────────────────────────
+    --bg-color: #{$color-charcoal};
+    --bg-secondary-color: #141414;
+    --bg-surface-color: #{$color-dark-surface};
+    --bg-inset-color: #111111;
+
+    // ── Text ──────────────────────────────────────────────────────────────
+    --text-color: #{$color-off-white};
+    --text-secondary-color: #{$color-mist};
+    --text-muted-color: #6a8a62;
+    --text-heading-color: #ffffff;
+
+    // ── Primary — Forest Canopy ───────────────────────────────────────────
+    --primary-color: #{$color-canopy};
+    --primary-hover-color: #{$color-leaf};
+    --primary-deep-color: #{$color-forest-deep};
+    --primary-glow: rgba(62, 122, 53, 0.22);
+    --primary-glow-strong: rgba(62, 122, 53, 0.42);
+
+    // ── Accent — Sprout ───────────────────────────────────────────────────
+    --accent-color: #{$color-sprout};
+    --accent-dim-color: #{$color-leaf};
+    --accent-glow: rgba(140, 200, 122, 0.18);
+
+    // ── Highlight ─────────────────────────────────────────────────────────
+    --highlight-color: #{$color-mist};
+    --highlight-glow: rgba(184, 223, 176, 0.16);
+
+    // ── Borders ───────────────────────────────────────────────────────────
+    --border-color: #2a3e28;
+    --border-strong-color: #{$color-shadow-fern};
+    --border-radius: #{$border-radius};
+
+    // ── Semantic ──────────────────────────────────────────────────────────
+    --danger-color: #a84a3a;
+    --danger-glow: rgba(168, 74, 58, 0.28);
+    --warning-color: #c2a84a;
+    --success-color: #{$color-leaf};
+    --submit-color: #{$color-canopy};
+    --disabled-color: #3a3a3a;
+
+    // ── Decorative ────────────────────────────────────────────────────────
+    --rule-color: #{$color-leaf};
+    --rule-glow: 0 0 8px rgba(95, 168, 78, 0.3);
+    --blur: rgba(16, 16, 16, 0.82);
+
+    --surface-tint: linear-gradient(
+        135deg,
+        rgba(62, 122, 53, 0.06) 0%,
+        transparent 65%
+    );
+
+    // ── Shadows ───────────────────────────────────────────────────────────
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+// ─── Light mode ───────────────────────────────────────────────────────────────
+
+// Explicit light mode override
+[data-theme='aetherscribe'][data-mode='light'] {
+    // ── Backgrounds ───────────────────────────────────────────────────────
+    --bg-color: #{$color-paper};
+    --bg-secondary-color: #{$color-haze};
+    --bg-surface-color: #ffffff;
+    --bg-inset-color: #c8e0c0;
+
+    // ── Text ──────────────────────────────────────────────────────────────
+    --text-color: #{$color-ink};
+    --text-secondary-color: #{$color-shadow-fern};
+    --text-muted-color: #6a8060;
+    --text-heading-color: #{$color-ink};
+
+    // ── Primary — Forest Canopy ────────────────────────────────────────────
+    --primary-color: #{$color-canopy};
+    --primary-hover-color: #{$color-forest-deep};
+    --primary-deep-color: #{$color-forest-deep};
+    --primary-glow: rgba(62, 122, 53, 0.16);
+    --primary-glow-strong: rgba(62, 122, 53, 0.3);
+
+    // ── Accent ────────────────────────────────────────────────────────────
+    --accent-color: #{$color-canopy};
+    --accent-dim-color: #{$color-leaf};
+    --accent-glow: rgba(62, 122, 53, 0.14);
+
+    // ── Highlight ─────────────────────────────────────────────────────────
+    --highlight-color: #{$color-shadow-fern};
+    --highlight-glow: rgba(74, 102, 68, 0.14);
+
+    // ── Borders ───────────────────────────────────────────────────────────
+    --border-color: #{$color-mist};
+    --border-strong-color: #{$color-shadow-fern};
+    --border-radius: #{$border-radius};
+
+    // ── Semantic ──────────────────────────────────────────────────────────
+    --danger-color: #9a3828;
+    --danger-glow: rgba(154, 56, 40, 0.18);
+    --warning-color: #a88630;
+    --success-color: #{$color-canopy};
+    --submit-color: #{$color-forest-deep};
+    --disabled-color: #{$color-mist};
+
+    // ── Decorative ────────────────────────────────────────────────────────
+    --rule-color: #{$color-canopy};
+    --rule-glow: 0 0 6px rgba(62, 122, 53, 0.2);
+    --blur: rgba(240, 247, 238, 0.92);
+
+    --surface-tint: linear-gradient(
+        135deg,
+        rgba(62, 122, 53, 0.04) 0%,
+        transparent 65%
+    );
+
+    // ── Shadows ───────────────────────────────────────────────────────────
+    --shadow-sm: 0 1px 4px rgba(45, 90, 39, 0.08);
+    --shadow-md: 0 4px 16px rgba(45, 90, 39, 0.1);
+    --shadow-lg: 0 10px 40px rgba(45, 90, 39, 0.14);
+}
+
+// System light mode preference (when no explicit data-mode is set)
+@media (prefers-color-scheme: light) {
+    [data-theme='aetherscribe']:not([data-mode='dark']) {
+        // ── Backgrounds ───────────────────────────────────────────────────
+        --bg-color: #{$color-paper};
+        --bg-secondary-color: #{$color-haze};
+        --bg-surface-color: #ffffff;
+        --bg-inset-color: #c8e0c0;
+
+        // ── Text ──────────────────────────────────────────────────────────
+        --text-color: #{$color-ink};
+        --text-secondary-color: #{$color-shadow-fern};
+        --text-muted-color: #6a8060;
+        --text-heading-color: #{$color-ink};
+
+        // ── Primary — Forest Canopy ────────────────────────────────────────
+        --primary-color: #{$color-canopy};
+        --primary-hover-color: #{$color-forest-deep};
+        --primary-deep-color: #{$color-forest-deep};
+        --primary-glow: rgba(62, 122, 53, 0.16);
+        --primary-glow-strong: rgba(62, 122, 53, 0.3);
+
+        // ── Accent ────────────────────────────────────────────────────────
+        --accent-color: #{$color-canopy};
+        --accent-dim-color: #{$color-leaf};
+        --accent-glow: rgba(62, 122, 53, 0.14);
+
+        // ── Highlight ─────────────────────────────────────────────────────
+        --highlight-color: #{$color-shadow-fern};
+        --highlight-glow: rgba(74, 102, 68, 0.14);
+
+        // ── Borders ───────────────────────────────────────────────────────
+        --border-color: #{$color-mist};
+        --border-strong-color: #{$color-shadow-fern};
+        --border-radius: #{$border-radius};
+
+        // ── Semantic ──────────────────────────────────────────────────────
+        --danger-color: #9a3828;
+        --danger-glow: rgba(154, 56, 40, 0.18);
+        --warning-color: #a88630;
+        --success-color: #{$color-canopy};
+        --submit-color: #{$color-forest-deep};
+        --disabled-color: #{$color-mist};
+
+        // ── Decorative ────────────────────────────────────────────────────
+        --rule-color: #{$color-canopy};
+        --rule-glow: 0 0 6px rgba(62, 122, 53, 0.2);
+        --blur: rgba(240, 247, 238, 0.92);
+
+        --surface-tint: linear-gradient(
+            135deg,
+            rgba(62, 122, 53, 0.04) 0%,
+            transparent 65%
+        );
+
+        // ── Shadows ───────────────────────────────────────────────────────
+        --shadow-sm: 0 1px 4px rgba(45, 90, 39, 0.08);
+        --shadow-md: 0 4px 16px rgba(45, 90, 39, 0.1);
+        --shadow-lg: 0 10px 40px rgba(45, 90, 39, 0.14);
+    }
+}

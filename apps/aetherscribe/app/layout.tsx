@@ -22,12 +22,14 @@ export default function RootLayout({
                 <ThemeInitializer
                     themeStorageKey={THEME_KEY}
                     modeStorageKey={MODE_KEY}
+                    defaultTheme="aetherscribe"
                 />
             </head>
             <body className="app-wrapper">
                 <ThemeProvider
                     themeStorageKey={THEME_KEY}
                     modeStorageKey={MODE_KEY}
+                    defaultTheme="aetherscribe"
                 >
                     <AuthProvider>{children}</AuthProvider>
                 </ThemeProvider>
