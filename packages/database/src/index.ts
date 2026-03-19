@@ -55,3 +55,14 @@ export type { I_NationDoc } from './aetherscribe/nationModel'
 
 export { default as Faction } from './aetherscribe/factionModel'
 export type { I_FactionDoc } from './aetherscribe/factionModel'
+
+// ─── SSO / OAuth ──────────────────────────────────────────────────────────────
+
+export { App, OAuthApp } from './sso/oauthAppModel'
+export type { I_App, I_OAuthApp } from './sso/oauthAppModel'
+
+export { AuthCode } from './sso/authCodeModel'
+export type { I_AuthCode } from './sso/authCodeModel'
+
+export { RefreshToken } from './sso/refreshTokenModel'
+export type { I_RefreshToken } from './sso/refreshTokenModel'

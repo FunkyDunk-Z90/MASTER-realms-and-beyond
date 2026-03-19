@@ -70,6 +70,12 @@ Thumbs.db
 *.iml
 
 # ---------------------------
+# RS256 key pair — NEVER commit the private key
+# ---------------------------
+keys/private.pem
+keys/*.pem
+
+# ---------------------------
 # Misc
 # ---------------------------
 *.swp

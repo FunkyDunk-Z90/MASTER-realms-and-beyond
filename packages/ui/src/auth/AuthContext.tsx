@@ -25,7 +25,7 @@ const aetherscribeApiBase = (): string => {
         process.env?.NEXT_PUBLIC_AETHERSCRIBE_API_URL
             ? process.env.NEXT_PUBLIC_AETHERSCRIBE_API_URL
             : 'http://localhost:8811'
-    return `${root}/api/v1/account`
+    return `${root}/api/v1/`
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────

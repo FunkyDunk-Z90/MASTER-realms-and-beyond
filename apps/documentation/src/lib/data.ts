@@ -59,6 +59,10 @@ export const NAV_SECTIONS: T_NavSection[] = [
       { id: "auth-onboarding", label: "OnboardingForm", href: "#auth-onboarding" },
       { id: "auth-guard", label: "AuthGuard", href: "#auth-guard" },
       { id: "auth-flow", label: "Server · Login Flow", href: "#auth-flow" },
+      { id: "sso-overview", label: "SSO Overview", href: "#sso-overview" },
+      { id: "sso-flow", label: "OAuth Flow", href: "#sso-flow" },
+      { id: "sso-new-app", label: "Adding a New App", href: "#sso-new-app" },
+      { id: "sso-middleware", label: "SSO Middleware", href: "#sso-middleware" },
     ],
   },
   { id: "api", label: "API Reference", href: "#api" },
@@ -91,8 +95,9 @@ export const TECH_STACKS: T_TechStack[] = [
       { concern: "Database", technology: "MongoDB / Mongoose 9" },
       {
         concern: "Authentication",
-        technology: "JWT (HS256) + httpOnly cookies",
+        technology: "OAuth 2.0 Authorization Code Flow + JWT",
       },
+      { concern: "Session management", technology: "express-session + connect-mongo (SSO)" },
       { concern: "Password hashing", technology: "bcrypt (12 rounds)" },
       { concern: "Token security", technology: "SHA-256, timing-safe compare" },
       { concern: "Env validation", technology: "envalid" },
@@ -143,8 +148,14 @@ export const PRODUCTS: T_Product[] = [
   {
     name: "Realms Portal",
     type: "Web App",
-    purpose: "Platform hub (landing/routing)",
+    purpose: "Public landing page — news, updates, app showcase",
     icon: "🌐",
+  },
+  {
+    name: "R&B Auth",
+    type: "Web App",
+    purpose: "SSO login/register UI + account management portal",
+    icon: "🔐",
   },
   {
     name: "Documentation",
@@ -186,6 +197,8 @@ export const PACKAGES: T_Package[] = [
       "getOne",
       "updateOne",
       "deleteOne",
+      "createRequireSSOAuth",
+      "createSSOCallbackHandler",
     ],
   },
   {
@@ -209,7 +222,7 @@ export const PACKAGES: T_Package[] = [
     description:
       "All Mongoose models. Centralises schema changes so multiple servers share collections without reimplementing schemas.",
     consumedBy: "realms-and-beyond-api, aetherscribe-api",
-    exports: ["Identity", "AetherscribeProfile", "connectDatabase"],
+    exports: ["Identity", "AetherscribeProfile", "OAuthApp", "AuthCode", "connectDatabase"],
   },
   {
     name: "@rnb/ui",

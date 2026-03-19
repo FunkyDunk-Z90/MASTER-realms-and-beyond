@@ -96,12 +96,13 @@ export const OnboardingForm: React.FC<I_OnboardingFormProps> = ({
 
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-    const apiBase =
-        aetherscribeApiUrl ??
-        (typeof process !== 'undefined' &&
-        process.env?.NEXT_PUBLIC_AETHERSCRIBE_API_URL
-            ? process.env.NEXT_PUBLIC_AETHERSCRIBE_API_URL
-            : 'http://localhost:8811')
+    const apiBase = 'http://localhost:8811'
+    // const apiBase =
+    //     aetherscribeApiUrl ??
+    //     (typeof process !== 'undefined' &&
+    //     process.env?.NEXT_PUBLIC_AETHERSCRIBE_API_URL
+    //         ? process.env.NEXT_PUBLIC_AETHERSCRIBE_API_URL
+    //         : 'http://localhost:8811')
 
     // ── Username availability check (debounced) ──────────────────────────────
 

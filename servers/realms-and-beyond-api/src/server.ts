@@ -1,14 +1,13 @@
 import 'dotenv/config'
 import { connect } from 'mongoose'
-// import { env } from './config/validateEnv'
-import { env } from '@rnb/validators'
+import { env } from './config/validateEnv'
 import app from './app'
 
-const database = env.DATABASE.replace('<PASSWORD>', env.DATABASE_PASSWORD)
+const mongoUri = env.DATABASE.replace('<PASSWORD>', env.DATABASE_PASSWORD)
 
 const connectToDatabase = async function () {
     try {
-        await connect(database)
+        await connect(mongoUri)
         console.log('Connected to Database')
     } catch (error) {
         console.error(error)
@@ -16,18 +15,16 @@ const connectToDatabase = async function () {
     }
 }
 
-const port = env.PORT
-
 const startServer = async function () {
     try {
         await connectToDatabase()
 
-        app.listen(port, () => {
-            console.log(`App running on port ${port}`)
+        app.listen(env.PORT, () => {
+            console.log(`Auth server running on port ${env.PORT}`)
         })
     } catch (error) {
         console.error(error)
-        console.log("Couldn't connect to server")
+        console.log("Couldn't start server")
     }
 }
 

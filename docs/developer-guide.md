@@ -1,8 +1,8 @@
 # Realms & Beyond — Developer Guide
 
-**Version:** 1.0
+**Version:** 1.1
 **Authors:** Engineering Team
-**Last Updated:** 2026-03-15
+**Last Updated:** 2026-03-17
 
 ---
 
@@ -28,14 +28,15 @@
 18. [App: ByteBurger](#18-app-byteburger)
 19. [App: NexusServe](#19-app-nexusserve)
 20. [Authentication & Identity System](#20-authentication--identity-system)
-21. [Database Models Reference](#21-database-models-reference)
-22. [API Reference](#22-api-reference)
-23. [Design System](#23-design-system)
-24. [Frontend Architecture](#24-frontend-architecture)
-25. [Data Flow & Use Case Scenarios](#25-data-flow--use-case-scenarios)
-26. [Environment Configuration](#26-environment-configuration)
-27. [Code Conventions](#27-code-conventions)
-28. [Dependency Graph](#28-dependency-graph)
+21. [SSO — Adding Auth to a New App](#21-sso--adding-auth-to-a-new-app)
+22. [Database Models Reference](#22-database-models-reference)
+23. [API Reference](#23-api-reference)
+24. [Design System](#24-design-system)
+25. [Frontend Architecture](#25-frontend-architecture)
+26. [Data Flow & Use Case Scenarios](#26-data-flow--use-case-scenarios)
+27. [Environment Configuration](#27-environment-configuration)
+28. [Code Conventions](#28-code-conventions)
+29. [Dependency Graph](#29-dependency-graph)
 
 ---
 
@@ -47,21 +48,27 @@
 
 | Product              | Type          | Purpose                                   |
 | -------------------- | ------------- | ----------------------------------------- |
-| **Aetherscribe**     | Web App + API | RPG worldbuilding and campaign management |
-| **ByteBurger**       | Web App       | Online food ordering                      |
-| **NexusServe**       | Web App + API | Restaurant point-of-sale and management   |
-| **Realms Portal**    | Web App       | Platform hub (landing/routing)            |
-| **UI Documentation** | Web App       | Internal component and design-system docs |
+| **Aetherscribe**     | Web App + API | RPG worldbuilding and campaign management           |
+| **ByteBurger**       | Web App       | Online food ordering                                |
+| **NexusServe**       | Web App + API | Restaurant point-of-sale and management             |
+| **Realms Portal**    | Web App       | Public landing page — news, updates, app showcase   |
+| **R&B Auth**         | Web App       | SSO login/register UI + account management portal   |
+| **UI Documentation** | Web App       | Internal component and design-system docs           |
 
 ### Core Philosophy
 
-Every product in the platform authenticates through a single **IAM server** (`realms-and-beyond-api`). Once authenticated, users are linked to product-specific accounts stored in that product's own API server. The `Identity` document in MongoDB is the canonical source of truth for who a user is; each product appends a `linkedService` entry to that document when the user creates a product account.
+Every product in the platform authenticates through a single **OAuth 2.0 auth server** (`realms-and-beyond-api`). Authentication uses the **Authorization Code Flow** — member apps never handle passwords directly. The `Identity` document in MongoDB is the canonical source of truth for who a user is.
 
-This separation means:
+The auth layer has two surfaces:
 
-- Product APIs are independently deployable and scalable.
-- The auth system is never duplicated — all tokens, cookies, and session logic live in one place.
-- Adding a new product requires only registering a new `serviceName` in the `services` array schema, creating a product model, and building a product API.
+- **`realms-and-beyond-api`** (port 2611) — the OAuth auth server. Handles all credential verification, session management, auth code issuance, and JWT token exchange.
+- **`apps/rnb-auth`** (port 3001) — the login/register UI. Renders the forms that users interact with. Forms POST directly to the auth server.
+
+This means:
+
+- Member apps are fully decoupled from password/identity logic.
+- SSO works across all products: log in once, all apps recognise the session.
+- Adding a new product requires registering it in the `OAuthApp` collection and wiring two middleware helpers from `@rnb/middleware`.
 
 ---
 
@@ -75,8 +82,9 @@ realms-and-beyond/
 │   ├── aetherscribe/            # RPG worldbuilding app
 │   ├── byte-burger/             # Food ordering app
 │   ├── nexus-serve/             # POS/management app
-│   ├── realms-and-beyond/       # Platform portal
-│   └── ui-documentation/        # Design system docs
+│   ├── realms-and-beyond/       # Public landing page (news, updates, about)
+│   ├── rnb-auth/                # SSO login/register UI + account portal (port 3001)
+│   └── documentation/           # Design system docs
 │
 ├── packages/                    # Shared libraries (imported by apps & servers)
 │   ├── assets/                  # @rnb/assets  — SVG icon components
@@ -140,7 +148,8 @@ The `^build` dependency syntax means "all packages that _I_ depend on must finis
 | Framework              | Express 5                                |
 | Language               | TypeScript 5 (ESM, `"type": "module"`)   |
 | Database               | MongoDB via Mongoose 9                   |
-| Authentication         | JWT (HS256) + httpOnly cookies           |
+| Authentication         | OAuth 2.0 Authorization Code Flow + JWT  |
+| Session management     | express-session + connect-mongo (SSO)    |
 | Password hashing       | bcrypt (12 rounds)                       |
 | Token security         | SHA-256 (crypto), timing-safe comparison |
 | Environment validation | `envalid` (validators package)           |
@@ -532,6 +541,73 @@ Generic Mongoose CRUD operation factories for use when a controller is thin and 
 #### `copyObj(obj, fields)`
 
 Shallow-copies only the specified fields from an object. Used by controllers to selectively apply patch body fields without spreading unknown keys.
+
+#### SSO Middleware — `createRequireSSOAuth(config)`
+
+Factory that returns an Express middleware protecting routes that require R&B SSO authentication.
+
+```typescript
+import { createRequireSSOAuth, SSOConfig } from '@rnb/middleware'
+
+const config: SSOConfig = {
+    authServerUrl: 'http://localhost:2611',
+    clientId: process.env.RNB_CLIENT_ID!,
+    clientSecret: process.env.RNB_CLIENT_SECRET!,
+    redirectUri: process.env.RNB_REDIRECT_URI!,
+}
+
+const requireAuth = createRequireSSOAuth(config)
+
+// Apply to any route
+router.get('/dashboard', requireAuth, handler)
+```
+
+**`SSOConfig` interface:**
+
+| Field           | Type   | Description                                          |
+| --------------- | ------ | ---------------------------------------------------- |
+| `authServerUrl` | string | Base URL of the R&B auth server, e.g. `http://localhost:2611` |
+| `clientId`      | string | This app's registered client ID                     |
+| `clientSecret`  | string | This app's registered client secret (server-side only) |
+| `redirectUri`   | string | This app's registered redirect URI (must match exactly) |
+
+**Behaviour:**
+
+1. If `req.session.user` exists → `next()` (already authenticated)
+2. Saves `req.originalUrl` to `req.session.returnTo`
+3. Generates CSRF `state` token, stores in `req.session.oauthState`
+4. Redirects to `${authServerUrl}/auth/login?client_id=...&redirect_uri=...&state=...`
+
+**Session augmentation:** This module extends `express-session`'s `SessionData` with:
+
+```typescript
+interface SessionData {
+    user?: { id: string; email: string; displayName: string; roles: string[] }
+    oauthState?: string
+    returnTo?: string
+}
+```
+
+#### SSO Middleware — `createSSOCallbackHandler(config)`
+
+Factory that returns an Express route handler for the OAuth callback URL. Mount at the path registered as `redirectUri`.
+
+```typescript
+import { createSSOCallbackHandler } from '@rnb/middleware'
+
+const ssoCallback = createSSOCallbackHandler(config)
+router.get('/api/auth/callback', ssoCallback)
+```
+
+**Behaviour:**
+
+1. Verifies `state` query param matches `req.session.oauthState` (CSRF protection — `403` on mismatch)
+2. Validates `code` is present (`400` if missing)
+3. Makes server-to-server `POST ${authServerUrl}/auth/token` with `{ code, client_id, client_secret, redirect_uri }`
+4. On `invalid_code` or `code_expired` → redirects to `/api/auth/initiate` to restart the flow
+5. On `invalid_client` → logs critical error, returns `500`
+6. Stores the returned `user` object in `req.session.user`
+7. Redirects to `req.session.returnTo` (the original URL before the login redirect)
 
 ---
 
@@ -1842,44 +1918,98 @@ Restaurant point-of-sale and management system. Currently scaffolded. Employee m
 
 This is one of the most important systems in the codebase. Understanding it in full is essential for every engineer.
 
-### Concept: IAM + Linked Services
+### Concept: OAuth 2.0 SSO + IAM
 
-The platform uses a single **Identity** document as the canonical user record. Each product (Aetherscribe, ByteBurger, NexusServe) has its own database collection for product-specific data, but they all reference the central Identity by `identityId`.
+The platform uses the **Authorization Code Flow** (OAuth 2.0) for all authentication. A user has one `Identity` document in MongoDB. Member apps never see passwords — they receive a short-lived one-time `code`, exchange it server-to-server for a JWT, then maintain their own session.
 
-When a user creates a product account, a `linkedService` entry is appended to `identity.services[]`. This allows:
+Key actors:
 
-- A single login to access all products
-- Fine-grained per-product access control via `scopes`
-- Product accounts to be independently suspended without affecting the platform identity
-- Cross-product features (e.g. unified profile, shared payment methods) to be built later
+| Actor | Role |
+|---|---|
+| **Browser** | Follows redirects. Never touches secrets. |
+| **Auth server** (`realms-and-beyond-api`, port 2611) | Identity store, SSO session, code issuance, token exchange |
+| **Auth UI** (`apps/rnb-auth`, port 3001) | Renders login/register forms. Forms POST directly to auth server. |
+| **Member app** | Receives the auth code callback, exchanges it, manages own session. |
 
-### Session Mechanism
+### Full OAuth Flow
+
+```
+Browser              Member App Server      Auth Server (2611)       MongoDB
+   │                       │                       │                    │
+   │  GET /dashboard        │                       │                    │
+   │─────────────────────→ │                       │                    │
+   │  No session → 302     │                       │                    │
+   │  ←── redirect to auth server                  │                    │
+   │                                               │                    │
+   │  GET /auth/login?client_id=APP&redirect_uri=…&state=… ──────────→ │
+   │                                               │  validate client   │──→ OAuthApp
+   │                                               │  check SSO session │──→ sessions
+   │                                               │  (none) → 302 to rnb-auth login UI
+   │  GET localhost:3001/login?client_id=…          │                    │
+   │─────────────────────────────────────────────→ │                    │
+   │  [login form rendered]                         │                    │
+   │                                                                     │
+   │  POST /auth/login { email, password, client_id, redirect_uri, state }
+   │──────────────────────────────────────────────────────────────────→ │
+   │                                               │  verifyPassword    │──→ Identity
+   │                                               │  set SSO session   │──→ sessions
+   │                                               │  create AuthCode   │──→ AuthCode
+   │  302 → member_app/api/auth/callback?code=…&state=…                 │
+   │←────────────────────────────────────────────────────────────────── │
+   │                                               │                    │
+   │  GET /api/auth/callback?code=…&state=…        │                    │
+   │─────────────────────────────────────────────→ │                    │
+   │                       │  verify state         │                    │
+   │                       │  POST /auth/token { code, client_secret }  │
+   │                       │──────────────────────────────────────────→ │
+   │                       │                       │  delete AuthCode   │
+   │                       │                       │  issue JWT         │
+   │                       │  { access_token, user }                    │
+   │                       │←────────────────────────────────────────── │
+   │                       │  set app session                           │
+   │  302 → /dashboard     │                                            │
+   │←─────────────────────→│                                            │
+   │  ✓ Authenticated       │                                            │
+```
+
+### SSO Fast-Path (Second Login)
+
+When a user who already logged into App A visits App B:
+
+1. App B redirects to `GET /auth/login?client_id=APP_B&…`
+2. Auth server finds an existing SSO session (`req.session.userId` is set)
+3. Auth server **skips the login UI entirely** — immediately issues a code and redirects
+4. App B exchanges the code as normal
+
+**The user never sees a login page.** This is the SSO fast-path.
+
+### Session Mechanism (direct API usage)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     AUTHENTICATION FLOW                     │
+│              IDENTITY API (direct, non-OAuth)               │
 │                                                             │
 │  Browser                    IAM API            MongoDB      │
 │  ──────────────────────────────────────────────────────     │
-│  POST /login                                                │
+│  POST /api/v1/user/login                                    │
 │  { email, password }  ──────────────→                      │
 │                              findByEmail()   ──────────→   │
-│                              verifyPassword()             │
-│                              recordLogin()   ──────────→   │
+│                              verifyPassword()               │
 │                              setAuthCookie() ←──────────   │
 │                       ←── 200 { user }                     │
 │  Set-Cookie: auth_token=<JWT>; HttpOnly; Secure             │
 │                                                             │
-│  GET /me (subsequent request)                              │
+│  GET /api/v1/user/me (subsequent request)                  │
 │  Cookie: auth_token=<JWT>  ──────────────→                  │
 │                              authenticate middleware         │
 │                              verifyToken()                  │
 │                              Identity.findById()  ────────→ │
 │                              req.identity = identity        │
-│                              getMyAccount()                 │
 │                       ←── 200 { user }                     │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+> The direct API (`/api/v1/user/*`) is used by the `rnb-auth` account portal and can be used by any server-side code that needs to act as the authenticated user. OAuth is used by all member apps in the browser flow.
 
 ### Token Security Design
 
@@ -1977,7 +2107,185 @@ Credentials: true
 
 ---
 
-## 21. Database Models Reference
+## 21. SSO — Adding Auth to a New App
+
+This section is the step-by-step guide for wiring R&B SSO into any new Express-based member app. The entire integration is four steps: register the app, set env vars, add two middleware calls, and handle the callback route.
+
+### Step 1 — Register the App in MongoDB
+
+Run the registration script from the auth server directory. Edit `APP_CONFIG` at the top of the script before running.
+
+```bash
+npx tsx servers/realms-and-beyond-api/scripts/registerApp.ts
+```
+
+The script creates an `OAuthApp` document with:
+
+| Field          | What to set                                                  |
+| -------------- | ------------------------------------------------------------ |
+| `name`         | Human-readable name, e.g. `"Aetherscribe"`                   |
+| `clientId`     | A unique string, e.g. `"aetherscribe-app"`                   |
+| `clientSecret` | A long random secret (generate with `openssl rand -hex 32`) |
+| `redirectUris` | The exact callback URL, e.g. `["http://localhost:3002/api/auth/callback"]` |
+| `scopes`       | `["openid", "profile"]`                                     |
+
+The script outputs the generated `clientId` and `clientSecret`. **Store the secret in the app's `.env` — it cannot be recovered after this.**
+
+---
+
+### Step 2 — Configure Environment Variables
+
+Add three variables to the member app's `.env`:
+
+```bash
+RNB_CLIENT_ID=aetherscribe-app
+RNB_CLIENT_SECRET=<secret from registration step>
+RNB_REDIRECT_URI=http://localhost:3002/api/auth/callback
+```
+
+The auth server URL (`http://localhost:2611`) is typically hardcoded in the config object or added as a fourth env var (`RNB_AUTH_SERVER_URL`).
+
+---
+
+### Step 3 — Add `requireSSOAuth` Middleware
+
+In the member app's Express setup, import the factory from `@rnb/middleware` and create an instance:
+
+```typescript
+import { createRequireSSOAuth, createSSOCallbackHandler } from '@rnb/middleware'
+
+const ssoConfig = {
+    authServerUrl: process.env.RNB_AUTH_SERVER_URL ?? 'http://localhost:2611',
+    clientId: process.env.RNB_CLIENT_ID!,
+    clientSecret: process.env.RNB_CLIENT_SECRET!,
+    redirectUri: process.env.RNB_REDIRECT_URI!,
+}
+
+const requireAuth = createRequireSSOAuth(ssoConfig)
+const ssoCallback = createSSOCallbackHandler(ssoConfig)
+```
+
+Apply `requireAuth` to any route that should be protected:
+
+```typescript
+router.get('/dashboard', requireAuth, dashboardHandler)
+router.get('/settings', requireAuth, settingsHandler)
+```
+
+**What `requireAuth` does:**
+
+1. Checks `req.session.user` — if present, calls `next()` immediately (session already established)
+2. Saves `req.originalUrl` to `req.session.returnTo` so the user lands on the page they were trying to reach after login
+3. Generates a CSRF `state` token and stores it in `req.session.oauthState`
+4. Redirects to `${authServerUrl}/auth/login?client_id=...&redirect_uri=...&state=...`
+
+The app session (`express-session`) must be configured in the member app for this to work:
+
+```typescript
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
+
+app.use(session({
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.DATABASE }),
+    cookie: { httpOnly: true, secure: false /* true in prod */ },
+}))
+```
+
+---
+
+### Step 4 — Mount the Callback Handler
+
+Register the callback route at the exact path that matches `redirectUri`:
+
+```typescript
+router.get('/api/auth/callback', ssoCallback)
+```
+
+**What `ssoCallback` does:**
+
+1. Reads `code` and `state` from query params
+2. CSRF check: `state` must match `req.session.oauthState` — returns `403` on mismatch
+3. Makes a server-to-server `POST /auth/token` to the auth server with `{ code, client_id, client_secret, redirect_uri }`
+4. Auth server validates the code, deletes it (single-use), returns `{ access_token, user }`
+5. Stores user object in `req.session.user`
+6. Redirects to `req.session.returnTo` (the original URL before the login redirect)
+
+**After the callback, `req.session.user` contains:**
+
+```typescript
+{
+    id: string           // MongoDB ObjectId of the Identity
+    email: string
+    displayName: string  // firstName + lastName
+    roles: string[]
+}
+```
+
+Access it in any protected controller via `req.session.user`:
+
+```typescript
+router.get('/dashboard', requireAuth, (req, res) => {
+    res.json({ message: `Hello, ${req.session.user!.displayName}` })
+})
+```
+
+---
+
+### Session Augmentation (TypeScript)
+
+`requireSSOAuth.ts` augments the `express-session` `SessionData` interface. Import from `@rnb/middleware` in the member app's entry point to activate this augmentation:
+
+```typescript
+// In app.ts or server.ts — the import is enough
+import '@rnb/middleware'
+```
+
+This gives `req.session.user`, `req.session.oauthState`, and `req.session.returnTo` full TypeScript types without re-declaring them.
+
+---
+
+### Logout
+
+To log a user out of the member app AND the R&B SSO session:
+
+```typescript
+router.post('/api/auth/logout', async (req, res) => {
+    // 1. Destroy the member app session
+    await new Promise<void>((resolve, reject) =>
+        req.session.destroy((err) => (err ? reject(err) : resolve()))
+    )
+
+    // 2. Notify the auth server to destroy the SSO session
+    await fetch(`${ssoConfig.authServerUrl}/auth/logout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: req.session.user?.id }),
+    }).catch(() => {}) // non-critical if this fails
+
+    res.redirect('/')
+})
+```
+
+Destroying only the member app session leaves the SSO session intact — the user would be instantly re-authenticated on the next visit via the fast-path. Destroy both to force a full re-login.
+
+---
+
+### Checklist for a New App
+
+- [ ] `OAuthApp` document created via `registerApp.ts`
+- [ ] `RNB_CLIENT_ID`, `RNB_CLIENT_SECRET`, `RNB_REDIRECT_URI` in `.env`
+- [ ] `express-session` + `connect-mongo` configured in `app.ts`
+- [ ] `createRequireSSOAuth(config)` applied to protected routes
+- [ ] `createSSOCallbackHandler(config)` mounted at the `redirectUri` path
+- [ ] Logout route destroys app session AND calls `POST /auth/logout` on auth server
+- [ ] `SESSION_SECRET` is a strong random value (not shared with any other secret)
+
+---
+
+## 22. Database Models Reference
 
 ### Identity Model Summary
 
@@ -1995,9 +2303,48 @@ Credentials: true
 | `identityId` | ObjectId | Unique           | One-to-one with Identity |
 | `username`   | String   | Unique + Regular | Lowercase, trimmed       |
 
+### OAuthApp Model
+
+**Path:** `packages/database/src/sso/oauthAppModel.ts`
+**Collection:** `oauthapps`
+
+Stores registered member apps that are permitted to participate in the SSO flow.
+
+| Field          | Type     | Notes                                                               |
+| -------------- | -------- | ------------------------------------------------------------------- |
+| `name`         | String   | Required. Human-readable label, e.g. `"Aetherscribe"`              |
+| `clientId`     | String   | Required, unique. Identifier sent in OAuth params.                 |
+| `clientSecret` | String   | Required. Server-side secret — never sent to the browser.          |
+| `redirectUris` | String[] | Allowed callback URLs. Auth server rejects any unlisted URI.        |
+| `scopes`       | String[] | Permitted scopes, e.g. `["openid", "profile"]`.                    |
+| `active`       | Boolean  | Default `true`. Set to `false` to disable an app without deleting. |
+| `createdAt`    | Date     | Mongoose timestamps.                                               |
+| `updatedAt`    | Date     | Mongoose timestamps.                                               |
+
+**Exported as:** `OAuthApp` from `@rnb/database`.
+
+### AuthCode Model
+
+**Path:** `packages/database/src/sso/authCodeModel.ts`
+**Collection:** `authcodes`
+
+Single-use, short-lived authorization codes issued after successful authentication.
+
+| Field        | Type     | Notes                                                                   |
+| ------------ | -------- | ----------------------------------------------------------------------- |
+| `code`       | String   | Required, unique. Random 32-char hex string.                            |
+| `clientId`   | String   | Required. The app that requested the code.                              |
+| `userId`     | String   | Required. MongoDB ObjectId string of the authenticated Identity.        |
+| `redirectUri`| String   | Required. Must match the URI used in the original auth request.         |
+| `expiresAt`  | Date     | Required. 5 minutes from creation.                                     |
+
+**TTL index:** `{ expiresAt: 1 }, { expireAfterSeconds: 0 }` — MongoDB auto-deletes expired codes. Codes are also explicitly deleted on successful token exchange (single-use enforcement).
+
+**Exported as:** `AuthCode` from `@rnb/database`.
+
 ---
 
-## 22. API Reference
+## 23. API Reference
 
 ### realms-and-beyond-api — Full Endpoint Table
 
@@ -2025,6 +2372,64 @@ Base URL: `http://localhost:2612`
 | PATCH  | `/api/v1/account/me`                       | ✓    | 200/400/401 | Update plan                 |
 | DELETE | `/api/v1/account/me`                       | ✓    | 200/401     | Remove account              |
 
+### realms-and-beyond-api — SSO OAuth Endpoints
+
+These endpoints implement the OAuth 2.0 Authorization Code Flow. They are consumed by the auth UI (`apps/rnb-auth`) and by member apps during the token exchange.
+
+Base URL: `http://localhost:2611`
+
+| Method | Endpoint           | Caller          | Description                                                                                        |
+| ------ | ------------------ | --------------- | -------------------------------------------------------------------------------------------------- |
+| GET    | `/auth/login`      | Browser (redirect) | Validates `client_id`/`redirect_uri`. If SSO session exists → fast-path code issue. Otherwise → redirect to login UI. |
+| POST   | `/auth/login`      | Login form      | Verifies credentials, sets SSO session, issues `AuthCode`, redirects to `redirect_uri?code=…&state=…`. |
+| GET    | `/auth/register`   | Browser (redirect) | Validates client. Redirects to register UI.                                                       |
+| POST   | `/auth/register`   | Register form   | Creates Identity, sets SSO session, issues code, redirects to `redirect_uri`.                     |
+| POST   | `/auth/token`      | Member app server | Exchanges `code` for `{ access_token, user }`. Requires `client_secret`. Deletes code on success. |
+| POST   | `/auth/logout`     | Member app server | Destroys the SSO session for the given `userId`.                                                  |
+
+#### `GET /auth/login` — Query Parameters
+
+| Param          | Required | Description                                          |
+| -------------- | -------- | ---------------------------------------------------- |
+| `client_id`    | Yes      | Registered app identifier                            |
+| `redirect_uri` | Yes      | Must exactly match a URI in `OAuthApp.redirectUris`  |
+| `state`        | Yes      | CSRF token generated by member app, echoed back      |
+| `error`        | No       | Error code from a failed login attempt (query-only)  |
+
+#### `POST /auth/token` — Request Body
+
+```json
+{
+    "code": "abc123...",
+    "client_id": "aetherscribe-app",
+    "client_secret": "<secret>",
+    "redirect_uri": "http://localhost:3002/api/auth/callback"
+}
+```
+
+**Success response `200`:**
+
+```json
+{
+    "access_token": "<JWT>",
+    "user": {
+        "id": "...",
+        "email": "user@example.com",
+        "displayName": "Duncan Saul",
+        "roles": []
+    }
+}
+```
+
+**Error codes:**
+
+| Code             | HTTP | Meaning                                              |
+| ---------------- | ---- | ---------------------------------------------------- |
+| `invalid_code`   | 400  | Code not found (already used or never issued)        |
+| `code_expired`   | 400  | Code is past its 5-minute TTL                        |
+| `invalid_client` | 401  | `client_id`/`client_secret` do not match             |
+| `uri_mismatch`   | 400  | `redirect_uri` does not match the one used at `/auth/login` |
+
 ### Standard Error Response Shape
 
 ```json
@@ -2039,7 +2444,7 @@ Base URL: `http://localhost:2612`
 
 ---
 
-## 23. Design System
+## 24. Design System
 
 ### Brand Identity
 
@@ -2096,7 +2501,7 @@ Shadows in R&B use **amber glow** rather than hard black drop shadows:
 
 ---
 
-## 24. Frontend Architecture
+## 25. Frontend Architecture
 
 ### Next.js App Router
 
@@ -2134,7 +2539,7 @@ FOUC is prevented by `ThemeInitializer`, which generates an inline `<script>` ta
 
 ---
 
-## 25. Data Flow & Use Case Scenarios
+## 26. Data Flow & Use Case Scenarios
 
 ### Scenario 1: New User Signup → Hub Access
 
@@ -2331,7 +2736,7 @@ Identity secured with new password
 
 ---
 
-## 26. Environment Configuration
+## 27. Environment Configuration
 
 ### `realms-and-beyond-api` — `.env`
 
@@ -2364,7 +2769,17 @@ MAILTRAP_USERNAME=your_username
 MAILTRAP_PASSWORD=your_password
 
 FRONTEND_URL=http://localhost:3000
+
+# SSO session store
+SESSION_SECRET=your_strong_random_session_secret_min_32_chars
+
+# URL of the rnb-auth login UI (Next.js app, port 3001)
+AUTH_UI_URL=http://localhost:3001
 ```
+
+> **`SESSION_SECRET`** must be a long, random secret (generate with `openssl rand -hex 32`). It is used to sign the express-session cookie for the SSO session store. It is completely separate from `JWT_SECRET` and must not be shared.
+>
+> **`AUTH_UI_URL`** tells the auth server where to redirect the browser when a login UI is needed. In development this is `http://localhost:3001`. In production, set it to the deployed `rnb-auth` domain.
 
 ### `aetherscribe-api` — `.env`
 
@@ -2392,9 +2807,31 @@ NEXT_PUBLIC_AETHERSCRIBE_API_URL=http://localhost:2612
 
 These are injected as `process.env.NEXT_PUBLIC_*` values at build time. They are exposed to the browser (that is the purpose of the `NEXT_PUBLIC_` prefix). Never put secrets in `NEXT_PUBLIC_` variables.
 
+### Member App (SSO client) — `.env`
+
+Any Express app wired as an SSO member via `@rnb/middleware` needs these additional variables:
+
+```bash
+# Must connect to same MongoDB as realms-and-beyond-api
+DATABASE=mongodb+srv://...
+
+# SSO session signing secret — unique per app, never shared
+SESSION_SECRET=your_member_app_session_secret
+
+# OAuth client credentials from registerApp.ts script
+RNB_CLIENT_ID=your-app-client-id
+RNB_CLIENT_SECRET=your-app-client-secret
+RNB_REDIRECT_URI=http://localhost:<port>/api/auth/callback
+
+# URL of the auth server
+RNB_AUTH_SERVER_URL=http://localhost:2611
+```
+
+> **`RNB_CLIENT_SECRET`** is a server-side secret. It is only ever used in the server-to-server `POST /auth/token` call. Never expose it in frontend code or `NEXT_PUBLIC_` env vars.
+
 ---
 
-## 27. Code Conventions
+## 28. Code Conventions
 
 ### TypeScript
 
@@ -2460,7 +2897,7 @@ All TypeScript is configured with `"strict": true`. This enables:
 
 ---
 
-## 28. Dependency Graph
+## 29. Dependency Graph
 
 The following diagram shows which workspaces depend on which:
 

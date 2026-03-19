@@ -1,6 +1,7 @@
 'use client'
 
-import { Navbar, Footer, AuthGuard, useAuth } from '@rnb/ui'
+import { useCallback } from 'react'
+import { Navbar, Footer, AuthGuard } from '@rnb/ui'
 import { aetherscribeLogo } from '@rnb/assets'
 import { navLinks } from '@/data/navLinks'
 
@@ -9,7 +10,10 @@ export default function MyAccountLayout({
 }: {
     children: React.ReactNode
 }) {
-    const { logout } = useAuth()
+    const handleLogout = useCallback(async () => {
+        await fetch('/api/auth/logout', { method: 'POST' })
+        window.location.href = '/'
+    }, [])
 
     return (
         <AuthGuard>
@@ -17,7 +21,7 @@ export default function MyAccountLayout({
                 headerIcon={aetherscribeLogo}
                 headerTitle="Aetherscribe"
                 navItems={navLinks}
-                onLogout={logout}
+                onLogout={handleLogout}
             />
             <main className="page-wrapper">{children}</main>
             <Footer appName="Aetherscribe" />

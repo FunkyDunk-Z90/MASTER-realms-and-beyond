@@ -41,6 +41,10 @@ const SEARCH_INDEX: I_SearchResult[] = [
   { title: 'OnboardingForm — username & plan picker', section: 'Auth', href: '#auth-onboarding' },
   { title: 'AuthGuard — route protection', section: 'Auth', href: '#auth-guard' },
   { title: 'Server login flow & cookie config', section: 'Auth', href: '#auth-flow' },
+  { title: 'SSO Overview — OAuth 2.0 Authorization Code Flow', section: 'Auth', href: '#sso-overview' },
+  { title: 'OAuth Flow — step-by-step', section: 'Auth', href: '#sso-flow' },
+  { title: 'Adding a new app to SSO', section: 'Auth', href: '#sso-new-app' },
+  { title: 'SSO Middleware — createRequireSSOAuth, createSSOCallbackHandler', section: 'Auth', href: '#sso-middleware' },
   { title: 'API Reference', section: 'API', href: '#api' },
   { title: 'Code Conventions — Naming', section: 'Conventions', href: '#conventions' },
   { title: 'Zod Schema Conventions', section: 'Conventions', href: '#conventions' },
@@ -861,6 +865,145 @@ setAuthCookie(res, identity._id.toString(), env.JWT_SECRET, isDev)
                 </table>
               </div>
             </div>
+
+
+            {/* ── SSO Overview ─────────────────────────────────────────── */}
+            <div id="sso-overview" data-section="sso-overview" className="subsection">
+              <SubsectionTitle>SSO Overview</SubsectionTitle>
+              <div className="prose">
+                <p>
+                  Every R&B product authenticates through a single OAuth 2.0 auth server
+                  (<code>realms-and-beyond-api</code>, port 2611). Member apps never see
+                  passwords — they receive a short-lived one-time <code>code</code>, exchange it
+                  server-to-server for a JWT, then maintain their own session via{' '}
+                  <code>express-session</code>.
+                </p>
+              </div>
+              <div className="table-wrap" style={{ marginTop: 'var(--space-md)' }}>
+                <table className="data-table">
+                  <thead>
+                    <tr><th>Actor</th><th>Role</th></tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { actor: 'Browser', role: 'Follows redirects. Never touches secrets.' },
+                      { actor: 'Auth server (port 2611)', role: 'Identity store, SSO session, code issuance, JWT token exchange.' },
+                      { actor: 'Auth UI (port 3001)', role: 'Renders login/register forms. Forms POST directly to auth server.' },
+                      { actor: 'Member app', role: 'Receives auth code callback, exchanges it server-to-server, manages own session.' },
+                    ].map((row) => (
+                      <tr key={row.actor}>
+                        <td className="td-primary">{row.actor}</td>
+                        <td>{row.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <Callout type="tip">
+                SSO fast-path: if the user already has an active SSO session (logged into any R&B app), subsequent
+                apps skip the login UI entirely. The auth server immediately issues a code and redirects — the user
+                sees nothing.
+              </Callout>
+            </div>
+
+            {/* ── OAuth Flow ───────────────────────────────────────────── */}
+            <div id="sso-flow" data-section="sso-flow" className="subsection">
+              <SubsectionTitle>OAuth Flow</SubsectionTitle>
+              <div className="auth-flow">
+                {[
+                  { n: '01', title: 'GET /dashboard (no session)', desc: 'requireSSOAuth middleware fires. Saves returnTo URL and CSRF state in session. Redirects browser to /auth/login?client_id=…&redirect_uri=…&state=…' },
+                  { n: '02', title: 'Auth server validates client', desc: 'Looks up OAuthApp by client_id. Checks redirect_uri is in the registered list. If SSO session exists → fast-path (skip to step 05).' },
+                  { n: '03', title: 'Redirect to login UI', desc: 'Browser is sent to apps/rnb-auth (port 3001) with OAuth params in query. Login form is rendered.' },
+                  { n: '04', title: 'POST /auth/login { email, password, … }', desc: 'Form POSTs directly to auth server. Auth server verifies credentials, sets SSO session in MongoDB, creates AuthCode (5min TTL), redirects to redirect_uri?code=…&state=…' },
+                  { n: '05', title: 'Member app callback receives code', desc: 'Browser follows redirect to /api/auth/callback. createSSOCallbackHandler verifies state (CSRF check).' },
+                  { n: '06', title: 'POST /auth/token (server-to-server)', desc: 'Member app server sends { code, client_id, client_secret, redirect_uri } to auth server. Browser is not involved. Auth server deletes the code (single-use) and returns { access_token, user }.' },
+                  { n: '07', title: 'App session created', desc: 'Member app stores user in req.session.user. Redirects browser to returnTo URL. User is now authenticated.' },
+                ].map((step) => (
+                  <div key={step.n} className="flow-step">
+                    <span className="flow-step-number">{step.n}</span>
+                    <div className="flow-step-content">
+                      <span className="flow-step-title">{step.title}</span>
+                      <span className="flow-step-desc">{step.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Adding a New App ─────────────────────────────────────── */}
+            <div id="sso-new-app" data-section="sso-new-app" className="subsection">
+              <SubsectionTitle>Adding a New App</SubsectionTitle>
+              <div className="prose">
+                <p>Four steps to wire SSO into any new Express app:</p>
+              </div>
+              <div className="auth-flow" style={{ marginTop: 'var(--space-md)' }}>
+                {[
+                  { n: '01', title: 'Register with registerApp.ts', desc: 'Run: npx tsx servers/realms-and-beyond-api/scripts/registerApp.ts. Edit APP_CONFIG first. Outputs clientId and clientSecret — save the secret, it cannot be recovered.' },
+                  { n: '02', title: 'Set env vars', desc: 'RNB_CLIENT_ID, RNB_CLIENT_SECRET, RNB_REDIRECT_URI in the app\'s .env. Also SESSION_SECRET and RNB_AUTH_SERVER_URL=http://localhost:2611.' },
+                  { n: '03', title: 'Apply requireAuth middleware', desc: 'import { createRequireSSOAuth } from \'@rnb/middleware\'. Create instance with config object. Apply to protected routes: router.get(\'/dashboard\', requireAuth, handler).' },
+                  { n: '04', title: 'Mount the callback handler', desc: 'import { createSSOCallbackHandler } from \'@rnb/middleware\'. Mount at the redirect_uri path: router.get(\'/api/auth/callback\', ssoCallback).' },
+                ].map((step) => (
+                  <div key={step.n} className="flow-step">
+                    <span className="flow-step-number">{step.n}</span>
+                    <div className="flow-step-content">
+                      <span className="flow-step-title">{step.title}</span>
+                      <span className="flow-step-desc">{step.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Callout type="danger">
+                Never put RNB_CLIENT_SECRET in NEXT_PUBLIC_ env vars or any client-side code. It is a server-side
+                secret used only in the server-to-server token exchange.
+              </Callout>
+            </div>
+
+            {/* ── SSO Middleware ───────────────────────────────────────── */}
+            <div id="sso-middleware" data-section="sso-middleware" className="subsection">
+              <SubsectionTitle>SSO Middleware (@rnb/middleware)</SubsectionTitle>
+              <CodeSnippet lang="typescript" code={`import { createRequireSSOAuth, createSSOCallbackHandler, SSOConfig } from '@rnb/middleware'
+
+const config: SSOConfig = {
+  authServerUrl: process.env.RNB_AUTH_SERVER_URL ?? 'http://localhost:2611',
+  clientId: process.env.RNB_CLIENT_ID!,
+  clientSecret: process.env.RNB_CLIENT_SECRET!,
+  redirectUri: process.env.RNB_REDIRECT_URI!,
+}
+
+// Protect routes
+const requireAuth = createRequireSSOAuth(config)
+router.get('/dashboard', requireAuth, handler)
+
+// Handle OAuth callback
+const ssoCallback = createSSOCallbackHandler(config)
+router.get('/api/auth/callback', ssoCallback)
+
+// Access user in controllers (after requireAuth)
+router.get('/dashboard', requireAuth, (req, res) => {
+  const { id, email, displayName } = req.session.user!
+  res.json({ message: \`Hello, \${displayName}\` })
+})`} />
+              <div className="table-wrap" style={{ marginTop: 'var(--space-md)' }}>
+                <table className="data-table">
+                  <thead>
+                    <tr><th>Export</th><th>Description</th></tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { name: 'createRequireSSOAuth(config)', desc: 'Returns middleware that redirects unauthenticated requests through the OAuth flow. Stores returnTo and CSRF state in session.' },
+                      { name: 'createSSOCallbackHandler(config)', desc: 'Returns a route handler for the OAuth callback. Verifies CSRF state, exchanges code for user via POST /auth/token, sets req.session.user.' },
+                      { name: 'SSOConfig', desc: 'Interface: { authServerUrl, clientId, clientSecret, redirectUri }' },
+                    ].map((row) => (
+                      <tr key={row.name}>
+                        <td className="td-primary">{row.name}</td>
+                        <td>{row.desc}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -869,7 +1012,7 @@ setAuthCookie(res, identity._id.toString(), env.JWT_SECRET, isDev)
         {/* ── API Reference ────────────────────────────────────────────────── */}
         <section id="api" data-section="api" className="section">
           <div className="section-header">
-            <span className="section-number">22</span>
+            <span className="section-number">23</span>
             <h2 className="section-title">API Reference</h2>
           </div>
           <div className="section-body">
@@ -895,6 +1038,34 @@ setAuthCookie(res, identity._id.toString(), env.JWT_SECRET, isDev)
                         <td className="td-accent">{row.method}</td>
                         <td className="td-primary">{row.route}</td>
                         <td className="td-muted">{row.auth}</td>
+                        <td>{row.desc}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="subsection">
+              <SubsectionTitle>realms-and-beyond-api — SSO OAuth Routes</SubsectionTitle>
+              <div className="table-wrap">
+                <table className="data-table">
+                  <thead>
+                    <tr><th>Method</th><th>Route</th><th>Caller</th><th>Description</th></tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { method: 'GET', route: '/auth/login', caller: 'Browser', desc: 'Validate client, check SSO session. Fast-path or redirect to login UI.' },
+                      { method: 'POST', route: '/auth/login', caller: 'Login form', desc: 'Verify credentials, set SSO session, issue AuthCode, redirect to member app.' },
+                      { method: 'GET', route: '/auth/register', caller: 'Browser', desc: 'Validate client. Redirect to register UI.' },
+                      { method: 'POST', route: '/auth/register', caller: 'Register form', desc: 'Create Identity, set SSO session, issue AuthCode, redirect.' },
+                      { method: 'POST', route: '/auth/token', caller: 'Member app (server)', desc: 'Exchange code for { access_token, user }. Requires client_secret. Deletes code (single-use).' },
+                      { method: 'POST', route: '/auth/logout', caller: 'Member app (server)', desc: 'Destroy the SSO session for the given userId.' },
+                    ].map((row) => (
+                      <tr key={`${row.method}-${row.route}`}>
+                        <td className="td-accent">{row.method}</td>
+                        <td className="td-primary">{row.route}</td>
+                        <td className="td-muted">{row.caller}</td>
                         <td>{row.desc}</td>
                       </tr>
                     ))}
