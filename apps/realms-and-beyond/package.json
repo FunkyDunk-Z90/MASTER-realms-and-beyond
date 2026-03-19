@@ -10,7 +10,6 @@
     },
     "dependencies": {
         "@rnb/styles": "workspace:*",
-        "@rnb/types": "workspace:*",
         "@rnb/ui": "workspace:*",
         "lucide-react": "^0.577.0",
         "next": "16.1.6",

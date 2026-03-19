@@ -11,7 +11,7 @@ import {
     Settings,
     Menu,
 } from 'lucide-react'
-import { I_Link, T_ObjectId } from '@rnb/types'
+import { I_Link, T_ObjectId } from '@rnb/validators'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 

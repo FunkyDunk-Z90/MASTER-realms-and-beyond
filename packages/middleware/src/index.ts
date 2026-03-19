@@ -1,4 +1,5 @@
 export { catchAsync } from './catchAsync'
+export { authenticate } from './authenticate'
 export { errorHandler } from './errorHandler'
 export {
     createOne,
@@ -16,9 +17,3 @@ export {
     hoursFromNow,
     daysFromNow,
 } from './tokenUtils'
-export { authenticate } from './authenticate'
-export {
-    createRequireSSOAuth,
-    createSSOCallbackHandler,
-} from './requireSSOAuth'
-export type { SSOConfig } from './requireSSOAuth'

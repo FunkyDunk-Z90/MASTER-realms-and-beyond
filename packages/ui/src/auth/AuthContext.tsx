@@ -30,12 +30,13 @@ const aetherscribeApiBase = (): string => {
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface I_LinkedService {
-    serviceName: string
-    serviceId: string
+export interface I_Venture {
+    ventureName: string
+    ventureId: string
     linkedAt: string
     scopes: string[]
     status: string
+    thirdParty?: boolean
 }
 
 export interface I_AuthUser {
@@ -63,7 +64,7 @@ export interface I_AuthUser {
     lifecycle?: {
         status: string
     }
-    services?: I_LinkedService[]
+    ventures?: I_Venture[]
 }
 
 interface I_SignupData {
@@ -106,7 +107,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }, [])
 
     const hasAetherscribeAccount = Boolean(
-        user?.services?.some((s) => s.serviceName === 'aetherscribe')
+        user?.ventures?.some((v) => v.ventureName === 'aetherscribe')
     )
 
     const login = async (email: string, password: string): Promise<void> => {
@@ -156,7 +157,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
             throw new Error(
                 json.message ?? 'Failed to create Aetherscribe account.'
             )
-        // Response includes updated user (with services array populated)
+        // Response includes updated user (with ventures array populated)
         setUser(json.user)
     }
 

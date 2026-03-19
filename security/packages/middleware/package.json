@@ -1,0 +1,35 @@
+{
+    "name": "@security/middleware",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "default": "./src/index.ts"
+        }
+    },
+    "scripts": {
+        "typecheck": "tsc --noEmit"
+    },
+    "peerDependencies": {
+        "express": "^4.0.0"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.6",
+        "@types/jsonwebtoken": "^9.0.10",
+        "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "@rnb/security": "workspace:*",
+        "@rnb/database": "workspace:*",
+        "@rnb/errors": "workspace:*",
+        "@rnb/validators": "workspace:*",
+        "jsonwebtoken": "^9.0.3",
+        "jwks-rsa": "^4.0.1",
+        "mongoose": "^9.2.1",
+        "zod": "^4.3.6"
+    }
+}

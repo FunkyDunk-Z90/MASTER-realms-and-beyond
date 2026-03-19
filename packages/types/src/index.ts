@@ -1,5 +1,0 @@
-export * from './aetherscribe/aetherscribeIndex'
-export * from './byteburger/byteburgerIndex'
-export * from './global/globalIndex'
-export * from './identity/identityIndex'
-export * from './nexusserve/nexusserveIndex'

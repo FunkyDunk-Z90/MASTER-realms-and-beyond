@@ -97,14 +97,15 @@ export async function GET(): Promise<NextResponse> {
             identityId: new mongoose.Types.ObjectId(payload.sub),
         }).select('_id username createdAt').lean()
 
-        const services = profile
+        const ventures = profile
             ? [
                   {
-                      serviceName: 'aetherscribe',
-                      serviceId: profile._id.toString(),
+                      ventureName: 'aetherscribe',
+                      ventureId: profile._id.toString(),
                       linkedAt: profile.createdAt.toISOString(),
                       scopes: ['read', 'write'],
                       status: 'active',
+                      thirdParty: false,
                   },
               ]
             : []
@@ -117,7 +118,7 @@ export async function GET(): Promise<NextResponse> {
                     lastName,
                     email: payload.email,
                 },
-                services,
+                ventures,
             },
         })
     } catch (err) {
