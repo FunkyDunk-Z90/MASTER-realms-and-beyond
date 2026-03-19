@@ -23,7 +23,7 @@ interface I_MessageResponse {
 // ─── Create Account ───────────────────────────────────────────────────────────
 // POST /api/v1/account
 // Protected — requires a valid R&B auth cookie.
-// Creates an AetherscribeProfile, a default Codex, and links to identity.services.
+// Creates an AetherscribeProfile, a default Codex, and links to identity.ventures.
 
 export const createAccount = catchAsync(
     async (
@@ -84,12 +84,13 @@ export const createAccount = catchAsync(
         })
 
         // ── Link to identity ──────────────────────────────────────────────────
-        identity.services.push({
-            serviceName: 'aetherscribe',
-            serviceId: profile._id,
+        identity.ventures.push({
+            ventureName: 'aetherscribe',
+            ventureId: profile._id,
             linkedAt: new Date().toISOString(),
             scopes: ['read', 'write'],
             status: 'active',
+            thirdParty: false,
         })
         await identity.save({ validateModifiedOnly: true })
 
@@ -189,9 +190,9 @@ export const deleteMyAccount = catchAsync(
             )
         }
 
-        identity.services = identity.services.filter(
-            (s) => s.serviceName !== 'aetherscribe'
-        ) as typeof identity.services
+        identity.ventures = identity.ventures.filter(
+            (v) => v.ventureName !== 'aetherscribe'
+        ) as typeof identity.ventures
         await identity.save({ validateModifiedOnly: true })
 
         res.status(200).json({ message: 'Aetherscribe account deleted.' })

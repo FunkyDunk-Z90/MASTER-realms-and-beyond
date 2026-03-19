@@ -9,7 +9,7 @@ import {
     preferencesSchema,
     securitySchema,
     verificationSchema,
-    servicesSchema,
+    venturesSchema,
     contactSchema,
 } from './_schemas'
 import { registerPasswordMethods } from './methods/password.methods'
@@ -40,7 +40,7 @@ const identitySchema = new Schema<
         security: securitySchema,
         verification: verificationSchema,
         lastLoginAt: String,
-        services: [servicesSchema],
+        ventures: [venturesSchema],
     },
     { timestamps: true }
 )

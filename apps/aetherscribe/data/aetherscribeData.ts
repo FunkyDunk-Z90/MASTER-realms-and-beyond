@@ -1,4 +1,4 @@
-import { I_AetherScribeContent } from '@rnb/types'
+import { I_AetherScribeContent } from '@rnb/validators'
 
 // ─── Category metadata for display ────────────────────────────────────────────
 

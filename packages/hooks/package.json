@@ -20,7 +20,7 @@
         "react-dom": "^18.0.0"
     },
     "dependencies": {
-        "@rnb/types": "workspace:*",
+        "@rnb/validators": "workspace:*",
         "axios": "^1.13.5"
     },
     "devDependencies": {

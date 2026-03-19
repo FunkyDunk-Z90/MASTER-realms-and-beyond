@@ -278,7 +278,7 @@ export default function DevGuide() {
                 </p>
               </div>
               <Callout type="info">
-                Adding a new product requires only registering a new serviceName, creating a product model, and building a product API. The auth system is never duplicated.
+                Adding a new product requires only registering a new ventureName, creating a product model, and building a product API. The auth system is never duplicated.
               </Callout>
             </div>
           </div>
@@ -571,7 +571,7 @@ export const Z_Timestamp = z.iso.datetime()
       ├─ GET /api/v1/account/check-username/:u  (debounced, 500ms)
       └─ POST /api/v1/account  ──────────────────────────────────────────
            │  creates AetherscribeProfile
-           │  pushes { serviceName: 'aetherscribe' } to identity.services
+           │  pushes { ventureName: 'aetherscribe' } to identity.ventures
            │  returns { account, user } — AuthContext sets user state
            ▼ onSuccess() callback
 /hub  (AuthGuard passes — user + hasAetherscribeAccount both true)
@@ -594,7 +594,7 @@ AuthGuard redirect logic
                   <span className="ic">AuthProvider</span> wraps the entire app in the root layout.
                   On mount it calls <span className="ic">GET /api/v1/user/me</span> with the httpOnly cookie to rehydrate the
                   session — no localStorage involved. <span className="ic">hasAetherscribeAccount</span> is derived
-                  from <span className="ic">user.services.some(s =&gt; s.serviceName === &apos;aetherscribe&apos;)</span>.
+                  from <span className="ic">user.ventures.some(v =&gt; v.ventureName === &apos;aetherscribe&apos;)</span>.
                 </p>
               </div>
               <CodeSnippet lang="tsx" filename="apps/aetherscribe/app/layout.tsx" code={`
@@ -625,11 +625,11 @@ export default function RootLayout({ children }) {
                     {[
                       { val: 'user', type: 'I_AuthUser | null', desc: 'Authenticated identity, or null if logged out' },
                       { val: 'isLoading', type: 'boolean', desc: 'True while the /me session check is in-flight on mount' },
-                      { val: 'hasAetherscribeAccount', type: 'boolean', desc: "Derived: user.services includes { serviceName: 'aetherscribe' }" },
+                      { val: 'hasAetherscribeAccount', type: 'boolean', desc: "Derived: user.ventures includes { ventureName: 'aetherscribe' }" },
                       { val: 'login(email, password)', type: 'Promise<void>', desc: 'POST /api/v1/user/login — sets cookie, updates user state' },
                       { val: 'signup(data)', type: 'Promise<void>', desc: 'POST /api/v1/user/signup — sets cookie, updates user state' },
                       { val: 'logout()', type: 'Promise<void>', desc: 'POST /api/v1/user/logout — clears cookie, sets user to null' },
-                      { val: 'createAetherscribeAccount(username, plan)', type: 'Promise<void>', desc: 'POST /api/v1/account — creates profile, updates user.services' },
+                      { val: 'createAetherscribeAccount(username, plan)', type: 'Promise<void>', desc: 'POST /api/v1/account — creates profile, updates user.ventures' },
                     ].map((row) => (
                       <tr key={row.val}>
                         <td className="td-primary">{row.val}</td>
@@ -801,7 +801,7 @@ export default function HubLayout({ children }) {
                   { n: '03', title: 'verifyPassword()', desc: 'bcrypt.compare(plaintext, hash). Timing-safe via bcrypt internals.' },
                   { n: '04', title: 'setAuthCookie()', desc: 'Creates HS256 JWT (sub: identityId, 7d expiry), sets httpOnly + SameSite=Strict cookie.' },
                   { n: '05', title: 'identity.toClient()', desc: 'Strips all sensitive security fields (password hash, reset tokens, IPs) from the document before returning { user }.' },
-                  { n: '06', title: 'AuthContext.setUser(data.user)', desc: 'Frontend receives the sanitised user object. hasAetherscribeAccount is computed from user.services.' },
+                  { n: '06', title: 'AuthContext.setUser(data.user)', desc: 'Frontend receives the sanitised user object. hasAetherscribeAccount is computed from user.ventures.' },
                 ].map((step) => (
                   <div key={step.n} className="flow-step">
                     <span className="flow-step-number">{step.n}</span>

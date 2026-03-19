@@ -59,3 +59,28 @@ export const Z_UpdateCodexRequest = z.object({
 export type T_Codex = z.infer<typeof Z_Codex>
 export type T_CreateCodexRequest = z.infer<typeof Z_CreateCodexRequest>
 export type T_UpdateCodexRequest = z.infer<typeof Z_UpdateCodexRequest>
+
+// ─── Content inventory types ──────────────────────────────────────────────────
+// Moved from @rnb/types — represents a content item summary for UI display.
+
+export interface I_ContentItem {
+    contentId: string
+    contentName: string
+    subCategory?: string
+    worldId?: T_ObjectId
+}
+
+export interface I_AetherScribeContent {
+    worlds: I_ContentItem[]
+    campaigns: I_ContentItem[]
+    playerCharacters: I_ContentItem[]
+    npcs: I_ContentItem[]
+    bestiary: I_ContentItem[]
+    ancestries: I_ContentItem[]
+    lore: I_ContentItem[]
+    items: I_ContentItem[]
+    arcana: I_ContentItem[]
+    locations: I_ContentItem[]
+    nations: I_ContentItem[]
+    factions: I_ContentItem[]
+}

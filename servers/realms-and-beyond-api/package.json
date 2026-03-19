@@ -14,7 +14,6 @@
         "@rnb/errors": "workspace:*",
         "@rnb/middleware": "workspace:*",
         "@rnb/security": "workspace:*",
-        "@rnb/types": "workspace:*",
         "@rnb/validators": "workspace:*",
         "@rnb/database": "workspace:*",
         "bcrypt": "^6.0.0",

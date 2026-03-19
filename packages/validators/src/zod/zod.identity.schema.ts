@@ -56,12 +56,13 @@ export const Z_IdentitySecurity = z.object({
     recoveryPhone: z.string().optional(),
 })
 
-export const Z_LinkedService = z.object({
-    serviceName: z.string(),
-    serviceId: Z_ObjectId,
+export const Z_Venture = z.object({
+    ventureName: z.string(),
+    ventureId: Z_ObjectId,
     linkedAt: z.iso.datetime(),
     scopes: z.array(z.string()),
     status: Z_IdentityStatus,
+    thirdParty: z.boolean().default(false),
 })
 
 export const Z_IdentityAudit = z.object({
@@ -92,7 +93,7 @@ export const Z_IdentitySchema = z.object({
     security: Z_IdentitySecurity,
     audit: Z_IdentityAudit,
     lifecycle: Z_IdentityLifecycle,
-    services: z.array(Z_LinkedService),
+    ventures: z.array(Z_Venture),
     lastLoginAt: z.iso.datetime().optional(),
 })
 
@@ -105,7 +106,7 @@ export type T_IdentityMedia = z.infer<typeof Z_IdentityMedia>
 export type T_IdentityPreferences = z.infer<typeof Z_IdentityPreferences>
 export type T_IdentityVerification = z.infer<typeof Z_IdentityVerification>
 export type T_IdentitySecurity = z.infer<typeof Z_IdentitySecurity>
-export type T_LinkedService = z.infer<typeof Z_LinkedService>
+export type T_Venture = z.infer<typeof Z_Venture>
 export type T_IdentityAudit = z.infer<typeof Z_IdentityAudit>
 export type T_IdentityLifecycle = z.infer<typeof Z_IdentityLifecycle>
 export type T_Identity = z.infer<typeof Z_IdentitySchema>

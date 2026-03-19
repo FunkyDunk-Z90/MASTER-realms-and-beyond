@@ -7,7 +7,7 @@ import {
     T_IdentityPreferences,
     T_IdentitySecurity,
     T_IdentityVerification,
-    T_LinkedService,
+    T_Venture,
 } from '@rnb/validators'
 import { contactSchema } from '../common/contactModel'
 
@@ -128,18 +128,19 @@ export const verificationSchema = new Schema<T_IdentityVerification>(
     { _id: false }
 )
 
-// ─── Linked Services ──────────────────────────────────────────────────────────
+// ─── Ventures ─────────────────────────────────────────────────────────────────
 
-export const servicesSchema = new Schema<T_LinkedService>(
+export const venturesSchema = new Schema<T_Venture>(
     {
-        serviceName: { type: String, required: true },
-        serviceId: { type: Types.ObjectId, required: true },
+        ventureName: { type: String, required: true },
+        ventureId: { type: Types.ObjectId, required: true },
         linkedAt: { type: String, required: true },
         scopes: [{ type: String, required: true }],
         status: {
             type: String,
             enum: ['active', 'soft-deleted', 'banned'],
         },
+        thirdParty: { type: Boolean, default: false },
     },
     { _id: false }
 )

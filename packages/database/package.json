@@ -20,7 +20,6 @@
         "typescript": "^5.9.3"
     },
     "dependencies": {
-        "@rnb/types": "workspace:*",
         "@rnb/validators": "workspace:*",
         "@rnb/middleware": "workspace:*",
         "bcrypt": "^6.0.0",
