@@ -1,16 +1,11 @@
 import { createVerify, createPublicKey } from 'crypto'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { connectDB } from '../../../../../lib/db'
-import { AetherscribeProfile } from '@rnb/database'
-import mongoose from 'mongoose'
 
 // ─── GET /api/v1/user/me ───────────────────────────────────────────────────────
-// Local proxy for AuthProvider. Reads the RS256 auth_token cookie, verifies it
-// against the auth server's JWKS, and returns user data shaped as I_AuthUser.
-//
-// NEXT_PUBLIC_API_URL in Aetherscribe must point to http://localhost:3000 so
-// AuthProvider calls this route instead of the auth server's HS256 endpoint.
+// Verifies the RS256 auth_token cookie, then calls the Aetherscribe Express API
+// to check whether the user has an Aetherscribe profile.
+// No direct database access — all data comes from backend servers.
 
 function base64urlDecode(str: string): string {
     const base64 = str.replace(/-/g, '+').replace(/_/g, '/')
@@ -20,8 +15,6 @@ function base64urlDecode(str: string): string {
 
 interface JwkKey {
     kty: string
-    use?: string
-    alg?: string
     kid?: string
     n: string
     e: string
@@ -33,10 +26,7 @@ interface JwtPayload {
     displayName: string
     roles: string[]
     scopes: string[]
-    iss: string
-    aud: string
     exp: number
-    iat: number
 }
 
 async function verifyRS256(token: string): Promise<JwtPayload> {
@@ -50,7 +40,7 @@ async function verifyRS256(token: string): Promise<JwtPayload> {
 
     const authServerUrl = process.env.RNB_AUTH_SERVER_URL ?? 'http://localhost:2611'
     const jwksRes = await fetch(`${authServerUrl}/.well-known/jwks.json`, {
-        next: { revalidate: 3600 }, // cache the public key for 1 hour
+        next: { revalidate: 3600 },
     })
 
     if (!jwksRes.ok) throw new Error('Failed to fetch JWKS')
@@ -59,7 +49,8 @@ async function verifyRS256(token: string): Promise<JwtPayload> {
     const jwk = keys.find((k) => !header.kid || k.kid === header.kid)
     if (!jwk) throw new Error('No matching signing key in JWKS')
 
-    const publicKey = createPublicKey({ key: jwk as unknown as Parameters<typeof createPublicKey>[0], format: 'jwk' })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const publicKey = createPublicKey({ key: jwk as any, format: 'jwk' })
 
     const verifier = createVerify('RSA-SHA256')
     verifier.update(`${headerB64}.${payloadB64}`)
@@ -67,10 +58,7 @@ async function verifyRS256(token: string): Promise<JwtPayload> {
     if (!valid) throw new Error('Invalid JWT signature')
 
     const payload = JSON.parse(base64urlDecode(payloadB64)) as JwtPayload
-
-    if (payload.exp < Math.floor(Date.now() / 1000)) {
-        throw new Error('JWT expired')
-    }
+    if (payload.exp < Math.floor(Date.now() / 1000)) throw new Error('JWT expired')
 
     return payload
 }
@@ -86,38 +74,36 @@ export async function GET(): Promise<NextResponse> {
     try {
         const payload = await verifyRS256(token)
 
-        // Split displayName into firstName / lastName for I_AuthUser shape
         const nameParts = payload.displayName.trim().split(' ')
         const firstName = nameParts[0] ?? ''
         const lastName = nameParts.slice(1).join(' ')
 
-        // Check if this user has an Aetherscribe profile
-        await connectDB()
-        const profile = await AetherscribeProfile.findOne({
-            identityId: new mongoose.Types.ObjectId(payload.sub),
-        }).select('_id username createdAt').lean()
+        // Ask the Aetherscribe Express API whether this user has a profile.
+        // The API verifies the token itself via its authenticate middleware.
+        const aetherscribeApiUrl =
+            process.env.AETHERSCRIBE_API_URL ?? 'http://localhost:8811'
 
-        const ventures = profile
-            ? [
-                  {
-                      ventureName: 'aetherscribe',
-                      ventureId: profile._id.toString(),
-                      linkedAt: profile.createdAt.toISOString(),
-                      scopes: ['read', 'write'],
-                      status: 'active',
-                      thirdParty: false,
-                  },
-              ]
-            : []
+        const accountRes = await fetch(`${aetherscribeApiUrl}/api/v1/account/me`, {
+            headers: { cookie: `auth_token=${token}` },
+        })
+
+        const ventures =
+            accountRes.ok
+                ? [
+                      {
+                          ventureName: 'aetherscribe',
+                          linkedAt: new Date().toISOString(),
+                          scopes: ['read', 'write'],
+                          status: 'active',
+                          thirdParty: false,
+                      },
+                  ]
+                : []
 
         return NextResponse.json({
             user: {
                 id: payload.sub,
-                profile: {
-                    firstName,
-                    lastName,
-                    email: payload.email,
-                },
+                profile: { firstName, lastName, email: payload.email },
                 ventures,
             },
         })

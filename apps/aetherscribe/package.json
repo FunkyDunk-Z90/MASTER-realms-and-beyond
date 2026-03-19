@@ -9,13 +9,11 @@
         "lint": "eslint"
     },
     "dependencies": {
-        "@rnb/database": "workspace:*",
         "@rnb/styles": "workspace:*",
         "@rnb/validators": "workspace:*",
         "@rnb/ui": "workspace:*",
         "@rnb/assets": "workspace:*",
         "lucide-react": "^0.577.0",
-        "mongoose": "^8.15.0",
         "next": "16.1.6",
         "react": "19.2.4",
         "react-dom": "19.2.4",

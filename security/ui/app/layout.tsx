@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { ThemeInitializer, ThemeProvider } from '@rnb/ui'
 
 import '@rnb/styles'
-import './globals.scss'
+// import './globals.scss'
 
 const THEME_KEY = 'rnb-auth-theme'
 const MODE_KEY = 'rnb-auth-mode'
@@ -26,7 +26,7 @@ export default function RootLayout({
                     defaultTheme="global-theme"
                 />
             </head>
-            <body className="auth-body">
+            <body className="app-wrapper">
                 <ThemeProvider
                     themeStorageKey={THEME_KEY}
                     modeStorageKey={MODE_KEY}
